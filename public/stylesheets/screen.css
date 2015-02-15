@@ -1,0 +1,66 @@
+ html, body {
+	height:100%;
+ }
+ 
+ body {
+	background:#363636;
+	padding-top:50px;
+ }
+ .no-padding {
+	padding:0px;
+ }
+ 
+.left-sidebar {
+    height:100%;
+    min-height:100%;
+	margin:0px;
+}
+#main-content {
+	color:#FFF;
+	padding:0px;
+	height:100%;
+	position: relative;
+}
+#editor {
+	font-size:16px;
+	height:50%;
+}
+#evaluated {
+	height:50%;
+	background:#2C3539;
+	position: absolute;
+	bottom: 0px;
+}
+.eval-pass-holder {
+	margin-top:7px;
+}
+.eval-js-btn ,
+.eval-html-btn {
+	margin-top:7px;
+	margin-right:7px;
+}
+.navbar li {
+	margin:0px!important;
+	border-left:0px solid #8E44AD;
+ -webkit-transition: all .2s ease-in-out;
+  -moz-transition: all .2s ease-in-out;
+  -o-transition: all .2s ease-in-out;
+  transition: all .2s ease-in-out;
+}
+li.active-trail {
+	border-left:3px solid #8E44AD;
+}
+.navbar li.active-trail a {
+	color:#FFF;
+}
+.leaf:hover {
+	border-left:3px solid #8E44AD;
+}
+#evaluated iframe {
+	border:none;
+	width:100%;
+	height:100%;
+}
+#evaluated {
+	padding-left:0px;
+}
