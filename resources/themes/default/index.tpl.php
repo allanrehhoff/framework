@@ -1,5 +1,3 @@
 <?php require $app->getTemplatePath('header'); ?>
-<?php
-	require $app->getTemplatePath('404');
-?>
+html goes here.
 <?php require $app->getTemplatePath('footer'); ?>
