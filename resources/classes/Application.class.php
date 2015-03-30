@@ -3,30 +3,40 @@
 		
 		protected $title;
 		public $args;
-
+		private $cwd, $config;
+		
 		public function __construct($init = true) {
 			if($init === true) {
-				$this->loadConfiguration();
-				$this->Initialize();
+				$this->initialize();
 			}
 		}
+		
+		public function __toString() {
+			$ob = ob_start();
+			Debug::pre($this->args);
+			Debug::pre($this->config);
+			return ob_get_clean();
+		}
 
-		private function Initialize() {
-			$this->setTitle();
-			
+		private function initialize() {
+			$this->cwd = getcwd();
+			$this->loadConfiguration();
+
 			$themeFunctions = $this->getThemePath().'/functions.php';
 			if(is_file($themeFunctions)) {
-				include($themeFunctions);
+				include $themeFunctions;
 			}
-
+	
+			$this->setTitle();
+			
 			return $this;
 		}
 
 		private function loadConfiguration() {
-			require(getcwd().'/config.php');
+			require $this->getApplicationPath().'/config.php';
 			
 			$this->config = (object) $config;
-
+		
 			return $this;
 		}
 
@@ -56,7 +66,7 @@
 		}
 
 		public function setArgs($route) {
-			$this->args = explode('/', $route);
+			$this->args = explode('/', ltrim($route, '/'));
 			return $this;
 		}
 		
@@ -70,7 +80,7 @@
 		}
 
 		public function getApplicationPath() {
-			return getcwd();
+			return $this->cwd;
 		}
 		
 		public function getTemplatePath($tpl) {
@@ -82,7 +92,7 @@
 		}
 		
 		public function getThemePath() {
-			return getcwd().'/resources/themes/'.$this->config->theme;
+			return $this->getApplicationPath().'/resources/themes/'.$this->config->theme;
 		}
 	}
 ?>

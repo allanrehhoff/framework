@@ -12,24 +12,24 @@
 	});
 	
 	$app = new Application();
-
-	$route = isset($_GET['route']) ? $_GET['route'] : $app->config('default_route');
+	
+	$route = ( (isset($_GET['route']) ) && ($_GET['route'] != '') ) ? $_GET['route'] : $app->config('default_route');
 
 	$app->setArgs($route);
-	
+		
 	$controller = $app->getControllerPath($app->arg(0));
 	$view = $app->getTemplatePath($app->arg(0));
-
+	
 	if(!is_file($controller) && !is_file($view)) {
 		$controller = $app->getControllerPath('404');
 		$view = $app->getTemplatePath('404');
 	}
 
 	if(is_file($controller)) {
-		require($controller);
+		require $controller;
 	}
 
 	if(is_file($view)) {
-		require($view);
+		require $view;
 	}
 ?>
