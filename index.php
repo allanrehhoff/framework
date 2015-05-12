@@ -12,7 +12,7 @@
 		}
 	});
 	
-	use Application;
+	use \Application;
 	
 	$app = new Application\Initialize();
 	$db = new Application\SimpleDB(
