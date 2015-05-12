@@ -8,7 +8,7 @@
 	//Database settings
 	$config['db_type'] = 5;
 	$config['db_host'] = 'localhost';
-	$config['db_username'] = '***REMOVED***';
-	$config['db_password'] = '***REMOVED***';
-	$config['db_database'] = '***REMOVED***ground';
+	$config['db_username'] = '';
+	$config['db_password'] = '';
+	$config['db_database'] = '';
 ?>
