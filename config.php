@@ -11,4 +11,5 @@
 	$config['db_username'] = '';
 	$config['db_password'] = '';
 	$config['db_database'] = '';
+	
 ?>
