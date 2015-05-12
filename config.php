@@ -10,5 +10,5 @@
 	$config['db_host'] = 'localhost';
 	$config['db_username'] = '***REMOVED***';
 	$config['db_password'] = '***REMOVED***';
-	$config['db_database'] = '***REMOVED***';
+	$config['db_database'] = '***REMOVED***ground';
 ?>
