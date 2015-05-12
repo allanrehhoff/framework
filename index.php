@@ -6,12 +6,22 @@
 		$class_name = str_replace('\\', '/', $class_name);
 		
 		$class_file = getcwd().'/resources/classes/'.$class_name.'.class.php';
+
 		if(file_exists($class_file)) {
-			include($class_file);
+			include $class_file;
 		}
 	});
 	
-	$app = new Application();
+	use Application;
+	
+	$app = new Application\Initialize();
+	$db = new Application\SimpleDB(
+		$app->config('db_type'),
+		$app->config('db_host'),
+		$app->config('db_username'),
+		$app->config('db_password'),
+		$app->config('db_database')
+	);
 	
 	$route = ( (isset($_GET['route']) ) && ($_GET['route'] != '') ) ? $_GET['route'] : $app->config('default_route');
 
