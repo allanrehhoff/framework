@@ -1,0 +1,12 @@
+#php_flag magic_quotes_gpc Off
+Options +FollowSymlinks
+
+RewriteEngine on
+RewriteBase /framework
+
+#RewriteCond %{HTTP_HOST} !^www\.
+#RewriteCond %{HTTP_HOST} !^dev\.
+#RewriteRule ^(.*)$ http://www.%{HTTP_HOST}/$1 [R=301,L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ /index.php?route=$1 [L,QSA]
