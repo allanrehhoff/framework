@@ -1,6 +1,7 @@
 <?php
 namespace Application;
-
+	use Exception;
+	
 	class Initialize {
 		
 		protected $title, $config;
@@ -28,6 +29,10 @@ namespace Application;
 			if(is_file($themeFunctions)) {
 				include $themeFunctions;
 			}
+			
+			$route = ( (isset($_GET['route']) ) && ($_GET['route'] != '') ) ? $_GET['route'] : $this->config('default_route');
+
+			$this->setArgs($route);
 	
 			$this->setTitle();
 			
@@ -35,10 +40,13 @@ namespace Application;
 		}
 
 		private function loadConfiguration() {
-			require $this->getApplicationPath().'/config.php';
+			//require $this->getApplicationPath().'/config.php';
 			
-			$this->config = (object) $config;
+			//$this->config = (object) $config;
 		
+			$jsonConfig = file_get_contents($this->getApplicationPath().'/config.json');
+			$this->config = json_decode($jsonConfig);
+			
 			return $this;
 		}
 
@@ -53,17 +61,42 @@ namespace Application;
 			return false;
 		}
 
-		public function config($value = 'all') {
-			if($value === 'all') {
+		public function config($conf = null) {
+			if($conf === null) {
 				return $this->config;
-			} elseif(isset($this->config->{$value})) {
-				return $this->config->{$value};
 			}
-			return false;
+			
+			$paths = explode('.', $conf);
+			
+			$configValue = $this->config;
+			foreach ($paths as $path) {
+				if(!isset($configValue->$path)) {
+					Throw new Exception($conf.' is not a valid configuration');
+					return false;
+				}
+				$configValue = $configValue->$path;
+			}
+			
+			return $configValue;
+			
+			//return false;
 		}
 
 		public function setConfig($setting, $value) {
-			$this->config->{$setting} = $value;
+			$paths = explode('.', $setting);
+			$result = &$this->config;
+			
+			$countedPaths = count($paths)
+			foreach ($paths as $i => $path) {
+				if ($i < $countedPaths-1) {
+					if (!isset($result->$path)) {
+						$result->$path = new stdClass();
+					}
+					$result = &$result->$path;
+				} else {
+					$result->$path = $value;
+				}
+			}
 			return $this;
 		}
 
