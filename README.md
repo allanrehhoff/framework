@@ -26,9 +26,9 @@ Every theme file must have the extension *.tpl.php* this is to distinguish them 
 Every optional theme file can have a possible controller named by *animals.php*  
 
 The optional file *functions.php* is special, this file should be used to contain all custom functions used by your theme, and cannot have a controller file.    
-  
-header.tpl.php, footer.tpl.php, and other template files you plan to include in your optional theme files cannot have a controller file.
-  
+
+> header.tpl.php, footer.tpl.php, and other template files you plan to include in your optional theme files cannot have a controller file.
+
 
 ##Permalinks##
 Given the URL *yourdomain.tld/animals* will map to optional theme and controller files. If no matching files is found, a 404 page will be issued.  
