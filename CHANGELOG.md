@@ -8,6 +8,7 @@ v1.2
 - Updated Application\Initialize::config() method to reflect the new config file structure.
 - Updated the README description.
 - Added an error handler
+- Started writing some documentation, more to come.
 
 v1.1  
 - Implemented a namespacing structure.  
