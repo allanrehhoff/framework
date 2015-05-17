@@ -86,7 +86,7 @@ namespace Application;
 			$paths = explode('.', $setting);
 			$result = &$this->config;
 			
-			$countedPaths = count($paths)
+			$countedPaths = count($paths);
 			foreach ($paths as $i => $path) {
 				if ($i < $countedPaths-1) {
 					if (!isset($result->$path)) {
