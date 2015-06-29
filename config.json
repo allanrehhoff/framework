@@ -2,11 +2,11 @@
 	"theme": "default",
 	"base_title": "%s - ",
 	"default_route": "index",
-	"debug": true,
 	"database": {
 		"host": "localhost",
 		"username": "root",
 		"password": "somethingsecret",
-		"name": "local_db"
+		"name": "local_db",
+		"debug": true
 	}
 }

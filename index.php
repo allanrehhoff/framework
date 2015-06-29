@@ -8,7 +8,7 @@
 		$app->config('database.name'),
 		$app->config('database.username'),
 		$app->config('database.password'),
-		$app->config('debug')
+		$app->config('database.debug')
 	);
 
 	$controller = $app->getControllerPath($app->arg(0));
