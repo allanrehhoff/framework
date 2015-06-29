@@ -1,16 +1,14 @@
 <?php
-	require 'core.php';
-	
-	use \Application;
+	require 'preprocess.php';
 	
 	$app = new Application\Initialize();
 	
-	$db = new Application\SimpleDB(
-		$app->config('database.type'),
+	$db = new Application\DbConnection(
 		$app->config('database.host'),
+		$app->config('database.name'),
 		$app->config('database.username'),
 		$app->config('database.password'),
-		$app->config('database.name')
+		$app->config('debug')
 	);
 
 	$controller = $app->getControllerPath($app->arg(0));
