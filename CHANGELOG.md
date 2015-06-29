@@ -1,5 +1,10 @@
 #Changelog#
 
+v1.2.5
+- Renamed core.php to preprocess.php (For the glory of satan)  
+- Replaced the bloated DB class with a simplified version
+- Added debugging configuration
+
 v1.2
 - Added core.php
 - Cleaned up index.php a bit
