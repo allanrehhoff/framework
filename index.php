@@ -1,16 +1,8 @@
 <?php
 	require 'preprocess.php';
 	
-	$app = new Application\Initialize();
+	$app = new Core\Application();
 	
-	$db = new Application\DbConnection(
-		$app->config('database.host'),
-		$app->config('database.name'),
-		$app->config('database.username'),
-		$app->config('database.password'),
-		$app->config('database.debug')
-	);
-
 	$controller = $app->getControllerPath($app->arg(0));
 	$view = $app->getTemplatePath($app->arg(0));
 	
