@@ -14,11 +14,11 @@ custom web project.
 This is where all your themes goes (obviously).  
 
 Each theme has 5 core files  
-- header.tpl.php (Required)
-- footer.tpl.php (Required)
-- index.tpl.php (Required)
-- 404.tpl.php (Required)
-- functions.php (Optional)
+- header.tpl.php (Required)  
+- footer.tpl.php (Required)  
+- index.tpl.php (Required)  
+- 404.tpl.php (Required)  
+- functions.php (Optional)  
  
 It is assumed that your theme has at least the required files, everything else is considered an *optional file*
 
