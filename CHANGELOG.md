@@ -8,6 +8,8 @@ v1.3
 - Renamed Initialize class to Application  
 - Renamed Application namespace to Core  
 - Cleaned up index.php  
+- Updated database class to throw exceptions instead of trying to handle it's own errors  
+- ->execute() will now fetch as object instead of an associative array.
 
 v1.2.5
 - Renamed core.php to preprocess.php (For the glory of satan)  

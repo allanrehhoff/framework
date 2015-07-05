@@ -46,24 +46,18 @@ namespace Core;
 			return DbConnection::$singleton;
 		}
 
-		public function execute($sql, $args = null, $fetch_mode = PDO::FETCH_ASSOC) {
+		public function execute($sql, $args = null, $fetch_mode = PDO::FETCH_OBJECT) {
 			if ($this->_debug) {
 				$queryStart = microtime(true);
 			}
 			$stmt = $this->_db->prepare($sql);
 			$stmt->setFetchMode($fetch_mode);
 			if (gettype($stmt) != "object") {
-				die("SQL error: " . $sql);
+				Throw new Exception('SQL Error: '.$sql);
 			}
 			$stmt->execute($args);
 			if ($stmt->errorCode() != "00000") {
-				print_r($stmt->errorInfo());
-				debug_print_backtrace();
-				error_log(print_r($stmt->errorInfo(), true));
-				$e = new Exception();
-				error_log($e->getTraceAsString());
-				echo 'XXX';
-				exit;
+				Throw new Exception($stnt->errorCode().': '.$stmt->errorInfo());
 			}
 			if ($this->_debug) {
 				$queryInfo = array(

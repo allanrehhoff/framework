@@ -33,10 +33,17 @@ The optional file *functions.php* is special, this file should be used to contai
 
 ##Permalinks##
 Given the URL *yourdomain.tld/animals* will map to optional theme and controller files. If no matching files is found, a 404 page will be issued.  
-Every other parameter after that, is the *animals.tpl.php* files responsibility to handle properly.
+Every other parameter after that, is the *animals.tpl.php* files responsibility to handle properly.  
+You can get those arguments with $app->arg(index); failing to provide an index will give you the whole array of arguments.  
 
 The public folder is where you should keep your static content such as stylesheets, javascript and images. 
 
+Any links in your theme files should be passed through Helper::url() like so: Helper::url('/path/to/stylesheet.css'); To ensure that the file is being linked correct. (In most cases if the application resides in a subfolder)  
+
 ##Configuration##
 The configuration resides within the file config,json, and should contain nothing but configuration settings used by the application.  
-Configuration is loaded upon initialization, values can be accessed and changed using a dot syntax.
+Configuration is loaded upon initialization, values can be accessed and changed using a dot syntax. for instance $app->config->get('database.name');  
+
+Calling the ->save(); method will overwrite the current configuration file with current application settings.
+
+The base_title setting only supports one wildcard %s use ->setTitle($title) to set a dynamic title  
