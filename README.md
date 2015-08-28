@@ -50,7 +50,7 @@ Calling the **->save();** method will overwrite the current configuration file w
 The base_title setting only supports one wildcard %s use **->setTitle($title)** in your controller files to set a dynamic title.  
 
 ##Data Objects##
-For easier data manipulation data objects should extend the **Core\DBObject** class.  
+For easier data manipulation, data objects should extend the **Core\DBObject** class.  
 Every class that extends **Core\DBObject** must implement the following methods.  
 
 - getTableName(); // Table in which this data object should store data.  
