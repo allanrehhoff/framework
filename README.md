@@ -47,3 +47,9 @@ Configuration is loaded upon initialization, values can be accessed and changed 
 Calling the ->save(); method will overwrite the current configuration file with current application settings.
 
 The base_title setting only supports one wildcard %s use ->setTitle($title) to set a dynamic title  
+
+##Data Objects##
+For easier data manipulation extend the Core\DBObject class. 
+Create a new Data Object by giving it the id of your tables primary key, FX: $obj = new SampleObject(13);
+if you wish to change data use the ->set(array('collumn' => 'value'));
+This will allow you to call ->save(); on an object and thus saving the data to your database.

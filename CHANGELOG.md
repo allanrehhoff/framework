@@ -1,4 +1,10 @@
 #Changelog#
+v1.4
+- Introduced Core\DBObject class  
+- Introduced SampleObject class extends Core\DBObject  
+- Changed spl_autoloader variables to camelCasing  
+- Updated Documentation to reflect the new changes.  
+  
 v1.3 
 - Introduced Configuration class  
 - Introduced Exception handler  
