@@ -12,13 +12,13 @@
 	define('TAB', "\t");
 	define('BR', '<br />');
 
-	spl_autoload_register(function($class_name) {
-		$class_name = str_replace('\\', '/', $class_name);
+	spl_autoload_register(function($className) {
+		$className = str_replace('\\', '/', $className);
 		
-		$class_file = getcwd().'/resources/classes/'.$class_name.'.class.php';
+		$classFile = getcwd().'/resources/classes/'.$className.'.class.php';
 
-		if(file_exists($class_file)) {
-			include $class_file;
+		if(file_exists($classFile)) {
+			require_once $classFile;
 		}
 	});
 	
