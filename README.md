@@ -14,11 +14,11 @@ In short all this does is serve as a kickstart to get a good and readable code b
 This is where all your themes goes (obviously).  
 
 Each theme should contain of at least the following files.  
-- header.tpl.php (Required)  
-- footer.tpl.php (Required)  
-- index.tpl.php (Required)  
-- 404.tpl.php (Required)  
-- functions.php (Optional)  
+* header.tpl.php (Required)  
+* footer.tpl.php (Required)  
+* index.tpl.php (Required)  
+* 404.tpl.php (Required)  
+* functions.php (Optional)  
 
 It is assumed by the core that your theme has at least the required files, everything else is considered an *optional file*  
 
@@ -51,8 +51,8 @@ The base_title setting only supports one wildcard %s use **->setTitle($title)** 
 ##Data Objects##
 For easier data manipulation data objects should extend the **Core\DBObject** class.  
 Every class that extends **Core\DBObject** must implement the following methods.  
-- getTableName(); // Table in which this data object should store data.  
-- getKeyField(); // The primary key of the table in which this object stores data.  
+* getTableName(); // Table in which this data object should store data.  
+* getKeyField(); // The primary key of the table in which this object stores data.  
 
 Every data object take an optional parameter [(int) primary_key] upon instantiating,  
 identifying whether a new data object should be instantiated or an already existing row should be loaded from the table.  
