@@ -7,6 +7,6 @@
         "username": "root",
         "password": "somethingsecret",
         "name": "local_db",
-		"debug": false
+		    "debug": false
     }
 }
