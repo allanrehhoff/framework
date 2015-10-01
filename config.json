@@ -1,12 +1,12 @@
 {
     "theme": "default",
-    "base_title": "%s - ",
+    "base_title": "%s - default-title",
     "default_route": "index",
     "database": {
         "host": "localhost",
         "username": "root",
         "password": "somethingsecret",
         "name": "local_db",
-		    "debug": false
+		"debug": false
     }
 }
