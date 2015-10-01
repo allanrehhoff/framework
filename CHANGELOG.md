@@ -1,5 +1,5 @@
 #Changelog#
-v1.5
+v1.5  
 - Rewrote ->getTitle(); to support if ->setTitle(); was not called in a controller file.  
 - Removed ->setArgs(); method, arguments will now be set upon init.  
 - Exception handler should no longer generate invalid HTML. (WTF noob!)  
