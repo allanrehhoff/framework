@@ -39,7 +39,7 @@
 			$stack .= '<li>' . (isset($item['file']) ? $item['file'] : '<unknown file>') . ' line ' . (isset($item['line']) ? $item['line'] : '<unknown line>') . ' calling ' . $item['function'] . '()</li>' . "\n";
 		}
 		
-		echo '</ol>'."\n";
+		$stack .= '</ol>'."\n";
 		
 		echo '<pre style="">';
 		echo '<h1 style="margin:0px;">Uncaught Exception: '.get_class($exception).'</h1><br>';
