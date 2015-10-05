@@ -5,7 +5,7 @@
 	
 	$controller = $app->getControllerPath($app->arg(0));
 	$view = $app->getTemplatePath($app->arg(0));
-	
+
 	if(!is_file($controller) && !is_file($view)) {
 		$controller = $app->getControllerPath('404');
 		$view = $app->getTemplatePath('404');

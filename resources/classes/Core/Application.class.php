@@ -27,13 +27,13 @@ namespace Core;
 			$this->title = '';
 
 			$this->config = new ConfigurationParser();
-			$this->db = new \Database\DbConnection(
+			/*$this->db = new \Database\DbConnection(
 				$this->config->get("database.host"),
 				$this->config->get("database.name"),
 				$this->config->get("database.username"),
 				$this->config->get("database.password"),
 				$this->config->get("database.debug")
-			);
+			);*/
 
 			$themeFunctions = $this->getThemePath()."/functions.php";
 			if(is_file($themeFunctions)) {
@@ -77,11 +77,11 @@ namespace Core;
 		}
 		
 		public function getTemplatePath($tpl) {
-			return $this->getThemePath().'/'.$tpl.".tpl.php";
+			return $this->getThemePath().'/'.basename($tpl).".tpl.php";
 		}
 		
 		public function getControllerPath($ctrl) {
-			return $this->getApplicationPath()."/resources/controller/".$ctrl.".php";
+			return $this->getApplicationPath()."/resources/controller/".basename($ctrl).".php";
 		}
 		
 		public function getThemePath() {
