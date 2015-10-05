@@ -2,7 +2,7 @@
 namespace Core;
 	use Exception;
 	
-	class Configuration {
+	class ConfigurationParser {
 		private $parsedConfig;
 		private $configurationFile = 'config.json';
 		
