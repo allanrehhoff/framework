@@ -7,7 +7,13 @@ Options +FollowSymlinks
 </Files>
 
 RewriteEngine on
-RewriteBase /
+
+RewriteCond %{REQUEST_URI}::$1 ^(.*?/)(.*)::\2$
+RewriteRule ^(.*)$ - [E=BASE:%1]
+
+# If the above lines doesn't work, set the RewriteBase manually
+# Most likely if this application does not reside in the document root
+#RewriteBase /
 
 RewriteCond %{HTTP_HOST} ^www [NC]
 RewriteRule ^(.*)$ http://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
