@@ -3,8 +3,8 @@ namespace DOM;
 	use string;
 
 	class Document {
-		private $stylesheets = [];
-		private $javascript = [];
+		private $stylesheets = array();
+		private $javascript = array();
 
 		public function __construct() {
 			$this->stylesheets["all"] = [];

@@ -66,7 +66,7 @@ if you wish to change data use the **->set(array('column' => 'value'));**
 This will allow you to call **->save();** on an object and thus saving the data to your database.  
 The data object will be saved as a new row if the primary_key key parameter was not present upon instantiating.  
 
-##The Document class##  
+##The Document class##
 You have the option to add custom javascript and stylesheet files by using the **$app->document->addStylesheet();**, **$app->document->addJavascript();** methods.  
   
 If you desire to add custom media stylesheets make use of the second parameter **$media** in **->addStylesheet();**  
@@ -75,7 +75,7 @@ Same goes for the **->addJavascript();** method for other regions than the foote
 > *NOTE:*  
 > You must manually implement rendering of custom media stylesheets and custom region javascripts. as only the defaults will be rendered by the core files.  
   
-##Errors and Exceptions##  
+##Errors and Exceptions##
 The application comes bundled by default with an error handler and exception handler, those handlers will take care of generating a small stacktrace for debugging purposes.  
 Every PHP error is treated as a fatal error by the error handler, this is to prevent the next developer from banging his head into the table later on, as those errors should be dealt with during development.  
   

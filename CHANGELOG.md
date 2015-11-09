@@ -9,6 +9,8 @@ v1.6
 - Updated header.php and footer.php to include files added by \DOM\document class  
 - Updated README.md to reflect the new changes  
 - Removed error reporting check in exception handler, exceptions should always be handled  
+- Changed arrays to a more modern syntax  
+- Switched echo's to print in preprocess.php
   
 v1.5  
 - Rewrote ->getTitle(); to support if ->setTitle(); was not called in a controller file.  
