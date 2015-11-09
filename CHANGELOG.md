@@ -10,7 +10,10 @@ v1.6
 - Updated README.md to reflect the new changes  
 - Removed error reporting check in exception handler, exceptions should always be handled  
 - Changed arrays to a more modern syntax  
-- Switched echo's to print in preprocess.php
+- Switched echo's to print in preprocess.php  
+- Added error type detection to Core\ConfigurationParser.class.php  
+- Introduced custom exceptions to core classes  
+- PHP 5.3 is now the minimum required version  
   
 v1.5  
 - Rewrote ->getTitle(); to support if ->setTitle(); was not called in a controller file.  

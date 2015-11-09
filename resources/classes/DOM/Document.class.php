@@ -7,8 +7,8 @@ namespace DOM;
 		private $javascript = array();
 
 		public function __construct() {
-			$this->stylesheets["all"] = [];
-			$this->javascript["footer"] = [];
+			$this->stylesheets["all"] = array();
+			$this->javascript["footer"] = array();
 		}
 
 		public function addStylesheet($style, $media = "all") {

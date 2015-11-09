@@ -1,19 +1,4 @@
 <?php
-/***
-* Version 4
-* 2012-02-04
-* Added singleton
-* 
-* 2011-11-03
-* Retung id on insert
-* Changed function names
-* 
-* 2011-09-07:
-* Added debug stats
-* Started adding changes comments
-* Changed version numbering
-* Changed filename and class name casing
-***/
 namespace Database;
 	use PDO;
 	use Exception;
@@ -33,7 +18,7 @@ namespace Database;
 			try {
 				$this->_db = new PDO("mysql:host=".$host.";dbname=".$db_name, $user, $pass);
 			} catch (Exception $e) {
-				throw new Exception("Unable to connect to database.");
+				throw new DatabaseException("Unable to connect to database.");
 			}
 			$this->_db->query("SET NAMES utf8");
 			if ($this->_debug) {
@@ -53,11 +38,11 @@ namespace Database;
 			$stmt = $this->_db->prepare($sql);
 			$stmt->setFetchMode($fetch_mode);
 			if (gettype($stmt) != "object") {
-				throw new Exception('SQL Error: '.$sql);
+				throw new DatabaseException('SQL Error: '.$sql);
 			}
 			$stmt->execute($args);
 			if ($stmt->errorCode() != "00000") {
-				throw new Exception($stnt->errorCode().': '.$stmt->errorInfo());
+				throw new DatabaseException($stnt->errorCode().': '.$stmt->errorInfo());
 			}
 			if ($this->_debug) {
 				$queryInfo = array(
@@ -198,9 +183,9 @@ namespace Database;
 				}
 				$result["totalQueryTime"] = number_format($totalQueryTime, 3) . "secs";
 				$result["queries"] = $queryInfoList;
-				echo '<script>';
-				echo 'if (console) {console.log('.json_encode($result).');}';
-				echo '</script>';
+				print '<script>';
+				print 'if (console) {console.log('.json_encode($result).');}';
+				print '</script>';
 			}
 		}
 	}

@@ -5,20 +5,35 @@ namespace Core;
 	class ConfigurationParser {
 		private $parsedConfig;
 		private $configurationFile = 'config.json';
+		public $error = '';
 		
 		/*
 		* The constructor parses the configuration file.
 		*/
 		public function __construct() {
 			if(!is_file(getcwd().'/config.json')) {
-				Throw new Exception('configuration file could not be located');
+				throw new ConfigurationParserException('configuration file could not be located, please create config.json in current working directory.');
 			}
 			
 			$jsonConfig = file_get_contents(getcwd().'/'.$this->configurationFile);
 			$this->parsedConfig = json_decode($jsonConfig);
-			
-			if($this->parsedConfig == null) {
-				Throw new Exception('Unable to parse configuration file, perhaps malformed JSON?');
+
+			$jsonErrorMap = array(
+				JSON_ERROR_DEPTH => "Maximum stack depth exceeded.",
+				JSON_ERROR_STATE_MISMATCH => "Underflow or the modes mismatch.",
+				JSON_ERROR_CTRL_CHAR => "Unexpected control character found.",
+				JSON_ERROR_SYNTAX => "Syntax error, your configuration file contains malformed JSON.",
+				JSON_ERROR_UTF8 => "Your configuration file may me incorrectly encoded, it contains malformed UTF-8 characters."
+			);
+
+			$this->error = json_last_error();
+
+			if($this->error !== JSON_ERROR_NONE) {
+				if(isset($jsonErrorMap[$this->error])) {
+					throw new ConfigurationParserException("Unable to parse configuration file, ".$jsonErrorMap[$this->error]);
+				} else {
+					throw new ConfigurationParserException("Unable to parse configuration file, unknown error.");
+				}
 			}
 			
 			return $this;
@@ -38,7 +53,7 @@ namespace Core;
 			$configValue = $this->parsedConfig;
 			foreach ($paths as $path) {
 				if(!isset($configValue->$path)) {
-					Throw new Exception($conf.' is not a valid configuration');
+					throw new ConfigurationParserException($conf." is not a valid configuration");
 					return false;
 				}
 				$configValue = $configValue->$path;
@@ -55,7 +70,7 @@ namespace Core;
 			$configValue = $this->parsedConfig;
 			foreach ($paths as $path) {
 				if(!isset($configValue->$path)) {
-					Throw new Exception($conf.' is not a valid configuration');
+					throw new ConfigurationParserException($conf." is not a valid configuration");
 					return false;
 				}
 			}
@@ -115,6 +130,6 @@ namespace Core;
 		}
 		
 		public function __toString() {
-			return '<pre>'.print_r($this->get(), true).'</pre>';
+			return "<pre>".print_r($this->get(), true)."</pre>";
 		}
 	}

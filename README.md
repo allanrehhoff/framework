@@ -81,4 +81,6 @@ Every PHP error is treated as a fatal error by the error handler, this is to pre
   
 However if you do decide to annoy the next developer you can turn of error reporting entirely by using the **ini_* ** functions in **preprocess.php**
 
-The exception handler will still kill your application however, due exceptions being thrown around.
+The exception handler will still kill your application however, due exceptions being thrown around.  
+
+While developing your custom classes you should also create custom exceptions in the same namespace to match your classes.

@@ -1,4 +1,6 @@
 <?php
+	if(phpversion() <= 5.3) die("PHP => 5.3 is required for this framework to function properly.");
+
 	ini_set('display_errors', 'On');
 	error_reporting(E_ALL);
 
