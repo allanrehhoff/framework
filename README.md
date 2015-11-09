@@ -10,7 +10,7 @@ In short all this does is serve as a kickstart to get a readable and stable code
 
 #Documentation#
 
-##Themes##
+##Themes and controllers##
 This is where all your themes goes (obviously).  
 
 Each theme should contain at least the following files.  
@@ -21,13 +21,16 @@ Each theme should contain at least the following files.
 - 404.tpl.php (Required)  
 - functions.php (Optional)  
 
-It is assumed by the core that your theme has at least the required files, everything else is considered an *optional file*  
-  
-Every theme file must have the extension **.tpl.php** this is to distinguish them from their representative controller files.  
-Every optional theme file can have a possible controller matching the theme filename, while ending on the .php extension  
-  
+It is assumed by the core that your theme has at least the required files.  
+
 The optional file **functions.php** is somewhat special, this file should be used to contain all custom functions used by your theme, and cannot have a controller file.  
-While functions.php is an optional file, it is highly recommended that you make use of it.
+Every other file is considered a view file.  
+While **functions.php** is an optional file, it is highly recommended that you make use of it.  
+  
+Every view file must have the extension **.tpl.php** this is to distinguish them from their representative controller files.  
+
+Any view file can have a possible controller matching the base filename, while ending on the .php extension.  
+Additionally any controller is not required to have a matching view file, this behaviour was intended for ajax requests.  
 
 > *NOTE:*  
 > header.tpl.php, footer.tpl.php, and any other template files you plan to include or require in optional theme files cannot have a controller file.  
