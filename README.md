@@ -33,7 +33,7 @@ Any view file can have a possible controller matching the base filename, while e
 Additionally any controller is not required to have a matching view file, this behaviour was intended for ajax requests.  
 
 > *NOTE:*  
-> header.tpl.php, footer.tpl.php, and any other template files you plan to include or require in optional theme files cannot have a controller file.  
+> header.tpl.php, footer.tpl.php, and any other view files you plan to include or require in another view file cannot have a controller file.  
   
 Stylesheets and javascript for your theme should be placed in either /public/* or in your theme folder, depending on your use for that particular file.  
 However you should consider consulting other develoeprs on the project about your application structure on this matter.  
