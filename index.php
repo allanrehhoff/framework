@@ -6,6 +6,11 @@
 	$controller = $app->getControllerPath($app->arg(0));
 	$view = $app->getTemplatePath($app->arg(0));
 
+	$themeFunctions = $app->getThemePath()."/functions.php";
+	if(is_file($themeFunctions)) {
+		require $themeFunctions;
+	}
+
 	if(!is_file($controller) && !is_file($view)) {
 		$controller = $app->getControllerPath('404');
 		$view = $app->getTemplatePath('404');

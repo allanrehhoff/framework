@@ -3,7 +3,6 @@ namespace Core;
 	use Exception;
 	
 	class Application {
-		
 		protected $title;
 		public $args, $config, $db;
 		private $cwd;
@@ -34,11 +33,7 @@ namespace Core;
 				$this->config->get("database.password"),
 				$this->config->get("database.debug")
 			);
-
-			$themeFunctions = $this->getThemePath()."/functions.php";
-			if(is_file($themeFunctions)) {
-				include $themeFunctions;
-			}
+			$this->document = new \DOM\Document;
 			
 			$route = ((isset($_GET["route"])) && ($_GET["route"] != '')) ? $_GET["route"] : $this->config->get("default_route");
 

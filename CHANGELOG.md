@@ -1,4 +1,15 @@
 #Changelog#
+v1.6
+- Removed unused style in public/stylesheets/screen.css  
+- Introduced \DOM\document class consult README for documentation  
+- Moved functions.php include from \Core\Application.class.php to index.php  
+- jQuery is now included by default in functions.php  
+- screen.css is now included by default in functions.php  
+- Modified Helper::url(); to only include one beginning slash.  
+- Updated header.php and footer.php to include files added by \DOM\document class  
+- Updated README.md to reflect the new changes  
+- Removed error reporting check in exception handler, exceptions should always be handled  
+  
 v1.5  
 - Rewrote ->getTitle(); to support if ->setTitle(); was not called in a controller file.  
 - Removed ->setArgs(); method, arguments will now be set upon init.  
