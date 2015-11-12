@@ -4,7 +4,9 @@ v1.6.1
 - DOM\Document now uses a static context.  
 - Singleton class introduced.  
 - ConfigurationParser(); and DbConnection(); can now be accessed through Singleton.  
-- Renamed ->getConnection(); to getInstance(); in Database::DbConnection();
+- Renamed ->getConnection(); to getInstance(); in Database::DbConnection();  
+- E_WARNING and E_USER_WARNING are now treated as fatal.  
+- Minimum required version is now PHP 5.4  
 
 v1.6
 - Removed unused style in public/stylesheets/screen.css  

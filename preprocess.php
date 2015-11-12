@@ -1,5 +1,5 @@
 <?php
-	if(phpversion() <= 5.3) die("PHP => 5.3 is required for this framework to function properly.");
+	if(phpversion() < 5.4) die("PHP >= 5.4 is required for this framework to function properly.");
 
 	ini_set('display_errors', 'On');
 	error_reporting(E_ALL);
@@ -58,20 +58,20 @@
 			case E_STRICT       :
 			case E_NOTICE       :
 			case E_USER_NOTICE  :
-				// Spaghetti? not in this case..
-				$type = 'fatal notice';
+				$type = 'Fatal notice';
 				$fatal = true;
 				break;
 			case E_WARNING      :
 			case E_USER_WARNING :
-				$type = 'warning';
-				$fatal = false;
+				$type = 'Warning';
+				$fatal = true;
 				break;
 			default             :
-				$type = 'fatal error';
+				$type = 'Fatal error';
 				$fatal = true;
 				break;
 		}
+
 		
 		$trace = array_reverse(debug_backtrace());
 		array_pop($trace);
@@ -95,7 +95,7 @@
 		}
 		
 		if(ini_get('log_errors')) {
-			$items = array();
+			$items = [];
 			foreach($trace as $item) {
 				$items[] = (isset($item['file']) ? $item['file'] : '<unknown file>') . ' ' . (isset($item['line']) ? $item['line'] : '<unknown line>') . ' calling ' . $item['function'] . '()';
 			}
