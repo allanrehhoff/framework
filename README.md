@@ -65,8 +65,7 @@ Database queries can be executed through **$app->db->query();**
 For instance you could do:   
 
 ```
-#PHP
-*$app->db->query("UPDATE animals SET `extinct` = :value WHERE name = :name", ["extinct" => true, "name" => "Asian Rhino"])*
+$app->db->query("UPDATE animals SET `extinct` = :value WHERE name = :name", ["extinct" => true, "name" => "Asian Rhino"])
 ```   
 
 > *NOTE:*  
