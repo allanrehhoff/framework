@@ -20,7 +20,7 @@
 		$classFile = getcwd().'/resources/classes/'.$className.'.class.php';
 
 		if(file_exists($classFile)) {
-			require_once $classFile;
+			require $classFile;
 		}
 	});
 	
