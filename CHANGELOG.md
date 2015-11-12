@@ -1,4 +1,11 @@
 #Changelog#
+v1.6.1
+- Configuration paster should no longer var_dump(); after saving content. (was I drunk?)  
+- DOM\Document now uses a static context.  
+- Singleton class introduced.  
+- ConfigurationParser(); and DbConnection(); can now be accessed through Singleton.  
+- Renamed ->getConnection(); to getInstance(); in Database::DbConnection();
+
 v1.6
 - Removed unused style in public/stylesheets/screen.css  
 - Introduced \DOM\document class consult README for documentation  

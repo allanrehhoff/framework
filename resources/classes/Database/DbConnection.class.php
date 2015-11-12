@@ -4,7 +4,7 @@ namespace Database;
 	use Exception;
 
 	class DbConnection {
-		private static $singleton;
+		private static $connection;
 
 		private $_db;
 
@@ -24,19 +24,19 @@ namespace Database;
 			if ($this->_debug) {
 				$this->_pageStart = microtime(true);
 			}
-			DbConnection::$singleton = $this;
+			DbConnection::$connection = $this;
 		}
 		
-		public static function getConnection() {
-			return DbConnection::$singleton;
+		public static function getInstance() {
+			return DbConnection::$connection;
 		}
 
-		public function execute($sql, $args = null, $fetch_mode = PDO::FETCH_OBJECT) {
+		public function execute($sql, $args = null, $fetchMode = PDO::FETCH_OBJECT) {
 			if ($this->_debug) {
 				$queryStart = microtime(true);
 			}
 			$stmt = $this->_db->prepare($sql);
-			$stmt->setFetchMode($fetch_mode);
+			$stmt->setFetchMode($fetchMode);
 			if (gettype($stmt) != "object") {
 				throw new DatabaseException('SQL Error: '.$sql);
 			}

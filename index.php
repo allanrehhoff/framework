@@ -1,8 +1,10 @@
 <?php
 	require 'preprocess.php';
 	
-	$app = new Core\Application();
-	
+	use Core\Application as Application;
+
+	$app = new Application();
+
 	$controller = $app->getControllerPath($app->arg(0));
 	$view = $app->getTemplatePath($app->arg(0));
 

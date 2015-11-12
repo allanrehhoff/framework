@@ -1,29 +1,28 @@
 <?php
 namespace DOM;
-	use string;
 
 	class Document {
-		private $stylesheets = array();
-		private $javascript = array();
+		private static $stylesheets = [];
+		private static $javascript = [];
 
 		public function __construct() {
-			$this->stylesheets["all"] = array();
-			$this->javascript["footer"] = array();
+			$stylesheets["all"] = [];
+			$javascript["footer"] = [];
 		}
 
-		public function addStylesheet($style, $media = "all") {
-			$this->stylesheets[$media][] = $style;
+		public static function addStylesheet($style, $media = "all") {
+			self::$stylesheets[$media][] = $style;
 		}
 
-		public function addJavascript($script, $region = "footer") {
-			$this->javascript[$region][] = $script;
+		public static function addJavascript($script, $region = "footer") {
+			self::$javascript[$region][] = $script;
 		}
 
-		public function getStylesheets($media = "all") {
-			return $this->stylesheets[$media];
+		public static function getStylesheets($media = "all") {
+			return self::$stylesheets[$media];
 		}
 
-		public function getJavascript($region = "footer") {
-			return $this->javascript[$region];
+		public static function getJavascript($region = "footer") {
+			return self::$javascript[$region];
 		}
 	}

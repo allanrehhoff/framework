@@ -8,9 +8,7 @@ namespace Core;
 		private $cwd;
 		
 		public function __construct($init = true) {
-			if($init === true) {
-				$this->initialize();
-			}
+			$this->initialize();
 		}
 		
 		public function __toString() {
@@ -33,6 +31,7 @@ namespace Core;
 				$this->config->get("database.password"),
 				$this->config->get("database.debug")
 			);
+
 			$this->document = new \DOM\Document;
 			
 			$route = ((isset($_GET["route"])) && ($_GET["route"] != '')) ? $_GET["route"] : $this->config->get("default_route");

@@ -33,7 +33,7 @@ Any view file can have a possible controller matching the base filename, while e
 Additionally any controller is not required to have a matching view file, this behaviour was intended for ajax requests.  
 
 > *NOTE:*  
-> header.tpl.php, footer.tpl.php, and any other view files you plan to include or require in another view file cannot have a controller file.  
+> header.tpl.php, footer.data.php, and any other view files you plan to include or require in another view file cannot have a controller file.  
   
 Stylesheets and javascript for your theme should be placed in either /public/* or in your theme folder, depending on your use for that particular file.  
 However you should consider consulting other develoeprs on the project about your application structure on this matter.  
@@ -51,13 +51,31 @@ Any links in your theme files should be passed through **Helper::url()** like so
 The configuration resides within the file **config,json**, and should contain nothing but configuration settings used by the application.  
 Configuration is loaded upon initialization, values can be accessed and changed using a dot syntax. for instance **$app->config->get('database.name');**  
 You can dynamically change a configuration setting using the **->set('database.username', 'root')**  
-Calling the **->save();** method will overwrite the current configuration file with current application settings.
+Calling the **->save();** method will overwrite the current configuration file and write current configuration settings to **config.json**  
 
 The base_title setting only supports one wildcard %s use **->setTitle($title)** in your controller files to set a dynamic title.  
 
+> *NOTE:*  
+> Configuration can be accessed in every scope as such \Core\ConfigurationParser::getInstance();  
+> This is intended for use inside scopes such as functions and classes.  
+
+##Database##
+This section assumes you have basic knowledge of PDO.  
+Database queries can be executed through **$app->db->query();**  
+For instance you could do:   
+
+```
+#PHP
+*$app->db->query("UPDATE animals SET `extinct` = :value WHERE name = :name", ["extinct" => true, "name" => "Asian Rhino"])*
+```   
+
+> *NOTE:*  
+> Database can be accessed in every scope as such \Database\DbConnection::getInstance();  
+> This is intended for use inside scopes such as functions and classes.  
+
 ##Data Objects##
 For easier data manipulation, data objects should extend the **Core\DBObject** class.  
-Every class that extends **Core\DBObject** must implement the following methods.  
+Every class that extends **\Core\DBObject** must implement the following methods.  
 
 - getTableName(); // Table in which this data object should store data.  
 - getKeyField(); // The primary key of the table in which this object stores data.  
@@ -70,10 +88,13 @@ This will allow you to call **->save();** on an object and thus saving the data 
 The data object will be saved as a new row if the primary_key key parameter was not present upon instantiating.  
 
 ##The Document class##
-You have the option to add custom javascript and stylesheet files by using the **$app->document->addStylesheet();**, **$app->document->addJavascript();** methods.  
+In the DOM namespace you'll find the Document class, this can be used to add stylesheets and javscript to the page.  
+Do either of the following to achieve this.  
+**DOM\Document::addStylesheet();**, **DOM\Document::addJavascript();** methods.  
+ressources are rendered in the same order they are added  
   
-If you desire to add custom media stylesheets make use of the second parameter **$media** in **->addStylesheet();**  
-Same goes for the **->addJavascript();** method for other regions than the footer.  
+If you desire to add custom media stylesheets make use of the second parameter **$media** in **Document::addStylesheet();**  
+Same goes for the **Document::addJavascript();** method for other regions than the footer.  
 
 > *NOTE:*  
 > You must manually implement rendering of custom media stylesheets and custom region javascripts. as only the defaults will be rendered by the core files.  

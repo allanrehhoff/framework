@@ -2,7 +2,7 @@
 namespace Core;
 	use Exception;
 	
-	class ConfigurationParser {
+	class ConfigurationParser extends \Singleton {
 		private $parsedConfig;
 		private $configurationFile = 'config.json';
 		public $error = '';
@@ -11,6 +11,10 @@ namespace Core;
 		* The constructor parses the configuration file.
 		*/
 		public function __construct() {
+			$this->parseConfig();
+		}
+
+		private function parseConfig() {
 			if(!is_file(getcwd().'/config.json')) {
 				throw new ConfigurationParserException('configuration file could not be located, please create config.json in current working directory.');
 			}
@@ -35,10 +39,8 @@ namespace Core;
 					throw new ConfigurationParserException("Unable to parse configuration file, unknown error.");
 				}
 			}
-			
-			return $this;
 		}
-		
+
 		/*
 		* Gets a single configuration value.
 		* If no configuration setting name is provided, 
@@ -111,7 +113,7 @@ namespace Core;
 		
 		public function save() {
 			$jsonConfig = json_encode($this->get(), JSON_PRETTY_PRINT);
-			var_dump(file_put_contents(getcwd().'/'.$this->configurationFile, $jsonConfig));
+			file_put_contents(getcwd().'/'.$this->configurationFile, $jsonConfig);
 		}
 		
 		/*
