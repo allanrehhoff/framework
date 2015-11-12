@@ -56,21 +56,34 @@ Calling the **->save();** method will overwrite the current configuration file a
 The base_title setting only supports one wildcard %s use **->setTitle($title)** in your controller files to set a dynamic title.  
 
 > *NOTE:*  
-> Configuration can be accessed in every scope as such \Core\ConfigurationParser::getInstance();  
-> This is intended for use inside scopes such as functions and classes.  
+> The ConfigurationParser class implements a singleton pattern through \Core\ConfigurationParser::getInstance();  
 
 ##Database##
 This section assumes you have basic knowledge of PDO.  
 Database queries can be executed through **$app->db->query();**  
-For instance you could do:   
 
 ```
-<?php $app->db->query("UPDATE animals SET `extinct` = :value WHERE name = :name", ["extinct" => true, "name" => "Asian Rhino"]); ?>
+<?php $app->db->query("UPDATE animals SET `extinct` = :value WHERE name = :name", ["value" => true, "name" => "Asian Rhino"]); ?>
 ```   
 
+This could also be written as follows:  
+```
+<?php $app->db->update("animals", ["extinxt" => true], ["name" => "Asian Rhino"]); ?>
+```
+
+Queries with a return value will be fetched as objects, for instance:  
+```
+<?php $app->db->select("animals"); ?>
+```   
+
+The exceptions to when an object is returned is the **->queryValue**, **->count()** and **->selectValue()** which reacts to a single cell value.
+```
+<?php $app->db->selectValue("last_access", "users", ["user_id" => 1]); ?>
+```
+Will fetch the stored value for a given row in a given table.  
+
 > *NOTE:*  
-> Database can be accessed in every scope as such \Database\DbConnection::getInstance();  
-> This is intended for use inside scopes such as functions and classes.  
+> The DbConnection class simulates a singleton pattern through \Database\DbConnection::getInstance();  
 
 ##Data Objects##
 For easier data manipulation, data objects should extend the **Core\DBObject** class.  
@@ -106,4 +119,41 @@ However if you do decide to annoy the next developer you can turn of error repor
 
 The exception handler will still kill your application however, due exceptions being thrown around.  
 
-While developing your custom classes you should also create custom exceptions in the same namespace to match your classes.
+While developing your custom classes you should also create custom exceptions in the same namespace to match your classes.  
+
+##Singletons##
+The singleton pattern is used to restrict the instantiation of a class to a single object, which can be useful when only one object is required across the system.  
+
+Singletons are designed to ensure there is a single (hence the name singleton) class instance and that is global point of access for it, along with this single instance we have global access and lazy initialization.  
+
+Simply extend the Singleton class to use this pattern.
+```
+<?php
+	class Animal extends Singleton {
+		private $roar;
+
+		public function __construct() {
+			$this->roar = "Meow";
+		}
+
+		public function getRoar() {
+			return $this->roar;
+		}
+	}
+?>
+```
+And a usage example
+```
+<?php
+	$animal = new Animal();
+
+	function meow() {
+		return Animal::getInstance()->getRoar();
+	}
+
+	print meow();
+?>
+```
+
+> *NOTE:*  
+> Singletons was intended for use inside scopes such as functions and classes.  
