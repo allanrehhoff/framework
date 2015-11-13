@@ -1,9 +1,7 @@
 <?php
 	require 'preprocess.php';
-	
-	use Core\Application as Application;
 
-	$app = new Application();
+	$app = new \Core\Application();
 
 	$controller = $app->getControllerPath($app->arg(0));
 	$view = $app->getTemplatePath($app->arg(0));
