@@ -1,5 +1,5 @@
 <?php
-namespace Database;
+namespace Database {	
 	use PDO;
 	use Exception;
 
@@ -189,3 +189,4 @@ namespace Database;
 			}
 		}
 	}
+}

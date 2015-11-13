@@ -1,5 +1,5 @@
 <?php
-namespace Core;
+namespace Core {
 	use Exception;
 	
 	class ConfigurationParser extends \Singleton {
@@ -135,3 +135,4 @@ namespace Core;
 			return "<pre>".print_r($this->get(), true)."</pre>";
 		}
 	}
+}

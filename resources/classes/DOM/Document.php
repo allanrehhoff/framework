@@ -1,6 +1,5 @@
 <?php
-namespace DOM;
-
+namespace DOM {	
 	class Document {
 		private static $stylesheets = [];
 		private static $javascript = [];
@@ -26,3 +25,4 @@ namespace DOM;
 			return self::$javascript[$region];
 		}
 	}
+}

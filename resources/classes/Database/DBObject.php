@@ -1,6 +1,5 @@
 <?php
-namespace Database;
-
+namespace Database {
 	abstract class DBObject {
 		private $key;
 		protected $data;
@@ -94,5 +93,5 @@ namespace Database;
 		public function __get($name) {
 			return $this->data[$name];
 		}
-
 	}
+}

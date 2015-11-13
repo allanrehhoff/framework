@@ -1,5 +1,5 @@
 <?php
-namespace Core;
+namespace Core {
 	use Exception;
 	
 	class Application {
@@ -24,13 +24,13 @@ namespace Core;
 			$this->title = '';
 
 			$this->config = new ConfigurationParser();
-			$this->db = new \Database\DbConnection(
+			/*$this->db = new \Database\DbConnection(
 				$this->config->get("database.host"),
 				$this->config->get("database.name"),
 				$this->config->get("database.username"),
 				$this->config->get("database.password"),
 				$this->config->get("database.debug")
-			);
+			);*/
 
 			$this->document = new \DOM\Document;
 			
@@ -82,4 +82,4 @@ namespace Core;
 			return $this->getApplicationPath()."/resources/themes/".$this->config->get("theme");
 		}
 	}
-?>
+}
