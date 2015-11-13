@@ -17,7 +17,7 @@
 	spl_autoload_register(function($className) {
 		$className = str_replace('\\', '/', $className);
 		
-		$classFile = getcwd().'/resources/classes/'.$className.'.php';
+		$classFile = getcwd().'/app/classes/'.$className.'.class.php';
 
 		if(file_exists($classFile)) {
 			require $classFile;
