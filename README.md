@@ -157,3 +157,8 @@ And a usage example
 
 > *NOTE:*  
 > Singletons was intended for use inside scopes such as functions and classes.  
+
+##Autoloading classes##
+Autoloading is a mechanism which requires class, interface and trait definitions (from here on, referenced as instances) on demand.  
+Files containing the definition of an instance must share name with the instance name, and end on **.php**.  
+Additionally instances residing within a namespace must be located within a folder structure matching the the namespacing structure (relative from classes/ folder).  

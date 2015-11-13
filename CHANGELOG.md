@@ -6,6 +6,7 @@ v1.6.1
 - ConfigurationParser(); and DbConnection(); can now be accessed through Singleton.  
 - Renamed ->getConnection(); to getInstance(); in Database::DbConnection();  
 - E_WARNING and E_USER_WARNING are now treated as fatal.  
+- Classes no longer require a .class.php extension.  
 - Minimum required version is now PHP 5.4  
 
 v1.6
