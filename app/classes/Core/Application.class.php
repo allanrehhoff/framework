@@ -5,6 +5,8 @@ namespace Core {
 	/**
 	* The mmain class for your application.
 	* Core\Application has the responsibility of bootstrapping the framework.
+	* Consult the README file for usage examples throughtout the framework.
+	* @see README.md
 	*/
 	class Application {
 		protected $title;
@@ -17,6 +19,7 @@ namespace Core {
 		
 		/**
 		* Use this method to debug your runtime configurations and arguments within the framework.
+		* @return string
 		*/
 		public function __toString() {
 			$ob = ob_start();

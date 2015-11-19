@@ -2,18 +2,27 @@
 namespace Core {
 	use Exception;
 	
+	/**
+	* Manipulates the configuration file.
+	* @extends Singleton
+	*/
 	class ConfigurationParser extends \Singleton {
 		private $parsedConfig;
 		private $configurationFile = 'config.json';
 		public $error = '';
 		
-		/*
-		* The constructor parses the configuration file.
+		/**
+		* The constructor starts parsing of the configuration file.
 		*/
 		public function __construct() {
 			$this->parseConfig();
 		}
 
+		/**
+		* The actual parsing.
+		* @throws ConfigurationParserException
+		* @return void
+		*/
 		private function parseConfig() {
 			if(!is_file(getcwd().'/config.json')) {
 				throw new ConfigurationParserException('configuration file could not be located, please create config.json in current working directory.');
@@ -41,10 +50,13 @@ namespace Core {
 			}
 		}
 
-		/*
+		/**
 		* Gets a single configuration value.
-		* If no configuration setting name is provided, 
-		* it will return the parsed configuration
+		* If no configuration setting name is provided, the whole configuration object will be returned.
+		* Sub-values can be accessed using a dot syntax.
+		* @param (string) $conf The name of the configuration to get value from.
+		* @return mixed, false on failure.
+		* @throws ConfigurationParserException
 		*/
 		public function get($conf = null) {
 			if($conf === null) {
@@ -64,8 +76,11 @@ namespace Core {
 			return $configValue;
 		}
 		
-		/*
+		/**
 		* Remove a configuration value
+		* @param (string) $conf Key of the setting to delete.
+		* @throws ConfigurationParserException
+		* @return self
 		*/
 		public function delete($conf) {
 			$paths = explode('.', $conf);
@@ -82,16 +97,19 @@ namespace Core {
 			return $this;
 		}
 		
-		/*
-		* Alias for ->delete() I found myself typing this alot..
+		/**
+		* Alias for ConfigurationParser::delete()
+		* @return value of onfigurationParser::delete()
 		*/
-		
 		public function remove($conf) {
-			$this->delete($conf);
+			return $this->delete($conf);
 		}
 		
-		/*
+		/**
 		* Dynamically set a configuration setting to a given value.
+		* @param $setting Key of the setting.
+		* @param $value Value of $setting
+		* @return self
 		*/
 		public function set($setting, $value) {
 			$paths = explode('.', $setting);
@@ -111,26 +129,37 @@ namespace Core {
 			return $this;
 		}
 		
+		/**
+		* Permanently save the current runtime configuration.
+		* @return self
+		*/
 		public function save() {
 			$jsonConfig = json_encode($this->get(), JSON_PRETTY_PRINT);
 			file_put_contents(getcwd().'/'.$this->configurationFile, $jsonConfig);
+			return $this;
 		}
 		
-		/*
+		/**
 		* I have no idea how this reacts if $user->does->this = 'stupid';
-		* But doing so is discouraged, and at some point I might introduce Exceptions here,
+		* But doing so is discouraged, and at some point I might introduce Exceptions here.
+		* @return value of ConfigurationParser::set();
 		*/
 		public function __set($name, $value) {
-			$this->set($name, $value);
+			return $this->set($name, $value);
 		}
 		
-		/*
+		/**
 		* Again please use the ->get() and ->set() methods
+		* @see ConfigurationParser::__set();
+		* @return mixed
 		*/
 		public function __get($name) {
 			return $this->get($name);
 		}
 		
+		/**
+		* Get debug information by printing the configuration object.
+		*/
 		public function __toString() {
 			return "<pre>".print_r($this->get(), true)."</pre>";
 		}
