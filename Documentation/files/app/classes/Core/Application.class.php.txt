@@ -9,9 +9,7 @@ namespace Core {
 	* @see README.md
 	*/
 	class Application {
-		protected $title;
-		public $args, $config, $db;
-		private $cwd;
+		private $cwd, $args;
 		
 		public function __construct() {
 			$this->initialize();
@@ -34,23 +32,19 @@ namespace Core {
 		* @return self
 		*/
 		private function initialize() {
+			\Registry::set("config", new \Core\ConfigurationParser());
+			\Registry::set("database", new \Database\DbConnection(
+				\Registry::get("config")->get("database.host"),
+				\Registry::get("config")->get("database.name"),
+				\Registry::get("config")->get("database.username"),
+				\Registry::get("config")->get("database.password"),
+				\Registry::get("config")->get("database.debug")
+			));
+			\Registry::set("document", new \DOM\Document);
+			
 			$this->cwd = getcwd();
-			
-			$this->title = '';
 
-			$this->config = new ConfigurationParser();
-			$this->db = new \Database\DbConnection(
-				$this->config->get("database.host"),
-				$this->config->get("database.name"),
-				$this->config->get("database.username"),
-				$this->config->get("database.password"),
-				$this->config->get("database.debug")
-			);
-
-			$this->document = new \DOM\Document;
-			
-			$route = ((isset($_GET["route"])) && ($_GET["route"] != '')) ? $_GET["route"] : $this->config->get("default_route");
-
+			$route = ((isset($_GET["route"])) && ($_GET["route"] != '')) ? $_GET["route"] : \Registry::get("config")->get("default_route");
 			$this->args = explode('/', ltrim($route, '/'));
 			
 			return $this;
@@ -70,29 +64,6 @@ namespace Core {
 				return $this->args[$argIndex];
 			}
 			return false;
-		}
-		
-		/**
-		* Set a dynamic value for the title tag.
-		* @param (string) $title a title to display in a template file.
-		* @return self
-		*/
-		public function setTitle($title) {
-			$this->title = $title;
-			return $this;
-		}
-
-		/**
-		* Get the current page title to be displayed.
-		* @return string
-		*/
-		public function getTitle() {
-			if(trim($this->title) != '') {
-				$title = sprintf($this->config->get("base_title"), $this->title);
-			} else {
-				$title = sprintf($this->config->get("base_title"), str_replace("- ", '', $this->config->get("base_title")));
-			}
-			return $title;
 		}
 
 		/**
@@ -120,7 +91,7 @@ namespace Core {
 		* @return string
 		*/
 		public function getControllerPath($ctrl) {
-			return $this->getApplicationPath()."/resources/controller/".basename($ctrl).".php";
+			return $this->getApplicationPath()."/app/controller/".basename($ctrl).".php";
 		}
 		
 		/**
@@ -129,7 +100,7 @@ namespace Core {
 		* @return string
 		*/
 		public function getThemePath() {
-			return $this->getApplicationPath()."/resources/themes/".$this->config->get("theme");
+			return $this->getApplicationPath()."/app/themes/".\Registry::get("config")->get("theme");
 		}
 	}
 }
