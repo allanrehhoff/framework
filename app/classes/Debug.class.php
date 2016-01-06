@@ -1,8 +1,16 @@
 <?php
 	class Debug {
+		/**
+		* Hwlpa you debug your application.
+		*/
 		public function __construct() {
 		}
 		
+		/**
+		* Pretty print almost any variable in a human readable format.
+		* @param (mixed) $stuff A variable to debug
+		* @param (boolean) $exit whether to exit the PHP process after printing debug information.
+		*/
 		public static function pre($stuff, $exit = false) {
 			echo "<pre style='background:#FFD; clear:both;'>";
 			if(count($stuff) > 0 && $stuff !== false) {
@@ -15,6 +23,9 @@
 			if($exit) exit;
 		}
 		
+		/**
+		* Get an easily readable tree of previously called functions.
+		*/
 		public static function getCaller() {
 			$c = '';
 			$file = '';

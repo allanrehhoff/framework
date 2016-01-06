@@ -30,6 +30,8 @@ namespace DOM {
 		* Add a stylesheet to be linked.
 		* @return voidDocument
 		* @param (string) $style Valid path to the stylesheet. Watch out for casing and whitespaces when using Document::getStylesheets();
+		* @param (string) $media Media query this stylesheet should apply to.
+		* @return void
 		*/
 		public function addStylesheet($style, $media = "all") {
 			$this->stylesheets[$media][] = $style;
