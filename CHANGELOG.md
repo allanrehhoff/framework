@@ -1,4 +1,11 @@
 #Changelog#
+v1.7
+- Introduced Registry class to hold all the variables being created within the application.
+- Updated Application class to reflect the new Registry
+- Removed helper class.
+- Moved Helper::url to DOM\Document::url
+- Updated documentation
+
 v1.6.1
 - Configuration paster should no longer var_dump(); after saving content. (was I drunk?)  
 - DOM\Document now uses a static context.  

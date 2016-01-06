@@ -4,6 +4,8 @@
 This is not what you'd typically associate with a fully functional MVC framework, and that is intentional.  
 The intention for this is to prevent the developer from writing complete spaghetti, while being leightweight, scaleable and portable.  
 
+I also aim to keep this framework structured, everything has it's place, no variables in random places.  
+
 Therefore this framework will not be bundled with bloat like modules and libraries more than absolutely necessary.  
 
 In short all this does is serve as a kickstart to get a readable and stable code base when starting up a new custom web project.
@@ -45,7 +47,11 @@ You can get those arguments with $app->arg(index); failing to provide an index w
 
 The public folder is where you should keep your static content such as stylesheets, javascript and images.
 
-Any links in your theme files should be passed through **Helper::url()** like so: **Helper::url('/path/to/stylesheet.css');** To ensure that the file is being linked correct. (In most cases if the application resides in a subfolder)  
+Any links in your theme files should be passed through **\DOM\Document::url()** like so: 
+```
+<?php Registry::get("document")->url('/path/to/stylesheet.css'); ?>
+```
+This ensures the file is being linked correct. (In most cases if the application resides in a subfolder)  
 
 ##Configuration##
 The configuration resides within the file **config,json**, and should contain nothing but configuration settings used by the application.  
@@ -60,25 +66,30 @@ The base_title setting only supports one wildcard %s use **->setTitle($title)** 
 
 ##Database##
 This section assumes you have basic knowledge of PDO.  
-Database queries can be executed through **$app->db->query();**  
+There are multiple ways of querying the database. (yes working around this is on my TODO)  
+
+1. **Database\DbConnection::getInstance()->query()**  
+2. **Registry::get("database")->query()**  
+
+Whichever you prefer is up to you.  
 
 ```
-<?php $app->db->query("UPDATE animals SET `extinct` = :value WHERE name = :name", ["value" => true, "name" => "Asian Rhino"]); ?>
+<?php Database\DbConnection::getInstance()->query("UPDATE animals SET `extinct` = :value WHERE name = :name", ["value" => true, "name" => "Asian Rhino"]); ?>
 ```   
 
 This could also be written as follows:  
 ```
-<?php $app->db->update("animals", ["extinxt" => true], ["name" => "Asian Rhino"]); ?>
+<?php Database\DbConnection::getInstance()->update("animals", ["extinxt" => true], ["name" => "Asian Rhino"]); ?>
 ```
 
 Queries with a return value will be fetched as objects, for instance:  
 ```
-<?php $app->db->select("animals"); ?>
+<?php Database\DbConnection::getInstance()->select("animals"); ?>
 ```   
 
 The exceptions to when an object is returned is the **->queryValue**, **->count()** and **->selectValue()** which reacts to a single cell value.
 ```
-<?php $app->db->selectValue("last_access", "users", ["user_id" => 1]); ?>
+<?php Database\DbConnection::getInstance()->selectValue("last_access", "users", ["user_id" => 1]); ?>
 ```
 Will fetch the stored value for a given row in a given table.  
 
@@ -86,8 +97,8 @@ Will fetch the stored value for a given row in a given table.
 > The DbConnection class simulates a singleton pattern through \Database\DbConnection::getInstance();  
 
 ##Data Objects##
-For easier data manipulation, data objects should extend the **Core\DBObject** class.  
-Every class that extends **\Core\DBObject** must implement the following methods.  
+For easier data manipulation, data objects should extend the **\Database\DBObject** class.  
+Every class that extends **\Database\DBObject** must implement the following methods.  
 
 - getTableName(); // Table in which this data object should store data.  
 - getKeyField(); // The primary key of the table in which this object stores data.  
@@ -102,11 +113,14 @@ The data object will be saved as a new row if the primary_key key parameter was 
 ##The Document class##
 In the DOM namespace you'll find the Document class, this can be used to add stylesheets and javscript to the page.  
 Do either of the following to achieve this.  
-**DOM\Document::addStylesheet();**, **DOM\Document::addJavascript();** methods.  
+**\DOM\Document::addStylesheet();**, **\DOM\Document::addJavascript();** methods.  
 ressources are rendered in the same order they are added  
   
 If you desire to add custom media stylesheets make use of the second parameter **$media** in **Document::addStylesheet();**  
 Same goes for the **Document::addJavascript();** method for other regions than the footer.  
+
+The document class also takes care of displaying the page title in **header.tpl.php** using the method **->getTitle()**    
+Set the page title with the **->setTitle()** method  
 
 > *NOTE:*  
 > You must manually implement rendering of custom media stylesheets and custom region javascripts. as only the defaults will be rendered by the core files.  

@@ -1,4 +1,4 @@
-	<?php foreach(DOM\Document::getJavascript() as $script): ?>
+	<?php foreach(Registry::get("document")->getStylesheets() as $script): ?>
 		<script type="text/javascript" src="<?php print $script; ?>"></script>
 	<?php endforeach; ?>
 	</body>

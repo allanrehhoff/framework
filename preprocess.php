@@ -18,7 +18,6 @@
 		$className = str_replace('\\', '/', $className);
 		
 		$classFile = getcwd().'/app/classes/'.$className.'.class.php';
-
 		if(file_exists($classFile)) {
 			require $classFile;
 		}
