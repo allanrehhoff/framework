@@ -10,3 +10,4 @@
 		public function __construct() {
 
 		}
+	}

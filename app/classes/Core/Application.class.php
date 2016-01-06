@@ -33,13 +33,13 @@ namespace Core {
 		*/
 		private function initialize() {
 			\Registry::set("config", new \Core\ConfigurationParser());
-			/*\Registry::set("database", new \Database\DbConnection(
+			\Registry::set("database", new \Database\DbConnection(
 				\Registry::get("config")->get("database.host"),
 				\Registry::get("config")->get("database.name"),
 				\Registry::get("config")->get("database.username"),
 				\Registry::get("config")->get("database.password"),
 				\Registry::get("config")->get("database.debug")
-			));*/
+			));
 			\Registry::set("document", new \DOM\Document);
 			
 			$this->cwd = getcwd();
