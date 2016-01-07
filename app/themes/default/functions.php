@@ -4,7 +4,7 @@
 	* Before declaring any functions in this file, consider creating them within a class instead.
 	*/
 	
-	Registry::get("document")->addJavascript( Registry::get("document")->url("/public/stylesheets/jquery-1.11.1.min.js") );
-	Registry::get("document")->addJavascript( Registry::get("document")->url("/test/test.hs"), "head");
-	Registry::get("document")->addStylesheet( Registry::get("document")->url("/public/stylesheets/screen.css") );
+	\DOM\Document::addJavascript( \DOM\Document::url("/public/stylesheets/jquery-1.11.1.min.js") );
+	\DOM\Document::addJavascript( \DOM\Document::url("/test/test.hs"), "head");
+	\DOM\Document::addStylesheet( \DOM\Document::url("/public/stylesheets/screen.css") );
 ?>

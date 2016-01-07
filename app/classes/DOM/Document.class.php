@@ -4,13 +4,13 @@ namespace DOM {
 	* Central class for setting javascripts and stylesheets to be rendered.
 	*/
 	class Document {
-		private $stylesheets = [];
-		private $javascript = [];
+		private static $stylesheets = [];
+		private static $javascript = [];
 		protected $title = '';
 
 		public function __construct() {
-			$this->stylesheets["all"] = [];
-			$this->javascript["footer"] = [];
+			self::$stylesheets["all"] = [];
+			self::$javascript["footer"] = [];
 		}
 
 		/**
@@ -19,7 +19,7 @@ namespace DOM {
 		* @param (string) $url Path to element of which to create a URI.
 		* @return string
 		*/
-		public function url($path = '') {
+		public static function url($path = '') {
 			$base_path = ltrim($path, '/');
 			$base_url = strtok($_SERVER["REQUEST_URI"],'?');		
 			$final_url = $base_url.$base_path;
@@ -33,8 +33,8 @@ namespace DOM {
 		* @param (string) $media Media query this stylesheet should apply to.
 		* @return void
 		*/
-		public function addStylesheet($style, $media = "all") {
-			$this->stylesheets[$media][] = $style;
+		public static function addStylesheet($style, $media = "all") {
+			self::$stylesheets[$media][] = $style;
 		}
 
 		/**
@@ -43,8 +43,8 @@ namespace DOM {
 		* @param (string) $region Region of the DOM where this javascript should be rendered.
 		* @return void
 		*/
-		public function addJavascript($script, $region = "footer") {
-			$this->javascript[$region][] = $script;
+		public static function addJavascript($script, $region = "footer") {
+			self::$javascript[$region][] = $script;
 		}
 
 		/**
@@ -52,8 +52,8 @@ namespace DOM {
 		* @param $media Only return stylesheets in this media query.
 		* @return array
 		*/
-		public function getStylesheets($media = "all") {
-			return $this->stylesheets[$media];
+		public static function getStylesheets($media = "all") {
+			return self::$stylesheets[$media];
 		}
 
 		/**
@@ -61,31 +61,8 @@ namespace DOM {
 		* @param (string) $region Only return javascript files belonging to this region.
 		* @return array
 		*/
-		public function getJavascript($region = "footer") {
-			return $this->javascript[$region];
-		}
-
-		/**
-		* Set a dynamic value for the title tag.
-		* @param (string) $title a title to display in a template file.
-		* @return self
-		*/
-		public function setTitle($title) {
-			$this->title = $title;
-			return $this;
-		}
-
-		/**
-		* Get the current page title to be displayed.
-		* @return string
-		*/
-		public function getTitle() {
-			if(trim($this->title) != '') {
-				$title = sprintf(\Registry::get("config")->get("base_title"), $this->title);
-			} else {
-				$title = sprintf(\Registry::get("config")->get("base_title"), str_replace("- ", '', \Registry::get("config")->get("base_title")));
-			}
-			return $title;
+		public static function getJavascript($region = "footer") {
+			return self::$javascript[$region];
 		}
 	}
 }

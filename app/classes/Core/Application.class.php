@@ -8,11 +8,37 @@ namespace Core {
 	* Consult the README file for usage examples throughtout the framework.
 	* @see README.md
 	*/
-	class Application {
-		private $cwd, $args;
+	class Application extends \Singleton {
+		private $cwd, $args, $config, $title;
 		
-		public function __construct() {
-			$this->initialize();
+		public function __construct(ConfigurationParser $config) {
+			$this->config = $config;
+			$this->cwd = getcwd();
+
+			$route = ((isset($_GET["route"])) && ($_GET["route"] != '')) ? $_GET["route"] : $this->config->get("default_route");
+			$this->args = explode('/', ltrim($route, '/'));
+		}
+		
+		/**
+		* Set a dynamic value for the title tag.
+		* @param (string) $title a title to display in a template file.
+		* @return self
+		*/
+		public function setTitle($title) {
+			$this->title = $title;
+		}
+
+		/**
+		* Get the current page title to be displayed.
+		* @return string
+		*/
+		public function getTitle() {
+			if(trim($this->title) != '') {
+				$title = sprintf($this->config->get("base_title"), $this->title);
+			} else {
+				$title = sprintf($this->config->get("base_title"), str_replace("- ", '', $this->config->get("base_title")));
+			}
+			return $title;
 		}
 		
 		/**
@@ -24,30 +50,6 @@ namespace Core {
 			Debug::pre($this->args);
 			Debug::pre($this->config);
 			return ob_get_clean();
-		}
-
-		/**
-		* Does the actual initialization.
-		* TODO: Consider other ways of creating DB connection and parse the configuration file, to abide by the one class, one responsibility standard.
-		* @return self
-		*/
-		private function initialize() {
-			\Registry::set("config", new \Core\ConfigurationParser());
-			\Registry::set("database", new \Database\DbConnection(
-				\Registry::get("config")->get("database.host"),
-				\Registry::get("config")->get("database.name"),
-				\Registry::get("config")->get("database.username"),
-				\Registry::get("config")->get("database.password"),
-				\Registry::get("config")->get("database.debug")
-			));
-			\Registry::set("document", new \DOM\Document);
-			
-			$this->cwd = getcwd();
-
-			$route = ((isset($_GET["route"])) && ($_GET["route"] != '')) ? $_GET["route"] : \Registry::get("config")->get("default_route");
-			$this->args = explode('/', ltrim($route, '/'));
-			
-			return $this;
 		}
 
 		/**
@@ -100,7 +102,7 @@ namespace Core {
 		* @return string
 		*/
 		public function getThemePath() {
-			return $this->getApplicationPath()."/app/themes/".\Registry::get("config")->get("theme");
+			return $this->getApplicationPath()."/app/themes/".$this->config->get("theme");
 		}
 	}
 }
