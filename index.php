@@ -15,7 +15,7 @@
 	$controller = $app->getControllerPath($app->arg(0));
 	$view = $app->getTemplatePath($app->arg(0));
 
-	$themeFunctions = $app->getThemePath()."/functions.php";
+	$themeFunctions = $app->getThemePath()."/main.php";
 	if(is_file($themeFunctions)) {
 		require $themeFunctions;
 	}
