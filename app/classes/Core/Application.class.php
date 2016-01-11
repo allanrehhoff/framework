@@ -11,8 +11,8 @@ namespace Core {
 	class Application extends \Singleton {
 		private $cwd, $args, $config, $title;
 		
-		public function __construct(ConfigurationParser $config) {
-			$this->config = $config;
+		public function __construct() {
+			$this->config = \Core\ConfigurationParser::getInstance();
 			$this->cwd = getcwd();
 
 			$route = ((isset($_GET["route"])) && ($_GET["route"] != '')) ? $_GET["route"] : $this->config->get("default_route");

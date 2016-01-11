@@ -2,7 +2,7 @@
 	require 'preprocess.php';
 
 	$config = new \Core\ConfigurationParser();
-	$app = new \Core\Application($config);
+	$app = new \Core\Application();
 
 	$db = new \Database\DbConnection(
 		$config->get("database.host"),

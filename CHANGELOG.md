@@ -1,6 +1,6 @@
 #Changelog#
 v1.7.1
-- Removed the registry structure, moving torwards a dependency injection structure instead.  
+- Removed the registry structure again, it wouldn't fit into the general structure.  
 - Registry class removed.  
 
 v1.7
