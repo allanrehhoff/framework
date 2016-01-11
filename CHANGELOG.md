@@ -2,6 +2,7 @@
 v1.7.1
 - Removed the registry structure again, it wouldn't fit into the general structure.  
 - Registry class removed.  
+- Renamed functions.php to main.php  
 
 v1.7
 - Introduced Registry class to hold all the variables being created within the application.  
