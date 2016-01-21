@@ -3,13 +3,13 @@
 
 	$config = new \Core\ConfigurationParser();
 	$app = new \Core\Application();
-	/*$db = new \Database\DbConnection(
+	$db = new \Database\DbConnection(
 		$config->get("database.host"),
 		$config->get("database.name"),
 		$config->get("database.username"),
 		$config->get("database.password"),
 		$config->get("database.debug")
-	);*/
+	);
 
 	$controller = $app->getControllerPath($app->arg(0));
 	$view = $app->getTemplatePath($app->arg(0));
