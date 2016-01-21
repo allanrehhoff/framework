@@ -1,15 +1,13 @@
 <?php
 	require 'preprocess.php';
 
-	$config = new \Core\ConfigurationParser();
 	$app = new \Core\Application();
-
 	$db = new \Database\DbConnection(
-		$config->get("database.host"),
-		$config->get("database.name"),
-		$config->get("database.username"),
-		$config->get("database.password"),
-		$config->get("database.debug")
+		\Core\ConfigurationParser::getInstance()->get("database.host"),
+		\Core\ConfigurationParser::getInstance()->get("database.name"),
+		\Core\ConfigurationParser::getInstance()->get("database.username"),
+		\Core\ConfigurationParser::getInstance()->get("database.password"),
+		\Core\ConfigurationParser::getInstance()->get("database.debug")
 	);
 
 	$controller = $app->getControllerPath($app->arg(0));
