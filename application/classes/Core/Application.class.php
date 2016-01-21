@@ -3,7 +3,7 @@ namespace Core {
 	use Exception;
 	
 	/**
-	* The mmain class for your application.
+	* The main class for this application.
 	* Core\Application handles the routes, directory paths and title
 	* Consult the README file for usage examples throughout the framework.
 	* @see README.md

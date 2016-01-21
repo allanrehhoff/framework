@@ -1,7 +1,7 @@
 <?php
 	class Debug {
 		/**
-		* Hwlpa you debug your application.
+		* Helps you debug your application.
 		*/
 		public function __construct() {
 		}

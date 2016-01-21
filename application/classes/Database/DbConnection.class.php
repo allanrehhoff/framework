@@ -3,6 +3,10 @@ namespace Database {
 	use PDO;
 	use Exception;
 
+	/**
+	* Handles the database connection.
+	* Wraps around PDO
+	*/
 	class DbConnection {
 		private static $connection;
 
@@ -12,11 +16,21 @@ namespace Database {
 		private $_pageStart;
 		private $_queryInfoList = array();
 
-		public function __construct($host, $db_name, $user, $pass, $debug = false) {
+		/**
+		* The constructer makes the initial database connection
+		* @param (string) $host Hostname to connect to
+		* @param (string) $dbName Name of the database to use
+		* @param (string) $user Username to use for authentication
+		* @param (string) $pass Password to use for authentication
+		* @param (boolean) $debug Enable/Disable query debugging
+		* @return void
+		* @throws DatabaseException
+		*/
+		public function __construct($host, $dbName, $user, $pass, $debug = false) {
 			$this->_debug = $debug;
 			
 			try {
-				$this->_db = new PDO("mysql:host=".$host.";dbname=".$db_name, $user, $pass);
+				$this->_db = new PDO("mysql:host=".$host.";dbname=".$dbName, $user, $pass);
 			} catch (Exception $e) {
 				throw new DatabaseException("Unable to connect to database.");
 			}
@@ -27,10 +41,22 @@ namespace Database {
 			DbConnection::$connection = $this;
 		}
 		
+		/**
+		* Get the currently instantiated database instance.
+		* @return object
+		*/
 		public static function getInstance() {
 			return DbConnection::$connection;
 		}
 
+		/**
+		* Execute a query
+		* @param (string) $sql The SQL string to qeury against the database
+		* @param (array) $args Arguments to pass along with the query
+		* @param (int) $fetchMode Default fetch mode for result sets
+		* @return (mixed)
+		* @throws DatabaseException
+		*/
 		public function execute($sql, $args = null, $fetchMode = PDO::FETCH_OBJECT) {
 			if ($this->_debug) {
 				$queryStart = microtime(true);
@@ -50,7 +76,7 @@ namespace Database {
 					"count" => 1,
 					"sql" => $sql
 				);
-				$e = new Exception();
+				$e = new DatabaseException();
 				$queryInfo["stacktrace"] = $e->getTraceAsString();
 				$this->_queryInfoList[] = $queryInfo;
 			}
@@ -58,10 +84,23 @@ namespace Database {
 			return $stmt->fetchAll();
 		}
 
+		/**
+		* Wrapper for DbConnection::execute()
+		* @param (array) $args Arguments to pass along with the query
+		* @param (int) $fetchMode Default fetch mode for result sets
+		* @return (mixed)
+		*/
 		public function query($sql, $args = null) {
 			return $this->execute($sql, $args);
 		}
 
+		/**
+		* Query a single row
+		* @param (string) $sql The SQL to query
+		* @param (array) $args The arguments to pass along with the query
+		* @param (boolean) $ignore_errors Log errors return by the execution
+		* @return (mixed)
+		*/
 		public function queryRow($sql, $args = null, $ignore_errors = false) {
 			$result = $this->execute($sql, $args);
 			if (count($result) == 0) {
@@ -155,10 +194,18 @@ namespace Database {
 			$this->execute($sql, $vars);
 		}
 
+		/**
+		* Get the last inserted ID
+		* @return int
+		*/
 		public function lastInsertId() {
 			return $this->_db->lastInsertId();
 		}
 		
+		/**
+		* Print out the debugging information from queries
+		* @return void
+		*/
 		public function echoDebug() {
 			if ($this->_debug) {
 				$now = microtime(true);
