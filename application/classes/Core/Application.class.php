@@ -4,8 +4,8 @@ namespace Core {
 	
 	/**
 	* The mmain class for your application.
-	* Core\Application has the responsibility of bootstrapping the framework.
-	* Consult the README file for usage examples throughtout the framework.
+	* Core\Application handles the routes, directory paths and title
+	* Consult the README file for usage examples throughout the framework.
 	* @see README.md
 	*/
 	class Application extends \Singleton {
@@ -36,7 +36,7 @@ namespace Core {
 			if(trim($this->title) != '') {
 				$title = sprintf($this->config->get("base_title"), $this->title);
 			} else {
-				$title = sprintf($this->config->get("base_title"), str_replace("- ", '', $this->config->get("base_title")));
+				$title = sprintf($this->config->get("base_title"), '');
 			}
 			return $title;
 		}
@@ -93,7 +93,7 @@ namespace Core {
 		* @return string
 		*/
 		public function getControllerPath($ctrl) {
-			return $this->getApplicationPath()."/app/controller/".basename($ctrl).".php";
+			return $this->getApplicationPath()."/application/controller/".basename($ctrl).".php";
 		}
 		
 		/**
@@ -102,7 +102,7 @@ namespace Core {
 		* @return string
 		*/
 		public function getThemePath() {
-			return $this->getApplicationPath()."/app/themes/".$this->config->get("theme");
+			return $this->getApplicationPath()."/application/themes/".$this->config->get("theme");
 		}
 	}
 }

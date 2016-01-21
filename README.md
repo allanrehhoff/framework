@@ -49,7 +49,7 @@ The public folder is where you should keep your static content such as styleshee
 
 Any links in your theme files should be passed through **\DOM\Document::url()** like so: 
 ```
-<?php Registry::get("document")->url('/path/to/stylesheet.css'); ?>
+<?php \DOM\Document::url("/path/to/your-file.ext") ?>
 ```
 This ensures the file is being linked correct. (In most cases if the application resides in a subfolder)  
 
@@ -66,30 +66,26 @@ The base_title setting only supports one wildcard %s use **->setTitle($title)** 
 
 ##Database##
 This section assumes you have basic knowledge of PDO.  
-There are multiple ways of querying the database. (yes working around this is on my TODO)  
 
-1. **Database\DbConnection::getInstance()->query()**  
-2. **Registry::get("database")->query()**  
-
-Whichever you prefer is up to you.  
+1. **\Database\DbConnection::getInstance()->query()**  
 
 ```
-<?php Database\DbConnection::getInstance()->query("UPDATE animals SET `extinct` = :value WHERE name = :name", ["value" => true, "name" => "Asian Rhino"]); ?>
+<?php \Database\DbConnection::getInstance()->query("UPDATE animals SET `extinct` = :value WHERE name = :name", ["value" => true, "name" => "Asian Rhino"]); ?>
 ```   
 
 This could also be written as follows:  
 ```
-<?php Database\DbConnection::getInstance()->update("animals", ["extinxt" => true], ["name" => "Asian Rhino"]); ?>
+<?php \Database\DbConnection::getInstance()->update("animals", ["extinxt" => true], ["name" => "Asian Rhino"]); ?>
 ```
 
 Queries with a return value will be fetched as objects, for instance:  
 ```
-<?php Database\DbConnection::getInstance()->select("animals"); ?>
+<?php \Database\DbConnection::getInstance()->select("animals"); ?>
 ```   
 
 The exceptions to when an object is returned is the **->queryValue**, **->count()** and **->selectValue()** which reacts to a single cell value.
 ```
-<?php Database\DbConnection::getInstance()->selectValue("last_access", "users", ["user_id" => 1]); ?>
+<?php \Database\DbConnection::getInstance()->selectValue("last_access", "users", ["user_id" => 1]); ?>
 ```
 Will fetch the stored value for a given row in a given table.  
 

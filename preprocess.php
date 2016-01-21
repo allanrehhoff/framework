@@ -13,15 +13,6 @@
 	define('CRLF', CR.LF);
 	define('TAB', "\t");
 	define('BR', '<br />');
-
-	spl_autoload_register(function($className) {
-		$className = str_replace('\\', '/', $className);
-		
-		$classFile = getcwd().'/app/classes/'.$className.'.class.php';
-		if(file_exists($classFile)) {
-			require $classFile;
-		}
-	});
 	
 	set_exception_handler(function($exception) {
 		if(php_sapi_name() == 'cli') {
@@ -71,7 +62,6 @@
 				break;
 		}
 
-		
 		$trace = array_reverse(debug_backtrace());
 		array_pop($trace);
 		
@@ -106,6 +96,13 @@
 		if($fatal) {
 			exit(1);
 		}
+	});
+
+	spl_autoload_register(function($className) {
+		$className = str_replace('\\', '/', $className);
+		$classFile = getcwd().'/application/classes/'.$className.'.class.php';
+
+		require $classFile;
 	});
 	
 	set_include_path(dirname(__FILE__));

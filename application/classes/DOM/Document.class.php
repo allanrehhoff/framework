@@ -1,7 +1,7 @@
 <?php
 namespace DOM {	
 	/**
-	* Central class for setting javascripts and stylesheets to be rendered.
+	* Central class for handling javascripts and stylesheets to be rendered.
 	*/
 	class Document {
 		private static $stylesheets = [];
@@ -20,10 +20,10 @@ namespace DOM {
 		* @return string
 		*/
 		public static function url($path = '') {
-			$base_path = ltrim($path, '/');
-			$base_url = strtok($_SERVER["REQUEST_URI"],'?');		
-			$final_url = $base_url.$base_path;
-			return $final_url;
+			$basePath = ltrim($path, '/');
+			$baseUrl = strtok($_SERVER["REQUEST_URI"],'?');		
+			$finalUrl = $baseUrl.$basePath;
+			return $finalUrl;
 		}
 
 		/**
