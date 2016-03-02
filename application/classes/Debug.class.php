@@ -1,7 +1,11 @@
 <?php
+/**
+* @package Rehhoff_Framework
+*/
 	class Debug {
 		/**
 		* Helps you debug your application.
+		* @author Allan Thue Rehhoff
 		*/
 		public function __construct() {
 		}

@@ -6,6 +6,8 @@ namespace Core {
 	* The main class for this application.
 	* Core\Application handles the routes, directory paths and title
 	* Consult the README file for usage examples throughout the framework.
+	* @author Allan Thue Rehhof
+	* @package Rehhoff_Framework
 	* @see README.md
 	*/
 	class Application extends \Singleton {

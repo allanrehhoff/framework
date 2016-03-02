@@ -7,6 +7,7 @@ namespace Database {
 	* Represents a connection between the server and the database.
 	* Easily perform SQL queries without writing (more than neccesary) SQL.
 	* @author Allan Thue Rehhoff
+	* @package Rehhoff_Framework
 	* @version 1.0
 	*/
 	class DatabaseConnection {

@@ -3,8 +3,10 @@ namespace Core {
 	use Exception;
 	
 	/**
-	* Manipulates the configuration file.
+	* Handles parsing and saving of the configuration file.
 	* @extends Singleton
+	* @author Allan Thue Rehhoff
+	* @package Rehhoff_Framework
 	*/
 	class ConfigurationParser extends \Singleton {
 		private $parsedConfig;
@@ -159,6 +161,7 @@ namespace Core {
 		
 		/**
 		* Get debug information by printing the configuration object.
+		* @return string
 		*/
 		public function __toString() {
 			return "<pre>".print_r($this->get(), true)."</pre>";

@@ -1,0 +1,35 @@
+[21-Jan-2016 17:12:09 UTC] PHP Notice:  Array to string conversion in /home/rehhoffm/php/phpDocumentor/vendor/erusev/parsedown/Parsedown.php on line 1405
+[21-Jan-2016 17:12:09 UTC] PHP Notice:  Undefined property: Parsedown::$Array in /home/rehhoffm/php/phpDocumentor/vendor/erusev/parsedown/Parsedown.php on line 1405
+[21-Jan-2016 17:12:09 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Monolog\ErrorHandler::handleException() must be an instance of Exception, instance of Error given in /home/rehhoffm/php/phpDocumentor/vendor/monolog/monolog/src/Monolog/ErrorHandler.php:122
+Stack trace:
+#0 [internal function]: Monolog\ErrorHandler->handleException(Object(Error))
+#1 {main}
+  thrown in /home/rehhoffm/php/phpDocumentor/vendor/monolog/monolog/src/Monolog/ErrorHandler.php on line 122
+[21-Jan-2016 17:28:28 UTC] PHP Notice:  Array to string conversion in /home/rehhoffm/php/phpDocumentor/vendor/erusev/parsedown/Parsedown.php on line 1405
+[21-Jan-2016 17:28:28 UTC] PHP Notice:  Undefined property: Parsedown::$Array in /home/rehhoffm/php/phpDocumentor/vendor/erusev/parsedown/Parsedown.php on line 1405
+[21-Jan-2016 17:28:28 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Monolog\ErrorHandler::handleException() must be an instance of Exception, instance of Error given in /home/rehhoffm/php/phpDocumentor/vendor/monolog/monolog/src/Monolog/ErrorHandler.php:122
+Stack trace:
+#0 [internal function]: Monolog\ErrorHandler->handleException(Object(Error))
+#1 {main}
+  thrown in /home/rehhoffm/php/phpDocumentor/vendor/monolog/monolog/src/Monolog/ErrorHandler.php on line 122
+[21-Jan-2016 17:29:02 UTC] PHP Notice:  Array to string conversion in /home/rehhoffm/php/phpDocumentor/vendor/erusev/parsedown/Parsedown.php on line 1405
+[21-Jan-2016 17:29:02 UTC] PHP Notice:  Undefined property: Parsedown::$Array in /home/rehhoffm/php/phpDocumentor/vendor/erusev/parsedown/Parsedown.php on line 1405
+[21-Jan-2016 17:29:02 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Monolog\ErrorHandler::handleException() must be an instance of Exception, instance of Error given in /home/rehhoffm/php/phpDocumentor/vendor/monolog/monolog/src/Monolog/ErrorHandler.php:122
+Stack trace:
+#0 [internal function]: Monolog\ErrorHandler->handleException(Object(Error))
+#1 {main}
+  thrown in /home/rehhoffm/php/phpDocumentor/vendor/monolog/monolog/src/Monolog/ErrorHandler.php on line 122
+[21-Jan-2016 17:32:43 UTC] PHP Notice:  Array to string conversion in /home/rehhoffm/php/phpDocumentor/vendor/erusev/parsedown/Parsedown.php on line 1405
+[21-Jan-2016 17:32:43 UTC] PHP Notice:  Undefined property: Parsedown::$Array in /home/rehhoffm/php/phpDocumentor/vendor/erusev/parsedown/Parsedown.php on line 1405
+[21-Jan-2016 17:32:43 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Monolog\ErrorHandler::handleException() must be an instance of Exception, instance of Error given in /home/rehhoffm/php/phpDocumentor/vendor/monolog/monolog/src/Monolog/ErrorHandler.php:122
+Stack trace:
+#0 [internal function]: Monolog\ErrorHandler->handleException(Object(Error))
+#1 {main}
+  thrown in /home/rehhoffm/php/phpDocumentor/vendor/monolog/monolog/src/Monolog/ErrorHandler.php on line 122
+[21-Jan-2016 17:34:09 UTC] PHP Notice:  Array to string conversion in /home/rehhoffm/php/phpDocumentor/vendor/erusev/parsedown/Parsedown.php on line 1405
+[21-Jan-2016 17:34:09 UTC] PHP Notice:  Undefined property: Parsedown::$Array in /home/rehhoffm/php/phpDocumentor/vendor/erusev/parsedown/Parsedown.php on line 1405
+[21-Jan-2016 17:34:09 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Monolog\ErrorHandler::handleException() must be an instance of Exception, instance of Error given in /home/rehhoffm/php/phpDocumentor/vendor/monolog/monolog/src/Monolog/ErrorHandler.php:122
+Stack trace:
+#0 [internal function]: Monolog\ErrorHandler->handleException(Object(Error))
+#1 {main}
+  thrown in /home/rehhoffm/php/phpDocumentor/vendor/monolog/monolog/src/Monolog/ErrorHandler.php on line 122

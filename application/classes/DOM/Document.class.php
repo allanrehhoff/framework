@@ -2,6 +2,8 @@
 namespace DOM {	
 	/**
 	* Central class for handling javascripts and stylesheets to be rendered.
+	* @author Allan Thue Rehhoff
+	* @package Rehhoff_Framework
 	*/
 	class Document {
 		private static $stylesheets = [];
