@@ -1,4 +1,9 @@
 #Changelog#
+v1.8
+- Totally rewritten the semi-broken DbConnection class  
+- Finally documented the DatabaseConnection class  
+- Removed Data Objects due to incompatibility  
+
 v1.7.1
 - Removed the registry structure again, it wouldn't fit into the general structure.  
 - Registry class removed.  

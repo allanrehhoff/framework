@@ -1,9 +1,16 @@
 <?php
+	/**
+	* Main entry point for your application.
+	* Consult the README.md file for documentation and usage examples.
+	*
+	* @author Allan Rehhoff
+	*/
+
 	require "preprocess.php";
 
 	$config = new \Core\ConfigurationParser();
 	$app = new \Core\Application();
-	$db = new \Database\DbConnection(
+	$db = new \Database\DatabaseConnection(
 		$config->get("database.host"),
 		$config->get("database.name"),
 		$config->get("database.username"),

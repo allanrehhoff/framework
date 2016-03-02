@@ -93,6 +93,8 @@ Will fetch the stored value for a given row in a given table.
 > The DbConnection class simulates a singleton pattern through \Database\DbConnection::getInstance();  
 
 ##Data Objects##
+DATA OBJECTS HAS BEEN REMOVED FROM V1.8 DUE TO INCOMPATIBILITY WITH THE NEW DATABASE CLASS !  
+
 For easier data manipulation, data objects should extend the **\Database\DBObject** class.  
 Every class that extends **\Database\DBObject** must implement the following methods.  
 
