@@ -11,6 +11,7 @@
 
 	$config = new \Core\ConfigurationParser();
 	$app = new \Core\Application();
+
 	$db = new \Database\DatabaseConnection(
 		$config->get("database.host"),
 		$config->get("database.name"),
@@ -20,23 +21,22 @@
 	);
 
 	$controller = $app->getControllerPath($app->arg(0));
-	$view = $app->getTemplatePath($app->arg(0));
-	$themeFunctions = $app->getThemePath()."/main.php";
+	if($controller !== false) {
+		require $controller;
+	}
 
+	$themeFunctions = $app->getThemePath()."/main-functions.php";
 	if(is_file($themeFunctions)) {
 		require $themeFunctions;
 	}
 
-	if(!is_file($controller) && !is_file($view)) {
-		$controller = $app->getControllerPath("404");
-		$view = $app->getTemplatePath("404");
-	}
-
-	if(is_file($controller)) {
-		require $controller;
-	}
-
-	if(is_file($view)) {
+	$view = $app->getView();
+	if($view !== false) {
 		require $view;
+	}
+
+	if($controller === false && $view === false) {
+		require $app->getControllerPath("404");
+		require $app->getTemplatePath("404");
 	}
 ?>

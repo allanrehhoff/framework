@@ -6,8 +6,9 @@
 	* I have yet to come up with a proper way of doing this, and preventing you (the developer)
 	* from writing complete spaghetti, so please! try not to bloat this file.
 	*/
+
+	\DOM\Document::addStylesheet( Tools::url("/application/themes/default/stylesheets/screen.css"));
+	\DOM\Document::addStylesheet( Tools::url("/application/themes/default/stylesheets/responsive.css"));
 	
-	\DOM\Document::addJavascript( \DOM\Document::url("/public/stylesheets/jquery-1.11.1.min.js") );
-	\DOM\Document::addJavascript( \DOM\Document::url("/test/test.hs"), "head");
-	\DOM\Document::addStylesheet( \DOM\Document::url("/public/stylesheets/screen.css") );
+	\DOM\Document::addJavascript( Tools::url("/application/javascript/jquery-1.11.1.min.js") );
 ?>

@@ -6,12 +6,12 @@ namespace Core {
 	* The main class for this application.
 	* Core\Application handles the routes, directory paths and title
 	* Consult the README file for usage examples throughout the framework.
-	* @author Allan Thue Rehhof
+	* @author Allan Thue Rehhoff
 	* @package Rehhoff_Framework
 	* @see README.md
 	*/
 	class Application extends \Singleton {
-		private $cwd, $args, $config, $title;
+		private $cwd, $args, $config, $title, $view;
 		
 		public function __construct() {
 			$this->config = \Core\ConfigurationParser::getInstance();
@@ -19,6 +19,8 @@ namespace Core {
 
 			$route = ((isset($_GET["route"])) && ($_GET["route"] != '')) ? $_GET["route"] : $this->config->get("default_route");
 			$this->args = explode('/', ltrim($route, '/'));
+
+			$this->view = $this->getTemplatePath($this->arg(0));
 		}
 		
 		/**
@@ -92,12 +94,42 @@ namespace Core {
 		* Get path to the specified controller file. Ommit the .php extension
 		* TODO: cut .php from the $ctrl param, if provided. (Find out if I can use basename()'s second argument)
 		* @param (string) name of the controller file.
-		* @return string
+		* @return mixed
 		*/
 		public function getControllerPath($ctrl) {
-			return $this->getApplicationPath()."/application/controller/".basename($ctrl).".php";
+			if(is_file($this->getApplicationPath()."/application/controller/".basename($ctrl).".php")) {
+				return $this->getApplicationPath()."/application/controller/".basename($ctrl).".php";
+			} else {
+				return false;
+			}
 		}
 		
+		/**
+		* If allowed by configurations controllers can define their own view file to be used.
+		* @param Name of the view to use, without .tpl.php extensions.
+		* @return bool
+		*/
+		public function setView($viewName) {
+			if($this->config->allow_views_override === true) {
+				$this->view = $this->getTemplatePath($viewName);
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		/**
+		* Get the view to be used by index.php
+		* @return mixed
+		*/
+		public function getView() {
+			if(is_file($this->view)) {
+				return $this->view;
+			} else {
+				return false;
+			}
+		}
+
 		/**
 		* Get the path to the current active theme.
 		* TODO: Provide a way to get client side theme path.

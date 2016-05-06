@@ -1,4 +1,18 @@
 #Changelog#
+v2.0
+- **This is a major release and is backwards incompatible**
+- Introduced Tools class  
+- Fixed a bug in footer.php (javascript not being added properly)  
+- Renamed main.php to main-functions.php  
+- Removed the public/ folder, stylesheets should belong in the theme directory  
+- Moved javascript into the application folder  
+- Controllers can now define their own view if allowed by config  
+- Removed debug setting from databse section in config  
+- Added a 404 page controller  
+- Rewrote index.php to better handle controllers/views and 404 pages
+- Updated bundled jQuery version  
+- Updated README.md documentation  
+
 v1.8
 - Totally rewritten the semi-broken DbConnection class  
 - Finally documented the DatabaseConnection class  
@@ -17,7 +31,7 @@ v1.7
 - Updated documentation  
 
 v1.6.1
-- Configuration paster should no longer var_dump(); after saving content. (was I drunk?)  
+- Configuration parser should no longer var_dump(); after saving content. (was I drunk?)  
 - DOM\Document now uses a static context.  
 - Singleton class introduced.  
 - ConfigurationParser(); and DbConnection(); can now be accessed through Singleton.  

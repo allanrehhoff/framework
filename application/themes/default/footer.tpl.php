@@ -1,4 +1,4 @@
-	<?php foreach(\DOM\Document::getStylesheets() as $script): ?>
+	<?php foreach(\DOM\Document::getJavascript("footer") as $script): ?>
 		<script type="text/javascript" src="<?php print $script; ?>"></script>
 	<?php endforeach; ?>
 	</body>

@@ -16,19 +16,6 @@ namespace DOM {
 		}
 
 		/**
-		* Removes any need for having a hardcoded basepath in some obscure place
-		* "cough"wordpress"cough"
-		* @param (string) $url Path to element of which to create a URI.
-		* @return string
-		*/
-		public static function url($path = '') {
-			$basePath = ltrim($path, '/');
-			$baseUrl = strtok($_SERVER["REQUEST_URI"],'?');		
-			$finalUrl = $baseUrl.$basePath;
-			return $finalUrl;
-		}
-
-		/**
 		* Add a stylesheet to be linked.
 		* @return voidDocument
 		* @param (string) $style Valid path to the stylesheet. Watch out for casing and whitespaces when using Document::getStylesheets();
@@ -55,7 +42,7 @@ namespace DOM {
 		* @return array
 		*/
 		public static function getStylesheets($media = "all") {
-			return self::$stylesheets[$media];
+			return isset(self::$stylesheets[$media]) ? self::$stylesheets[$media] : [];
 		}
 
 		/**
@@ -64,7 +51,7 @@ namespace DOM {
 		* @return array
 		*/
 		public static function getJavascript($region = "footer") {
-			return self::$javascript[$region];
+			return isset(self::$javascript[$region]) ? self::$javascript[$region] : [];
 		}
 	}
 }

@@ -21,13 +21,12 @@ Each theme should contain at least the following files.
 - footer.tpl.php (Required)  
 - index.tpl.php (Required)  
 - 404.tpl.php (Required)  
-- functions.php (Optional)  
+- min-functions.php (Optional)  
 
 It is assumed by the core that your theme has at least the required files.  
 
-The optional file **functions.php** is somewhat special, this file should be used to contain all custom functions used by your theme, and cannot have a controller file.  
+The optional file **main-functions.php** is somewhat special, this file should be used to contain all custom functions used by your theme, and cannot have a controller file.  
 Every other file is considered a view file.  
-While **functions.php** is an optional file, it is highly recommended that you make use of it.  
   
 Every view file must have the extension **.tpl.php** this is to distinguish them from their representative controller files.  
 
@@ -37,19 +36,16 @@ Additionally any controller is not required to have a matching view file, this b
 > *NOTE:*  
 > header.tpl.php, footer.data.php, and any other view files you plan to include or require in another view file cannot have a controller file.  
   
-Stylesheets and javascript for your theme should be placed in either /public/* or in your theme folder, depending on your use for that particular file.  
-However you should consider consulting other develoeprs on the project about your application structure on this matter.  
+Controllers can override the default view to be used, if allowed by the developers configurations. so do so, use **$app->setView($viewName)** in your controller.  
 
 ##Permalinks##
 Given the URL **yourdomain.tld/animals** will map to optional theme and controller files. If no matching files is found, a 404 page will be issued.  
 Every other parameter after that, is the **animals.tpl.php** files responsibility to handle properly.  
 You can get those arguments with $app->arg(index); failing to provide an index will give you the whole array of arguments.  
 
-The public folder is where you should keep your static content such as stylesheets, javascript and images.
-
-Any links in your theme files should be passed through **\DOM\Document::url()** like so: 
+Any links in your theme files should be passed through **Tools::url()** like so: 
 ```
-<?php \DOM\Document::url("/path/to/your-file.ext") ?>
+<?php Tools::url("/path/to/your-file.ext") ?>
 ```
 This ensures the file is being linked correct. (In most cases if the application resides in a subfolder)  
 
@@ -66,26 +62,27 @@ The base_title setting only supports one wildcard %s use **->setTitle($title)** 
 
 ##Database##
 This section assumes you have basic knowledge of PDO.  
+(I haven't yet had time to properly test this documentation, as though it may appear outdated, use at own risk.)
 
 1. **\Database\DbConnection::getInstance()->query()**  
 
 ```
-<?php \Database\DbConnection::getInstance()->query("UPDATE animals SET `extinct` = :value WHERE name = :name", ["value" => true, "name" => "Asian Rhino"]); ?>
+<?php \Database\DatabaseConnection::getInstance()->query("UPDATE animals SET `extinct` = :value WHERE name = :name", ["value" => true, "name" => "Asian Rhino"]); ?>
 ```   
 
 This could also be written as follows:  
 ```
-<?php \Database\DbConnection::getInstance()->update("animals", ["extinxt" => true], ["name" => "Asian Rhino"]); ?>
+<?php \Database\DatabaseConnection::getInstance()->update("animals", ["extinxt" => true], ["name" => "Asian Rhino"]); ?>
 ```
 
 Queries with a return value will be fetched as objects, for instance:  
 ```
-<?php \Database\DbConnection::getInstance()->select("animals"); ?>
+<?php \Database\DatabaseConnection::getInstance()->select("animals"); ?>
 ```   
 
 The exceptions to when an object is returned is the **->queryValue**, **->count()** and **->selectValue()** which reacts to a single cell value.
 ```
-<?php \Database\DbConnection::getInstance()->selectValue("last_access", "users", ["user_id" => 1]); ?>
+<?php \Database\DatabaseConnection::getInstance()->selectValue("last_access", "users", ["user_id" => 1]); ?>
 ```
 Will fetch the stored value for a given row in a given table.  
 
