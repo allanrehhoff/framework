@@ -11,6 +11,7 @@ v2.1
 - \Core\Application::getControllerPath(); and \Core\Application::getViewPath(); will now return requested path given no arguments.  
 - Minor changes to default theme being compatible with this release.  
 - allow_views_override setting is no longer available.  
+- Renamed main-functions to theme-functions.  
 
 v2.0
 - **This is a major release and is backwards incompatible. **

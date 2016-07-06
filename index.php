@@ -22,7 +22,7 @@
 		require $controller;
 	}
 
-	$themeFunctions = is_file($app->getThemePath()."/main-functions.php") ? $app->getThemePath()."/main-functions.php" : false;
+	$themeFunctions = is_file($app->getThemePath()."/theme-functions.php") ? $app->getThemePath()."/theme-functions.php" : false;
 	if($themeFunctions !== false) {
 		require $themeFunctions;
 	}
