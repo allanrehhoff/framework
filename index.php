@@ -16,8 +16,7 @@
 		$config->get("database.host"),
 		$config->get("database.name"),
 		$config->get("database.username"),
-		$config->get("database.password"),
-		$config->get("database.debug")
+		$config->get("database.password")
 	);
 
 	$controller = $app->getControllerPath($app->arg(0));
