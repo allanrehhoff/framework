@@ -1,3 +1,3 @@
-<?php require $app->getTemplatePath('header'); ?>
+<?php require $app->getViewPath("header"); ?>
 html goes here.
-<?php require $app->getTemplatePath('footer'); ?>
+<?php require $app->getViewPath("footer"); ?>

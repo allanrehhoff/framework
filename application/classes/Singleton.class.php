@@ -1,18 +1,19 @@
 <?php
+abstract class Singleton {
+	protected function __construct(){ }
 
-class Singleton {
-	private static $instance;
+	final private function __clone() { }
+	
+	final public static function getInstance() {
+		static $instances = [];
 
-	private function __construct() { }
+		$calledClass = get_called_class();
 
-	private function __clone() { }
-
-	public static function getInstance() {
-		if (!isset(self::$instance)) {
-			$obj = get_called_class(); 
-        	self::$instance = new $obj;
+		if (!isset($instances[$calledClass])) {
+			$instances[$calledClass] = new $calledClass();
 		}
 
-		return self::$instance;
+		return $instances[$calledClass];
 	}
+
 }

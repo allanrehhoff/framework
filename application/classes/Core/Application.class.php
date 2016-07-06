@@ -14,13 +14,13 @@ namespace Core {
 		private $cwd, $args, $config, $title, $view;
 		
 		public function __construct() {
-			$this->config = \Core\ConfigurationParser::getInstance();
+			$this->config = ConfigurationParser::getInstance();
 			$this->cwd = getcwd();
 
 			$route = ((isset($_GET["route"])) && ($_GET["route"] != '')) ? $_GET["route"] : $this->config->get("default_route");
 			$this->args = explode('/', ltrim($route, '/'));
 
-			$this->view = $this->getTemplatePath($this->arg(0));
+			$this->view = $this->arg(0);
 		}
 		
 		/**
@@ -86,7 +86,10 @@ namespace Core {
 		* @param (string) $tpl name of the template file to get path for,
 		* @return string
 		*/
-		public function getTemplatePath($tpl) {
+		public function getViewPath($tpl = null) {
+			if($tpl === null) {
+				$tpl = $this->view;
+			}
 			return $this->getThemePath().'/'.basename($tpl).".tpl.php";
 		}
 
@@ -96,7 +99,11 @@ namespace Core {
 		* @param (string) name of the controller file.
 		* @return mixed
 		*/
-		public function getControllerPath($ctrl) {
+		public function getControllerPath($ctrl = null) {
+			if($ctrl === null) {
+				$ctrl = $this->arg(0);
+			}
+
 			if(is_file($this->getApplicationPath()."/application/controller/".basename($ctrl).".php")) {
 				return $this->getApplicationPath()."/application/controller/".basename($ctrl).".php";
 			} else {
@@ -110,24 +117,8 @@ namespace Core {
 		* @return bool
 		*/
 		public function setView($viewName) {
-			if($this->config->allow_views_override === true) {
-				$this->view = $this->getTemplatePath($viewName);
-				return true;
-			} else {
-				return false;
-			}
-		}
-
-		/**
-		* Get the view to be used by index.php
-		* @return mixed
-		*/
-		public function getView() {
-			if(is_file($this->view)) {
-				return $this->view;
-			} else {
-				return false;
-			}
+			$this->view = $viewName;
+			return true;
 		}
 
 		/**

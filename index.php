@@ -9,33 +9,30 @@
 
 	require "preprocess.php";
 
-	$config = new \Core\ConfigurationParser();
-	$app = new \Core\Application();
-
+	$app = \Core\Application::getInstance();
 	$db = new \Database\DatabaseConnection(
-		$config->get("database.host"),
-		$config->get("database.name"),
-		$config->get("database.username"),
-		$config->get("database.password")
+		\Core\ConfigurationParser::getInstance()->get("database.host"),
+		\Core\ConfigurationParser::getInstance()->get("database.username"),
+		\Core\ConfigurationParser::getInstance()->get("database.password"),
+		\Core\ConfigurationParser::getInstance()->get("database.name")
 	);
 
-	$controller = $app->getControllerPath($app->arg(0));
+	$controller = is_file($app->getControllerPath()) ? $app->getControllerPath() : false;
 	if($controller !== false) {
 		require $controller;
 	}
 
-	$themeFunctions = $app->getThemePath()."/main-functions.php";
-	if(is_file($themeFunctions)) {
+	$themeFunctions = is_file($app->getThemePath()."/main-functions.php") ? $app->getThemePath()."/main-functions.php" : false;
+	if($themeFunctions !== false) {
 		require $themeFunctions;
 	}
 
-	$view = $app->getView();
+	$view = is_file($app->getViewPath()) ? $app->getViewPath() : false;
 	if($view !== false) {
 		require $view;
 	}
 
-	if($controller === false && $view === false) {
+	if($controller == false && $view === false) {
 		require $app->getControllerPath("404");
-		require $app->getTemplatePath("404");
+		require $app->getViewPath("404");
 	}
-?>

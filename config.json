@@ -2,11 +2,10 @@
     "theme": "default",
     "base_title": "%s - default-title",
     "default_route": "index",
-    "allow_views_override": false,
     "database": {
         "host": "localhost",
         "username": "root",
-        "password": "somethingsecret",
-        "name": "local_db"
+        "password": "password",
+        "name": "dbname"
     }
 }

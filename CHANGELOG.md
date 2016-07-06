@@ -1,6 +1,19 @@
 #Changelog#
+v2.1
+- **This release is backwards incompatible. **  
+- Fixed DatabaseConnection parameter order.  
+- Fixed Tools::url(); should no longer return paths with the requested path in it.  
+- Updated default 404 page to be more helpful and informative.  
+- Added default title to 404 page.  
+- Fixed singleton class to not always return the first class with a method containing getInstance();  
+- Singleton classes don't need to be instantiated.  
+- Removed \Core\Application::getView(); in favour of a more generic Application::getViewPath(); method.
+- \Core\Application::getControllerPath(); and \Core\Application::getViewPath(); will now return requested path given no arguments.  
+- Minor changes to default theme being compatible with this release.  
+- allow_views_override setting is no longer available.  
+
 v2.0
-- **This is a major release and is backwards incompatible**
+- **This is a major release and is backwards incompatible. **
 - Introduced Tools class  
 - Fixed a bug in footer.php (javascript not being added properly)  
 - Renamed main.php to main-functions.php  
