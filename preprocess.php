@@ -6,21 +6,21 @@
 	*/
 	if(version_compare(PHP_VERSION, 5.4, '<')) die("PHP >= 5.4 is required for this framework to function properly.");
 
-	ini_set('display_errors', 'On');
+	ini_set("display_errors", "On");
 	error_reporting(E_ALL);
 
-	header('Pragma: no-cache');
-	header('Cache-Control: no-cache, no-store, must-revalidate, max-age=0');
-	header('Expires: -1');
+	header("Pragma: no-cache");
+	header("Cache-Control: no-cache, no-store, must-revalidate, max-age=0");
+	header("Expires: -1");
 
-	define('CR', "\r");
-	define('LF', "\n");
-	define('CRLF', CR.LF);
-	define('TAB', "\t");
-	define('BR', '<br />');
+	define("CR", "\r");
+	define("LF", "\n");
+	define("CRLF", CR.LF);
+	define("TAB", "\t");
+	define("BR", "<br />");
 	
 	set_exception_handler(function($exception) {
-		if(php_sapi_name() == 'cli') {
+		if(php_sapi_name() == "cli") {
 			die($exception);
 		}
 		
@@ -70,42 +70,42 @@
 		$trace = array_reverse(debug_backtrace());
 		array_pop($trace);
 		
-		if(php_sapi_name() == 'cli') {
-			print 'Backtrace from ' . $type . ' \'' . $errstr . '\' at ' . $errfile . ' ' . $errline . ':' . "\n";
+		if(php_sapi_name() == "cli") {
+			print "Backtrace from ".$type." '".$errstr."' at ".$errfile.' '.$errline.':'."\n";
 			foreach($trace as $item) {
-				print '  ' . (isset($item['file']) ? $item['file'] : '<unknown file>') . ' line ' . (isset($item['line']) ? $item['line'] : '<unknown line>') . ' calling ' . $item['function'] . '()' . "\n";
+				print '  ' .(isset($item["file"]) ? $item["file"] : "<unknown file>")." line ".(isset($item["line"]) ? $item["line"] : "<unknown line>")." calling ".$item['function']."()"."\n";
 			}
 		} else {
 			print '<pre class="alert alert-danger" style="">' . "\n";
-			print '<p style="line-height:10px; margin:0px;">Backtrace from ' . $type . ' \'' . $errstr . '\' at ' . $errfile . ' ' . $errline . ':' . "\n".'</p>';
+			print '<p style="line-height:10px; margin:0px;">Backtrace from ' . $type . ' \'' . $errstr . '\' at ' . $errfile . ' ' . $errline . ':' . "\n"."</p>";
 			print '  <ol style="margin-top:0px; line-height:10px;">' . "\n";
 			
 			foreach($trace as $item) {
-				print '<li>' . (isset($item['file']) ? $item['file'] : '<unknown file>') . ' line ' . (isset($item['line']) ? $item['line'] : '<unknown line>') . ' calling ' . $item['function'] . '()</li>' . "\n";
+				print "<li>" . (isset($item["file"]) ? $item["file"] : "<unknown file>")." line ".(isset($item["line"]) ? $item["line"] : "<unknown line>")." calling ".$item['function']."()</li>" . "\n";
 			}
 			
-			print '  </ol>' . "\n";
-			print '</pre>' . "\n";
+			print "  </ol>" . "\n";
+			print "</pre>" . "\n";
 		}
 		
-		if(ini_get('log_errors')) {
+		if(ini_get("log_errors")) {
 			$items = [];
 			foreach($trace as $item) {
-				$items[] = (isset($item['file']) ? $item['file'] : '<unknown file>') . ' ' . (isset($item['line']) ? $item['line'] : '<unknown line>') . ' calling ' . $item['function'] . '()';
+				$items[] = (isset($item['file']) ? $item['file'] : '<unknown file>') . ' ' . (isset($item["line"]) ? $item["line"] : '<unknown line>')." calling ".$item["function"]."()";
 			}
 			
-			$message = 'Backtrace from ' . $type . ' \'' . $errstr . '\' at ' . $errfile . ' ' . $errline . ': ' . join(' | ', $items);
+			$message = "Backtrace from ".$type." '".$errstr ."' at ".$errfile.' '.$errline.": ".implode(" | ", $items);
 			error_log($message);
 		}
 		
 		if($fatal) {
-			exit(1);
+			exit(-1);
 		}
 	});
 
 	spl_autoload_register(function($className) {
-		$className = str_replace('\\', '/', $className);
-		$classFile = getcwd().'/application/classes/'.$className.'.class.php';
+		$className = str_replace("\\", "/", $className);
+		$classFile = getcwd()."/application/classes/".$className.".class.php";
 
 		require $classFile;
 	});
