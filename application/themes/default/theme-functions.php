@@ -9,6 +9,6 @@
 
 	\DOM\Document::addStylesheet( Tools::url("/application/themes/default/stylesheets/screen.css"));
 	\DOM\Document::addStylesheet( Tools::url("/application/themes/default/stylesheets/responsive.css"));
-	
-	\DOM\Document::addJavascript( Tools::url("/application/javascript/jquery-1.11.1.min.js") );
+
+	\DOM\Document::addJavascript( Tools::url("/application/themes/default/javascript/jquery-1.11.1.min.js") );
 ?>
