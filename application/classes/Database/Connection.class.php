@@ -1,19 +1,18 @@
 <?php
+/**
+* Represents a connection between the server and the database.
+* Easily perform SQL queries without writing (more than neccesary) SQL.
+* Credits to Mikkel Jensen & Victoria Hansen from whom I in cold blood have undeterred copied some of this code from.
+* @author Allan Thue Rehhoff
+* @version 2.0
+*/
 namespace Database {
-	use PDO;
-	use Exception;
-	
-	/**
-	* Represents a connection between the server and the database.
-	* Easily perform SQL queries without writing (more than neccesary) SQL.
-	* @author Allan Thue Rehhoff
-	* @package Rehhoff_Framework
-	* @version 1.0
-	*/
-	class DatabaseConnection {
-		private $_connection;
+	use \PDO;
+
+	class Connection {
+		private $_connection, $transactionStarted;
 		private static $singletonInstance;
-		public $rowCount;
+		public $rowCount, $statement;
 
 		/**
 		* Initiate a new database connection through PDO.
@@ -22,30 +21,55 @@ namespace Database {
 		* @param (string) $password Password to use for authentication
 		* @param (string) $database Name of the database to use
 		* @return (void)
-		* @throws DatabaseException
+		* @throws Exception
 		* @author Allan Thue Rehhoff
 		* @since 1.0
 		*/
 		public function __construct($hostname, $username, $password, $database) {
-			if (extension_loaded('pdo') === false) {
-				throw new DatabaseException("Oh god! PDO does not appear to be enabled for this server.");
+			if (extension_loaded("pdo") === false) {
+				throw new Exception("Oh god! PDO does not appear to be enabled for this server.");
 			}
 
 			try {
 				$this->_connection = new PDO("mysql:host=".$hostname.";dbname=".$database, $username, $password, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
 				$this->_connection->query("SET NAMES utf8");
-			} catch (PDODatabaseException $DatabaseException) {
-				throw new DatabaseException($DatabaseException->getMessage(), $DatabaseException->getCode());
+			} catch (PDOException $exception) {
+				throw new Exception($exception->getMessage(), $exception->getCode());
 			}
 
 			self::$singletonInstance = $this;
 		}
 
 		/**
+		* This should most likely close the connection when you're done using the DatabaseConnection
+		* @author Allan Thue Rehhoff
+		* @return void
+		* @since 1.3
+		*/
+		public function __destruct() {
+			$this->statement = null;
+			$this->_connection = null;
+		}
+
+		/**
+		* Allow methods not implemented by this class to be called on the connection
+		* @author Allan Thue Rehhoff
+		* @todo Consider removing the DatabaseConnection::getConnection(); method now that we have this.
+		* @since 1.3
+		*/
+		public function __call($method, $params = []) {
+			if(method_exists($this->_connection, $method)) {
+				return call_user_func_array([$this->_connection, $method], $params);
+			} else {
+				throw new Exception("PDO::".$method." no such method.");
+			}
+		} 
+
+		/**
 		* Retrieve the latest initiated DatabaseConnection instance.
-		* @since 1.0
 		* @return (object)
 		* @author Allan Thue Rehhoff
+		* @since 1.0
 		*/
 		public static function getInstance() {
 			return self::$singletonInstance;
@@ -53,10 +77,53 @@ namespace Database {
 
 		/**
 		* Retrieve the connection instance used by the current DatabaseConnection instance.
-		* You should rarely have a use for this though
+		* You should rarely have a use for this though.
+		* @since 1.0
+		* @return (object)
+		* @author Allan Thue Rehhoff
 		*/
 		public function getConnection() {
 			return $this->_connection;
+		}
+
+		/**
+		* Turns off autocommit mode. Until changes made to the database are committed.
+		* @author Allan Thue Rehhoff
+		* @return (boolean)
+		* @since 1.3
+		*/
+		public function transaction() {
+			return ($this->transactionStarted = $this->_connection->beginTransaction());
+		}
+
+		/**
+		* Commits a transaction, returning the database connection to autocommit mode.
+		* @author Allan Thue Rehhoff
+		* @throws Exception
+		* @return (bool)
+		* @since 1.3
+		*/
+		public function commit() {
+			if($this->transactionStarted === true) {
+				return !($this->transactionStarted = !$this->_connection->commit());
+			} else {
+				throw new Exception("Attempt to commit when not in transaction.");
+			}
+		}
+
+		/**
+		* Rolls back the current transaction
+		* @author Allan Thue Rehhoff
+		* @throws Exception
+		* @return (bool)
+		* @since 1.3
+		*/
+		public function rollback() {
+			if($this->transactionStarted === true) {
+				return !($this->transactionStarted = !$this->_connection->rollBack());
+			} else {
+				throw new Exception("Attempt rollback when not in transaction.");
+			}
 		}
 
 		/**
@@ -64,30 +131,23 @@ namespace Database {
 		* @param (string) $sql The SQL string to qeury against the database
 		* @param (array) $args Arguments to pass along with the query
 		* @param (int) $fetchMode Default fetch mode for result sets, set to null for query types that cannot be fetched such as UPDATE
-		* @return (mixed)
-		* @throws DatabaseException
+		* @return (object)
+		* @throws Exception
 		* @author Allan Thue Rehhoff
-		* @since 1.0
 		* @todo Find and alternative to casting errorcodes to integers for handling error codes.
+		* @since 1.0
 		*/
 		public function query($sql, $filters = null, $fetchMode = PDO::FETCH_OBJ) {
-			$queryType = strtok($sql, " ");
-
 			try {
-				$stmt = $this->_connection->prepare($sql);
-				$stmt->execute($filters);
-				$this->rowCount = $stmt->rowCount();
-				if(strtoupper(strtok($sql, " ")) == "SELECT") {
-					$stmt->setFetchMode($fetchMode);
-					return $stmt->fetchAll();
-				} else {
-					// There's properly a lot of obscure SQL keywords that does not support getting the last insert id, such as DELETE, ALTER, EXPLAIN, SHOW
-					// But as long as this does not throw a hissy fit, the next developer can live happily ignoring that fact.
-					return $this->lastInsertId();
-				}
-			} catch(PDODatabaseException $DatabaseException) {
-				throw new DatabaseException($DatabaseException->getCode().": ".$DatabaseException->getMessage(), (int) $DatabaseException->getCode());
+				$this->statement = null;
+				$this->statement = $this->_connection->prepare($sql);
+				$this->statement->execute($filters);
+				$this->statement->setFetchMode($fetchMode);
+			} catch(PDOException $exception) {
+				throw new Exception($exception->getCode().": ".$exception->getMessage(), (int) $exception->getCode());
 			}
+
+			return $this->statement;
 		}
 
 		/**
@@ -100,7 +160,7 @@ namespace Database {
 		*/
 		public function select($table, $criteria = null) {
 			$sql = "SELECT * FROM ".$table." WHERE ".$this->keysToSql($criteria, "AND");
-			return $this->query($sql, $criteria);
+			return $this->query($sql, $criteria)->fetchAll();
 		}
 
 		/**
@@ -114,7 +174,8 @@ namespace Database {
 		*/
 		public function fetchRow($table, $criteria = null) {
 			$sql = "SELECT * FROM `".$table."` WHERE ".$this->keysToSql($criteria, "AND")." LIMIT 1";
-			return $this->query($sql, $criteria)[0];
+			$row = $this->query($sql, $criteria)->fetchAll();
+			return !empty($row) ? $row[0] : [];
 		}
 
 		/**
@@ -128,7 +189,16 @@ namespace Database {
 		*/
 		public function fetchCell($table, $column, $criteria = null) {
 			$sql = "SELECT `".$column."` FROM ".$table." WHERE ".$this->keysToSql($criteria, "AND")." LIMIT 1";
-			return $this->query($sql, $criteria)[0]->$column;
+			$row = $this->query($sql, $criteria)->fetchAll()[0]->$column;
+			return !empty($row) ? $row[0]->$column : false;
+		}
+
+		/**
+		* Alias of DatabaseConnection::fetchCell implemented for the drupal developers sake.
+		* @see DatabaseConnection::fetchCell();
+		*/
+		public function fetchField($table, $column, $criteria = null) {
+			return $this->fetchCell($table, $column, $criteria);
 		}
 
 		/**
@@ -141,7 +211,8 @@ namespace Database {
 		*/
 		public function insert($table, $variables = null) {
 			$variables = ($variables != null) ? $variables : [];
-			return $this->createRow("INSERT", $table, $variables);
+			$this->createRow("INSERT", $table, $variables);
+			return $this->lastInsertId();
 		}
 
 		/**
@@ -150,9 +221,10 @@ namespace Database {
 		* @param (string) $table Name of the table to replace into
 		* @param (array) $variables Column => Value pairs to be inserted
 		* @return (string) The last inserted ID
+		* @since 1.0
 		*/
 		public function replace($table, $variables) {
-			return $this->createRow("REPLACE", $table, $variables);
+			return $this->createRow("REPLACE", $table, $variables)->rowCount();
 		}
 
 		/**
@@ -186,8 +258,7 @@ namespace Database {
 			foreach ($criteria as $key => $value) $args["old_".$key] = $value;
 			
 			$sql = "UPDATE `".$table."` SET ".$this->keysToSql($variables, ",", "new_")." WHERE ".$this->keysToSql($criteria, " AND ", "old_");
-			$this->query($sql, $args);
-			return $this->rowCount();
+			return $this->query($sql, $args)->rowCount();
 		}
 
 		/**
@@ -201,8 +272,7 @@ namespace Database {
 		*/
 		public function delete($table, $criteria = null) {
 			$sql = "DELETE FROM `".$table."` WHERE ".$this->keysToSql($criteria, " AND");
-			$this->query($sql, $criteria);
-			return $this->rowCount();
+			return $this->query($sql, $criteria)->rowCount();
 		}
 
 		/**
@@ -228,19 +298,38 @@ namespace Database {
 
 		/**
 		* Debugging prepared statements can be severely painful, use this as you would with DatabaseConnection::query(); to output the resulting SQL
+		* Replaces any parameter placeholders in a query with the corrosponding value that parameter.
+		* Assumes anonymous parameters from $params are are in the same order as specified in $query
 		* @param (string) $sql A parameterized SQL query
 		* @param (array) $params Parameters for $statement
 		* @return (string)
 		* @author Allan Thue Rehhoff
-		* @since 1.0
-		* @todo Thoroughly test this, it appears to be semi-broken
+		* @since 1.1
+		* @todo Support UPDATE statements as seen in DatabaseConnection::update();
 		*/
-		public function compileQuery($sql, $params = []) {
-			$statement = preg_replace_callback("/(?:^|\W):(\w+)(?!\w)/", function ($k) use ($params) {
-				return sprintf(" '%s'", $params[$k[1]]);
-			}, $statement );
+		public function interpolateQuery($query, $params) {
+			$keys = [];
+			$values = $params;
 
-			return $statement;
+			foreach ($params as $key => $value) {
+				if (is_string($key)) {
+					$keys[] = '/:'.$key.'/';
+				} else {
+					$keys[] = '/[?]/';
+				}
+
+				if (is_string($value)) {
+					$values[$key] = "'" . $value . "'";
+				}
+
+		        if (is_array($value)) {
+					$values[$key] = "('" . implode("','", $value) . "')";
+				} else if (is_null($value)) {
+					$values[$key] = "NULL";
+				}
+			}
+
+			return preg_replace($keys, $values, $query, 1, $count);
 		}
 
 		/**
@@ -251,16 +340,6 @@ namespace Database {
 		*/
 		public function lastInsertId() {
 			return $this->_connection->lastInsertId();
-		}
-
-		/**
-		* Retrieve the number of affected rows from last query
-		* @return (int)
-		* @author Allan Rehhoff
-		* @since 1.0
-		*/
-		public function rowCount() {
-			return $this->rowCount;
 		}
 	}
 }

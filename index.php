@@ -10,7 +10,7 @@
 	require "preprocess.php";
 
 	$app = \Core\Application::getInstance();
-	$db = new \Database\DatabaseConnection(
+	$db = new \Database\Connection(
 		\Core\ConfigurationParser::getInstance()->get("database.host"),
 		\Core\ConfigurationParser::getInstance()->get("database.username"),
 		\Core\ConfigurationParser::getInstance()->get("database.password"),
