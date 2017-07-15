@@ -1,6 +1,8 @@
 #Changelog#
 v2.1
 - **This release is backwards incompatible. **  
+- Updated Tools::url(); functin to not strip filesnames from assets if they matched default route.  
+- Added SSL constant  
 - Fixed DatabaseConnection parameter order.  
 - Fixed Tools::url(); should no longer return paths with the requested path in it.  
 - Updated default 404 page to be more helpful and informative.  
