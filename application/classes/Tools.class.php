@@ -10,11 +10,12 @@
 		* @author Allan Thue Rehhoff
 		* @return string
 		*/
-		public static function url($path = '') {
-			$relativeUri = implode('/', \Core\Application::getInstance()->arg());
-			$basePath = ltrim($path, '/');
-			$baseUrl = strtok($_SERVER["REQUEST_URI"],'?');
-			return str_replace($relativeUri, '', $baseUrl.$basePath);
+		public static function url($asset = '') {
+			$protocol = SSL ? "https://" : "http://";
+			$host  = $_SERVER['HTTP_HOST'];
+			$path = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
+			$baseurl = $protocol.$host.$path."/";
+			return $baseurl.ltrim($asset, '/');
 		}
 	}
 ?>

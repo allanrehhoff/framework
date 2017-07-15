@@ -14,7 +14,8 @@
 	define("CRLF", CR.LF);
 	define("TAB", "\t");
 	define("BR", "<br />");
-	
+	define("SSL", !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on');
+
 	set_exception_handler(function($exception) {
 		if(php_sapi_name() == "cli") {
 			die($exception->getMessage()."(".$exception->getCode().") thrown in "-$exception->getFile.":".$exception->getLine());
