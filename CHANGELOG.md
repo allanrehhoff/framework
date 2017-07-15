@@ -1,4 +1,7 @@
 #Changelog#
+v3.0-alpha1
+- Rewritten to a controller based structure, having a controller is now mandatory.
+
 v2.1
 - **This release is backwards incompatible. **  
 - Fixed DatabaseConnection parameter order.  
