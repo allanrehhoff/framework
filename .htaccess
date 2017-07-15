@@ -20,7 +20,7 @@ Options +FollowSymlinks
 DirectoryIndex index.php
 
 RewriteEngine on
-RewriteBase /huskeliste/
+RewriteBase /subdomains/framework.rehhoff.me/
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 

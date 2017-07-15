@@ -7,7 +7,7 @@
 		<li>Check you haven't mispelled the request uri, (the part after "<?php print $_SERVER["HTTP_HOST"]; ?>")</li>
 		<li>Contact us about whether or not this page is located elsewhere,</li>
 		<li><a href="/">Visit the front page</a></li>
-		<?php if($_SERVER["HTTP_REFERER"]): ?>
+		<?php if(isset($_SERVER["HTTP_REFERER"])): ?>
 			<li><a href="<?php print $_SERVER["HTTP_REFERER"]; ?>">Go back to where you came from</a></li>
 		<?php endif; ?>
 	</ul>

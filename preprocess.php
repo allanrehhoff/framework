@@ -9,10 +9,6 @@
 	ini_set("display_errors", "On");
 	error_reporting(E_ALL);
 
-	header("Pragma: no-cache");
-	header("Cache-Control: no-cache, no-store, must-revalidate, max-age=0");
-	header("Expires: -1");
-
 	define("CR", "\r");
 	define("LF", "\n");
 	define("CRLF", CR.LF);
@@ -21,7 +17,7 @@
 	
 	set_exception_handler(function($exception) {
 		if(php_sapi_name() == "cli") {
-			die($exception);
+			die($exception->getMessage()."(".$exception->getCode().") thrown in "-$exception->getFile.":".$exception->getLine());
 		}
 		
 		$stack = '';
@@ -105,7 +101,12 @@
 
 	spl_autoload_register(function($className) {
 		$className = str_replace("\\", "/", $className);
-		$classFile = getcwd()."/application/classes/".$className.".class.php";
+
+		if(substr($className, -10) == "Controller" && $className != "Core/Controller") {
+			$classFile = getcwd()."/application/controllers/".substr($className, 0, -10).".php";
+		} else {
+			$classFile = getcwd()."/application/classes/".$className.".class.php";
+		}
 
 		require $classFile;
 	});

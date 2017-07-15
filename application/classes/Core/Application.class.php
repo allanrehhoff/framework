@@ -11,9 +11,11 @@ namespace Core {
 	* @see README.md
 	*/
 	class Application extends \Singleton {
-		private $cwd, $args, $config, $title, $view;
-		
+		private $cwd, $args, $config, $title, $view, $controller;
+
 		public function __construct() {
+			parent::__construct();
+
 			$this->config = ConfigurationParser::getInstance();
 			$this->cwd = getcwd();
 
@@ -43,17 +45,6 @@ namespace Core {
 				$title = sprintf($this->config->get("base_title"), '');
 			}
 			return $title;
-		}
-		
-		/**
-		* Use this method to debug your runtime configurations and arguments within the framework.
-		* @return string
-		*/
-		public function __toString() {
-			$ob = ob_start();
-			Debug::pre($this->args);
-			Debug::pre($this->config);
-			return ob_get_clean();
 		}
 
 		/**
@@ -90,6 +81,7 @@ namespace Core {
 			if($tpl === null) {
 				$tpl = $this->view;
 			}
+
 			return $this->getThemePath().'/'.basename($tpl).".tpl.php";
 		}
 
@@ -104,8 +96,8 @@ namespace Core {
 				$ctrl = $this->arg(0);
 			}
 
-			if(is_file($this->getApplicationPath()."/application/controller/".basename($ctrl).".php")) {
-				return $this->getApplicationPath()."/application/controller/".basename($ctrl).".php";
+			if(is_file($this->getApplicationPath()."/application/controllers/".basename($ctrl).".php")) {
+				return $this->getApplicationPath()."/application/controllers/".basename($ctrl).".php";
 			} else {
 				return false;
 			}
@@ -128,6 +120,31 @@ namespace Core {
 		*/
 		public function getThemePath() {
 			return $this->getApplicationPath()."/application/themes/".$this->config->get("theme");
+		}
+
+		/**
+		* Dispatches the given controller, serves a notfound if it doesn't exists
+		* @return array
+		*/
+		public function dispatch() {
+			$base = preg_replace('/\W+/','',strtolower(strip_tags($this->arg(0))));
+
+			if($this->getControllerPath($base) === false) {
+				$base = "notfound";
+			}
+
+			$controller = $base . "Controller";
+			$this->controller = new $controller;
+
+			$method = $this->arg(1);
+
+			if(!method_exists($this->controller, $method)) {
+				$method = "index";
+			}
+
+			$this->controller->$method();
+
+			return $this->controller->getData();
 		}
 	}
 }

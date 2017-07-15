@@ -1,3 +1,3 @@
 <?php require $app->getViewPath("header"); ?>
-html goes here.
+	<?php print $intro; ?>
 <?php require $app->getViewPath("footer"); ?>

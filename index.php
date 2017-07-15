@@ -9,30 +9,7 @@
 
 	require "preprocess.php";
 
-	$app = \Core\Application::getInstance();
-	$db = new \Database\Connection(
-		\Core\ConfigurationParser::getInstance()->get("database.host"),
-		\Core\ConfigurationParser::getInstance()->get("database.username"),
-		\Core\ConfigurationParser::getInstance()->get("database.password"),
-		\Core\ConfigurationParser::getInstance()->get("database.name")
-	);
+	$data = \Core\Application::getInstance()->dispatch();
 
-	$controller = is_file($app->getControllerPath()) ? $app->getControllerPath() : false;
-	if($controller !== false) {
-		require $controller;
-	}
-
-	$themeFunctions = is_file($app->getThemePath()."/theme-functions.php") ? $app->getThemePath()."/theme-functions.php" : false;
-	if($themeFunctions !== false) {
-		require $themeFunctions;
-	}
-
-	$view = is_file($app->getViewPath()) ? $app->getViewPath() : false;
-	if($view !== false) {
-		require $view;
-	}
-
-	if($controller == false && $view === false) {
-		require $app->getControllerPath("404");
-		require $app->getViewPath("404");
-	}
+	extract($data);
+	require $app->getViewPath();
