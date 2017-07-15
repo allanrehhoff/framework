@@ -6,6 +6,8 @@ v2.1
 - **This release is backwards incompatible. **  
 - Fixed DatabaseConnection parameter order.  
 - Fixed Tools::url(); should no longer return paths with the requested path in it.  
+- Updated Tools::url(); functin to not strip filesnames from assets if they matched default route.  
+- Added SSL constant  
 - Updated default 404 page to be more helpful and informative.  
 - Added default title to 404 page.  
 - Fixed singleton class to not always return the first class with a method containing getInstance();  
