@@ -10,41 +10,17 @@ namespace Core {
 	* @package Rehhoff_Framework
 	* @see README.md
 	*/
-	class Application extends \Singleton {
-		private $cwd, $args, $config, $title, $view, $controller;
+	class Application {
+		private $cwd, $args, $config, $view, $controller;
 
 		public function __construct() {
-			parent::__construct();
-
-			$this->config = ConfigurationParser::getInstance();
 			$this->cwd = getcwd();
+			$this->config = \Registry::set( new ConfigurationParser("config.json") );
 
 			$route = ((isset($_GET["route"])) && ($_GET["route"] != '')) ? $_GET["route"] : $this->config->get("default_route");
 			$this->args = explode('/', ltrim($route, '/'));
 
 			$this->view = $this->arg(0);
-		}
-		
-		/**
-		* Set a dynamic value for the title tag.
-		* @param (string) $title a title to display in a template file.
-		* @return self
-		*/
-		public function setTitle($title) {
-			$this->title = $title;
-		}
-
-		/**
-		* Get the current page title to be displayed.
-		* @return string
-		*/
-		public function getTitle() {
-			if(trim($this->title) != '') {
-				$title = sprintf($this->config->get("base_title"), $this->title);
-			} else {
-				$title = sprintf($this->config->get("base_title"), '');
-			}
-			return $title;
 		}
 
 		/**

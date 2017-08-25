@@ -9,7 +9,7 @@
 
 	require "preprocess.php";
 
-	$data = \Core\Application::getInstance()->dispatch();
+	$data = Registry::set( new Core\Application() )->dispatch();
 
 	extract($data);
 	require $app->getViewPath();

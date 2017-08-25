@@ -8,16 +8,15 @@ namespace Core {
 	* @author Allan Thue Rehhoff
 	* @package Rehhoff_Framework
 	*/
-	class ConfigurationParser extends \Singleton {
+	class ConfigurationParser {
 		private $parsedConfig;
-		private $configurationFile = 'config.json';
 		public $error = '';
 		
 		/**
 		* The constructor starts parsing of the configuration file.
 		*/
-		public function __construct() {
-			$this->parseConfig();
+		public function __construct($configurationFile) {
+			$this->parseConfig($configurationFile);
 		}
 
 		/**
@@ -25,12 +24,12 @@ namespace Core {
 		* @throws ConfigurationParserException
 		* @return void
 		*/
-		private function parseConfig() {
-			if(!is_file(getcwd().'/config.json')) {
-				throw new ConfigurationParserException('configuration file could not be located, please create config.json in current working directory.');
+		private function parseConfig($configurationFile) {
+			if(!is_file(getcwd().'/'.$configurationFile)) {
+				throw new ConfigurationParserException("The given configuration file could not be located.");
 			}
 			
-			$jsonConfig = file_get_contents(getcwd().'/'.$this->configurationFile);
+			$jsonConfig = file_get_contents(getcwd().'/'.$configurationFile);
 			$this->parsedConfig = json_decode($jsonConfig);
 
 			$jsonErrorMap = [
