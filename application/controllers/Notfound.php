@@ -1,5 +1,5 @@
 <?php
-	class notfoundController extends \Core\Controller {
+	class NotfoundController extends \Core\Controller {
 		public function __construct() {
 			parent::__construct();
 			header("HTTP/1.0 404 Not Found");

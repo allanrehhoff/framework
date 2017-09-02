@@ -1,5 +1,7 @@
 #Allan Rehhoff's Framework#
 
+#THIS README IS OUTDATED, IT'S NOT UPDATED FOR V3 YET.#
+
 ##Introduction##
 This is not what you'd typically associate with a fully functional MVC framework, and that is intentional.  
 The intention for this is to prevent the developer from writing complete spaghetti, while being leightweight, scaleable and portable.  

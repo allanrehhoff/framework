@@ -15,6 +15,7 @@
 	define("TAB", "\t");
 	define("BR", "<br />");
 	define("SSL", !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on');
+	define("CWD", getcwd());
 
 	set_exception_handler(function($exception) {
 		if(php_sapi_name() == "cli") {
@@ -104,13 +105,12 @@
 		$className = str_replace("\\", "/", $className);
 
 		if(substr($className, -10) == "Controller" && $className != "Core/Controller") {
-			$classFile = getcwd()."/application/controllers/".substr($className, 0, -10).".php";
+			$classFile = CWD."/application/controllers/".substr($className, 0, -10).".php";
 		} else {
-			$classFile = getcwd()."/application/classes/".$className.".class.php";
+			$classFile = CWD."/application/classes/".$className.".class.php";
 		}
 
 		require $classFile;
 	});
 	
 	set_include_path(dirname(__FILE__));
-?>

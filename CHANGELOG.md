@@ -1,4 +1,17 @@
 #Changelog#
+v3.0-alpha2
+- Introduced CWD constant, containing current working directory.  
+- Implemented a registry class to avoid the use of future singletons.  
+- Updated default theme files to match the new structure.  
+- ConfigurationParser can now be used to parse additional configuration files.  
+- Page title handling, is now handled by Controller class, instead of the Application.  
+- Added second argument, EXTR_SKIP,to index.php's extract(); call for security reasons.  
+- Merged Debug and Tools classes, to Functions instead, yeah yeah, I know bad practice, screw me later.  
+- Themes are now required to define a 'theme.json' config file.  
+- Removed 'theme-functions.php' file.  
+- Renamed ConfigurationsParser() to Configuration.  
+- Controller filenames, and classes are now Capitalized.  
+
 v3.0-alpha1
 - Rewritten to a controller based structure, having a controller is now mandatory.
 

@@ -3,12 +3,12 @@ namespace Core {
 	use Exception;
 	
 	/**
-	* Handles parsing and saving of the configuration file.
+	* Handles parsing and saving of a given configuration file.
 	* @extends Singleton
 	* @author Allan Thue Rehhoff
 	* @package Rehhoff_Framework
 	*/
-	class ConfigurationParser {
+	class Configuration {
 		private $parsedConfig;
 		public $error = '';
 		
@@ -25,11 +25,11 @@ namespace Core {
 		* @return void
 		*/
 		private function parseConfig($configurationFile) {
-			if(!is_file(getcwd().'/'.$configurationFile)) {
-				throw new ConfigurationParserException("The given configuration file could not be located.");
+			if(!is_file($configurationFile)) {
+				throw new ConfigurationException("The given configuration file '$configurationFile' could not be located.");
 			}
 			
-			$jsonConfig = file_get_contents(getcwd().'/'.$configurationFile);
+			$jsonConfig = file_get_contents($configurationFile);
 			$this->parsedConfig = json_decode($jsonConfig);
 
 			$jsonErrorMap = [
@@ -44,9 +44,9 @@ namespace Core {
 
 			if($this->error !== JSON_ERROR_NONE) {
 				if(isset($jsonErrorMap[$this->error])) {
-					throw new ConfigurationParserException("Unable to parse configuration file, ".$jsonErrorMap[$this->error]);
+					throw new ConfigurationException("Unable to parse configuration file, ".$jsonErrorMap[$this->error]);
 				} else {
-					throw new ConfigurationParserException("Unable to parse configuration file, unknown error.");
+					throw new ConfigurationException("Unable to parse configuration file, unknown error.");
 				}
 			}
 		}
@@ -68,7 +68,7 @@ namespace Core {
 			$configValue = $this->parsedConfig;
 			foreach ($paths as $path) {
 				if(!isset($configValue->$path)) {
-					throw new ConfigurationParserException($conf." is not a valid configuration");
+					throw new ConfigurationException($conf." is not a valid configuration");
 					return false;
 				}
 				$configValue = $configValue->$path;
@@ -88,7 +88,7 @@ namespace Core {
 			$configValue = $this->parsedConfig;
 			foreach ($paths as $path) {
 				if(!isset($configValue->$path)) {
-					throw new ConfigurationParserException($conf." is not a valid configuration");
+					throw new ConfigurationException($conf." is not a valid configuration");
 					return false;
 				}
 			}

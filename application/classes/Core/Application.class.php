@@ -14,8 +14,8 @@ namespace Core {
 		private $cwd, $args, $config, $view, $controller;
 
 		public function __construct() {
-			$this->cwd = getcwd();
-			$this->config = \Registry::set( new ConfigurationParser("config.json") );
+			$this->cwd = CWD;
+			$this->config = \Registry::set(new Configuration($this->cwd."/config.json"));
 
 			$route = ((isset($_GET["route"])) && ($_GET["route"] != '')) ? $_GET["route"] : $this->config->get("default_route");
 			$this->args = explode('/', ltrim($route, '/'));
@@ -103,11 +103,12 @@ namespace Core {
 		* @return array
 		*/
 		public function dispatch() {
-			$base = preg_replace('/\W+/','',strtolower(strip_tags($this->arg(0))));
+			$base = preg_replace('/\W+/', '', ucfirst(strtolower(strip_tags($this->arg(0)))));
 
 			if($this->getControllerPath($base) === false) {
-				$base = "notfound";
+				$base = "Notfound";
 			}
+
 
 			$controller = $base . "Controller";
 			$this->controller = new $controller;
