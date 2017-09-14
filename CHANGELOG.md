@@ -1,4 +1,11 @@
 #Changelog#
+v3.0-alpha3
+- Added \DOM\Document as a Controller property.  
+- Added core Configuration as a Controller property.  
+- Added a convenience wrapper Controller::setView();  
+- Restructured the Application::dispatch(); method to properly construct class names.  
+- Fixed fatal errors in the Notfound controller.  
+
 v3.0-alpha2
 - Introduced CWD constant, containing current working directory.  
 - Implemented a registry class to avoid the use of future singletons.  

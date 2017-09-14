@@ -103,17 +103,16 @@ namespace Core {
 		* @return array
 		*/
 		public function dispatch() {
-			$base = preg_replace('/\W+/', '', ucfirst(strtolower(strip_tags($this->arg(0)))));
+			$base = ucwords(preg_replace('/\W+/', ' ', strtolower($this->arg(0))));
 
 			if($this->getControllerPath($base) === false) {
 				$base = "Notfound";
 			}
 
-
-			$controller = $base . "Controller";
-			$this->controller = new $controller;
-
+			$controller = str_replace(" ", '', $base . "Controller");
 			$method = $this->arg(1);
+
+			$this->controller = new $controller;
 
 			if(!method_exists($this->controller, $method)) {
 				$method = "index";

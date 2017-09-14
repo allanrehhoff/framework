@@ -6,8 +6,8 @@
 		}
 
 		public function index() {
-			$this->application->setTitle("Not found");
-			$this->application->setView("notfound");
+			$this->setTitle("Not found");
+			$this->setView("notfound");
 			// One could log this 404 entry here.
 		}
 	}

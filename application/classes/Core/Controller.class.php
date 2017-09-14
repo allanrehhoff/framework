@@ -71,5 +71,12 @@ namespace Core {
 		public function getTitle() {
 			return $this->data["title"];
 		}
+
+		/**
+		* Convenience wrapper, for setting/overriding a view within any controller
+		*/
+		protected function setView($view) {
+			$this->application->setView($view);
+		}
 	}
 }
