@@ -8,7 +8,6 @@
 	*/
 
 	require "preprocess.php";
-
 	$data = Registry::set(new Core\Application())->dispatch();
 
 	extract($data, EXTR_SKIP);

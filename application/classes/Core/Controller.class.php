@@ -2,25 +2,30 @@
 namespace Core {
 	use Exception;
 
+	/**
+	* The core controller which subcontrollers should extend upon.
+	*/
 	class Controller {
 		protected $application, $request, $title;
 		protected $data = [];
 		private $theme;
 
 		public function __construct() {
-			$this->application = \Registry::get("Core\Application");
 			$this->request = array_merge($_GET, $_POST);
-			$this->setTitle("Frontpage");
-
+			$this->application = \Registry::get("Core\Application");
+			$this->configuration = \Registry::get("Core\Configuration");
 			$this->theme = (new Configuration($this->application->getThemepath()."/theme.json"));
-			$this->addThemeAssets();
+			$this->document = \Registry::set(new \DOM\Document);
 
 			$this->database = new \Database\Connection(
-				\Registry::get("Core\Configuration")->get("database.host"),
-				\Registry::get("Core\Configuration")->get("database.username"),
-				\Registry::get("Core\Configuration")->get("database.password"),
-				\Registry::get("Core\Configuration")->get("database.name")
+				$this->configuration->get("database.host"),
+				$this->configuration->get("database.username"),
+				$this->configuration->get("database.password"),
+				$this->configuration->get("database.name")
 			);
+
+			$this->setTitle("Frontpage");
+			$this->addThemeAssets();
 		}
 
 		/**
@@ -56,7 +61,7 @@ namespace Core {
 		* @return self
 		*/
 		public function setTitle($title) {
-			$this->data["title"] = sprintf(\Registry::get("Core\Configuration")->get("base_title"), $title);
+			$this->data["title"] = sprintf($this->configuration->get("base_title"), $title);
 		}
 
 		/**
