@@ -4,11 +4,15 @@
 	* @author Allan Thue Rehhoff
 	* @package Rehhoff_Framework
 	*/
+
+	// Version check
 	if(version_compare(PHP_VERSION, 5.4, '<')) die("PHP >= 5.4 is required for this framework to function properly.");
 
+	// Error reporting
 	ini_set("display_errors", "On");
 	error_reporting(E_ALL);
 
+	// Helper constants
 	define("CR", "\r");
 	define("LF", "\n");
 	define("TAB", "\t");
@@ -18,6 +22,7 @@
 	define("SSL", !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on');
 	define("CWD", getcwd());
 
+	// Exception handler
 	set_exception_handler(function($exception) {
 		if(CLI) die($exception->getMessage()."(".$exception->getCode().") thrown in "-$exception->getFile().":".$exception->getLine());
 		
@@ -40,7 +45,8 @@
 		print '<strong>Stacktrace: </strong><br>'.$stack;
 		print '</pre>';
 	});
-	
+
+	// Error handler
 	set_error_handler(function($errno, $errstr, $errfile, $errline, $errcontext) {
 		if(!(error_reporting() & $errno)) {
 			return;
@@ -100,6 +106,7 @@
 		}
 	});
 
+	// Autoloader
 	spl_autoload_register(function($className) {
 		$className = str_replace("\\", "/", $className);
 
@@ -111,5 +118,6 @@
 
 		require $classFile;
 	});
-	
+
+	// Include paths.
 	set_include_path(dirname(__FILE__));
