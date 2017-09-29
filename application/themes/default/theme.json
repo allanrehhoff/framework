@@ -1,6 +1,6 @@
 {
 	"javascript": [
-		"/application/themes/default/javascript/jquery-1.12.3.min.js"
+		"/application/themes/default/javascript/jquery-3.2.1.min.js"
 	],
 	"stylesheets": [
 		"/application/themes/default/stylesheets/screen.css",

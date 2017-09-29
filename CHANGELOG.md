@@ -1,9 +1,13 @@
 #Changelog#
 v3.0-alpha4
+- Upgraded jQuery to v3.2.1, effectively giving legacy browsers the middle finger.  
 - Fixed incorrect call to Exception::getFile(); in bundled exception handler.  
-- Cleaned up messy .htaccess
-- Added CLI constant.
-- Error & Exception handler now uses CLI constant check.
+- Cleaned up messy .htaccess.  
+- Added CLI constant, getting ready for CLI support.  
+- Error & Exception handler now uses CLI constant check.  
+- Removed the Tools class, Tools::url(); moved to Functions class.  
+- Documented the Registry class by comments.  
+- Documented Functions class.  
 
 v3.0-alpha3
 - Added \DOM\Document as a Controller property.  
@@ -122,7 +126,7 @@ v1.3
 - Introduced Exception handler  
 - Moved $db into the application class  
 - Updated README, more to come  
-- Application::setArgs() is now private, it was never intented to be used pubicly  
+- Application::setArgs() is now private, it was never intented to be used publicly  
 - Renamed Initialize class to Application  
 - Renamed Application namespace to Core  
 - Cleaned up index.php  

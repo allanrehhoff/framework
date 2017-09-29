@@ -1,15 +1,35 @@
 <?php
 /**
+* Put whatever helper functions you may need in this class.
+* I know classes was never meant to be used for collection spaghetti...
+* But as of this moment, i'm about to give up where I can put those without making a mess...
+* @author Allan Thue Rehhoff
 * @package Rehhoff_Framework
 */
 	class Functions {
 		/**
-		* Helps you debug your application.
-		* @author Allan Thue Rehhoff
+		* Mandatory constructor, nothing to do here...
+		* @return void
 		*/
 		public function __construct() {
+
 		}
-		
+
+		/**
+		* Removes any need for having a hardcoded basepath in some obscure place
+		* "cough"wordpress"cough"
+		* @param (string) $url Path to element of which to create a URI.
+		* @author Allan Thue Rehhoff
+		* @return (string)
+		*/
+		public static function url($asset = '') {
+			$protocol = SSL ? "https://" : "http://";
+			$host  = $_SERVER['HTTP_HOST'];
+			$path = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
+			$baseurl = $protocol.$host.$path."/";
+			return $baseurl.ltrim($asset, '/');
+		}
+
 		/**
 		* Pretty print almost any variable in a human readable format.
 		* @param (mixed) $stuff A variable to debug
