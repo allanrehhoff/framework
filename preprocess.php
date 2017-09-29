@@ -51,7 +51,7 @@
 		if(!(error_reporting() & $errno)) {
 			return;
 		}
-			
+
 		switch($errno) {
 			case E_STRICT       :
 			case E_NOTICE       :
