@@ -1,4 +1,3 @@
-#php_flag magic_quotes_gpc Off
 Options +FollowSymlinks
 
 <Files config.json>
@@ -7,29 +6,20 @@ Options +FollowSymlinks
 </Files>
 
 <IfModule mod_headers.c>
-    Header set Cache-Control "no-cache, no-store, must-revalidate"
-    Header set Pragma "no-cache"
-    Header set Expires 0
+	Header set Cache-Control "no-cache, no-store, must-revalidate"
+	Header set Pragma "no-cache"
+	Header set Expires 0
 </IfModule>
-
-#RewriteCond %{REQUEST_URI}::$1 ^(.*?/)(.*)::\2$
-#RewriteRule ^(.*)$ - [E=BASE:%1]
 
 # If the above lines doesn't work, set the RewriteBase manually
 # Most likely if this application does not reside in the document root
 DirectoryIndex index.php
 
-RewriteEngine on
-RewriteBase /subdomains/framework.rehhoff.me/
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
+<IfModule mod_rewrite.c>
+	RewriteEngine on
+	RewriteBase /
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
 
-RewriteRule ^(.*)$ index.php/?route=$1 [L]
-
-### OLD HTACCESS KEPT IN CASE I NEED IT ###
-#RewriteCond %{HTTP_HOST} !^www\.
-#RewriteCond %{HTTP_HOST} !^dev\.
-#RewriteRule ^(.*)$ http://www.%{HTTP_HOST}/$1 [R=301,L]
-
-#RewriteCond %{REQUEST_FILENAME} !-f
-#RewriteRule ^(.*)$ /index.php?route=$1 [L,QSA]
+	RewriteRule ^(.*)$ index.php/?route=$1 [L]
+</IfModule>
