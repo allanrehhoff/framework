@@ -1,4 +1,8 @@
 #Changelog#
+v3.0-alpha4
+- Fixed incorrect call to Exception::getFile(); in bundles exception handler.  
+- Cleaned up messy .htaccess
+
 v3.0-alpha3
 - Added \DOM\Document as a Controller property.  
 - Added core Configuration as a Controller property.  

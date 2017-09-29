@@ -19,7 +19,7 @@
 
 	set_exception_handler(function($exception) {
 		if(php_sapi_name() == "cli") {
-			die($exception->getMessage()."(".$exception->getCode().") thrown in "-$exception->getFile.":".$exception->getLine());
+			die($exception->getMessage()."(".$exception->getCode().") thrown in "-$exception->getFile().":".$exception->getLine());
 		}
 		
 		$stack = '';
