@@ -11,16 +11,15 @@
 
 	define("CR", "\r");
 	define("LF", "\n");
-	define("CRLF", CR.LF);
 	define("TAB", "\t");
+	define("CRLF", CR.LF);
 	define("BR", "<br />");
+	define("CLI", php_sapi_name() == "cli");
 	define("SSL", !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on');
 	define("CWD", getcwd());
 
 	set_exception_handler(function($exception) {
-		if(php_sapi_name() == "cli") {
-			die($exception->getMessage()."(".$exception->getCode().") thrown in "-$exception->getFile().":".$exception->getLine());
-		}
+		if(CLI) die($exception->getMessage()."(".$exception->getCode().") thrown in "-$exception->getFile().":".$exception->getLine());
 		
 		$stack = '';
 		$stack .= '<ol style="margin-top:0px; line-height:10px;">'."\n";
@@ -68,7 +67,7 @@
 		$trace = array_reverse(debug_backtrace());
 		array_pop($trace);
 		
-		if(php_sapi_name() == "cli") {
+		if(CLI) {
 			print "Backtrace from ".$type." '".$errstr."' at ".$errfile.' '.$errline.':'."\n";
 			foreach($trace as $item) {
 				print '  ' .(isset($item["file"]) ? $item["file"] : "<unknown file>")." line ".(isset($item["line"]) ? $item["line"] : "<unknown line>")." calling ".$item['function']."()"."\n";

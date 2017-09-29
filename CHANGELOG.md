@@ -2,6 +2,8 @@
 v3.0-alpha4
 - Fixed incorrect call to Exception::getFile(); in bundles exception handler.  
 - Cleaned up messy .htaccess
+- Added CLI constant.
+- Error & Exception handler now uses CLI constant check.
 
 v3.0-alpha3
 - Added \DOM\Document as a Controller property.  
