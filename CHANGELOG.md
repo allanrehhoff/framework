@@ -1,4 +1,13 @@
 #Changelog#
+v3.0-alpha5  
+- Fixed a stupid double function declaration "Functions::url();" resulting in fatal error.  
+- Removed Application::setView(); as that is conbtrollers area.  
+- Moved view related methods to \Core\Controller allowing a cleaner template syntax in views, aka less function calls.  
+- Updated a few docblocks.  
+- Controllers can now disable their view, by setting them to null.  
+- Finally started updating README.md  
+- Added a .gitignore.  
+
 v3.0-alpha4
 - Upgraded jQuery to v3.2.1, effectively giving legacy browsers the middle finger.  
 - Fixed incorrect call to Exception::getFile(); in bundled exception handler.  

@@ -1,3 +1,3 @@
-<?php require Registry::get("Core\Application")->getViewPath("header"); ?>
+<?php require $header; ?>
 	<?php print $intro; ?>
-<?php require Registry::get("Core\Application")->getViewPath("footer"); ?>
+<?php require $footer; ?>

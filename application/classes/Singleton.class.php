@@ -1,6 +1,11 @@
 <?php
+/**
+* Extend this class to create a singletong class.
+* This class is deprecated, use Registry::set(object) to create a globally accessible instance.
+* @deprecated Deprecated since "v3.0-alpha2"
+*/
 abstract class Singleton {
-	protected function __construct(){ }
+	protected function __construct() { }
 
 	final private function __clone() { }
 	

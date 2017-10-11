@@ -1,4 +1,4 @@
-<?php require Registry::get("Core\Application")->getViewPath("header"); ?>
+<?php require $header; ?>
 	<h1>404 Error.</h1>
 	<strong>Was does that mean in a human language?</strong>
 	<p>The page you've requested at <em><?php print $_SERVER["REQUEST_URI"]; ?></em> does not exist.</p>
@@ -11,4 +11,4 @@
 			<li><a href="<?php print $_SERVER["HTTP_REFERER"]; ?>">Go back to where you came from</a></li>
 		<?php endif; ?>
 	</ul>
-<?php require Registry::get("Core\Application")->getViewPath("footer"); ?>
+<?php require $footer; ?>

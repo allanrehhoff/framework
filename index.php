@@ -8,7 +8,10 @@
 	*/
 
 	require "preprocess.php";
-	$data = Registry::set(new Core\Application())->dispatch();
+	$controller = Registry::set(new Core\Application())->dispatch();
 
-	extract($data, EXTR_SKIP);
-	require Registry::get("Core\Application")->getViewPath();
+	extract($controller->getData(), EXTR_SKIP);
+
+	if($controller->hasView() === true) {
+		require $controller->getViewPath();
+	}

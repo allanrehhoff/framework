@@ -11,7 +11,7 @@ namespace Core {
 	* @see README.md
 	*/
 	class Application {
-		private $cwd, $args, $config, $view, $controller;
+		private $cwd, $args, $config, $controller;
 
 		public function __construct() {
 			$this->cwd = CWD;
@@ -19,8 +19,6 @@ namespace Core {
 
 			$route = ((isset($_GET["route"])) && ($_GET["route"] != '')) ? $_GET["route"] : $this->config->get("default_route");
 			$this->args = explode('/', ltrim($route, '/'));
-
-			$this->view = $this->arg(0);
 		}
 
 		/**
@@ -46,20 +44,6 @@ namespace Core {
 		public function getApplicationPath() {
 			return $this->cwd;
 		}
-		
-		/**
-		* Get the path to a template file, ommit .tpl.php extension
-		* TODO: cut .tpl.php from the $tpl param, if provided. (Find out if I can use basename()'s second argument)
-		* @param (string) $tpl name of the template file to get path for,
-		* @return string
-		*/
-		public function getViewPath($tpl = null) {
-			if($tpl === null) {
-				$tpl = $this->view;
-			}
-
-			return $this->getThemePath().'/'.basename($tpl).".tpl.php";
-		}
 
 		/**
 		* Get path to the specified controller file. Ommit the .php extension
@@ -78,16 +62,6 @@ namespace Core {
 				return false;
 			}
 		}
-		
-		/**
-		* If allowed by configurations controllers can define their own view file to be used.
-		* @param Name of the view to use, without .tpl.php extensions.
-		* @return bool
-		*/
-		public function setView($viewName) {
-			$this->view = $viewName;
-			return true;
-		}
 
 		/**
 		* Get the path to the current active theme.
@@ -99,7 +73,8 @@ namespace Core {
 		}
 
 		/**
-		* Dispatches the given controller, serves a notfound if it doesn't exists
+		* Dispatches a controller, based upon the requeted path..
+		* Serves a NotfoundController if it doesn't exists
 		* @return array
 		*/
 		public function dispatch() {
@@ -120,7 +95,7 @@ namespace Core {
 
 			$this->controller->$method();
 
-			return $this->controller->getData();
+			return $this->controller;
 		}
 	}
 }
