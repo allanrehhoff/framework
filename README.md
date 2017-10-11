@@ -100,7 +100,7 @@ Values can be accessed, changed, removed and saved using a dot syntax.
 ?>
 ```
 
-> *WARNING:*
+> *WARNING:*  
 > Calling the **Configuration()->save();** method will overwrite the current configuration file and write current configuration settings to the loaded JSON file.  
 
 The core base_title setting only supports one wildcard %s use **(controller)->setTitle($title)** in your controller files to set a dynamic title.  
