@@ -69,17 +69,7 @@ You can add a new "partial" or "children" by adding it's path to the controllers
 
 > *NOTE:*  
 > header.tpl.php, footer.data.php, and any other view files you plan to include or require in another view file cannot have a controller file.  
-
-##Permalinks##
-Any links in your theme files should be passed through **Functions::url()** like so: 
-```
-<?php Functions::url("/path/to/your-file.ext") ?>
-```
-This ensures the file is being linked correct, in most cases if the application is installed in a subfolder.  
-You may also link the full path manually, the above is solely a helper method.  
-
-However, **do not** link assets this way, use the theme configuration for this.  
-
+  
 ##Configuration##
 The main configuration resides within the file **config,json**, and should contain nothing but configuration settings used by the core and controllers.  
 
@@ -104,7 +94,53 @@ Values can be accessed, changed, removed and saved using a dot syntax.
 > Calling the **Configuration()->save();** method will overwrite the current configuration file and write current configuration settings to the loaded JSON file.  
 
 The core base_title setting only supports one wildcard %s use **(controller)->setTitle($title)** in your controller files to set a dynamic title.  
+  
+##Autoloading classes##
+Autoloading is a mechanism which requires class, interface and trait definitions (from here on, referenced as instances) on demand.  
+Files containing the definition of an instance must share name with the instance name, and end on **.class.php**.  
+Additionally instances residing within a namespace must be located within a folder structure matching the the namespacing structure (relative from classes/ folder).  
+  
+##Errors and Exceptions##
+The application comes bundled by default with a rather agressive error and exception handler, those handlers will take care of generating a small stacktrace for debugging purposes.  
+Every PHP notice/error is treated as a fatal error by the error handler, this is to prevent the next developer from banging his head into the table later on, as those errors should be dealt with during development.  
+  
+However if you do decide to be a nincompoop and annoy the next developer you can turn of error reporting entirely by using the **ini_* ** functions in **preprocess.php**
 
+The exception handler will still kill your application however, due to exceptions being thrown around.  
+
+Good practice dictates that while developing your custom classes you should also create custom exceptions in the same namespace to match your classes.  
+  
+##The Registry##
+Is where all instances that should be globally accessible is stored.  
+
+Once an instance has been set in the registry, it is immediately accesible by using **Registry::get()** instances are keyed by their class name definitions.  
+The instance registered, will be returned.  
+  
+Examples:  
+```
+<?php
+	// Exmaple 1
+	$currentUser = Registry::set( new User($uid) );
+
+	// Example 2
+	$currentUser = Registry::get("User");
+?>
+```
+
+In case an instance is namespaced the namespace should also be specified (without the initial backslash) upon retrieval.
+
+Example:  
+```
+<?php
+	Registry::set( new \Alerts\Error("No more cheese for the pizza...") );
+
+	print Registry::get("Alerts\Error")->getMessage(); // Would print: "No more cheese for the pizza"
+?>
+```
+  
+This structure is in place to avoid singletons being misused.  
+Albeit this framework currently ships with a \Singleton(); class, it's use is discouraged, as it is currently deprecated, and to be removed later on.  
+  
 ##Database##
 This section assumes you have basic knowledge of PDO.  
 (I haven't yet had time to properly test this documentation, as though it may appear outdated, use at own risk.)
@@ -124,8 +160,8 @@ Queries with a return value will be fetched as objects, for instance:
 ```
 <?php \Registry::get("Database\Connection")->select("animals"); ?>
 ```
-
-##Data Entities##
+  
+##Database Entities##
 For easier data manipulation, data objects should extend the **\Database\Entity** class.  
 Every class that extends **\Database\DBObject** must implement the following methods.  
 
@@ -135,10 +171,10 @@ Every class that extends **\Database\DBObject** must implement the following met
 Every data object take an optional parameter [(int) primary_key] upon instantiating,  
 identifying whether a new data object should be instantiated or an already existing row should be loaded from the table.  
 
-if you wish to change data use the **->set(array('column' => 'value'));**  
+If you wish to change data use the **->set(array('column' => 'value'));**  
 This will allow you to call **->save();** on an object and thus saving the data to your database.  
 The data object will be saved as a new row if the primary_key key parameter was not present upon instantiating.  
-
+  
 ##The Document class##
 In the DOM namespace you'll find the Document class, this can be used to add stylesheets and javscript to the page.  
 Do either of the following to achieve this.  
@@ -154,22 +190,12 @@ Set the page title with the **->setTitle()** method
 > *NOTE:*  
 > You must manually implement rendering of custom media stylesheets and custom region javascripts. as only the defaults will be rendered by the core files.  
   
-##Errors and Exceptions##
-The application comes bundled by default with a rather agressive error and exception handler, those handlers will take care of generating a small stacktrace for debugging purposes.  
-Every PHP notice/error is treated as a fatal error by the error handler, this is to prevent the next developer from banging his head into the table later on, as those errors should be dealt with during development.  
-  
-However if you do decide to be a nincompoop and annoy the next developer you can turn of error reporting entirely by using the **ini_* ** functions in **preprocess.php**
+##Permalinks##
+Any links in your theme files should be passed through **Functions::url()** like so: 
+```
+<?php Functions::url("/path/to/your-file.ext") ?>
+```
+This ensures the file is being linked correct, in most cases if the application is installed in a subfolder.  
+You may also link the full path manually, the above is solely a helper method.  
 
-The exception handler will still kill your application however, due to exceptions being thrown around.  
-
-Good practice dictates that while developing your custom classes you should also create custom exceptions in the same namespace to match your classes.  
-
-##Autoloading classes##
-Autoloading is a mechanism which requires class, interface and trait definitions (from here on, referenced as instances) on demand.  
-Files containing the definition of an instance must share name with the instance name, and end on **.class.php**.  
-Additionally instances residing within a namespace must be located within a folder structure matching the the namespacing structure (relative from classes/ folder).  
-
-##The Registry##
-Is where all objects that are globally accessible should be stored.  
-
-TO BE UPDATED.....
+However, **do not** link assets this way, use the theme configuration for this.  
