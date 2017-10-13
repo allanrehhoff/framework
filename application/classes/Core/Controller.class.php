@@ -24,14 +24,12 @@ namespace Core {
 			$this->theme = (new Configuration($this->application->getThemepath()."/theme.json"));
 			$this->view = $this->application->arg(0);
 
-			/*
 			$this->database = new \Database\Connection(
 				$this->configuration->get("database.host"),
 				$this->configuration->get("database.username"),
 				$this->configuration->get("database.password"),
 				$this->configuration->get("database.name")
 			);
-			*/
 
 			$this->data["header"] = $this->getViewPath("header");
 			$this->data["footer"] = $this->getViewPath("footer");
