@@ -1,4 +1,9 @@
 #Changelog#
+v3.0-alpha6  
+- theme.json and error_log are now inaccessible from URL's  
+- Cache control headers moved to Application::__construct();  
+- New config value, cache_control.  
+
 v3.0-alpha5  
 - Fixed a stupid double function declaration "Functions::url();" resulting in fatal error.  
 - Removed Application::setView(); as that is conbtrollers area.  

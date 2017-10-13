@@ -2,6 +2,7 @@
     "theme": "default",
     "base_title": "%s | default-title",
     "default_route": "index",
+    "cache_control": 23,
     "database": {
         "host": "localhost",
         "username": "root",

@@ -1,15 +1,9 @@
 Options +FollowSymlinks
 
-<Files config.json>
+<FilesMatch "(theme.json|config.json|error_log)">
 	Order Allow,Deny
 	Deny from all
-</Files>
-
-<IfModule mod_headers.c>
-	Header set Cache-Control "no-cache, no-store, must-revalidate"
-	Header set Pragma "no-cache"
-	Header set Expires 0
-</IfModule>
+</FilesMatch >
 
 # If the above lines doesn't work, set the RewriteBase manually
 # Most likely if this application does not reside in the document root

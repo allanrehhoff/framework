@@ -19,6 +19,16 @@ namespace Core {
 
 			$route = ((isset($_GET["route"])) && ($_GET["route"] != '')) ? $_GET["route"] : $this->config->get("default_route");
 			$this->args = explode('/', ltrim($route, '/'));
+
+			if($this->config->get("cache_control") !== false) {
+  				header("Cache-Control: max-age=".(int)$this->config->get("cache_control"));
+  				header("Cache-Control: post-check=1, pre-check=1", false);
+  				header("Pragma: cache");
+			} else {
+				header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+				header("Cache-Control: post-check=0, pre-check=0", false);
+				header("Pragma: no-cache");
+			}
 		}
 
 		/**
