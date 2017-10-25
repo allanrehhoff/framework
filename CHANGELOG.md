@@ -1,4 +1,8 @@
 #Changelog#
+v3.0-alpha7  
+- PHP Error messages updated to include bootstrap compatibility.  
+- Moving stylesheet and javascript logic to seperate variables.  
+
 v3.0-alpha6  
 - theme.json and error_log are now inaccessible from URL's  
 - Cache control headers moved to Application::__construct();  
