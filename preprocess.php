@@ -36,13 +36,13 @@
 		
 		$stack .= '</ol>'."\n";
 		
-		print '<pre style="">';
-		print '<h1 style="margin:0px;">Uncaught Exception: '.get_class($exception).'</h1><br>';
-		print '<strong>Code: </strong>'.$exception->getCode().'<br>';
-		print '<strong>File: </strong>'.$exception->getFile().'<br>';
-		print '<strong>Line: </strong>'.$exception->getLine().'<br>';
-		print '<strong>Message: </strong>'.$exception->getMessage().'<br>';
-		print '<strong>Stacktrace: </strong><br>'.$stack;
+		print '<pre class="alert alert-danger">';
+			print '<h1 style="margin:0px;">Uncaught Exception: '.get_class($exception).'</h1><br>';
+			print '<strong>Code: </strong>'.$exception->getCode().'<br>';
+			print '<strong>File: </strong>'.$exception->getFile().'<br>';
+			print '<strong>Line: </strong>'.$exception->getLine().'<br>';
+			print '<strong>Message: </strong>'.$exception->getMessage().'<br>';
+			print '<strong>Stacktrace: </strong><br>'.$stack;
 		print '</pre>';
 	});
 
