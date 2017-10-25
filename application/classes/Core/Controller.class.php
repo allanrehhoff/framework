@@ -31,11 +31,14 @@ namespace Core {
 				$this->configuration->get("database.name")
 			);
 
+			$this->setTitle("Frontpage");
+			$this->addThemeAssets();
+
 			$this->data["header"] = $this->getViewPath("header");
 			$this->data["footer"] = $this->getViewPath("footer");
 
-			$this->setTitle("Frontpage");
-			$this->addThemeAssets();
+			$this->data["stylesheets"] = \DOM\Document::getStylesheets();
+			$this->data["javascript"]  = \DOM\Document::getJavascript("footer");
 		}
 
 		/**
