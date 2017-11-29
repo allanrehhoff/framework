@@ -14,6 +14,8 @@ namespace Core {
 
 		/**
 		* Contsructs the overall environment, setting up helpers and initial variables.
+		* @uses \Registry
+		* @uses \DOM\Document
 		* @return void
 		*/
 		public function __construct() {
@@ -31,11 +33,10 @@ namespace Core {
 				$this->configuration->get("database.name")
 			);
 
-			$this->setTitle("Frontpage");
 			$this->addThemeAssets();
 
-			$this->data["header"] = $this->getViewPath("header");
-			$this->data["footer"] = $this->getViewPath("footer");
+			$this->data["header"] = $this->getView("header");
+			$this->data["footer"] = $this->getView("footer");
 
 			$this->data["stylesheets"] = \DOM\Document::getStylesheets();
 			$this->data["javascript"]  = \DOM\Document::getJavascript("footer");
@@ -71,7 +72,7 @@ namespace Core {
 		/**
 		* Set a dynamic value for the title tag.
 		* @param (string) $title a title to display in a template file.
-		* @return self
+		* @return void
 		*/
 		public function setTitle($title) {
 			$this->data["title"] = sprintf($this->configuration->get("base_title"), $title);
@@ -92,7 +93,7 @@ namespace Core {
 		* @param (string) $tpl name of the template file to get path for,
 		* @return string
 		*/
-		public function getViewPath($tpl = null) {
+		public function getView($tpl = null) {
 			if($tpl === null) {
 				$tpl = $this->view;
 			}
@@ -105,7 +106,7 @@ namespace Core {
 		* @return bool
 		*/
 		public function hasView() {
-			return $this->getViewPath() !== null;
+			return $this->getView() !== null;
 		}
 
 		/**

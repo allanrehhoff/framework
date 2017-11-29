@@ -1,4 +1,9 @@
 #Changelog#
+v3.0-beta1
+- The project should now finally, be in a stable release, backwards incompatible updates may still be released.  
+- Renamed Controller::getViewPath(); to Controller:getView(); to match the rest of the function names.  
+- Moved some logic to IndexController instead.  
+
 v3.0-alpha7  
 - PHP Error messages updated to include bootstrap compatibility.  
 - Moving stylesheet and javascript logic to seperate variables.  
