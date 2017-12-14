@@ -12,6 +12,12 @@
 	ini_set("display_errors", "On");
 	error_reporting(E_ALL);
 
+	// Include paths.
+	set_include_path(dirname(__FILE__));
+
+	// Default timezone
+	date_default_timezone_set("Europe/Copenhagen");
+
 	// Helper constants
 	define("CR", "\r");
 	define("LF", "\n");
@@ -52,6 +58,7 @@
 			return;
 		}
 
+		// Be super nazi about errors, eliminates most noob mistakes.
 		switch($errno) {
 			case E_STRICT       :
 			case E_NOTICE       :
@@ -118,6 +125,3 @@
 
 		require $classFile;
 	});
-
-	// Include paths.
-	set_include_path(dirname(__FILE__));

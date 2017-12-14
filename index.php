@@ -8,8 +8,8 @@
 	*/
 
 	require "preprocess.php";
-	$controller = Registry::set(new Core\Application())->dispatch();
 
+	$controller = Registry::set(new Core\Application())->dispatch();
 	extract($controller->getData(), EXTR_SKIP);
 
 	if($controller->hasView() === true) {

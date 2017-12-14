@@ -1,4 +1,15 @@
 #Changelog#
+v3.0-beta2
+- \Core\Application(); Is now declared as final, as it wasn't intended to be extended upon.  
+- \Core\Controller::$request now also contains COOKIE values.  
+- Syntactical changes.  
+- Finally removed the Singleton(); class.  
+- .htaccess compatibility changes.  
+- Theme is now loaded as a seperate object.  
+- Functions::url(); ranmed to Theme::getDirectoryUri();  
+- Some documentation blocks opdated.  
+- Added default timezone to preprocessor
+
 v3.0-beta1
 - The project should now finally, be in a stable release, backwards incompatible updates may still be released.  
 - Renamed Controller::getViewPath(); to Controller:getView(); to match the rest of the function names.  

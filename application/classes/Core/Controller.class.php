@@ -16,15 +16,17 @@ namespace Core {
 		* Contsructs the overall environment, setting up helpers and initial variables.
 		* @uses \Registry
 		* @uses \DOM\Document
+		* @uses \Core\Theme
 		* @return void
 		*/
 		public function __construct() {
-			$this->request = array_merge($_GET, $_POST);
+			$this->request = array_merge($_GET, $_POST, $_COOKIE);
 			$this->configuration = \Registry::get("Core\Configuration");
 			$this->application = \Registry::get("Core\Application");
-			$this->document = \Registry::set(new \DOM\Document);
-			$this->theme = (new Configuration($this->application->getThemepath()."/theme.json"));
 			$this->view = $this->application->arg(0);
+
+			$this->document = \Registry::set(new \DOM\Document);
+			$this->theme = \Registry::set(new Theme($this->configuration->get("theme")));
 
 			$this->database = new \Database\Connection(
 				$this->configuration->get("database.host"),
@@ -33,32 +35,11 @@ namespace Core {
 				$this->configuration->get("database.name")
 			);
 
-			$this->addThemeAssets();
-
 			$this->data["header"] = $this->getView("header");
 			$this->data["footer"] = $this->getView("footer");
 
 			$this->data["stylesheets"] = \DOM\Document::getStylesheets();
 			$this->data["javascript"]  = \DOM\Document::getJavascript("footer");
-		}
-
-		/**
-		* Adds configured theme assets to the DOM\Document class
-		* @uses \DOM\Document
-		* @return void
-		*/
-		private function addThemeAssets() {
-			if($this->theme->get("javascript")) {
-				foreach($this->theme->get("javascript") as $javascript) {
-					\DOM\Document::addJavascript(\Functions::url($javascript));
-				}
-			}
-
-			if($this->theme->get("stylesheets")) {
-				foreach($this->theme->get("stylesheets") as $stylesheet) {
-					\DOM\Document::addStylesheet(\Functions::url($stylesheet));
-				}
-			}
 		}
 
 		/**
@@ -86,10 +67,8 @@ namespace Core {
 			return $this->data["title"];
 		}
 
-
 		/**
 		* Get the path to a template file, ommit .tpl.php extension
-		* TODO: cut .tpl.php from the $tpl param, if provided. (Find out if I can use basename()'s second argument)
 		* @param (string) $tpl name of the template file to get path for,
 		* @return string
 		*/
@@ -98,7 +77,7 @@ namespace Core {
 				$tpl = $this->view;
 			}
 
-			return $this->application->getThemePath().'/'.basename($tpl).".tpl.php";
+			return $this->theme->getTemplatePath(basename($tpl).".tpl.php");
 		}
 
 		/**

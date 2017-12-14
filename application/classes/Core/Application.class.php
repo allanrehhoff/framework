@@ -10,9 +10,31 @@ namespace Core {
 	* @package Rehhoff_Framework
 	* @see README.md
 	*/
-	class Application {
-		private $cwd, $args, $config, $controller;
+	final class Application {
+		/**
+		* @var Current working directory, in which the application resides.
+		*/
+		private $cwd;
 
+		/**
+		* @var arguments provided through URI parts
+		* @todo Accept argv when in CLI mode
+		*/
+		private $args
+
+		/**
+		* @var Holds the Application-wide configuration object.
+		*/
+		private $config
+
+		/**
+		* @var Controller to be dispatched.
+		*/
+		private $controller;
+
+		/**
+		* Parse the current route and set caching as needed.
+		*/
 		public function __construct() {
 			$this->cwd = CWD;
 			$this->config = \Registry::set(new Configuration($this->cwd."/config.json"));
@@ -74,15 +96,6 @@ namespace Core {
 		}
 
 		/**
-		* Get the path to the current active theme.
-		* TODO: Provide a way to get client side theme path.
-		* @return string
-		*/
-		public function getThemePath() {
-			return $this->getApplicationPath()."/application/themes/".$this->config->get("theme");
-		}
-
-		/**
 		* Dispatches a controller, based upon the requeted path..
 		* Serves a NotfoundController if it doesn't exists
 		* @return array
@@ -95,10 +108,9 @@ namespace Core {
 			}
 
 			$controller = str_replace(" ", '', $base . "Controller");
-			$method = $this->arg(1);
-
 			$this->controller = new $controller;
 
+			$method = $this->arg(1);
 			if(!method_exists($this->controller, $method)) {
 				$method = "index";
 			}

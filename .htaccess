@@ -1,19 +1,21 @@
-Options +FollowSymlinks
-
-<FilesMatch "(theme.json|config.json|error_log)">
-	Order Allow,Deny
-	Deny from all
-</FilesMatch >
-
-# If the above lines doesn't work, set the RewriteBase manually
-# Most likely if this application does not reside in the document root
-DirectoryIndex index.php
-
 <IfModule mod_rewrite.c>
 	RewriteEngine on
 	RewriteBase /
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
-
-	RewriteRule ^(.*)$ index.php/?route=$1 [L]
+	RewriteRule ^(.*)$ /index.php?route=$1 [NC,L,QSA]
 </IfModule>
+
+Options -Indexes
+
+<FilesMatch "(.json|error_log)">
+	Order Allow,Deny
+	Deny from all
+</FilesMatch >
+
+# php -- BEGIN cPanel-generated handler, do not edit
+# Set the “ea-php71” package as the default “PHP” programming language.
+<IfModule mime_module>
+  AddType application/x-httpd-ea-php71___lsphp .php .php7 .phtml
+</IfModule>
+# php -- END cPanel-generated handler, do not edit
