@@ -1,4 +1,7 @@
 #Changelog#
+v3.0-beta3
+- Change utf8 to utf8mb4 in MySQL connections, allowing emoji support.
+
 v3.0-beta2
 - \Core\Application(); Is now declared as final, as it wasn't intended to be extended upon.  
 - \Core\Controller::$request now also contains COOKIE values.  

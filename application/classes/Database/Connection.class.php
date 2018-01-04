@@ -32,7 +32,7 @@ namespace Database {
 
 			try {
 				$this->_connection = new PDO("mysql:host=".$hostname.";dbname=".$database, $username, $password, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
-				$this->_connection->query("SET NAMES utf8");
+				$this->_connection->query("SET NAMES utf8mb4");
 			} catch (PDOException $exception) {
 				throw new Exception($exception->getMessage(), $exception->getCode());
 			}
