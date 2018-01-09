@@ -17,7 +17,6 @@ namespace Core {
 
 		/**
 		* @var arguments provided through URI parts
-		* @todo Accept argv when in CLI mode
 		*/
 		private $args;
 
@@ -34,12 +33,16 @@ namespace Core {
 		/**
 		* Parse the current route and set caching as needed.
 		*/
-		public function __construct() {
+		public function __construct(array $args) {
 			$this->cwd = CWD;
 			$this->config = \Registry::set(new Configuration($this->cwd."/config.json"));
 
-			$route = ((isset($_GET["route"])) && ($_GET["route"] != '')) ? $_GET["route"] : $this->config->get("default_route");
-			$this->args = explode('/', ltrim($route, '/'));
+			if(isset($args["route"]) === true) {
+				$route = ((isset($args["route"])) && ($args["route"] != '')) ? $args["route"] : $this->config->get("default_route");
+				$this->args = explode('/', ltrim($route, '/'));
+			} else {
+				$this->args = array_slice($args, 1);
+			}
 
 			if($this->config->get("cache_control") !== false) {
   				header("Cache-Control: max-age=".(int)$this->config->get("cache_control"));

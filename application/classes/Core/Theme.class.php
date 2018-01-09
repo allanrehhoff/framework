@@ -46,8 +46,8 @@ namespace Core {
 		*/
 		public function getDirectoryUri($path = '/') {
 			$protocol = SSL ? "https://" : "http://";
-			$host  = $_SERVER["SERVER_NAME"];
-			$path = rtrim(dirname($_SERVER["PHP_SELF"]), '/\\');
+			$host  = isset($_SERVER["SERVER_NAME"]) ? $_SERVER["SERVER_NAME"] : "127.0.0.1";
+			$path = rtrim(dirname($_SERVER["PHP_SELF"]), "/\\");
 			$baseurl = $protocol.$host.$path."/";
 
 			return $baseurl.ltrim($path, '/');

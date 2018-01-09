@@ -1,4 +1,12 @@
 #Changelog#
+v3.0-beta4
+- Almost completeæy rewritten exception handler.  
+- Coding style changes, mainly apostrophes.   
+- Corrected syntax error, from beta3.  
+- Theme::getDirectoryUri(); now uses SERVER_NAME instead of HTTP_HOST.  
+- Removed branding from docblocks (I don't really like commercials).  
+- Better support for when in CLI mode (Documentation to come).  
+
 v3.0-beta3
 - Change utf8 to utf8mb4 in MySQL connections, allowing emoji support.
 

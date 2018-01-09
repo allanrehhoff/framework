@@ -8,7 +8,9 @@
 
 	require "preprocess.php";
 
-	$controller = Registry::set(new Core\Application())->dispatch();
+	$args = CLI ? $argv : $_GET;
+	$controller = Registry::set(new Core\Application($args))->dispatch();
+
 	extract($controller->getData(), EXTR_SKIP);
 
 	if($controller->hasView() === true) {

@@ -24,15 +24,15 @@ namespace Core {
 			$this->application = \Registry::get("Core\Application");
 			$this->view = $this->application->arg(0);
 
-			$this->document = \Registry::set(new \DOM\Document);
-			$this->theme = \Registry::set(new Theme($this->configuration->get("theme")));
-
 			$this->database = new \Database\Connection(
 				$this->configuration->get("database.host"),
 				$this->configuration->get("database.username"),
 				$this->configuration->get("database.password"),
 				$this->configuration->get("database.name")
 			);
+
+			$this->document = \Registry::set(new \DOM\Document);
+			$this->theme = \Registry::set(new Theme($this->configuration->get("theme")));
 
 			$this->data["header"] = $this->getView("header");
 			$this->data["footer"] = $this->getView("footer");
