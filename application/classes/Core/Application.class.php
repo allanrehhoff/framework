@@ -20,7 +20,7 @@ namespace Core {
 		* @var arguments provided through URI parts
 		* @todo Accept argv when in CLI mode
 		*/
-		private $args
+		private $args;
 
 		/**
 		* @var Holds the Application-wide configuration object.
