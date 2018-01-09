@@ -100,7 +100,7 @@ namespace Core {
 		* @return array
 		*/
 		public function dispatch() {
-			$base = ucwords(preg_replace('/\W+/', ' ', strtolower($this->arg(0))));
+			$base = ucwords(preg_replace("/\W+/", ' ', strtolower($this->arg(0))));
 
 			if($this->getControllerPath($base) === false) {
 				$base = "Notfound";
