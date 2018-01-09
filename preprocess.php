@@ -30,26 +30,34 @@
 
 	// Exception handler
 	set_exception_handler(function($exception) {
-		if(CLI) die($exception->getMessage()."(".$exception->getCode().") thrown in "-$exception->getFile().":".$exception->getLine());
-		
-		$stack = '';
-		$stack .= '<ol style="margin-top:0px; line-height:10px;">'."\n";
-		
+		$stacktrace = [];
 		$trace = array_reverse($exception->getTrace());
+
 		foreach($trace as $item) {
-			$stack .= '<li>' . (isset($item['file']) ? $item['file'] : '<unknown file>') . ' line ' . (isset($item['line']) ? $item['line'] : '<unknown line>') . ' calling ' . $item['function'] . '()</li>' . "\n";
+			$stacktrace[] = (isset($item["file"]) ? $item["file"] : "<unknown file>")." line ".(isset($item["line"]) ? $item["line"] : "<unknown line>")." calling ".$item["function"]."()".LF;
 		}
-		
-		$stack .= '</ol>'."\n";
-		
-		print '<pre class="alert alert-danger">';
-			print '<h1 style="margin:0px;">Uncaught Exception: '.get_class($exception).'</h1><br>';
-			print '<strong>Code: </strong>'.$exception->getCode().'<br>';
-			print '<strong>File: </strong>'.$exception->getFile().'<br>';
-			print '<strong>Line: </strong>'.$exception->getLine().'<br>';
-			print '<strong>Message: </strong>'.$exception->getMessage().'<br>';
-			print '<strong>Stacktrace: </strong><br>'.$stack;
-		print '</pre>';
+
+		if(CLI) {
+			print "Uncaught Exception: ".get_class($exception).LF;
+			print "Code: ".$exception->getCode().LF;
+			print "File: ".$exception->getFile().LF;
+			print "Line: ".$exception->getLine().LF;
+			print "Message: ".$exception->getMessage().LF;
+			print "Stacktrace: ".LF;
+			print TAB.implode(TAB, $stacktrace);
+		} else {
+			print "<div class=\"alert alert-danger\" style=\"font-family: 'Courier New';\">
+					    <h1 style=\"margin:0px;\">Uncaught Exception: ".get_class($exception)."</h1>".BR."
+						<strong>Code: </strong>".$exception->getCode().BR."
+						<strong>File: </strong>".$exception->getFile().BR."
+						<strong>Line: </strong>".$exception->getLine().BR."
+						<strong>Message: </strong>".$exception->getMessage().BR."
+						<strong>Stacktrace: </strong>".BR."
+						<ol style=\"margin-top:0px; line-height:10px;\">".LF."
+							<li>".implode("</li><li>", $stacktrace)."</li>
+						</ol>
+					</div>";
+		}
 	});
 
 	// Error handler
@@ -86,9 +94,9 @@
 				print '  ' .(isset($item["file"]) ? $item["file"] : "<unknown file>")." line ".(isset($item["line"]) ? $item["line"] : "<unknown line>")." calling ".$item['function']."()"."\n";
 			}
 		} else {
-			print '<pre class="alert alert-danger" style="">' . "\n";
-			print '<p style="line-height:10px; margin:0px;">Backtrace from ' . $type . ' \'' . $errstr . '\' at ' . $errfile . ' ' . $errline . ':' . "\n"."</p>";
-			print '  <ol style="margin-top:0px; line-height:10px;">' . "\n";
+			print "<pre class=\"alert alert-danger\">".LF;
+			print "<p style=\"line-height:10px; margin:0px;\">Backtrace from ".$type." '".$errstr."' at ".$errfile.' '.$errline.':'.LF."</p>";
+			print "  <ol style=\"margin-top:0px; line-height:10px;\">".LF;
 			
 			foreach($trace as $item) {
 				print "<li>" . (isset($item["file"]) ? $item["file"] : "<unknown file>")." line ".(isset($item["line"]) ? $item["line"] : "<unknown line>")." calling ".$item['function']."()</li>" . "\n";
@@ -101,7 +109,7 @@
 		if(ini_get("log_errors")) {
 			$items = [];
 			foreach($trace as $item) {
-				$items[] = (isset($item['file']) ? $item['file'] : '<unknown file>') . ' ' . (isset($item["line"]) ? $item["line"] : '<unknown line>')." calling ".$item["function"]."()";
+				$items[] = (isset($item["file"]) ? $item["file"] : "<unknown file>") . ' ' . (isset($item["line"]) ? $item["line"] : '<unknown line>')." calling ".$item["function"]."()";
 			}
 			
 			$message = "Backtrace from ".$type." '".$errstr ."' at ".$errfile.' '.$errline.": ".implode(" | ", $items);
