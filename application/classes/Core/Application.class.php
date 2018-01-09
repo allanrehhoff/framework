@@ -7,7 +7,6 @@ namespace Core {
 	* Core\Application handles the routes, directory paths and title
 	* Consult the README file for usage examples throughout the framework.
 	* @author Allan Thue Rehhoff
-	* @package Rehhoff_Framework
 	* @see README.md
 	*/
 	final class Application {

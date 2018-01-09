@@ -2,7 +2,6 @@
 	/**
 	* Registry to hold class objects, used to avoid the usage of singletons.
 	* @author Allan Rehhoff
-	* @package Rehhoff_Framework
 	*/
 	final class Registry {
 		/**

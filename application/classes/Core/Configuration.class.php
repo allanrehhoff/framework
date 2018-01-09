@@ -6,7 +6,6 @@ namespace Core {
 	* Handles parsing and saving of a given configuration file.
 	* @extends Singleton
 	* @author Allan Thue Rehhoff
-	* @package Rehhoff_Framework
 	*/
 	class Configuration {
 		private $parsedConfig;

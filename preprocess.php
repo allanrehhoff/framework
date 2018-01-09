@@ -2,7 +2,6 @@
 	/**
 	* Sets error handling and other useful PHP configurations, to help you write proper code.
 	* @author Allan Thue Rehhoff
-	* @package Rehhoff_Framework
 	*/
 
 	// Version check

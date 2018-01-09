@@ -5,7 +5,6 @@ namespace Core {
 	/**
 	* The core controller which subcontrollers should extend upon.
 	* @author Allan Thue Rehhoff
-	* @package Rehhoff_Framework
 	*/
 	class Controller {
 		protected $application, $view, $request, $title;

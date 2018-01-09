@@ -1,10 +1,10 @@
 <?php
 namespace Core {
+
 	/**
 	* Loads and setups the current configured theme in use.
 	*
 	* @author Allan Thue Rehhoff
-	* @package Rehhoff_Framework
 	*/
 	class Theme {
 		/**

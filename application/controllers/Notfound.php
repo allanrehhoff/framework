@@ -2,7 +2,6 @@
 	/**
 	* Default controller for paths that cannot be routed.
 	* @author Allan Thue Rehhoff
-	* @package Rehhoff_Framework
 	*/
 	class NotfoundController extends \Core\Controller {
 		/**

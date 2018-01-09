@@ -1,11 +1,10 @@
 <?php
-/**
-* Put whatever helper functions you may need in this class.
-* I know classes was never meant to be used for collection spaghetti...
-* But as of this moment, i'm about to give up where I can put those without making a mess...
-* @author Allan Thue Rehhoff
-* @package Rehhoff_Framework
-*/
+	/**
+	* Put whatever helper functions you may need in this class.
+	* I know classes was never meant to be used for collection spaghetti...
+	* But as of this moment, i'm about to give up where I can put those without making a mess...
+	* @author Allan Thue Rehhoff
+	*/
 	class Functions {
 		/**
 		* Mandatory constructor, nothing to do here...
