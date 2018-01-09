@@ -24,7 +24,7 @@ namespace Core {
 		/**
 		* @var Holds the Application-wide configuration object.
 		*/
-		private $config
+		private $config;
 
 		/**
 		* @var Controller to be dispatched.
