@@ -110,7 +110,7 @@ namespace Core {
 				$base = "Notfound";
 			}
 
-			$controller = str_replace(" ", '', $base . "Controller");
+			$controller = str_replace(" ", '', $base."Controller");
 			$this->controller = new $controller;
 
 			$method = lcfirst(preg_replace("/\W+/", ' ', strtolower($this->arg(1))));
