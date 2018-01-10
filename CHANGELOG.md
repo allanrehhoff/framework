@@ -1,11 +1,14 @@
 #Changelog#
 v3.0-beta4
-- Almost completeæy rewritten exception handler.  
+- Better support CLI mode support.  
+- Almost completely rewritten exception handler.  
 - Coding style changes, mainly apostrophes.   
 - Corrected syntax error, from beta3.  
 - Theme::getDirectoryUri(); now uses SERVER_NAME instead of HTTP_HOST.  
 - Removed branding from docblocks (I don't really like commercials).  
-- Better support for when in CLI mode (Documentation to come).  
+- Bugfixing, one should now again be able to add assets from derived controllers.  
+- Default method called by controllers are now the constructer rather than the index(); method.  
+- Updated some documentation.  
 
 v3.0-beta3
 - Change utf8 to utf8mb4 in MySQL connections, allowing emoji support.

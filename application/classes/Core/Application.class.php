@@ -37,7 +37,8 @@ namespace Core {
 			$this->cwd = CWD;
 			$this->config = \Registry::set(new Configuration($this->cwd."/config.json"));
 
-			if(isset($args["route"]) === true) {
+
+			if(CLI === false) {
 				$route = ((isset($args["route"])) && ($args["route"] != '')) ? $args["route"] : $this->config->get("default_route");
 				$this->args = explode('/', ltrim($route, '/'));
 			} else {
@@ -112,12 +113,12 @@ namespace Core {
 			$controller = str_replace(" ", '', $base . "Controller");
 			$this->controller = new $controller;
 
-			$method = $this->arg(1);
-			if(!method_exists($this->controller, $method)) {
-				$method = "index";
+			$method = lcfirst(preg_replace("/\W+/", ' ', strtolower($this->arg(1))));
+			if(method_exists($this->controller, $method)) {
+				$this->controller->$method();
 			}
 
-			$this->controller->$method();
+			$this->controller->assemble();
 
 			return $this->controller;
 		}

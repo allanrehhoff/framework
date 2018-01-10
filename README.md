@@ -18,7 +18,7 @@ Your controllers must extend upon **\Core\Controller** to have all the neccessar
 
 Additionally the method to be called in your controller can be set by the next argument in the request URI.
 
-**yourdomain.tld/animals/tiger** will trigger **AnimalController()->tiger();** to be called.  
+**yourdomain.tld/animal/tiger** will trigger **AnimalController()->tiger();** to be called.  
 Any other parts ARE NOT passed to the method, these are for you to pick up using the applications arg() method.  
 The **\Core\Application()->arg();** method starts from index 0, whereas the first two indices are already used by the core to determine the route.  
 
@@ -26,10 +26,12 @@ The **\Core\Application()->arg();** method starts from index 0, whereas the firs
 <?php
 	// Assume this url: yourdomain.tld/animals/tiger/indo-chinese
 	class AnimalController extends \Core\Controller {
-		public function index() {}
+		public function _construct() {
+			parent::__construct();
+		}
 
 		public function tiger() {
-			var_dump($this->application->arg(2));
+			var_dump($this->application->arg(2)); // indo-chinese
 		}
 	}
 ?>
@@ -42,7 +44,7 @@ string(12) "indo-chinese"
 ```
 
 > *NOTE:*  
-> The default method to be called is "index" if arg(1) is nowhere to be found.  
+> By default only the controllers constructer are invoked, if arg(1) is nowhere to be found.  
 
 ##Views##
 This is where all your theming goes (obviously du'h).  
@@ -70,6 +72,21 @@ You can add a new "partial" or "children" by adding it's path to the controllers
 > *NOTE:*  
 > header.tpl.php, footer.data.php, and any other view files you plan to include or require in another view file cannot have a controller file.  
   
+##Command Line Interface##
+This framework has support for being queried through CLI (albeit, not fully tested), to do so you must query the **index.php** file.  
+```
+$ php index.php <controller> <method> <argument> ...
+```
+  
+Just as the URL scheme, the first argument maps to the controller being used, second the method and so on.  
+```
+$ php index.php cli
+Hello from cli
+
+$ php index.php cli interface
+Hello from interface
+```
+  
 ##Configuration##
 The main configuration resides within the file **config,json**, and should contain nothing but configuration settings used by the core and controllers.  
 
@@ -80,7 +97,7 @@ Values can be accessed, changed, removed and saved using a dot syntax.
 ```
 <?php
 	class RestaurantController extends \Core\Controller {
-		public function index() {
+		public function __construct() {
 			$this->theme->get("menu.pizzas"); // ["Hawaii", "MeatLover", "Vegan", ...]
 			$this->theme->set("menu.pizzas.Hawaii", "Ananas"); // ["Ananas", "MeatLover", "Vegan", ...]
 			$this->theme->remove("menu.pizzass.Vegan"); // ["Ananas", "MeatLover", ...]

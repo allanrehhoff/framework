@@ -9,7 +9,7 @@ namespace Core {
 	class Controller {
 		protected $application, $view, $request, $title;
 		protected $data = [];
-		private $theme;
+		public $theme;
 
 		/**
 		* Contsructs the overall environment, setting up helpers and initial variables.
@@ -33,7 +33,14 @@ namespace Core {
 
 			$this->document = \Registry::set(new \DOM\Document);
 			$this->theme = \Registry::set(new Theme($this->configuration->get("theme")));
+		}
 
+		/**
+		* Contains globally accessible theme variables.
+		* @uses \DOM\Document
+		* @return void
+		*/
+		public function assemble() {
 			$this->data["header"] = $this->getView("header");
 			$this->data["footer"] = $this->getView("footer");
 
@@ -84,7 +91,7 @@ namespace Core {
 		* @return bool
 		*/
 		public function hasView() {
-			return $this->getView() !== null;
+			return $this->getView() !== null && !CLI;
 		}
 
 		/**
