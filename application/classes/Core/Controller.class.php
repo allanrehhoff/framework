@@ -63,7 +63,7 @@ namespace Core {
 		*/
 		final public function __construct() {
 			if($this->initialized !== true) {
-				$this->init();
+				$this->initialize();
 			}
 		}
 
@@ -72,7 +72,7 @@ namespace Core {
 		* Boots up constructor and controller variables.
 		* @return void
 		*/
-		final public function init() {
+		final public function initialize() {
 			$this->request = $_GET + $_POST;
 			$this->configuration = Registry::get("Core\Configuration");
 			$this->application = Registry::get("Core\Application");
