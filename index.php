@@ -3,36 +3,19 @@
 	* Main entry point for your application.
 	* Consult the README.md file for documentation and usage examples.
 	*
+	* Don't forget to read the documentation.
+	*
+	* @link https://bitbucket.org/allanrehhoff/framework
 	* @author Allan Thue Rehhoff
-	* @package Rehhoff_Framework
 	*/
 
 	require "preprocess.php";
 
-	$app = \Core\Application::getInstance();
-	$db = new \Database\Connection(
-		\Core\ConfigurationParser::getInstance()->get("database.host"),
-		\Core\ConfigurationParser::getInstance()->get("database.username"),
-		\Core\ConfigurationParser::getInstance()->get("database.password"),
-		\Core\ConfigurationParser::getInstance()->get("database.name")
-	);
+	$args = CLI ? $argv : $_GET;
+	$controller = Registry::set(new Core\Application($args))->dispatch();
 
-	$controller = is_file($app->getControllerPath()) ? $app->getControllerPath() : false;
-	if($controller !== false) {
-		require $controller;
-	}
+	extract($controller->getData(), EXTR_SKIP);
 
-	$themeFunctions = is_file($app->getThemePath()."/theme-functions.php") ? $app->getThemePath()."/theme-functions.php" : false;
-	if($themeFunctions !== false) {
-		require $themeFunctions;
-	}
-
-	$view = is_file($app->getViewPath()) ? $app->getViewPath() : false;
-	if($view !== false) {
-		require $view;
-	}
-
-	if($controller == false && $view === false) {
-		require $app->getControllerPath("404");
-		require $app->getViewPath("404");
+	if($controller->hasView() === true) {
+		require $controller->getView();
 	}

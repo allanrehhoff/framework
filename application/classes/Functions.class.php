@@ -1,34 +1,40 @@
 <?php
-/**
-* @package Rehhoff_Framework
-*/
-	class Debug {
+	/**
+	* Put whatever helper functions you may need in this class.
+	* I know classes was never meant to be used for collection spaghetti...
+	* But as of this moment, i'm about to give up where I can put those without making a mess...
+	* @author Allan Thue Rehhoff
+	*/
+	class Functions {
 		/**
-		* Helps you debug your application.
-		* @author Allan Thue Rehhoff
+		* Mandatory constructor, nothing to do here...
+		* @return void
 		*/
 		public function __construct() {
+
 		}
-		
+
 		/**
 		* Pretty print almost any variable in a human readable format.
 		* @param (mixed) $stuff A variable to debug
 		* @param (boolean) $exit whether to exit the PHP process after printing debug information.
+		* @return void
 		*/
 		public static function pre($stuff, $exit = false) {
-			echo "<pre style='background:#FFD; clear:both;'>";
+			print "<pre style='background:#FFD; clear:both;'>";
 			if(count($stuff) > 0 && $stuff !== false) {
 				print_r($stuff);
 			} else {
 				var_dump($stuff);
 			}
-			echo "</pre>";
+			print "</pre>";
 			
 			if($exit) exit;
 		}
 		
 		/**
 		* Get an easily readable tree of previously called functions.
+		* @return void
 		*/
 		public static function getCaller() {
 			$c = '';
@@ -46,6 +52,7 @@
 				$file = $trace[1]["file"];
 				$func = '';
 			}
+
 			if (isset($trace[3]["class"])) {
 				$class = $trace[3]["class"];
 				$func = $trace[3]["function"];

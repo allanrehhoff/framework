@@ -1,35 +1,21 @@
-#php_flag magic_quotes_gpc Off
-Options +FollowSymlinks
-
-<Files config.json>
-	Order Allow,Deny
-	Deny from all
-</Files>
-
-<IfModule mod_headers.c>
-    Header set Cache-Control "no-cache, no-store, must-revalidate"
-    Header set Pragma "no-cache"
-    Header set Expires 0
+<IfModule mod_rewrite.c>
+	RewriteEngine on
+	RewriteBase /
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule ^(.*)$ /index.php?route=$1 [NC,L,QSA]
 </IfModule>
 
-#RewriteCond %{REQUEST_URI}::$1 ^(.*?/)(.*)::\2$
-#RewriteRule ^(.*)$ - [E=BASE:%1]
+Options -Indexes
 
-# If the above lines doesn't work, set the RewriteBase manually
-# Most likely if this application does not reside in the document root
-DirectoryIndex index.php
+<FilesMatch "(.json|error_log)">
+	Order Allow,Deny
+	Deny from all
+</FilesMatch >
 
-RewriteEngine on
-RewriteBase /huskeliste/
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-
-RewriteRule ^(.*)$ index.php/?route=$1 [L]
-
-### OLD HTACCESS KEPT IN CASE I NEED IT ###
-#RewriteCond %{HTTP_HOST} !^www\.
-#RewriteCond %{HTTP_HOST} !^dev\.
-#RewriteRule ^(.*)$ http://www.%{HTTP_HOST}/$1 [R=301,L]
-
-#RewriteCond %{REQUEST_FILENAME} !-f
-#RewriteRule ^(.*)$ /index.php?route=$1 [L,QSA]
+# php -- BEGIN cPanel-generated handler, do not edit
+# Set the “ea-php71” package as the default “PHP” programming language.
+<IfModule mime_module>
+  AddType application/x-httpd-ea-php71___lsphp .php .php7 .phtml
+</IfModule>
+# php -- END cPanel-generated handler, do not edit

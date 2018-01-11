@@ -1,74 +1,67 @@
 <?php
 namespace Core {
-	use Exception;
+	use Exception, Registry, ReflectionClass;
 	
 	/**
 	* The main class for this application.
 	* Core\Application handles the routes, directory paths and title
 	* Consult the README file for usage examples throughout the framework.
 	* @author Allan Thue Rehhoff
-	* @package Rehhoff_Framework
+	* @uses ReflectionClass
+	* @uses Exception
+	* @uses Registry
 	* @see README.md
 	*/
-	class Application extends \Singleton {
-		private $cwd, $args, $config, $title, $view;
-		
-		public function __construct() {
-			$this->config = ConfigurationParser::getInstance();
-			$this->cwd = getcwd();
-
-			$route = ((isset($_GET["route"])) && ($_GET["route"] != '')) ? $_GET["route"] : $this->config->get("default_route");
-			$this->args = explode('/', ltrim($route, '/'));
-
-			$this->view = $this->arg(0);
-		}
-		
+	final class Application {
 		/**
-		* Set a dynamic value for the title tag.
-		* @param (string) $title a title to display in a template file.
-		* @return self
+		* @var Current working directory, in which the application resides.
 		*/
-		public function setTitle($title) {
-			$this->title = $title;
-		}
+		private $cwd;
 
 		/**
-		* Get the current page title to be displayed.
-		* @return string
+		* @var arguments provided through URI parts
 		*/
-		public function getTitle() {
-			if(trim($this->title) != '') {
-				$title = sprintf($this->config->get("base_title"), $this->title);
+		private $args;
+
+		/**
+		* @var Holds the Application-wide configuration object.
+		*/
+		private $configuration;
+
+		/**
+		* @var Controller to be dispatched.
+		*/
+		private $controller;
+
+		/**
+		* Parse the current route and set caching as needed.
+		*/
+		public function __construct(array $args) {
+			$this->cwd = CWD;
+			$this->configuration = Registry::set(new Configuration($this->cwd."/config.json"));
+
+			if(CLI === false) {
+				$route = ((isset($args["route"])) && ($args["route"] != '')) ? $args["route"] : $this->configuration->get("default_route");
+				$this->args = explode('/', ltrim($route, '/'));
 			} else {
-				$title = sprintf($this->config->get("base_title"), '');
+				$this->args = array_slice($args, 1);
 			}
-			return $title;
-		}
-		
-		/**
-		* Use this method to debug your runtime configurations and arguments within the framework.
-		* @return string
-		*/
-		public function __toString() {
-			$ob = ob_start();
-			Debug::pre($this->args);
-			Debug::pre($this->config);
-			return ob_get_clean();
 		}
 
 		/**
 		* Get an argument from the url. ommit $argIndex to get all arguments passed with the request.
 		* This is set to a string because if the variable passed to this function 
 		* is null it would be easier to debug with a false rather than getting the whole array.
-		* @param (int) $argIndex the index or the url arg.
+		* @param (int) $index the index or the url arg.
 		* @return string, or false on failure.
 		*/
-		public function arg($argIndex = "all") {
-			if($argIndex === "all") {
+		public function arg($index = "all") {
+			if($index === "all") {
 				return $this->args;
-			} elseif(isset($this->args[$argIndex])) {
-				return $this->args[$argIndex];
+			} elseif(isset($this->args[$index])) {
+				return $this->args[$index];
 			}
+
 			return false;
 		}
 
@@ -79,55 +72,55 @@ namespace Core {
 		public function getApplicationPath() {
 			return $this->cwd;
 		}
-		
-		/**
-		* Get the path to a template file, ommit .tpl.php extension
-		* TODO: cut .tpl.php from the $tpl param, if provided. (Find out if I can use basename()'s second argument)
-		* @param (string) $tpl name of the template file to get path for,
-		* @return string
-		*/
-		public function getViewPath($tpl = null) {
-			if($tpl === null) {
-				$tpl = $this->view;
-			}
-			return $this->getThemePath().'/'.basename($tpl).".tpl.php";
-		}
 
 		/**
 		* Get path to the specified controller file. Ommit the .php extension
-		* TODO: cut .php from the $ctrl param, if provided. (Find out if I can use basename()'s second argument)
-		* @param (string) name of the controller file.
+		* @todo Cut .php from the $ctrl param, if provided. (Find out if I can use basename()'s second argument)
+		* @param (string) $controller name of the controller file.
 		* @return mixed
 		*/
-		public function getControllerPath($ctrl = null) {
-			if($ctrl === null) {
-				$ctrl = $this->arg(0);
+		public function getControllerPath($controller = null) {
+			if($controller === null) {
+				$controller = $this->arg(0);
 			}
 
-			if(is_file($this->getApplicationPath()."/application/controller/".basename($ctrl).".php")) {
-				return $this->getApplicationPath()."/application/controller/".basename($ctrl).".php";
+			if(is_file($this->getApplicationPath()."/application/controllers/".basename($controller).".php")) {
+				return $this->getApplicationPath()."/application/controllers/".basename($controller).".php";
 			} else {
 				return false;
 			}
 		}
-		
-		/**
-		* If allowed by configurations controllers can define their own view file to be used.
-		* @param Name of the view to use, without .tpl.php extensions.
-		* @return bool
-		*/
-		public function setView($viewName) {
-			$this->view = $viewName;
-			return true;
-		}
 
 		/**
-		* Get the path to the current active theme.
-		* TODO: Provide a way to get client side theme path.
-		* @return string
+		* Dispatches a controller, based upon the requeted path..
+		* Serves a NotfoundController if it doesn't exists
+		* @return array
 		*/
-		public function getThemePath() {
-			return $this->getApplicationPath()."/application/themes/".$this->config->get("theme");
+		public function dispatch() {
+			$base = ucwords(preg_replace("/\W+/", ' ', strtolower($this->arg(0))));
+
+			if($this->getControllerPath($base) === false) {
+				$base = "Notfound";
+			}
+
+			$controller = str_replace(" ", '', $base."Controller");
+			$reflector  = new ReflectionClass($controller);
+
+			if($reflector->isSubclassOf("Core\Controller") !== true) {
+				throw new Exception($controller." must derive from \Core\Controller 'extends \Core\Controller'.");
+			}
+
+			$this->controller = new $controller;
+
+			$method = "index";
+			if($this->arg(1) !== false && $reflector->hasMethod($this->arg(1))) {
+				$method = lcfirst(preg_replace("/\W+/", ' ', strtolower($this->arg(1))));
+			}
+
+			$this->controller->$method();
+			$this->controller->assemble();
+
+			return $this->controller;
 		}
 	}
 }

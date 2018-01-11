@@ -1,10 +1,99 @@
 #Changelog#
+v3.0-beta4
+- **This release is backwards incompatible. **  
+- Better support CLI mode support.  
+- Almost completely rewritten exception handler.  
+- Coding style changes, mainly apostrophes.   
+- Corrected syntax error, from beta3.  
+- Theme::getDirectoryUri(); now uses SERVER_NAME instead of HTTP_HOST.  
+- Removed branding from docblocks (I don't really like commercials).  
+- Bugfixing: one should now again be able to add assets from derived controllers.  
+- Bugfixing: Controller::hasView(); didn't check if file existed before returning true.  
+- Updated some documentation.  
+- Now forcing controllers to extend upon \Core\Controller();  
+- Now forcing child controllers to invoke the parent constructor.  
+- Methods in \Core\Controller are now final, as they were never meant to be overridden.  
+- \Core\Controller:$request should not contain cookie variables.  
+- \Core\Controller now forces chlid classes index methods.   
+
+v3.0-beta3
+- Change utf8 to utf8mb4 in MySQL connections, allowing emoji support.
+
+v3.0-beta2
+- \Core\Application(); Is now declared as final, as it wasn't intended to be extended upon.  
+- \Core\Controller::$request now also contains COOKIE values.  
+- Syntactical changes.  
+- Finally removed the Singleton(); class.  
+- .htaccess compatibility changes.  
+- Theme is now loaded as a seperate object.  
+- Functions::url(); ranmed to Theme::getDirectoryUri();  
+- Some documentation blocks opdated.  
+- Added default timezone to preprocessor
+
+v3.0-beta1
+- The project should now finally, be in a stable release, backwards incompatible updates may still be released.  
+- Renamed Controller::getViewPath(); to Controller:getView(); to match the rest of the function names.  
+- Moved some logic to IndexController instead.  
+
+v3.0-alpha7  
+- PHP Error messages updated to include bootstrap compatibility.  
+- Moving stylesheet and javascript logic to seperate variables.  
+
+v3.0-alpha6  
+- theme.json and error_log are now inaccessible from URL's  
+- Cache control headers moved to Application::__construct();  
+- New config value, cache_control.  
+
+v3.0-alpha5  
+- Fixed a stupid double function declaration "Functions::url();" resulting in fatal error.  
+- Removed Application::setView(); as that is conbtrollers area.  
+- Moved view related methods to \Core\Controller allowing a cleaner template syntax in views, aka less function calls.  
+- Updated a few docblocks.  
+- Controllers can now disable their view, by setting them to null.  
+- Finally started updating README.md  
+- Added a .gitignore.  
+
+v3.0-alpha4
+- Upgraded jQuery to v3.2.1, effectively giving legacy browsers the middle finger.  
+- Fixed incorrect call to Exception::getFile(); in bundled exception handler.  
+- Cleaned up messy .htaccess.  
+- Added CLI constant, getting ready for CLI support.  
+- Error & Exception handler now uses CLI constant check.  
+- Removed the Tools class, Tools::url(); moved to Functions class.  
+- Documented the Registry class by comments.  
+- Documented Functions class.  
+
+v3.0-alpha3
+- Added \DOM\Document as a Controller property.  
+- Added core Configuration as a Controller property.  
+- Added a convenience wrapper Controller::setView();  
+- Restructured the Application::dispatch(); method to properly construct class names.  
+- Fixed fatal errors in the Notfound controller.  
+
+v3.0-alpha2
+- Introduced CWD constant, containing current working directory.  
+- Implemented a registry class to avoid the use of future singletons.  
+- Updated default theme files to match the new structure.  
+- ConfigurationParser can now be used to parse additional configuration files.  
+- Page title handling, is now handled by Controller class, instead of the Application.  
+- Added second argument, EXTR_SKIP,to index.php's extract(); call for security reasons.  
+- Merged Debug and Tools classes, to Functions instead, yeah yeah, I know bad practice, screw me later.  
+- Themes are now required to define a 'theme.json' config file.  
+- Removed 'theme-functions.php' file.  
+- Renamed ConfigurationsParser() to Configuration.  
+- Controller filenames, and classes are now Capitalized.  
+
+v3.0-alpha1
+- Rewritten to a controller based structure, having a controller is now mandatory.
+
 v2.1
 - **This release is backwards incompatible. **  
 - Updated Tools::url(); functin to not strip filesnames from assets if they matched default route.  
 - Added SSL constant  
 - Fixed DatabaseConnection parameter order.  
 - Fixed Tools::url(); should no longer return paths with the requested path in it.  
+- Updated Tools::url(); functin to not strip filesnames from assets if they matched default route.  
+- Added SSL constant  
 - Updated default 404 page to be more helpful and informative.  
 - Added default title to 404 page.  
 - Fixed singleton class to not always return the first class with a method containing getInstance();  
@@ -93,7 +182,7 @@ v1.3
 - Introduced Exception handler  
 - Moved $db into the application class  
 - Updated README, more to come  
-- Application::setArgs() is now private, it was never intented to be used pubicly  
+- Application::setArgs() is now private, it was never intented to be used publicly  
 - Renamed Initialize class to Application  
 - Renamed Application namespace to Core  
 - Cleaned up index.php  
