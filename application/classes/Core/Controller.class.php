@@ -9,11 +9,6 @@ namespace Core {
 	abstract class Controller {
 
 		/**
-		* @var Determines if the core controller have been initialised.
-		*/
-		private $initialized = false;
-
-		/**
 		* @var Holds the current application instance.
 		*/
 		protected $application;
@@ -65,7 +60,6 @@ namespace Core {
 			$this->initialize();
 		}
 
-
 		/**
 		* Boots up constructor and controller variables.
 		* @return void
@@ -76,16 +70,17 @@ namespace Core {
 			$this->application = Registry::get("Core\Application");
 			$this->view = $this->application->arg(0);
 
-			/*$this->database = new \Database\Connection(
+			$this->database = new \Database\Connection(
 				$this->configuration->get("database.host"),
 				$this->configuration->get("database.username"),
 				$this->configuration->get("database.password"),
 				$this->configuration->get("database.name")
-			);*/
+			);
+
+			$this->setTitle(array_slice($this->application->arg(), -1)[0]);
 
 			$this->document = Registry::set(new DOM\Document);
 			$this->theme = Registry::set(new Theme($this->configuration->get("theme")));
-			$this->initialized = true;
 		}
 
 		/**
@@ -94,6 +89,16 @@ namespace Core {
 		* @return void
 		*/
 		final public function assemble() {
+			if($this->configuration->get("cache_control") !== false) {
+				header("Cache-Control: max-age=".(int)$this->config->get("cache_control"));
+				header("Cache-Control: post-check=1, pre-check=1", false);
+				header("Pragma: cache");
+			} else {
+				header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+				header("Cache-Control: post-check=0, pre-check=0", false);
+				header("Pragma: no-cache");
+			}
+
 			$this->data["header"] = $this->getView("header");
 			$this->data["footer"] = $this->getView("footer");
 
@@ -128,15 +133,15 @@ namespace Core {
 
 		/**
 		* Get the path to a template file, ommit .tpl.php extension
-		* @param (string) $tpl name of the template file to get path for,
+		* @param (string) $template name of the template file to get path for,
 		* @return string
 		*/
-		final public function getView($tpl = null) {
-			if($tpl === null) {
-				$tpl = $this->view;
+		final public function getView($template = null) {
+			if($template === null) {
+				$template = $this->view;
 			}
 
-			return $this->theme->getTemplatePath(basename($tpl).".tpl.php");
+			return $this->theme->getTemplatePath(basename($template).".tpl.php");
 		}
 
 		/**

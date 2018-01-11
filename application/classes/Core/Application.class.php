@@ -26,7 +26,7 @@ namespace Core {
 		/**
 		* @var Holds the Application-wide configuration object.
 		*/
-		private $config;
+		private $configuration;
 
 		/**
 		* @var Controller to be dispatched.
@@ -38,23 +38,13 @@ namespace Core {
 		*/
 		public function __construct(array $args) {
 			$this->cwd = CWD;
-			$this->config = Registry::set(new Configuration($this->cwd."/config.json"));
+			$this->configuration = Registry::set(new Configuration($this->cwd."/config.json"));
 
 			if(CLI === false) {
-				$route = ((isset($args["route"])) && ($args["route"] != '')) ? $args["route"] : $this->config->get("default_route");
+				$route = ((isset($args["route"])) && ($args["route"] != '')) ? $args["route"] : $this->configuration->get("default_route");
 				$this->args = explode('/', ltrim($route, '/'));
 			} else {
 				$this->args = array_slice($args, 1);
-			}
-
-			if($this->config->get("cache_control") !== false) {
-  				header("Cache-Control: max-age=".(int)$this->config->get("cache_control"));
-  				header("Cache-Control: post-check=1, pre-check=1", false);
-  				header("Pragma: cache");
-			} else {
-				header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-				header("Cache-Control: post-check=0, pre-check=0", false);
-				header("Pragma: no-cache");
 			}
 		}
 
@@ -62,15 +52,16 @@ namespace Core {
 		* Get an argument from the url. ommit $argIndex to get all arguments passed with the request.
 		* This is set to a string because if the variable passed to this function 
 		* is null it would be easier to debug with a false rather than getting the whole array.
-		* @param (int) $argIndex the index or the url arg.
+		* @param (int) $index the index or the url arg.
 		* @return string, or false on failure.
 		*/
-		public function arg($argIndex = "all") {
-			if($argIndex === "all") {
+		public function arg($index = "all") {
+			if($index === "all") {
 				return $this->args;
-			} elseif(isset($this->args[$argIndex])) {
-				return $this->args[$argIndex];
+			} elseif(isset($this->args[$index])) {
+				return $this->args[$index];
 			}
+
 			return false;
 		}
 
@@ -84,17 +75,17 @@ namespace Core {
 
 		/**
 		* Get path to the specified controller file. Ommit the .php extension
-		* TODO: cut .php from the $ctrl param, if provided. (Find out if I can use basename()'s second argument)
-		* @param (string) name of the controller file.
+		* @todo Cut .php from the $ctrl param, if provided. (Find out if I can use basename()'s second argument)
+		* @param (string) $controller name of the controller file.
 		* @return mixed
 		*/
-		public function getControllerPath($ctrl = null) {
-			if($ctrl === null) {
-				$ctrl = $this->arg(0);
+		public function getControllerPath($controller = null) {
+			if($controller === null) {
+				$controller = $this->arg(0);
 			}
 
-			if(is_file($this->getApplicationPath()."/application/controllers/".basename($ctrl).".php")) {
-				return $this->getApplicationPath()."/application/controllers/".basename($ctrl).".php";
+			if(is_file($this->getApplicationPath()."/application/controllers/".basename($controller).".php")) {
+				return $this->getApplicationPath()."/application/controllers/".basename($controller).".php";
 			} else {
 				return false;
 			}
