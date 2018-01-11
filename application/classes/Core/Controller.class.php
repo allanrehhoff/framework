@@ -49,7 +49,7 @@ namespace Core {
 		public $theme;
 
 		/**
-		* Child controllers should have this function instead of a constructor.
+		* Child controllers should declare this function instead of a constructor.
 		*/
 		abstract protected function index();
 
