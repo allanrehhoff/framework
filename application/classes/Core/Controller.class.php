@@ -62,9 +62,7 @@ namespace Core {
 		* @return void
 		*/
 		final public function __construct() {
-			if($this->initialized !== true) {
-				$this->initialize();
-			}
+			$this->initialize();
 		}
 
 
