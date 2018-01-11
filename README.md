@@ -1,4 +1,4 @@
-#Introduction#
+#Introduction (Version 3)#
 This is not what you'd typically associate with a fully functional MVC framework, there's no "Models" and that is intentional, deal with it.  
 The intention for this is to prevent the developer from writing complete spaghetti, while being lightweight, scaleable and portable.  
 
@@ -12,22 +12,22 @@ In short all this does is serve as a kickstart to get a readable and stable code
 
 ##Controllers##
 If you're familiar with opencart or other MVC frameworks you might already know the url-to-controller concept.  
-Given the URL **yourdomain.tld/animals** will map to a controller as such **AnimalController.php** in the application/controllers/ directory.  
+Given the URL **yourdomain.tld/animal** will map to a controller as such **AnimalController.php** in the application/controllers/ directory.  
 
 Your controllers must extend upon **\Core\Controller** to have all the neccessary functions available.
 
-Additionally the method to be called in your controller can be set by the next argument in the request URI.
+Additionally the method to be called in your controller can be set by the next argument in the request URI.  
 
 **yourdomain.tld/animal/tiger** will trigger **AnimalController()->tiger();** to be called.  
-Any other parts ARE NOT passed to the method, these are for you to pick up using the applications arg() method.  
+Any other parts beyond the method ARE NOT passed to the controller, these are for you to pick up using the applications arg() method.  
 The **\Core\Application()->arg();** method starts from index 0, whereas the first two indices are already used by the core to determine the route.  
 
 ```
 <?php
 	// Assume this url: yourdomain.tld/animals/tiger/indo-chinese
 	class AnimalController extends \Core\Controller {
-		public function _construct() {
-			parent::__construct();
+		public function index() {
+			// Will only trigger at yourdomain.tld/animal
 		}
 
 		public function tiger() {
@@ -44,23 +44,22 @@ string(12) "indo-chinese"
 ```
 
 > *NOTE:*  
-> By default only the controllers constructer are invoked, if arg(1) is nowhere to be found.  
+> The default method invoked is **index** this will happen if arg(1) is nowhere to be found, or there are no more arguments in the list.  
 
 ##Views##
 This is where all your theming goes (obviously du'h).  
-
 Each theme should contain at least the following files.  
 
 - header.tpl.php (Required)  
 - footer.tpl.php (Required)  
 - (default-route).tpl.php (Required) (default-route indicates a filename matching the configured default route.)  
 - notfound.tpl.php (Required)  
-- theme.json (Required)
+- theme.json (Required) (This is the per-theme configurations)
 
 It is assumed by the core that your theme has at least the required files, failing to create those files will result in unknown errors.  
   
 Every view file must have the extension **.tpl.php** this is to distinguish them from their representative controller files.  
-By default the view to be displayed is the one found matching arg(0), for example **animal.tpl.php**, unless otherwise specified by the active controller.
+By default the view to be displayed is the one found matching arg(0), for example **animal.tpl.php**, unless otherwise specified by the dispatched controller.
 
 You can add a new "partial" or "children" by adding it's path to the controllers data.
 ```
@@ -69,11 +68,16 @@ You can add a new "partial" or "children" by adding it's path to the controllers
 ?>
 ```
 
+And then in your template files
+```
+<?php require $sidebar; ?>
+```
+
 > *NOTE:*  
 > header.tpl.php, footer.data.php, and any other view files you plan to include or require in another view file cannot have a controller file.  
   
 ##Command Line Interface##
-This framework has support for being queried through CLI (albeit, not fully tested), to do so you must query the **index.php** file.  
+This framework supports being queried through CLI (albeit, not fully tested), to do so you must query the **index.php** file.  
 ```
 $ php index.php <controller> <method> <argument> ...
 ```
@@ -200,12 +204,6 @@ ressources are rendered in the same order they are added
   
 If you desire to add custom media stylesheets make use of the second parameter **$media** in **Document::addStylesheet();**  
 Same goes for the **Document::addJavascript();** method for other regions than the footer.  
-
-The document class also takes care of displaying the page title in **header.tpl.php** using the method **->getTitle()**    
-Set the page title with the **->setTitle()** method  
-
-> *NOTE:*  
-> You must manually implement rendering of custom media stylesheets and custom region javascripts. as only the defaults will be rendered by the core files.  
   
 ##Permalinks##
 Any links in your theme files should be passed through **Functions::url()** like so: 
