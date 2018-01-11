@@ -1,12 +1,15 @@
 <?php
 namespace Core {
-	use Exception;
+	use Exception, Registry, ReflectionClass;
 	
 	/**
 	* The main class for this application.
 	* Core\Application handles the routes, directory paths and title
 	* Consult the README file for usage examples throughout the framework.
 	* @author Allan Thue Rehhoff
+	* @uses ReflectionClass
+	* @uses Exception
+	* @uses Registry
 	* @see README.md
 	*/
 	final class Application {
@@ -35,8 +38,7 @@ namespace Core {
 		*/
 		public function __construct(array $args) {
 			$this->cwd = CWD;
-			$this->config = \Registry::set(new Configuration($this->cwd."/config.json"));
-
+			$this->config = Registry::set(new Configuration($this->cwd."/config.json"));
 
 			if(CLI === false) {
 				$route = ((isset($args["route"])) && ($args["route"] != '')) ? $args["route"] : $this->config->get("default_route");
@@ -111,13 +113,20 @@ namespace Core {
 			}
 
 			$controller = str_replace(" ", '', $base."Controller");
-			$this->controller = new $controller;
+			$reflector  = new ReflectionClass($controller);
 
-			$method = lcfirst(preg_replace("/\W+/", ' ', strtolower($this->arg(1))));
-			if(method_exists($this->controller, $method)) {
-				$this->controller->$method();
+			if($reflector->isSubclassOf("Core\Controller") !== true) {
+				throw new Exception($controller." must derive from \Core\Controller 'extends \Core\Controller'.");
 			}
 
+			$this->controller = new $controller;
+
+			$method = "index";
+			if($this->arg(1) !== false && $reflector->hasMethod($this->arg(1))) {
+				$method = lcfirst(preg_replace("/\W+/", ' ', strtolower($this->arg(1))));
+			}
+
+			$this->controller->$method();
 			$this->controller->assemble();
 
 			return $this->controller;

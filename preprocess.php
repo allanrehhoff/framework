@@ -70,17 +70,14 @@
 			case E_STRICT       :
 			case E_NOTICE       :
 			case E_USER_NOTICE  :
-				$type = 'Fatal notice';
-				$fatal = true;
+				$type = 'Fatal Notice';
 				break;
 			case E_WARNING      :
 			case E_USER_WARNING :
-				$type = 'Warning';
-				$fatal = true;
+				$type = 'Fatal Warning';
 				break;
 			default             :
-				$type = 'Fatal error';
-				$fatal = true;
+				$type = 'Fatal Error';
 				break;
 		}
 
@@ -115,9 +112,7 @@
 			error_log($message);
 		}
 		
-		if($fatal) {
-			exit(-1);
-		}
+		exit(-1);
 	});
 
 	// Autoloader

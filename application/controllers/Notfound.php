@@ -9,8 +9,7 @@
 		* Constructs an indicates the path wasn't found
 		* @return void
 		*/
-		public function __construct() {
-			parent::__construct();
+		public function index() {
 			header("HTTP/1.0 404 Not Found");
 
 			// Force the "notfound.tpl.php" file, as arg(0) is potentially unknown at this point.

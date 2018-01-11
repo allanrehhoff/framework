@@ -1,7 +1,6 @@
 <?php
 	class CliController extends \Core\Controller {
-		public function __construct() {
-			parent::__construct();
+		public function index() {
 			print "hello from cli".CRLF;
 		}
 

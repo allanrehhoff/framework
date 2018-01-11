@@ -1,14 +1,20 @@
 #Changelog#
 v3.0-beta4
+- **This release is backwards incompatible. **  
 - Better support CLI mode support.  
 - Almost completely rewritten exception handler.  
 - Coding style changes, mainly apostrophes.   
 - Corrected syntax error, from beta3.  
 - Theme::getDirectoryUri(); now uses SERVER_NAME instead of HTTP_HOST.  
 - Removed branding from docblocks (I don't really like commercials).  
-- Bugfixing, one should now again be able to add assets from derived controllers.  
-- Default method called by controllers are now the constructer rather than the index(); method.  
+- Bugfixing: one should now again be able to add assets from derived controllers.  
+- Bugfixing: Controller::hasView(); didn't check if file existed before returning true.  
 - Updated some documentation.  
+- Now forcing controllers to extend upon \Core\Controller();  
+- Now forcing child controllers to invoke the parent constructor.  
+- Methods in \Core\Controller are now final, as they were never meant to be overridden.  
+- \Core\Controller:$request should not contain cookie variables.  
+- \Core\Controller now forces chlid classes index methods.   
 
 v3.0-beta3
 - Change utf8 to utf8mb4 in MySQL connections, allowing emoji support.
