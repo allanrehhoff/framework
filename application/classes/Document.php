@@ -1,8 +1,6 @@
 <?php
-namespace DOM {	
 	/**
 	* Central class for handling javascripts and stylesheets to be rendered.
-	* @author Allan Thue Rehhoff
 	*/
 	class Document {
 		private $stylesheets = [];
@@ -53,4 +51,3 @@ namespace DOM {
 			return isset($this->javascript[$region]) ? $this->javascript[$region] : [];
 		}
 	}
-}

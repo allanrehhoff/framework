@@ -1,6 +1,6 @@
 <?php
 namespace Core {
-	use Exception, Registry, DOM;
+	use Exception, Registry;
 
 	/**
 	* The core controller which subcontrollers should extend upon.
@@ -14,7 +14,7 @@ namespace Core {
 		protected $application;
 
 		/**
-		* @var Holds the DOM\Document instance
+		* @var Holds the \Document instance
 		*/
 		protected $document;
 
@@ -52,7 +52,7 @@ namespace Core {
 		* Constructs the overall environment, setting up helpers and initial variables.
 		* By making this final child controllers don't need to call parent::__construct().
 		* @uses \Registry
-		* @uses \DOM\Document
+		* @uses \Document
 		* @uses \Core\Theme
 		* @return void
 		*/
@@ -70,22 +70,22 @@ namespace Core {
 			$this->application 	 = Registry::get("Core\Application");
 			$this->view 		 = $this->application->arg(0);
 
-			$this->database = new \Database\Connection(
+			/* $this->database = new \Database\Connection(
 				$this->configuration->get("database.host"),
 				$this->configuration->get("database.username"),
 				$this->configuration->get("database.password"),
 				$this->configuration->get("database.name")
-			);
+			); */
 
 			$this->setTitle(array_slice($this->application->arg(), -1)[0]);
 
-			$this->document = Registry::set(new DOM\Document);
+			$this->document = Registry::set(new \Document);
 			$this->theme = Registry::set(new Theme($this->configuration->get("theme")));
 		}
 
 		/**
 		* Contains accessible theme variables.
-		* @uses \DOM\Document
+		* @uses \Document
 		* @return void
 		*/
 		final public function assemble() {

@@ -52,7 +52,7 @@
 						<strong>Line: </strong>".$exception->getLine().BR."
 						<strong>Message: </strong>".$exception->getMessage().BR."
 						<strong>Stacktrace: </strong>".BR."
-						<ol style=\"margin-top:0px; line-height:10px;\">".LF."
+						<ol style=\"margin-top:0px;\">".LF."
 							<li>".implode("</li><li>", $stacktrace)."</li>
 						</ol>
 					</div>";
@@ -122,7 +122,7 @@
 		if(substr($className, -10) == "Controller" && $className != "Core/Controller") {
 			$classFile = CWD."/application/controllers/".substr($className, 0, -10).".php";
 		} else {
-			$classFile = CWD."/application/classes/".$className.".class.php";
+			$classFile = CWD."/application/classes/".$className.".php";
 		}
 
 		require $classFile;

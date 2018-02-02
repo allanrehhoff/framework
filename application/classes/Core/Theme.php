@@ -62,20 +62,20 @@ namespace Core {
 		}
 
 		/**
-		* Adds configured theme assets to the DOM\Document class
-		* @uses \DOM\Document
+		* Adds configured theme assets to the Document class
+		* @uses \Document
 		* @return void
 		*/
 		private function addAssets() {
 			if(!empty($this->theme->get("javascript"))) {
 				foreach($this->theme->get("javascript") as $javascript) {
-					\Registry::get("DOM\Document")->addJavascript($this->getDirectoryUri($javascript));
+					\Registry::get("Document")->addJavascript($this->getDirectoryUri($javascript));
 				}
 			}
 
 			if(!empty($this->theme->get("stylesheets"))) {
 				foreach($this->theme->get("stylesheets") as $stylesheet) {
-					\Registry::get("DOM\Document")->addStylesheet($this->getDirectoryUri($stylesheet));
+					\Registry::get("Document")->addStylesheet($this->getDirectoryUri($stylesheet));
 				}
 			}
 		}
