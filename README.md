@@ -46,7 +46,7 @@ string(12) "indo-chinese"
 > *NOTE:*  
 > The default method invoked is **index** this will happen if arg(1) is nowhere to be found, or there are no more arguments in the list.  
 
-##Views##
+##Themes##
 This is where all your theming goes (obviously du'h).  
 Each theme should contain at least the following files.  
 
@@ -73,9 +73,11 @@ And then in your template files
 <?php require $sidebar; ?>
 ```
 
+Theme assets should be configured in the theme.json file, and paths must be relative to the theme directory.  
+
 > *NOTE:*  
 > header.tpl.php, footer.data.php, and any other view files you plan to include or require in another view file cannot have a controller file.  
-  
+
 ##Command Line Interface##
 This framework supports being queried through CLI (albeit, not fully tested), to do so you must query the **index.php** file.  
 ```
@@ -122,7 +124,7 @@ Files containing the definition of an instance must share name with the instance
 Additionally instances residing within a namespace must be located within a folder structure matching the the namespacing structure (relative from classes/ folder).  
   
 ##Errors and Exceptions##
-The application comes bundled by default with a rather agressive error and exception handler, those handlers will take care of generating a small stacktrace for debugging purposes.  
+The application comes bundled with a rather conservative error/exception handlers, the handlers are very aggresive and will take care of generating a small stacktrace for debugging purposes.  
 Every PHP notice/error is treated as a fatal error by the error handler, this is to prevent the next developer from banging his head into the table later on, as those errors should be dealt with during development.  
   
 However if you do decide to be a nincompoop and annoy the next developer you can turn of error reporting entirely by using the **ini_* ** functions in **preprocess.php**
@@ -204,13 +206,3 @@ ressources are rendered in the same order they are added
   
 If you desire to add custom media stylesheets make use of the second parameter **$media** in **Document::addStylesheet();**  
 Same goes for the **Document::addJavascript();** method for other regions than the footer.  
-  
-##Permalinks##
-Any links in your theme files should be passed through **Functions::url()** like so: 
-```
-<?php Functions::url("/path/to/your-file.ext") ?>
-```
-This ensures the file is being linked correct, in most cases if the application is installed in a subfolder.  
-You may also link the full path manually, the above is solely a helper method.  
-
-However, **do not** link assets this way, use the theme configuration for this.  

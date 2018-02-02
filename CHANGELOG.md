@@ -1,4 +1,11 @@
 #Changelog#
+v3.0-beta5
+- Fixing merge conflict.  
+- variable naming error in Theme::getDirectoryUri();  
+- Cache.max_age default configured time should be 0.  
+- New function to get theme path uri.
+- \Core\Theme::getDirectoryUri(); now points directly to the theme.  
+
 v3.0-beta4
 - **This release is backwards incompatible. **  
 - Better support CLI mode support.  

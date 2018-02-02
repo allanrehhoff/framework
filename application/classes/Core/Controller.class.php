@@ -84,13 +84,13 @@ namespace Core {
 		}
 
 		/**
-		* Contains globally accessible theme variables.
+		* Contains accessible theme variables.
 		* @uses \DOM\Document
 		* @return void
 		*/
 		final public function assemble() {
-			if($this->configuration->get("cache_control") !== false) {
-				header("Cache-Control: max-age=".(int)$this->config->get("cache_control"));
+			if($this->configuration->get("cache.max_age") > 0) {
+				header("Cache-Control: max-age=".(int)$this->configuration->get("cache.max_age"));
 				header("Cache-Control: post-check=1, pre-check=1", false);
 				header("Pragma: cache");
 			} else {

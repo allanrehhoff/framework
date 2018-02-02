@@ -23,16 +23,11 @@
 	define("TAB", "\t");
 	define("CRLF", CR.LF);
 	define("BR", "<br />");
-<<<<<<< HEAD
 	define("SSL", !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on');
-	
-=======
 	define("CLI", php_sapi_name() == "cli");
-	define("SSL", !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on');
 	define("CWD", getcwd());
 
 	// Exception handler
->>>>>>> v3
 	set_exception_handler(function($exception) {
 		$stacktrace = [];
 		$trace = array_reverse($exception->getTrace());

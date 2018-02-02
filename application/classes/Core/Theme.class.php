@@ -44,13 +44,13 @@ namespace Core {
 		* @author Allan Thue Rehhoff
 		* @return string
 		*/
-		public function getDirectoryUri($path = '/') {
+		public function getDirectoryUri($file = '/') {
 			$protocol = SSL ? "https://" : "http://";
 			$host  = isset($_SERVER["SERVER_NAME"]) ? $_SERVER["SERVER_NAME"] : "127.0.0.1";
 			$path = rtrim(dirname($_SERVER["PHP_SELF"]), "/\\");
-			$baseurl = $protocol.$host.$path."/";
+			$baseurl = $protocol.$host.$path;
 
-			return $baseurl.ltrim($path, '/');
+			return $baseurl."/application/themes/".$this->getName()."/".ltrim($file, '/');
 		}
 
 		/**

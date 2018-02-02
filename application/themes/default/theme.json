@@ -1,9 +1,9 @@
 {
 	"javascript": [
-		"/application/themes/default/javascript/jquery-3.2.1.min.js"
+		"javascript/jquery-3.2.1.min.js"
 	],
 	"stylesheets": [
-		"/application/themes/default/stylesheets/screen.css",
-		"/application/themes/default/stylesheets/responsive.css"
+		"stylesheets/screen.css",
+		"stylesheets/responsive.css"
 	]
 }

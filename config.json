@@ -2,7 +2,9 @@
     "theme": "default",
     "base_title": "%s | default-title",
     "default_route": "index",
-    "cache_control": false,
+    "cache":  {
+        "max_age": 0
+    },
     "database": {
         "host": "localhost",
         "username": "root",
