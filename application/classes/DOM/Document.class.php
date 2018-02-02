@@ -5,13 +5,13 @@ namespace DOM {
 	* @author Allan Thue Rehhoff
 	*/
 	class Document {
-		private static $stylesheets = [];
-		private static $javascript = [];
+		private $stylesheets = [];
+		private $javascript = [];
 		protected $title = '';
 
 		public function __construct() {
-			self::$stylesheets["all"] = [];
-			self::$javascript["footer"] = [];
+			$this->stylesheets["all"] = [];
+			$this->javascript["footer"] = [];
 		}
 
 		/**
@@ -21,8 +21,8 @@ namespace DOM {
 		* @param (string) $media Media query this stylesheet should apply to.
 		* @return void
 		*/
-		public static function addStylesheet($style, $media = "all") {
-			self::$stylesheets[$media][] = $style;
+		public function addStylesheet($style, $media = "all") {
+			$this->stylesheets[$media][] = $style;
 		}
 
 		/**
@@ -31,8 +31,8 @@ namespace DOM {
 		* @param (string) $region Region of the DOM where this javascript should be rendered.
 		* @return void
 		*/
-		public static function addJavascript($script, $region = "footer") {
-			self::$javascript[$region][] = $script;
+		public function addJavascript($script, $region = "footer") {
+			$this->javascript[$region][] = $script;
 		}
 
 		/**
@@ -40,8 +40,8 @@ namespace DOM {
 		* @param $media Only return stylesheets in this media query.
 		* @return array
 		*/
-		public static function getStylesheets($media = "all") {
-			return isset(self::$stylesheets[$media]) ? self::$stylesheets[$media] : [];
+		public function getStylesheets($media = "all") {
+			return isset($this->stylesheets[$media]) ? $this->stylesheets[$media] : [];
 		}
 
 		/**
@@ -49,8 +49,8 @@ namespace DOM {
 		* @param (string) $region Only return javascript files belonging to this region.
 		* @return array
 		*/
-		public static function getJavascript($region = "footer") {
-			return isset(self::$javascript[$region]) ? self::$javascript[$region] : [];
+		public function getJavascript($region = "footer") {
+			return isset($this->javascript[$region]) ? $this->javascript[$region] : [];
 		}
 	}
 }

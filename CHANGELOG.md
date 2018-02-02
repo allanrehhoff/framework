@@ -5,6 +5,7 @@ v3.0-beta5
 - Cache.max_age default configured time should be 0.  
 - New function to get theme path uri.
 - \Core\Theme::getDirectoryUri(); now points directly to the theme.  
+- DOM\Document no longer uses a static context.  
 
 v3.0-beta4
 - **This release is backwards incompatible. **  

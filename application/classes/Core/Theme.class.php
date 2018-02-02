@@ -69,13 +69,13 @@ namespace Core {
 		private function addAssets() {
 			if(!empty($this->theme->get("javascript"))) {
 				foreach($this->theme->get("javascript") as $javascript) {
-					\DOM\Document::addJavascript($this->getDirectoryUri($javascript));
+					\Registry::get("DOM\Document")->addJavascript($this->getDirectoryUri($javascript));
 				}
 			}
 
 			if(!empty($this->theme->get("stylesheets"))) {
 				foreach($this->theme->get("stylesheets") as $stylesheet) {
-					\DOM\Document::addStylesheet($this->getDirectoryUri($stylesheet));
+					\Registry::get("DOM\Document")->addStylesheet($this->getDirectoryUri($stylesheet));
 				}
 			}
 		}

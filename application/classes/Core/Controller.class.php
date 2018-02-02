@@ -65,10 +65,10 @@ namespace Core {
 		* @return void
 		*/
 		final public function initialize() {
-			$this->request = $_GET + $_POST;
+			$this->request 		 = $_GET + $_POST;
 			$this->configuration = Registry::get("Core\Configuration");
-			$this->application = Registry::get("Core\Application");
-			$this->view = $this->application->arg(0);
+			$this->application 	 = Registry::get("Core\Application");
+			$this->view 		 = $this->application->arg(0);
 
 			$this->database = new \Database\Connection(
 				$this->configuration->get("database.host"),
@@ -102,8 +102,8 @@ namespace Core {
 			$this->data["header"] = $this->getView("header");
 			$this->data["footer"] = $this->getView("footer");
 
-			$this->data["stylesheets"] = DOM\Document::getStylesheets();
-			$this->data["javascript"]  = DOM\Document::getJavascript("footer");
+			$this->data["stylesheets"] = $this->document->getStylesheets();
+			$this->data["javascript"]  = $this->document->getJavascript("footer");
 		}
 
 		/**
