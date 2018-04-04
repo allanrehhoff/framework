@@ -1,4 +1,10 @@
 #Changelog#
+v3.0-beta6
+- Only assign configuration errors, if it's actually needed.  
+- Controller method names should new be properly sanitized to PHP5 compatible method/function name.  
+- Cache headers moved to preprocess.php, reverted from v3.0-alpha6.  
+- Updated documentation to reflect the new methodName changes.  
+
 v3.0-beta5
 - Fixing merge conflict.  
 - variable naming error in Theme::getDirectoryUri();  

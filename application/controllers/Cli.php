@@ -7,4 +7,8 @@
 		public function interface() {
 			print "Hello from interface".CRLF;
 		}
+
+		public function myMethod() {
+			print "myMethod was called..";
+		} 
 	}

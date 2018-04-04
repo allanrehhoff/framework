@@ -112,9 +112,13 @@ namespace Core {
 
 			$this->controller = new $controller;
 
-			$method = "index";
-			if($this->arg(1) !== false && $reflector->hasMethod($this->arg(1))) {
-				$method = lcfirst(preg_replace("/\W+/", ' ', strtolower($this->arg(1))));
+			$method = '';
+			if($this->arg(1) !== false) {
+				$method = (string) new MethodName($this->arg(1));
+			}
+
+			if($reflector->hasMethod($method) !== true) {
+				$method = Method::DEFAULT;
 			}
 
 			$this->controller->$method();

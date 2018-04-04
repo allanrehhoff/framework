@@ -70,12 +70,14 @@ namespace Core {
 			$this->application 	 = Registry::get("Core\Application");
 			$this->view 		 = $this->application->arg(0);
 
+			/*
 			$this->database = new \Database\Connection(
 				$this->configuration->get("database.host"),
 				$this->configuration->get("database.username"),
 				$this->configuration->get("database.password"),
 				$this->configuration->get("database.name")
 			);
+			*/
 
 			$this->setTitle(array_slice($this->application->arg(), -1)[0]);
 
@@ -89,16 +91,6 @@ namespace Core {
 		* @return void
 		*/
 		final public function assemble() {
-			if($this->configuration->get("cache.max_age") > 0) {
-				header("Cache-Control: max-age=".(int)$this->configuration->get("cache.max_age"));
-				header("Cache-Control: post-check=1, pre-check=1", false);
-				header("Pragma: cache");
-			} else {
-				header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-				header("Cache-Control: post-check=0, pre-check=0", false);
-				header("Pragma: no-cache");
-			}
-
 			$this->data["header"] = $this->getView("header");
 			$this->data["footer"] = $this->getView("footer");
 

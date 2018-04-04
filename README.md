@@ -10,16 +10,23 @@ In short all this does is serve as a kickstart to get a readable and stable code
 
 #Documentation#
 
-##Controllers##
+##Controller & Methods##
 If you're familiar with opencart or other MVC frameworks you might already know the url-to-controller concept.  
 Given the URL **yourdomain.tld/animal** will map to a controller as such **AnimalController.php** in the application/controllers/ directory.  
 
 Your controllers must extend upon **\Core\Controller** to have all the neccessary functions available.
 
-Additionally the method to be called in your controller can be set by the next argument in the request URI.  
+Additionally the method to be called on your controller can be set by the next argument in the request URI, alias arg(1).  
 
 **yourdomain.tld/animal/tiger** will trigger **AnimalController()->tiger();** to be called.  
-Any other parts beyond the method ARE NOT passed to the controller, these are for you to pick up using the applications arg() method.  
+
+arg(1) will be sanitized to a PHP5 compatible method name in camelCase format, this means that dashes, numbers, everything that's not a word will be stripped
+and the upcoming word will be uppercased, except the first.  
+
+By design there's no way for PHP to validate that you (namely the developer),
+define your methods in camelCaseFormat, so please! for you and the next developers sake, do this, and be strict about it. 
+
+Any other parts beyond arg(1) ARE NOT passed directly to the controller, these are for you to pick up using the applications arg() method.  
 The **\Core\Application()->arg();** method starts from index 0, whereas the first two indices are already used by the core to determine the route.  
 
 ```
@@ -44,7 +51,7 @@ string(12) "indo-chinese"
 ```
 
 > *NOTE:*  
-> The default method invoked is **index** this will happen if arg(1) is nowhere to be found, or there are no more arguments in the list.  
+> The default method invoked is **index** this will happen if arg(1) is nowhere to be found in the given controller, or arg(1) is void.
 
 ##Themes##
 This is where all your theming goes (obviously du'h).  

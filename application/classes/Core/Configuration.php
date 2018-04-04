@@ -31,17 +31,17 @@ namespace Core {
 			$jsonConfig = file_get_contents($configurationFile);
 			$this->parsedConfig = json_decode($jsonConfig);
 
-			$jsonErrorMap = [
-				JSON_ERROR_DEPTH => "Maximum stack depth exceeded.",
-				JSON_ERROR_STATE_MISMATCH => "Underflow or the modes mismatch.",
-				JSON_ERROR_CTRL_CHAR => "Unexpected control character found.",
-				JSON_ERROR_SYNTAX => "Syntax error, your configuration file contains malformed JSON.",
-				JSON_ERROR_UTF8 => "Your configuration file may me incorrectly encoded, it contains malformed UTF-8 characters."
-			];
-
 			$this->error = json_last_error();
 
 			if($this->error !== JSON_ERROR_NONE) {
+				$jsonErrorMap = [
+					JSON_ERROR_DEPTH => "Maximum stack depth exceeded.",
+					JSON_ERROR_STATE_MISMATCH => "Underflow or the modes mismatch.",
+					JSON_ERROR_CTRL_CHAR => "Unexpected control character found.",
+					JSON_ERROR_SYNTAX => "Syntax error, your configuration file contains malformed JSON.",
+					JSON_ERROR_UTF8 => "Your configuration file may me incorrectly encoded, it contains malformed UTF-8 characters."
+				];
+
 				if(isset($jsonErrorMap[$this->error])) {
 					throw new ConfigurationException("Unable to parse configuration file, ".$jsonErrorMap[$this->error]);
 				} else {
