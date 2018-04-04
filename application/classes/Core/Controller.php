@@ -70,14 +70,12 @@ namespace Core {
 			$this->application 	 = Registry::get("Core\Application");
 			$this->view 		 = $this->application->arg(0);
 
-			/*
 			$this->database = new \Database\Connection(
 				$this->configuration->get("database.host"),
 				$this->configuration->get("database.username"),
 				$this->configuration->get("database.password"),
 				$this->configuration->get("database.name")
 			);
-			*/
 
 			$this->setTitle(array_slice($this->application->arg(), -1)[0]);
 
