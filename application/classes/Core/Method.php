@@ -53,7 +53,7 @@ namespace Core {
 				throw new MethodNameException($this->errorMap[$pregLastError], $pregLastError);
 			}
 
-			foreach ($temp[0] as $key => $word) {
+			foreach($temp[0] as $key => $word) {
 				$temp[$key] = ucfirst(strtolower($word)); 
 			}
 
