@@ -90,9 +90,9 @@
 		array_pop($trace);
 		
 		if(CLI) {
-			print "Backtrace from ".$type." '".$errstr."' at ".$errfile.' '.$errline.':'."\n";
+			print "Backtrace from ".$type." '".$errstr."' at ".$errfile.' '.$errline.':'.LF;
 			foreach($trace as $item) {
-				print '  ' .(isset($item["file"]) ? $item["file"] : "<unknown file>")." line ".(isset($item["line"]) ? $item["line"] : "<unknown line>")." calling ".$item['function']."()"."\n";
+				print '  ' .(isset($item["file"]) ? $item["file"] : "<unknown file>")." line ".(isset($item["line"]) ? $item["line"] : "<unknown line>")." calling ".$item['function']."()".LF;
 			}
 		} else {
 			print "<pre class=\"alert alert-danger\">".LF;
@@ -100,7 +100,7 @@
 			print "  <ol style=\"margin-top:0px; line-height:10px;\">".LF;
 			
 			foreach($trace as $item) {
-				print "<li>" . (isset($item["file"]) ? $item["file"] : "<unknown file>")." line ".(isset($item["line"]) ? $item["line"] : "<unknown line>")." calling ".$item['function']."()</li>" . "\n";
+				print "<li>" . (isset($item["file"]) ? $item["file"] : "<unknown file>")." line ".(isset($item["line"]) ? $item["line"] : "<unknown line>")." calling ".$item['function']."()</li>".LF;
 			}
 			
 			print "  </ol>" . "\n";
