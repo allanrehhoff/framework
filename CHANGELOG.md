@@ -6,6 +6,7 @@ v3.0-beta7
 - Removed PHP version check, as it's outdated now.  
 - Streamlined the style of xceptions and errors thrown.  
 - Errors and exceptions will now clear the output buffer.  
+- CWD constant should be equal to the dir of the index.php file.  
 
 v3.0-beta6
 - Only assign configuration errors, if it's actually needed.  
