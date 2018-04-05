@@ -14,7 +14,7 @@ namespace Core {
 		/**
 		* @var Different PCRE error definitions, it's unlikely you'll ever see those.
 		*/
-		private $this->errorMap = [
+		private $errorMap = [
 			PREG_INTERNAL_ERROR => "Internal PCRE error.",
 			PREG_BACKTRACK_LIMIT_ERROR => "PCRE's backtracking limit was reached, try ini_set('pcre.backtrack_limit', int).",
 			PREG_RECURSION_LIMIT_ERROR => "PCRE's recursion limit was reached, pcre.recursion_limit may not be set to high as it consume all the available process stack.",

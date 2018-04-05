@@ -118,7 +118,7 @@ namespace Core {
 			}
 
 			if($reflector->hasMethod($method) !== true) {
-				$method = Method::DEFAULT;
+				$method = MethodName::DEFAULT;
 			}
 
 			$this->controller->$method();
