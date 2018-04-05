@@ -1,5 +1,5 @@
 <?php
-	class CliController extends \Core\Controller {
+	class CliController extends Controller {
 		public function index() {
 			print "hello from cli".CRLF;
 		}

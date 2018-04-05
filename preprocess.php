@@ -124,11 +124,18 @@
 	spl_autoload_register(function($className) {
 		$className = str_replace("\\", "/", $className);
 
+		$classFile = CWD."/application/classes/".$className.".php";
+		if(!file_exists($classFile) && mb_strlen($className) > 10) {
+			$classFile = CWD."/application/controllers/".substr($className, 0, -10).".php";
+		}
+
+		/*
 		if(substr($className, -10) == "Controller" && $className != "Core/Controller") {
 			$classFile = CWD."/application/controllers/".substr($className, 0, -10).".php";
 		} else {
 			$classFile = CWD."/application/classes/".$className.".php";
 		}
+		*/
 
 		require $classFile;
 	});

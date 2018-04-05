@@ -1,7 +1,4 @@
 <?php
-namespace Core {
-	use Exception, Registry;
-
 	/**
 	* The core controller which subcontrollers should extend upon.
 	* @author Allan Thue Rehhoff
@@ -80,7 +77,7 @@ namespace Core {
 			$this->setTitle(array_slice($this->application->arg(), -1)[0]);
 
 			$this->document = Registry::set(new \Document);
-			$this->theme = Registry::set(new Theme($this->configuration->get("theme")));
+			$this->theme = Registry::set(new \Core\Theme($this->configuration->get("theme")));
 		}
 
 		/**
@@ -151,4 +148,3 @@ namespace Core {
 			$this->view = $view;
 		}
 	}
-}

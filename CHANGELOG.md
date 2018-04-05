@@ -4,6 +4,7 @@ v3.0-beta6
 - Controller method names should new be properly sanitized to PHP5 compatible method/function name.  
 - Cache headers moved to preprocess.php, reverted from v3.0-alpha6.  
 - Updated documentation to reflect the new methodName changes.  
+- Main Controller class moved out from \Core namespace.  
 
 v3.0-beta5
 - Fixing merge conflict.  

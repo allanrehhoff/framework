@@ -106,8 +106,8 @@ namespace Core {
 			$controller = str_replace(" ", '', $base."Controller");
 			$reflector  = new ReflectionClass($controller);
 
-			if($reflector->isSubclassOf("Core\Controller") !== true) {
-				throw new Exception($controller." must derive from \Core\Controller 'extends \Core\Controller'.");
+			if($reflector->isSubclassOf("Controller") !== true) {
+				throw new Exception($controller." must derive from \Controller 'extends \Controller'.");
 			}
 
 			$this->controller = new $controller;

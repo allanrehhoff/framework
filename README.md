@@ -14,7 +14,7 @@ In short all this does is serve as a kickstart to get a readable and stable code
 If you're familiar with opencart or other MVC frameworks you might already know the url-to-controller concept.  
 Given the URL **yourdomain.tld/animal** will map to a controller as such **AnimalController.php** in the application/controllers/ directory.  
 
-Your controllers must extend upon **\Core\Controller** to have all the neccessary functions available.
+Your controllers must extend upon **Controller** to have all the neccessary functions available.
 
 Additionally the method to be called on your controller can be set by the next argument in the request URI, alias arg(1).  
 
@@ -32,7 +32,7 @@ The **\Core\Application()->arg();** method starts from index 0, whereas the firs
 ```
 <?php
 	// Assume this url: yourdomain.tld/animals/tiger/indo-chinese
-	class AnimalController extends \Core\Controller {
+	class AnimalController extends Controller {
 		public function index() {
 			// Will only trigger at yourdomain.tld/animal
 		}
@@ -109,7 +109,7 @@ Configuration is loaded upon controller initialization.
 Values can be accessed, changed, removed and saved using a dot syntax.  
 ```
 <?php
-	class RestaurantController extends \Core\Controller {
+	class RestaurantController extends Controller {
 		public function __construct() {
 			$this->theme->get("menu.pizzas"); // ["Hawaii", "MeatLover", "Vegan", ...]
 			$this->theme->set("menu.pizzas.Hawaii", "Ananas"); // ["Ananas", "MeatLover", "Vegan", ...]

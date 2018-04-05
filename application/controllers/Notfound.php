@@ -3,7 +3,7 @@
 	* Default controller for paths that cannot be routed.
 	* @author Allan Thue Rehhoff
 	*/
-	class NotfoundController extends \Core\Controller {
+	class NotfoundController extends Controller {
 
 		/**
 		* Constructs an indicates the path wasn't found
