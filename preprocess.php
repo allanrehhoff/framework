@@ -9,8 +9,18 @@
 	header("Cache-Control: post-check=0, pre-check=0", false);
 	header("Pragma: no-cache");
 
-	// Version check
-	if(version_compare(PHP_VERSION, 5.4, '<')) die("PHP >= 5.4 is required for this framework to function properly.");
+	// Helper constants
+	define("CR", "\r");
+	define("LF", "\n");
+	define("TAB", "\t");
+	define("CRLF", CR.LF);
+	define("BR", "<br />");
+	define("SSL", !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on');
+	define("CLI", php_sapi_name() == "cli");
+	define("CWD", getcwd());
+
+	// Output buffering
+	if(!CLI) ob_start();
 
 	// Error reporting
 	ini_set("display_errors", "On");
@@ -22,18 +32,10 @@
 	// Default timezone
 	date_default_timezone_set("Europe/Copenhagen");
 
-	// Helper constants
-	define("CR", "\r");
-	define("LF", "\n");
-	define("TAB", "\t");
-	define("CRLF", CR.LF);
-	define("BR", "<br />");
-	define("SSL", !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on');
-	define("CLI", php_sapi_name() == "cli");
-	define("CWD", getcwd());
-
 	// Exception handler
+	// Be super nazi about exception, eliminates most noob mistakes.
 	set_exception_handler(function($exception) {
+
 		$stacktrace = [];
 		$trace = array_reverse($exception->getTrace());
 
@@ -50,8 +52,13 @@
 			print "Stacktrace: ".LF;
 			print TAB.implode(TAB, $stacktrace);
 		} else {
-			print "<div class=\"alert alert-danger\" style=\"font-family: 'Courier New';\">
-					    <h1 style=\"margin:0px;\">Uncaught Exception: ".get_class($exception)."</h1>".BR."
+			if(ob_get_length()) ob_clean();
+
+			header("HTTP/1.1 503 Service Temporarily Unavailable");
+			header("Retry-After: 3600");
+
+			print "<div style=\"font-family: monospace; background-color: #f44336; border-color: #f32c1e; color:#FFF; padding: 15px 15px 15px 15px;\">
+					    <h1 style=\"margin:0px;\">Uncaught Exception: ".get_class($exception)."</h1>".BR."</h1>
 						<strong>Code: </strong>".$exception->getCode().BR."
 						<strong>File: </strong>".$exception->getFile().BR."
 						<strong>Line: </strong>".$exception->getLine().BR."
@@ -65,12 +72,12 @@
 	});
 
 	// Error handler
+	// Be super nazi about errors, eliminates most noob mistakes.
 	set_error_handler(function($errno, $errstr, $errfile, $errline, $errcontext) {
 		if(!(error_reporting() & $errno)) {
 			return;
 		}
 
-		// Be super nazi about errors, eliminates most noob mistakes.
 		switch($errno) {
 			case E_STRICT       :
 			case E_NOTICE       :
@@ -95,16 +102,21 @@
 				print '  ' .(isset($item["file"]) ? $item["file"] : "<unknown file>")." line ".(isset($item["line"]) ? $item["line"] : "<unknown line>")." calling ".$item['function']."()".LF;
 			}
 		} else {
-			print "<pre class=\"alert alert-danger\">".LF;
-			print "<p style=\"line-height:10px; margin:0px;\">Backtrace from ".$type." '".$errstr."' at ".$errfile.' '.$errline.':'.LF."</p>";
-			print "  <ol style=\"margin-top:0px; line-height:10px;\">".LF;
+			if(ob_get_length()) ob_clean();
+
+			header("HTTP/1.1 503 Service Temporarily Unavailable");
+			header("Retry-After: 3600");
+
+			print "<pre style=\"background-color: #f44336; border-color: #f32c1e; color:#FFF; padding: 15px 15px 0px 15px;\">".LF;
+			print "<strong style=\"line-height:10px; margin:0px;\">Backtrace from ".$type." '".$errstr."' at ".$errfile.' '.$errline.':'.LF."</strong>";
+			print "<ol style=\"margin-top:0px; line-height:10px; margin-bottom:0px;\">".LF;
 			
 			foreach($trace as $item) {
 				print "<li>" . (isset($item["file"]) ? $item["file"] : "<unknown file>")." line ".(isset($item["line"]) ? $item["line"] : "<unknown line>")." calling ".$item['function']."()</li>".LF;
 			}
 			
-			print "  </ol>" . "\n";
-			print "</pre>" . "\n";
+			print "</ol>".LF;
+			print "</pre>".LF;
 		}
 		
 		if(ini_get("log_errors")) {

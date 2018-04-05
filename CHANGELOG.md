@@ -1,10 +1,17 @@
 #Changelog#
+v3.0-beta7
+- **This release is backwards incompatible. **  
+- Fixed syntax errors introduced in previous version.  
+- Main Controller class moved out from \Core namespace.  
+- Removed PHP version check, as it's outdated now.  
+- Streamlined the style of xceptions and errors thrown.  
+- Errors and exceptions will now clear the output buffer.  
+
 v3.0-beta6
 - Only assign configuration errors, if it's actually needed.  
 - Controller method names should new be properly sanitized to PHP5 compatible method/function name.  
 - Cache headers moved to preprocess.php, reverted from v3.0-alpha6.  
 - Updated documentation to reflect the new methodName changes.  
-- Main Controller class moved out from \Core namespace.  
 
 v3.0-beta5
 - Fixing merge conflict.  
