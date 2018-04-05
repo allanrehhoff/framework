@@ -20,7 +20,7 @@
 	define("CWD", getcwd());
 
 	// Output buffering
-	if(!CLI) ob_start();
+	!CLI ? substr_count($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip') ? ob_start("ob_gzhandler") : ob_start() : false;
 
 	// Error reporting
 	ini_set("display_errors", "On");
@@ -35,7 +35,6 @@
 	// Exception handler
 	// Be super nazi about exception, eliminates most noob mistakes.
 	set_exception_handler(function($exception) {
-
 		$stacktrace = [];
 		$trace = array_reverse($exception->getTrace());
 
