@@ -20,7 +20,8 @@
 	define("CWD", getcwd());
 
 	// Output buffering
-	!CLI ? substr_count($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip') ? ob_start("ob_gzhandler") : ob_start() : false;
+	// The ob_gzhandler callback returns false if browser doesn't support gzip
+	!CLI ? ob_start("ob_gzhandler") ? : ob_start() : false;
 
 	// Error reporting
 	ini_set("display_errors", "On");
