@@ -15,9 +15,10 @@
 	define("TAB", "\t");
 	define("CRLF", CR.LF);
 	define("BR", "<br />");
-	define("SSL", !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on');
+	define("SSL", !empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == 'on');
 	define("CLI", php_sapi_name() == "cli");
 	define("CWD", __DIR__);
+	define("DS", DIRECTORY_SEPARATOR);
 
 	// Output buffering
 	// The ob_gzhandler callback returns false if browser doesn't support gzip

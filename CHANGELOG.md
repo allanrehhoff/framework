@@ -1,4 +1,8 @@
 #Changelog#
+v3.0-beta8
+- New constant DS  
+- change some qsingle quote strings to double quotes.  
+
 v3.0-beta7
 - **This release is backwards incompatible. **  
 - Fixed syntax errors introduced in previous version.  
@@ -6,7 +10,7 @@ v3.0-beta7
 - Removed PHP version check, as it's outdated now.  
 - Streamlined the style of xceptions and errors thrown.  
 - Errors and exceptions will now clear the output buffer.  
-- CWD constant should be equal to the dir of the index.php file.  
+- CWD constant is now equal to the dir of the index.php file.  
 
 v3.0-beta6
 - Only assign configuration errors, if it's actually needed.  
