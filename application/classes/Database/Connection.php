@@ -10,9 +10,40 @@ namespace Database {
 	use \PDO;
 
 	class Connection {
-		private $_connection, $transactionStarted;
+		/**
+		* @var (object) Internal PDO connection
+		*/
+		private $_connection;
+
+		/**
+		* @var (boolean) True if a transaction has started, false otherwise.
+		*/
+		private $transactionStarted = false;
+
+		/**
+		*@var (object)  The singleton instance of the this class.
+		*/
 		private static $singletonInstance;
-		public $rowCount, $statement;
+
+		/**
+		* @var (object) Holds the last prepared statement after execution.
+		*/
+		public $statement;
+
+		/**
+		* @var (int) Number of affected rows from last query
+		*/
+		public $rowCount;
+
+		/**
+		* @var (int) Number of queries executed.
+		*/
+		public $queryCount = 0;
+
+		/**
+		* @var (string) Last query attempted to be executed.
+		*/
+		public $lastQuery;
 
 		/**
 		* Initiate a new database connection through PDO.
@@ -32,6 +63,7 @@ namespace Database {
 
 			try {
 				$this->_connection = new PDO("mysql:host=".$hostname.";dbname=".$database, $username, $password, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+				$this->_connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 				$this->_connection->query("SET NAMES utf8mb4");
 			} catch (PDOException $exception) {
 				throw new Exception($exception->getMessage(), $exception->getCode());
@@ -41,7 +73,7 @@ namespace Database {
 		}
 
 		/**
-		* This should most likely close the connection when you're done using the DatabaseConnection
+		* This should most likely close the connection when you're done using the \Database\Connection
 		* @author Allan Thue Rehhoff
 		* @return void
 		* @since 1.3
@@ -54,7 +86,7 @@ namespace Database {
 		/**
 		* Allow methods not implemented by this class to be called on the connection
 		* @author Allan Thue Rehhoff
-		* @todo Consider removing the DatabaseConnection::getConnection(); method now that we have this.
+		* @todo Consider removing the \Database\Connection::getConnection(); method now that we have this.
 		* @since 1.3
 		*/
 		public function __call($method, $params = []) {
@@ -66,7 +98,7 @@ namespace Database {
 		} 
 
 		/**
-		* Retrieve the latest initiated DatabaseConnection instance.
+		* Retrieve the latest initiated \Database\Connection instance.
 		* @return (object)
 		* @author Allan Thue Rehhoff
 		* @since 1.0
@@ -76,7 +108,7 @@ namespace Database {
 		}
 
 		/**
-		* Retrieve the connection instance used by the current DatabaseConnection instance.
+		* Retrieve the connection instance used by the current \Database\Connection instance.
 		* You should rarely have a use for this though.
 		* @since 1.0
 		* @return (object)
@@ -93,7 +125,7 @@ namespace Database {
 		* @since 1.3
 		*/
 		public function transaction() {
-			return ($this->transactionStarted = $this->_connection->beginTransaction());
+			return $this->transactionStarted = $this->_connection->beginTransaction();
 		}
 
 		/**
@@ -105,9 +137,9 @@ namespace Database {
 		*/
 		public function commit() {
 			if($this->transactionStarted === true) {
-				return !($this->transactionStarted = !$this->_connection->commit());
+				return $this->_connection->commit();
 			} else {
-				throw new Exception("Attempt to commit when not in transaction.");
+				throw new Exception("Attempted to commit when not in transaction.");
 			}
 		}
 
@@ -120,9 +152,9 @@ namespace Database {
 		*/
 		public function rollback() {
 			if($this->transactionStarted === true) {
-				return !($this->transactionStarted = !$this->_connection->rollBack());
+				return $this->_connection->rollBack();
 			} else {
-				throw new Exception("Attempt rollback when not in transaction.");
+				throw new Exception("Attempted rollback when not in transaction.");
 			}
 		}
 
@@ -130,8 +162,8 @@ namespace Database {
 		* Execute a parameterized SQL query.
 		* @param (string) $sql The SQL string to qeury against the database
 		* @param (array) $args Arguments to pass along with the query
-		* @param (int) $fetchMode Default fetch mode for result sets, set to null for query types that cannot be fetched such as UPDATE
-		* @return (object)
+		* @param (int) $fetchMode Set fetch mode for the query performed. Must be one of PDO::FETCH_* default is PDO::FETCH_OBJECT
+		* @return (object) The prepared PDO statement after execution.
 		* @throws Exception
 		* @author Allan Thue Rehhoff
 		* @todo Find and alternative to casting errorcodes to integers for handling error codes.
@@ -143,8 +175,12 @@ namespace Database {
 				$this->statement = $this->_connection->prepare($sql);
 				$this->statement->execute($filters);
 				$this->statement->setFetchMode($fetchMode);
+
+				$this->queryCount++;
 			} catch(PDOException $exception) {
 				throw new Exception($exception->getCode().": ".$exception->getMessage(), (int) $exception->getCode());
+			} finally {
+				$this->lastQuery = $this->interpolateQuery($sql, $filters);
 			}
 
 			return $this->statement;
@@ -168,7 +204,7 @@ namespace Database {
 		* Rows are not ordered, make sure your criteria matches the desired row.
 		* @param (string) $table Name of the table containing the row to be fetched
 		* @param (array) $criteria Criteria used to filter the rows.
-		* @return (object)
+		* @return (array)
 		* @author Allan Thue Rehhoff
 		* @since 1.0
 		*/
@@ -189,13 +225,13 @@ namespace Database {
 		*/
 		public function fetchCell($table, $column, $criteria = null) {
 			$sql = "SELECT `".$column."` FROM ".$table." WHERE ".$this->keysToSql($criteria, "AND")." LIMIT 1";
-			$row = $this->query($sql, $criteria)->fetchAll()[0]->$column;
-			return !empty($row) ? $row[0]->$column : false;
+			$row = $this->query($sql, $criteria)->fetchAll();
+			return !empty($row) ? $row[0]->$column : null;
 		}
 
 		/**
-		* Alias of DatabaseConnection::fetchCell implemented for the drupal developers sake.
-		* @see DatabaseConnection::fetchCell();
+		* Alias of \Database\Connection::fetchCell implemented for the drupal developers sake.
+		* @see \Database\Connection::fetchCell();
 		*/
 		public function fetchField($table, $column, $criteria = null) {
 			return $this->fetchCell($table, $column, $criteria);
@@ -297,7 +333,7 @@ namespace Database {
 		}
 
 		/**
-		* Debugging prepared statements can be severely painful, use this as you would with DatabaseConnection::query(); to output the resulting SQL
+		* Debugging prepared statements can be severely painful, use this as you would with \Database\Connection::query(); to output the resulting SQL
 		* Replaces any parameter placeholders in a query with the corrosponding value that parameter.
 		* Assumes anonymous parameters from $params are are in the same order as specified in $query
 		* @param (string) $sql A parameterized SQL query
@@ -305,27 +341,29 @@ namespace Database {
 		* @return (string)
 		* @author Allan Thue Rehhoff
 		* @since 1.1
-		* @todo Support UPDATE statements as seen in DatabaseConnection::update();
+		* @todo Support UPDATE statements as seen in \Database\Connection::update();
 		*/
 		public function interpolateQuery($query, $params) {
 			$keys = [];
 			$values = $params;
 
-			foreach ($params as $key => $value) {
-				if (is_string($key)) {
-					$keys[] = '/:'.$key.'/';
-				} else {
-					$keys[] = '/[?]/';
-				}
+			if(is_array($params)) {
+				foreach ($params as $key => $value) {
+					if (is_string($key)) {
+						$keys[] = '/:'.$key.'/';
+					} else {
+						$keys[] = '/[?]/';
+					}
 
-				if (is_string($value)) {
-					$values[$key] = "'" . $value . "'";
-				}
+					if (is_string($value)) {
+						$values[$key] = "'" . $value . "'";
+					}
 
-		        if (is_array($value)) {
-					$values[$key] = "('" . implode("','", $value) . "')";
-				} else if (is_null($value)) {
-					$values[$key] = "NULL";
+			        if (is_array($value)) {
+						$values[$key] = "('" . implode("','", $value) . "')";
+					} else if (is_null($value)) {
+						$values[$key] = "NULL";
+					}
 				}
 			}
 
