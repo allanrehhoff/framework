@@ -63,19 +63,33 @@ namespace Core {
 
 		/**
 		* Adds configured theme assets to the Document class
+		* If theme assets appears to be an url, they'll be used as-is,
+		* otherwise files are linked absolutely to the theme.
 		* @uses \Document
 		* @return void
 		*/
 		private function addAssets() {
 			if(!empty($this->theme->get("javascript"))) {
 				foreach($this->theme->get("javascript") as $javascript) {
-					\Registry::get("Document")->addJavascript($this->getDirectoryUri($javascript));
+					if(filter_var($javascript, FILTER_VALIDATE_URL)) {
+						$src = $javascript;
+					} else {
+						$src = $this->getDirectoryUri($javascript);
+					}
+
+					\Registry::get("Document")->addJavascript($src);
 				}
 			}
 
 			if(!empty($this->theme->get("stylesheets"))) {
 				foreach($this->theme->get("stylesheets") as $stylesheet) {
-					\Registry::get("Document")->addStylesheet($this->getDirectoryUri($stylesheet));
+					if(filter_var($stylesheet, FILTER_VALIDATE_URL)) {
+						$src = $stylesheet;
+					} else {
+						$src = $this->getDirectoryUri($stylesheet);
+					}
+
+					\Registry::get("Document")->addStylesheet($src);
 				}
 			}
 		}
