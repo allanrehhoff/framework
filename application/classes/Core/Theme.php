@@ -74,6 +74,9 @@ namespace Core {
 					if(filter_var($javascript, FILTER_VALIDATE_URL)) {
 						$src = $javascript;
 					} else {
+						// Do not add files that does not exist in theme
+						if(file_exists($this->getTemplatePath($javascript)) === false) continue;
+
 						$src = $this->getDirectoryUri($javascript);
 					}
 
@@ -86,6 +89,9 @@ namespace Core {
 					if(filter_var($stylesheet, FILTER_VALIDATE_URL)) {
 						$src = $stylesheet;
 					} else {
+						// Do not add files that does not exist in theme
+						if(file_exists($this->getTemplatePath($stylesheet)) === false) continue;
+
 						$src = $this->getDirectoryUri($stylesheet);
 					}
 
