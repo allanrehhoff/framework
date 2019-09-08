@@ -89,6 +89,8 @@
 			$this->data["header"] = $this->getView("header");
 			$this->data["footer"] = $this->getView("footer");
 
+			$this->data["current"] = $this->application->arg(0);
+
 			$this->data["stylesheets"] = $this->document->getStylesheets();
 			$this->data["javascript"]  = $this->document->getJavascript("footer");
 		}

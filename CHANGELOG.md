@@ -5,6 +5,7 @@ v3.1
 - Fixed typos in changelog.  
 - Assets linked in theme.json can now be absolute urls. e.g. external assets.  
 - .htaccess files now includes lines to force HTTPS based websites. (commented as default)
+- Adding default controller variable containing the name of the current page.  
 
 v3.0-beta8
 - New constant DS  
