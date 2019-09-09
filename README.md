@@ -80,7 +80,7 @@ And then in your template files
 <?php require $sidebar; ?>
 ```
 
-Theme assets should be configured in the theme.json file, and paths must be relative to the theme directory.  
+Theme assets should be configured in the theme.json file, and paths must be relative to the theme directory, or an absolute url to the asset.  
 
 > *NOTE:*  
 > header.tpl.php, footer.data.php, and any other view files you plan to include or require in another view file cannot have a controller file.  

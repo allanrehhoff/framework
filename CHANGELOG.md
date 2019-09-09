@@ -7,6 +7,7 @@ v3.1
 - .htaccess files now includes lines to force HTTPS based websites. (commented as default)
 - Adding default controller variable containing the name of the current page.  
 - Prevent adding assets to DOM that does not exist in theme.  
+- Prevent fatal errors with trailing slashes in urls.  
 
 v3.0-beta8
 - New constant DS  

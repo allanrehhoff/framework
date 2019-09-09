@@ -58,7 +58,7 @@ namespace Core {
 		public function arg($index = "all") {
 			if($index === "all") {
 				return $this->args;
-			} elseif(isset($this->args[$index])) {
+			} elseif(isset($this->args[$index]) && $this->args[$index] !== '') {
 				return $this->args[$index];
 			}
 
