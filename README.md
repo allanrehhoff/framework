@@ -8,9 +8,9 @@ Therefore this framework will not be bundled with bloatware such as modules/comp
 
 In short all this does is serve as a kickstart to get a readable and stable codebase when starting up a new custom web project.
 
-#Documentation#  
+# Documentation
 
-##Controller & Methods##  
+## Controller & Methods
 If you're familiar with opencart or other MVC frameworks you might already know the url-to-controller concept.  
 Given the URL **yourdomain.tld/animal** will map to a controller as such **AnimalController.php** in the application/controllers/ directory.  
 
@@ -78,7 +78,7 @@ Will result in `PredatorController` being invoked.
 > *NOTE:*  
 > The default method invoked is **index** this will happen if arg(1) is nowhere to be found in the given controller, or arg(1) is void.
 
-##Themes##  
+## Themes folder
 This is where all your theming goes (obviously du'h).  
 Each theme should contain at least the following files.  
 
@@ -101,6 +101,7 @@ You can add a new "partial" or "children" by adding it's path to the controllers
 ```
 
 And then in your template files
+
 ```
 <?php require $sidebar; ?>
 ```
@@ -110,8 +111,9 @@ Theme assets should be configured in the theme.json file, and paths must be rela
 > *NOTE:*  
 > header.tpl.php, footer.data.php, and any other view files you plan to include or require in another view file cannot have a controller file.  
 
-##Command Line Interface##
+## Command Line Interface
 This framework supports being queried through CLI (albeit, not fully tested), to do so you must query the **index.php** file.  
+
 ```
 $ php index.php <controller> <method> <argument> ...
 ```
@@ -125,7 +127,7 @@ $ php index.php cli interface
 Hello from interface
 ```
   
-##Configuration##
+## Configuration
 The main configuration resides within the file **config,json**, and should contain nothing but configuration settings used by the core and controllers.  
 
 Theme specific configurations such as assets, third-party libraries should be managed by the **theme.json** file bundled with the theme.  
@@ -150,12 +152,12 @@ Values can be accessed, changed, removed and saved using a dot syntax.
 
 The core base_title setting only supports one wildcard %s use **(controller)->setTitle($title)** in your controller files to set a dynamic title.  
   
-##Autoloading classes##  
+## Autoloading classes
 Autoloading is a mechanism which requires class, interface and trait definitions (from here on, referenced as instances) on demand.  
 Files containing the definition of an instance must share name with the instance name, and end on **.class.php**.  
 Additionally instances residing within a namespace must be located within a folder structure matching the the namespacing structure (relative from classes/ folder).  
   
-##Errors and Exceptions##
+## Errors and Exceptions
 The application comes bundled with a rather conservative error/exception handlers, the handlers are very aggresive and will take care of generating a small stacktrace for debugging purposes.  
 Every PHP notice/error is treated as a fatal error by the error handler, this is to prevent the next developer from banging his head into the table later on, as those errors should be dealt with during development.  
   
@@ -165,7 +167,7 @@ The exception handler will still kill your application however, due to exception
 
 Good practice dictates that while developing your custom classes you should also create custom exceptions in the same namespace to match your classes.  
   
-##The Registry##  
+## The Registry
 Is where all instances that should be globally accessible is stored.  
 
 Once an instance has been set in the registry, it is immediately accesible by using **Registry::get()** instances are keyed by their class name definitions.  
@@ -196,7 +198,7 @@ Example:
 This structure is in place to avoid singletons being misused.  
 Albeit this framework currently ships with a \Singleton(); class, it's use is discouraged, as it is currently deprecated, and to be removed later on.  
   
-##Database##  
+## Database
 This section assumes you have basic knowledge of PDO.  
 (I haven't yet had time to properly test this documentation, as though it may appear outdated, use at own risk.)
 
@@ -216,7 +218,7 @@ Queries with a return value will be fetched as objects, for instance:
 <?php \Registry::get("Database\Connection")->select("animals"); ?>
 ```
   
-##Database Entities##  
+## Database Entities
 For easier data manipulation, data objects should extend the **\Database\Entity** class.  
 Every class that extends **\Database\DBObject** must implement the following methods.  
 
@@ -230,7 +232,7 @@ If you wish to change data use the **->set(array('column' => 'value'));**
 This will allow you to call **->save();** on an object and thus saving the data to your database.  
 The data object will be saved as a new row if the primary_key key parameter was not present upon instantiating.  
   
-##The Document class##  
+## The Document class
 In the DOM namespace you'll find the Document class, this can be used to add stylesheets and javscript to the page.  
 Do either of the following to achieve this.  
 **\DOM\Document::addStylesheet();**, **\DOM\Document::addJavascript();** methods.  
