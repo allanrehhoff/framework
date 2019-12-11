@@ -92,13 +92,11 @@ namespace Core {
 		}
 
 		/**
-		* Dispatches a controller, based upon the requeted path..
-		* Serves a NotfoundController if it doesn't exists
-		* @return array
+		* Executes a given controller by name.
+		* @param (strong) $base The base name of the controller, alias the class name.
+		* @return (object) Controller - the dispatched controller that has just been executed.
 		*/
-		public function dispatch() {
-			$base = ucwords(preg_replace("/\W+/", ' ', strtolower($this->arg(0))));
-
+		public function executeController($base) {
 			if($this->getControllerPath($base) === false) {
 				$base = "Notfound";
 			}
@@ -110,7 +108,7 @@ namespace Core {
 				throw new Exception($controller." must derive from \Controller 'extends \Controller'.");
 			}
 
-			$this->controller = new $controller;
+			$controller = new $controller;
 
 			$method = '';
 			if($this->arg(1) !== false) {
@@ -121,10 +119,20 @@ namespace Core {
 				$method = MethodName::DEFAULT;
 			}
 
-			$this->controller->$method();
-			$this->controller->assemble();
+			$controller->$method();
+			$controller->finalize();
 
-			return $this->controller;
+			return $controller;
+		}
+
+		/**
+		* Dispatches a controller, based upon the requeted path..
+		* Serves a NotfoundController if it doesn't exists
+		* @return array
+		*/
+		public function run() {
+			$base = ucwords(preg_replace("/\W+/", ' ', strtolower($this->arg(0))));
+			return $this->executeController($base);
 		}
 	}
 }

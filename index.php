@@ -12,7 +12,7 @@
 	require "preprocess.php";
 
 	$args = CLI ? $argv : $_GET;
-	$controller = Registry::set(new Core\Application($args))->dispatch();
+	$controller = Registry::set(new Core\Application($args))->run();
 
 	extract($controller->getData(), EXTR_SKIP);
 

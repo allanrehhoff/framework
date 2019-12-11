@@ -50,6 +50,31 @@ The above example will output something similar to:
 string(12) "indo-chinese"
 ```
 
+Controllers may also set child controllers to be executed once the parent controller finalizes.  
+
+```
+	class AnimalController extends Controller {
+		public function index() {
+			$this->children["Tiger"];
+		}
+	}
+```
+Will result in `TigerController` being invoked as if it was a normal controller, AFTER `AnimalController`
+
+Children controllers will also be able to override any data set by the parent controller.
+
+Setting a different view, will automatically add the new view to children controllers, to ensure that the controller for said view is executed.
+
+```
+	class AnimalController extends Controller {
+		public function index() {
+			$this->setView("predator");
+		}
+	}
+```
+
+Will result in `PredatorController` being invoked.  
+
 > *NOTE:*  
 > The default method invoked is **index** this will happen if arg(1) is nowhere to be found in the given controller, or arg(1) is void.
 

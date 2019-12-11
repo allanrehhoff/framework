@@ -41,6 +41,11 @@
 		public $theme;
 
 		/**
+		* @var Child controllers to be executed when the main one finalizes.
+		*/
+		protected $children = [];
+
+		/**
 		* Child controllers should declare this function instead of a constructor.
 		*/
 		abstract protected function index();
@@ -85,7 +90,7 @@
 		* @uses \Document
 		* @return void
 		*/
-		final public function assemble() {
+		final public function finalize() {
 			$this->data["header"] = $this->getView("header");
 			$this->data["footer"] = $this->getView("footer");
 
@@ -93,6 +98,10 @@
 
 			$this->data["stylesheets"] = $this->document->getStylesheets();
 			$this->data["javascript"]  = $this->document->getJavascript("footer");
+
+			foreach($this->children as $child) {
+				$this->application->executeController($child);
+			}
 		}
 
 		/**
@@ -148,5 +157,6 @@
 		*/
 		final protected function setView($view) {
 			$this->view = $view;
+			$this->children[] = ucfirst($view);
 		}
 	}
