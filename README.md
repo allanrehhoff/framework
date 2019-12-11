@@ -1,4 +1,4 @@
-#Introduction (Version 3)#  
+# Introduction (Version 3)
 This is not what you'd typically associate with a fully functional MVC framework, there's no "Models" and that is intentional, deal with it.  
 The intention for this is to prevent the developer from writing complete spaghetti, while being lightweight, scaleable and portable.  
 
