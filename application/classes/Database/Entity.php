@@ -26,8 +26,13 @@ namespace Database {
 
 			if ($data !== null) {
 				$key = $this->getKeyField();
-				$this->key = $data[$key];
-				unset( $data[$key]);
+
+				if(isset($data[$key])) {
+					$this->key = $data[$key];
+					unset( $data[$key] );
+				} else {
+					$this->key = null;
+				}
 			} else {
 				$data = [];
 			}
