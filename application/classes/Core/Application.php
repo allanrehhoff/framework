@@ -101,7 +101,8 @@ namespace Core {
 				$base = "Notfound";
 			}
 
-			$controller = str_replace(" ", '', $base."Controller");
+			//$controller = str_replace(" ", '', $base."Controller");
+			$controller = $base . "Controller";
 			$reflector  = new ReflectionClass($controller);
 
 			if($reflector->isSubclassOf("Controller") !== true) {
@@ -126,12 +127,16 @@ namespace Core {
 		}
 
 		/**
-		* Dispatches a controller, based upon the requeted path..
+		* Dispatches a controller, based upon the requeted path.
 		* Serves a NotfoundController if it doesn't exists
 		* @return array
 		*/
 		public function run() {
 			$base = ucwords(preg_replace("/\W+/", ' ', strtolower($this->arg(0))));
+			$parts = explode(' ', $base);
+			$parts = array_map("ucfirst", $parts);
+			$base = implode('', $parts);
+
 			return $this->executeController($base);
 		}
 	}

@@ -138,7 +138,7 @@
 		$className = str_replace("\\", "/", $className);
 
 		$classFile = CWD."/application/classes/".$className.".php";
-		if(!file_exists($classFile) && mb_strlen($className) > 10) {
+		if(!file_exists($classFile) && substr($className, -10) == "Controller") {
 			$classFile = CWD."/application/controllers/".substr($className, 0, -10).".php";
 		}
 

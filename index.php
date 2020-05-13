@@ -16,6 +16,4 @@
 
 	extract($controller->getData(), EXTR_SKIP);
 
-	if($controller->hasView() === true) {
-		require $controller->getView();
-	}
+	require $controller->getView();

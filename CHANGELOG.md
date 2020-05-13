@@ -1,4 +1,10 @@
 #Changelog#
+v3.2
+- Allow for setting views in subdirectories.
+- Fixed autoloader not allowed short class names.
+- Controller::getView(); now throws exception when view file is not found in theme.
+- Fixes controllers sometimes being dispatched with spaces in them.
+
 v3.1
 - New constant DS  
 - Change some single quote strings to double quotes.  

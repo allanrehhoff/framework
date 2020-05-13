@@ -139,7 +139,13 @@
 				$template = $this->view;
 			}
 
-			return $this->theme->getTemplatePath(basename($template).".tpl.php");
+			$view = $this->theme->getTemplatePath($template.".tpl.php");
+
+			if(is_file($view) === false) {
+				throw new Exception("View template file '".$template.".tpl.php' not found in theme.");
+			}
+
+			return $view;
 		}
 
 		/**
