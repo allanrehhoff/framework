@@ -1,5 +1,9 @@
 <?php
 	namespace Core {
+		use Exception;
+		use Registry
+		use Url;
+
 		class Language {
 			private $langcode;
 			private $strings = [];
@@ -23,8 +27,8 @@
 				if(preg_match("/^[a-z]{2}$/", strtolower($appArgs[0]))) {
 					$this->langcode = array_shift($appArgs);
 				} else {
-					$this->langcode = \Registry::get("Core\Configuration")->get("default_language");
-					\Url::redirect(\Url::fromUri($_SERVER["REQUEST_URI"]), __CLASS__);
+					$this->langcode = Registry::get("Core\Configuration")->get("default_language");
+					Url::redirect(Url::fromUri($_SERVER["REQUEST_URI"]), __CLASS__);
 				}
 
 				$this->load($this->langcode);
@@ -41,7 +45,7 @@
 					$fileloc  = CWD.'/language/'.$langfile;
 
 					if(file_exists($fileloc) === false) {
-						throw new \Exception("Language file ".$langfile." was not found in the language folder");
+						throw new Exception("Language file ".$langfile." was not found in the language folder");
 					}
 
 					$json = file_get_contents($fileloc);

@@ -1,5 +1,6 @@
 <?php
 namespace Core {
+	use Registry;
 
 	/**
 	* Loads and setups the current configured theme in use.
@@ -80,7 +81,7 @@ namespace Core {
 						$src = $this->getDirectoryUri($javascript);
 					}
 
-					\Registry::get("Document")->addJavascript($src);
+					Registry::get("Document")->addJavascript($src);
 				}
 			}
 
@@ -95,7 +96,7 @@ namespace Core {
 						$src = $this->getDirectoryUri($stylesheet);
 					}
 
-					\Registry::get("Document")->addStylesheet($src);
+					Registry::get("Document")->addStylesheet($src);
 				}
 			}
 		}

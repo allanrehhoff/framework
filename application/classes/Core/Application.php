@@ -1,6 +1,8 @@
 <?php
 namespace Core {
-	use Exception, Registry, ReflectionClass;
+	use Exception;
+	use Registry;
+	use ReflectionClass;
 	
 	/**
 	* The main class for this application.
