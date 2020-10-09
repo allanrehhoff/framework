@@ -19,12 +19,14 @@
 			}
 
 			/**
-			* Determine/negotiate the language to use, redirects to default language if none provided
+			* Negotiate the language to use, redirects to default language if none provided
+			* We don't use Language::load(); or merge this into load(); because we want the
+			* application to serve a 404 if the language isn't found or enabled.
 			* @param (array) $appArgs Arguments provided from Core\Application
 			* @return void
 			*/
 			public function negotiate(array &$appArgs) : void {
-				if(preg_match("/^[a-z]{2}$/", strtolower($appArgs[0]))) {
+				if($this->validateCode($appArgs[0]) && $this->enabled($appArgs[0])) {
 					$this->langcode = array_shift($appArgs);
 				} else {
 					$this->langcode = Registry::get("Core\Configuration")->get("default_language");
@@ -35,16 +37,32 @@
 			}
 
 			/**
+			* Validates given language against a 2 character pattern
+			* @param (string) $langcode Language code to validate
+			* @return bool Whether the language code is valid or not
+			*/
+			public function validateCode(string $langcode) : bool {
+				return preg_match("/^[a-z]{2}$/", $langcode);
+			}
+
+			/**
+			* Determine if a language is enabled or not by looking at the filesystem
+			* @param (string) $langcode Language code to check
+			* @return bool Enabled or not
+			*/
+			public function enabled(string $langcode) : bool {
+				$fileloc  = CWD.'/language/'.$langcode.".json";
+				return file_exists($fileloc) !== false;
+			}
+
+			/**
 			* Loads a gíven language by langcode
 			* @param (string) $langcode Language code, 2 characters.
 			* @return void
 			*/
 			public function load(string $langcode) : void {
 				if($langcode !== \Registry::get("Core\Configuration")->get("default_language")) {
-					$langfile = $langcode.".json";
-					$fileloc  = CWD.'/language/'.$langfile;
-
-					if(file_exists($fileloc) === false) {
+					if($this->enabled($langcode) !== true) {
 						throw new Exception("Language file ".$langfile." was not found in the language folder");
 					}
 
