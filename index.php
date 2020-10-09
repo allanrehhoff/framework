@@ -8,7 +8,6 @@
 	* @link https://bitbucket.org/allanrehhoff/framework
 	* @author Allan Thue Rehhoff
 	*/
-
 	require "preprocess.php";
 
 	$args = CLI ? $argv : $_GET;

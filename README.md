@@ -1,4 +1,4 @@
-# Introduction (Version 3)
+# Introduction (Version 4)
 This is not what you'd typically associate with a fully functional MVC framework, there's no "Models" and that is intentional, deal with it.  
 The intention for this is to prevent the developer from writing complete spaghetti, while being lightweight, scaleable and portable.  
 
@@ -240,3 +240,15 @@ ressources are rendered in the same order they are added
   
 If you desire to add custom media stylesheets make use of the second parameter **$media** in **Document::addStylesheet();**  
 Same goes for the **Document::addJavascript();** method for other regions than the footer.  
+
+## Languages (I18n)
+String translations may by enabled by setting the key **enable_i18n** to a boolean in **config.json**
+When enabling internationalization it is also required to set the default language with the key **default_language**
+All language keys should be a 2 character language code.
+
+Add/enable other languages by creating a **langcode**.json file in the **language/** folder
+The default language does not require a language file, as the original string will just be returned when calling translation functions.
+
+Current/default language will automatically be prepended to the request uri, and a redirect will be performed.
+
+If a user tries to access a non-configured language, an error will be thrown.

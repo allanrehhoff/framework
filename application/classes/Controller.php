@@ -66,7 +66,7 @@
 		* Boots up constructor and controller variables.
 		* @return void
 		*/
-		final public function initialize() {
+		final public function initialize() : void {
 			$this->request 		 = $_GET + $_POST;
 			$this->configuration = Registry::get("Core\Configuration");
 			$this->application 	 = Registry::get("Core\Application");
@@ -79,7 +79,7 @@
 				$this->configuration->get("database.name")
 			);
 
-			$this->setTitle(array_slice($this->application->arg(), -1)[0]);
+			$this->setTitle(array_slice($this->application->getArgs(), -1)[0]);
 
 			$this->document = Registry::set(new \Document);
 			$this->theme = Registry::set(new \Core\Theme($this->configuration->get("theme")));
@@ -90,7 +90,7 @@
 		* @uses \Document
 		* @return void
 		*/
-		final public function finalize() {
+		final public function finalize() : void {
 			$this->data["header"] = $this->getView("header");
 			$this->data["footer"] = $this->getView("footer");
 
@@ -108,7 +108,7 @@
 		* Provides data set by extending controllers.
 		* @return array
 		*/
-		final public function getData() {
+		final public function getData() : array {
 			return $this->data;
 		}
 
@@ -117,7 +117,7 @@
 		* @param (string) $title a title to display in a template file.
 		* @return void
 		*/
-		final public function setTitle($title) {
+		final public function setTitle(string $title) : void {
 			$this->data["title"] = sprintf($this->configuration->get("base_title"), $title);
 		}
 
@@ -125,7 +125,7 @@
 		* Get the current page title to be displayed.
 		* @return string
 		*/
-		final public function getTitle() {
+		final public function getTitle() : string {
 			return $this->data["title"];
 		}
 
@@ -134,7 +134,7 @@
 		* @param (string) $template name of the template file to get path for,
 		* @return string
 		*/
-		final public function getView($template = null) {
+		final public function getView(string $template = null) : string {
 			if($template === null) {
 				$template = $this->view;
 			}
@@ -152,7 +152,7 @@
 		* Checks if the requested controller has a corresponding view.
 		* @return bool
 		*/
-		final public function hasView() {
+		final public function hasView() : bool {
 			return file_exists($this->getView()) && !CLI;
 		}
 
@@ -161,7 +161,7 @@
 		* @param Name of the view to use, without .tpl.php extensions.
 		* @return bool
 		*/
-		final protected function setView($view) {
+		final protected function setView(string $view) : void {
 			$this->view = $view;
 			$this->children[] = ucfirst($view);
 		}

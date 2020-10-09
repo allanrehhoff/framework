@@ -1,4 +1,12 @@
 #Changelog#
+v4.0
+- Added feature for language/i18n, enabled in config files
+- Renamed Tools class to Url, as it contains url only realted functions.
+- Functions class renamed to Debug.
+- Introduced argument and return types to functions.
+- Core\Application::arg(); no longer returns all args if argument is ommited, instead use Core\Application::getArgs();
+- Added more error types to Core\Configuration::parse();
+
 v3.2
 - Allow for setting views in subdirectories.
 - Fixed autoloader not allowed short class names.

@@ -41,8 +41,13 @@ namespace Core {
 			$this->configuration = Registry::set(new Configuration($this->cwd."/config.json"));
 
 			if(CLI === false) {
-				$route = ((isset($args["route"])) && ($args["route"] != '')) ? $args["route"] : $this->configuration->get("default_route");
+				$route = $args["route"] ?? $this->configuration->get("default_route");
 				$this->args = explode('/', ltrim($route, '/'));
+
+				if($this->configuration->get("enable_i18n")) {
+					$this->language = Registry::set(new Language);
+					$this->language->negotiate($this->args);
+				}
 			} else {
 				$this->args = array_slice($args, 1);
 			}
@@ -51,25 +56,31 @@ namespace Core {
 		/**
 		* Get an argument from the url. ommit $argIndex to get all arguments passed with the request.
 		* This is set to a string because if the variable passed to this function 
-		* is null it would be easier to debug with a false rather than getting the whole array.
+		* is null it would be easier to debug with a ull rather than getting the whole array.
 		* @param (int) $index the index or the url arg.
-		* @return string, or false on failure.
+		* @return null|string, or null on failure.
 		*/
-		public function arg($index = "all") {
-			if($index === "all") {
-				return $this->args;
-			} elseif(isset($this->args[$index]) && $this->args[$index] !== '') {
+		public function arg(int $index = -1) : ?string {
+			if(isset($this->args[$index]) && $this->args[$index] !== '') {
 				return $this->args[$index];
 			}
 
-			return false;
+			return null;
+		}
+
+		/**
+		* Get all parsed application args
+		* @return array
+		*/
+		public function getArgs() : array {
+			return $this->args;
 		}
 
 		/**
 		* Get the current working directory of the application
 		* @return string
 		*/
-		public function getApplicationPath() {
+		public function getApplicationPath() : string {
 			return $this->cwd;
 		}
 
@@ -77,9 +88,9 @@ namespace Core {
 		* Get path to the specified controller file. Ommit the .php extension
 		* @todo Cut .php from the $ctrl param, if provided. (Find out if I can use basename()'s second argument)
 		* @param (string) $controller name of the controller file.
-		* @return mixed
+		* @return string or null on failure
 		*/
-		public function getControllerPath($controller = null) {
+		public function getControllerPath(string $controller = null) : ?string {
 			if($controller === null) {
 				$controller = $this->arg(0);
 			}
@@ -87,17 +98,17 @@ namespace Core {
 			if(is_file($this->getApplicationPath()."/application/controllers/".basename($controller).".php")) {
 				return $this->getApplicationPath()."/application/controllers/".basename($controller).".php";
 			} else {
-				return false;
+				return null;
 			}
 		}
 
 		/**
 		* Executes a given controller by name.
-		* @param (strong) $base The base name of the controller, alias the class name.
+		* @param (string) $base The base name of the controller, alias the class name.
 		* @return (object) Controller - the dispatched controller that has just been executed.
 		*/
-		public function executeController($base) {
-			if($this->getControllerPath($base) === false) {
+		public function executeController(string $base) : \Controller {
+			if($this->getControllerPath($base) === null) {
 				$base = "Notfound";
 			}
 
@@ -112,7 +123,7 @@ namespace Core {
 			$controller = new $controller;
 
 			$method = '';
-			if($this->arg(1) !== false) {
+			if($this->arg(1) !== null) {
 				$method = (string) new MethodName($this->arg(1));
 			}
 
@@ -129,9 +140,9 @@ namespace Core {
 		/**
 		* Dispatches a controller, based upon the requeted path.
 		* Serves a NotfoundController if it doesn't exists
-		* @return array
+		* @return Instance of extended Controller
 		*/
-		public function run() {
+		public function run() : \Controller {
 			$base = ucwords(preg_replace("/\W+/", ' ', strtolower($this->arg(0))));
 			$parts = explode(' ', $base);
 			$parts = array_map("ucfirst", $parts);

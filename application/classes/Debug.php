@@ -5,7 +5,7 @@
 	* But as of this moment, i'm about to give up where I can put those without making a mess...
 	* @author Allan Thue Rehhoff
 	*/
-	class Functions {
+	class Debug {
 		/**
 		* Mandatory constructor, nothing to do here...
 		* @return void
@@ -20,7 +20,7 @@
 		* @param (boolean) $exit whether to exit the PHP process after printing debug information.
 		* @return void
 		*/
-		public static function pre($stuff, $exit = false) {
+		public static function pre($stuff, $exit = false) : void {
 			print "<pre style='background:#FFD; clear:both;'>";
 			if(count($stuff) > 0 && $stuff !== false) {
 				print_r($stuff);

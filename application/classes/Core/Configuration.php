@@ -15,7 +15,7 @@ namespace Core {
 		* The constructor starts parsing of the configuration file.
 		*/
 		public function __construct($configurationFile) {
-			$this->parseConfig($configurationFile);
+			$this->parse($configurationFile);
 		}
 
 		/**
@@ -23,7 +23,7 @@ namespace Core {
 		* @throws ConfigurationParserException
 		* @return void
 		*/
-		private function parseConfig($configurationFile) {
+		private function parse(string $configurationFile) : void {
 			if(!is_file($configurationFile)) {
 				throw new ConfigurationException("The given configuration file '$configurationFile' could not be located.");
 			}
@@ -39,7 +39,10 @@ namespace Core {
 					JSON_ERROR_STATE_MISMATCH => "Underflow or the modes mismatch.",
 					JSON_ERROR_CTRL_CHAR => "Unexpected control character found.",
 					JSON_ERROR_SYNTAX => "Syntax error, your configuration file contains malformed JSON.",
-					JSON_ERROR_UTF8 => "Your configuration file may me incorrectly encoded, it contains malformed UTF-8 characters."
+					JSON_ERROR_UTF8 => "Your configuration file may me incorrectly encoded, it contains malformed UTF-8 characters.",
+					JSON_ERROR_RECURSION => "One or more recursive references in the value to be decoded",
+					JSON_ERROR_UNSUPPORTED_TYPE => "A value of a type that cannot be decoded was given",
+					JSON_ERROR_UTF16 => "Malformed UTF-16 characters, possibly incorrectly encoded"
 				];
 
 				if(isset($jsonErrorMap[$this->error])) {
@@ -55,7 +58,7 @@ namespace Core {
 		* If no configuration setting name is provided, the whole configuration object will be returned.
 		* Sub-values can be accessed using a dot syntax.
 		* @param (string) $conf The name of the configuration to get value from.
-		* @return mixed, false on failure.
+		* @return mixed, null on failure.
 		* @throws ConfigurationParserException
 		*/
 		public function get($conf = null) {
@@ -68,7 +71,7 @@ namespace Core {
 			foreach ($paths as $path) {
 				if(!isset($configValue->$path)) {
 					throw new ConfigurationException($conf." is not a valid configuration");
-					return false;
+					return null;
 				}
 				$configValue = $configValue->$path;
 			}
@@ -82,7 +85,7 @@ namespace Core {
 		* @throws ConfigurationParserException
 		* @return self
 		*/
-		public function delete($conf) {
+		public function delete(string $conf) : Configuration {
 			$paths = explode('.', $conf);
 			$configValue = $this->parsedConfig;
 			foreach ($paths as $path) {
@@ -101,7 +104,7 @@ namespace Core {
 		* Alias for ConfigurationParser::delete()
 		* @return value of onfigurationParser::delete()
 		*/
-		public function remove($conf) {
+		public function remove(string $conf) : Configuration {
 			return $this->delete($conf);
 		}
 		
@@ -111,7 +114,7 @@ namespace Core {
 		* @param $value Value of $setting
 		* @return self
 		*/
-		public function set($setting, $value) {
+		public function set(string $setting, $value) : Configuration {
 			$paths = explode('.', $setting);
 			$result = &$this->parsedConfig;
 			
@@ -133,7 +136,7 @@ namespace Core {
 		* Permanently save the current runtime configuration.
 		* @return self
 		*/
-		public function save() {
+		public function save() : Configuration {
 			$jsonConfig = json_encode($this->get(), JSON_PRETTY_PRINT);
 			file_put_contents(getcwd().'/'.$this->configurationFile, $jsonConfig);
 			return $this;

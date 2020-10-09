@@ -7,13 +7,13 @@
 		/**
 		* Stores the data objects.
 		*/
-		private static $data = array();
+		private static $data = [];
 
 		/**
 		* Get an object by it's class name, namespaces included.
 		* @return (object) on success, null if the object is nowhere to be found
 		*/
-		public static function get($key) {
+		public static function get(string $key) {
 			return (isset(self::$data[$key]) ? self::$data[$key] : NULL);
 		}
 
@@ -32,7 +32,7 @@
 		* Checks if the registry contains a given object.
 		* @return bool
 		*/
-		public static function has($key) {
+		public static function has($key) : bool {
 			return isset(self::$data[$key]);
 		}
 	}
