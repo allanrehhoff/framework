@@ -251,4 +251,4 @@ The default language does not require a language file, as the original string wi
 
 Current/default language will automatically be prepended to the request uri, and a redirect will be performed.
 
-If a user tries to access a non-configured language, an error will be thrown.
+If a user tries to access a non-configured language, an 404 page will be served
