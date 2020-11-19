@@ -1,4 +1,7 @@
 #Changelog#
+v4.0.1
+- Added support for config files one level above current working directory
+
 v4.0
 - Added feature for language/i18n, enabled in config files
 - Renamed Tools class to Url, as it contains url only realted functions.

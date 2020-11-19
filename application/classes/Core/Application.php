@@ -40,7 +40,14 @@ namespace Core {
 		*/
 		public function __construct(array $args) {
 			$this->cwd = CWD;
-			$this->configuration = Registry::set(new Configuration($this->cwd."/config.json"));
+
+			$configPath = $this->cwd."/config.json";
+
+			if(file_exists($configPath) === false) {
+				$configPath = realpath($this->cwd.'/../config.json');
+			}
+
+			$this->configuration = Registry::set(new Configuration($configPath));
 
 			if(CLI === false) {
 				$route = $args["route"] ?? $this->configuration->get("default_route");
