@@ -49,6 +49,13 @@ namespace Core {
 
 			$this->configuration = Registry::set(new Configuration($configPath));
 
+			\Registry::set(new \Database\Connection(
+				$this->configuration->get("database.host"),
+				$this->configuration->get("database.username"),
+				$this->configuration->get("database.password"),
+				$this->configuration->get("database.name")
+			));
+
 			if(CLI === false) {
 				$route = $args["route"] ?? $this->configuration->get("default_route");
 				$this->args = explode('/', ltrim($route, '/'));

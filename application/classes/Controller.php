@@ -67,17 +67,11 @@
 		* @return void
 		*/
 		final public function initialize() : void {
-			$this->request 		 = $_GET + $_POST;
 			$this->configuration = Registry::get("Core\Configuration");
 			$this->application 	 = Registry::get("Core\Application");
+			$this->database 	 = Registry::get("Database\Connection");
+			$this->request 		 = $_GET + $_POST;
 			$this->view 		 = $this->application->arg(0);
-
-			$this->database = new \Database\Connection(
-				$this->configuration->get("database.host"),
-				$this->configuration->get("database.username"),
-				$this->configuration->get("database.password"),
-				$this->configuration->get("database.name")
-			);
 
 			$this->setTitle(array_slice($this->application->getArgs(), -1)[0]);
 
