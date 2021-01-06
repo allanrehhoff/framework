@@ -142,13 +142,5 @@
 			$classFile = CWD."/application/controllers/".substr($className, 0, -10).".php";
 		}
 
-		/*
-		if(substr($className, -10) == "Controller" && $className != "Core/Controller") {
-			$classFile = CWD."/application/controllers/".substr($className, 0, -10).".php";
-		} else {
-			$classFile = CWD."/application/classes/".$className.".php";
-		}
-		*/
-
 		require $classFile;
 	});
