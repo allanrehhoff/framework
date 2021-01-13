@@ -64,7 +64,7 @@
 				}
 
 				try {
-					parent::__construct("mysql:host=".$hostname.";dbname=".$database, $username, $password, [self::ATTR_ERRMODE => self::ERRMODE_EXCEPTION]);
+					parent::__construct("mysql:host=".$hostname.";dbname=".$database, $username, $password);
 					$this->setAttribute(self::ATTR_ERRMODE, self::ERRMODE_EXCEPTION);
 					$this->setAttribute(self::ATTR_STATEMENT_CLASS, ["Database\Statement", [$this]]);
 					$this->query("SET NAMES utf8mb4");
