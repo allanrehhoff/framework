@@ -7,5 +7,7 @@
         "username": "root",
         "password": "password",
         "name": "dbname"
-    }
+    },
+    "enable_i18n": false,
+    "default_language": "en"
 }

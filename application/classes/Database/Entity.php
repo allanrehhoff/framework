@@ -32,7 +32,11 @@ namespace Database {
 
 				if(isset($data[$key])) {
 					$this->key = $data[$key];
+<<<<<<< HEAD
 					unset($data[$key]);
+=======
+					unset( $data[$key] );
+>>>>>>> 469a433d2f6ec69737b48d4fc458f1d6333f463f
 				} else {
 					$this->key = null;
 				}

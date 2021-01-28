@@ -8,14 +8,11 @@
 	* @link https://bitbucket.org/allanrehhoff/framework
 	* @author Allan Thue Rehhoff
 	*/
-
 	require "preprocess.php";
 
 	$args = CLI ? $argv : $_GET;
-	$controller = Registry::set(new Core\Application($args))->dispatch();
+	$controller = Registry::set(new Core\Application($args))->run();
 
 	extract($controller->getData(), EXTR_SKIP);
 
-	if($controller->hasView() === true) {
-		require $controller->getView();
-	}
+	require $controller->getView();

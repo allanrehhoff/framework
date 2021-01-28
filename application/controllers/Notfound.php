@@ -15,6 +15,5 @@
 			// Force the "notfound.tpl.php" file, as arg(0) is potentially unknown at this point.
 			// One should also log this 404 entry here.
 			$this->setTitle("Not found");
-			$this->setView("notfound");
 		}
 	}

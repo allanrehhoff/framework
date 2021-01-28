@@ -22,7 +22,7 @@
 
 	// Output buffering
 	// The ob_gzhandler callback returns false if browser doesn't support gzip
-	!CLI ? ob_start("ob_gzhandler") ? : ob_start() : false;
+	//!CLI ? ob_start("ob_gzhandler") ? : ob_start() : false;
 
 	// Error reporting
 	ini_set("display_errors", "On");
@@ -138,17 +138,9 @@
 		$className = str_replace("\\", "/", $className);
 
 		$classFile = CWD."/application/classes/".$className.".php";
-		if(!file_exists($classFile) && mb_strlen($className) > 10) {
+		if(!file_exists($classFile) && substr($className, -10) == "Controller") {
 			$classFile = CWD."/application/controllers/".substr($className, 0, -10).".php";
 		}
-
-		/*
-		if(substr($className, -10) == "Controller" && $className != "Core/Controller") {
-			$classFile = CWD."/application/controllers/".substr($className, 0, -10).".php";
-		} else {
-			$classFile = CWD."/application/classes/".$className.".php";
-		}
-		*/
 
 		require $classFile;
 	});

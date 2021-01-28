@@ -1,16 +1,41 @@
-#Changelog#
-v3.1
+# Changelog #
+v4.2.0  
+- Updated to latest Database library version
+
+v4.1.0  
+- Added support for config files one level above current working directory
+- Added Environment class to core library
+- Moved database connection to init earlier in the application layer
+
+v4.0-beta  
+- Added feature for language/i18n, enabled in config files
+- Renamed Tools class to Url, as it contains url only realted functions.
+- Functions class renamed to Debug.
+- Introduced argument and return types to functions.
+- Core\Application::arg(); no longer returns all args if argument is ommited, instead use Core\Application::getArgs();
+- Added more error types to Core\Configuration::parse();
+
+v3.2  
+- Allow for setting views in subdirectories.
+- Fixed autoloader not allowed short class names.
+- Controller::getView(); now throws exception when view file is not found in theme.
+- Fixes controllers sometimes being dispatched with spaces in them.
+
+v3.1  
 - New constant DS  
 - Change some single quote strings to double quotes.  
 - Fixed typos in changelog.  
 - Assets linked in theme.json can now be absolute urls. e.g. external assets.  
 - .htaccess files now includes lines to force HTTPS based websites. (commented as default)
+- Adding default controller variable containing the name of the current page.  
+- Prevent adding assets to DOM that does not exist in theme.  
+- Prevent fatal errors with trailing slashes in urls.  
 
-v3.0-beta8
+v3.0-beta8  
 - New constant DS  
 - Change some single quote strings to double quotes.  
 
-v3.0-beta7
+v3.0-beta7  
 - **This release is backwards incompatible. **  
 - Fixed syntax errors introduced in previous version.  
 - Main Controller class moved out from \Core namespace.  
@@ -19,13 +44,13 @@ v3.0-beta7
 - Errors and exceptions will now clear the output buffer.  
 - CWD constant is now equal to the dir of the index.php file.  
 
-v3.0-beta6
+v3.0-beta6  
 - Only assign configuration errors, if it's actually needed.  
 - Controller method names should new be properly sanitized to PHP5 compatible method/function name.  
 - Cache headers moved to preprocess.php, reverted from v3.0-alpha6.  
 - Updated documentation to reflect the new methodName changes.  
 
-v3.0-beta5
+v3.0-beta5  
 - Fixing merge conflict.  
 - variable naming error in Theme::getDirectoryUri();  
 - Cache.max_age default configured time should be 0.  
@@ -33,7 +58,7 @@ v3.0-beta5
 - \Core\Theme::getDirectoryUri(); now points directly to the theme.  
 - DOM\Document no longer uses a static context.  
 
-v3.0-beta4
+v3.0-beta4  
 - **This release is backwards incompatible. **  
 - Better support CLI mode support.  
 - Almost completely rewritten exception handler.  
@@ -50,10 +75,10 @@ v3.0-beta4
 - \Core\Controller:$request should not contain cookie variables.  
 - \Core\Controller now forces chlid classes index methods.   
 
-v3.0-beta3
+v3.0-beta3  
 - Change utf8 to utf8mb4 in MySQL connections, allowing emoji support.
 
-v3.0-beta2
+v3.0-beta2  
 - \Core\Application(); Is now declared as final, as it wasn't intended to be extended upon.  
 - \Core\Controller::$request now also contains COOKIE values.  
 - Syntactical changes.  
@@ -64,7 +89,7 @@ v3.0-beta2
 - Some documentation blocks opdated.  
 - Added default timezone to preprocessor
 
-v3.0-beta1
+v3.0-beta1  
 - The project should now finally, be in a stable release, backwards incompatible updates may still be released.  
 - Renamed Controller::getViewPath(); to Controller:getView(); to match the rest of the function names.  
 - Moved some logic to IndexController instead.  

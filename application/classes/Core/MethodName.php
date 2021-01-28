@@ -30,7 +30,7 @@ namespace Core {
 		* @param (string) The string to sanitize.
 		* @return string the sanitized method name
 		*/
-		private function sanitizeToValidMethodName(string $string) {
+		private function sanitizeToValidMethodName(string $string) : string {
 			preg_match_all('/\w+/', $string, $temp);
 
 			$pregLastError = preg_last_error();
@@ -61,7 +61,7 @@ namespace Core {
 		* Returns the sanitized method name
 		* @return string
 		*/
-		public function getSanitizedMethodName() {
+		public function getSanitizedMethodName() :string {
 			return $this->sanitizedMethodName;
 		}
 

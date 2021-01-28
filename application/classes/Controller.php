@@ -41,6 +41,11 @@
 		public $theme;
 
 		/**
+		* @var Child controllers to be executed when the main one finalizes.
+		*/
+		protected $children = [];
+
+		/**
 		* Child controllers should declare this function instead of a constructor.
 		*/
 		abstract protected function index();
@@ -61,20 +66,14 @@
 		* Boots up constructor and controller variables.
 		* @return void
 		*/
-		final public function initialize() {
-			$this->request 		 = $_GET + $_POST;
+		final public function initialize() : void {
 			$this->configuration = Registry::get("Core\Configuration");
 			$this->application 	 = Registry::get("Core\Application");
+			$this->database 	 = Registry::get("Database\Connection");
+			$this->request 		 = $_GET + $_POST;
 			$this->view 		 = $this->application->arg(0);
 
-			$this->database = new \Database\Connection(
-				$this->configuration->get("database.host"),
-				$this->configuration->get("database.username"),
-				$this->configuration->get("database.password"),
-				$this->configuration->get("database.name")
-			);
-
-			$this->setTitle(array_slice($this->application->arg(), -1)[0]);
+			$this->setTitle(array_slice($this->application->getArgs(), -1)[0]);
 
 			$this->document = Registry::set(new \Document);
 			$this->theme = Registry::set(new \Core\Theme($this->configuration->get("theme")));
@@ -85,19 +84,25 @@
 		* @uses \Document
 		* @return void
 		*/
-		final public function assemble() {
+		final public function finalize() : void {
 			$this->data["header"] = $this->getView("header");
 			$this->data["footer"] = $this->getView("footer");
 
+			$this->data["current"] = $this->application->arg(0);
+
 			$this->data["stylesheets"] = $this->document->getStylesheets();
 			$this->data["javascript"]  = $this->document->getJavascript("footer");
+
+			foreach($this->children as $child) {
+				$this->application->executeController($child);
+			}
 		}
 
 		/**
 		* Provides data set by extending controllers.
 		* @return array
 		*/
-		final public function getData() {
+		final public function getData() : array {
 			return $this->data;
 		}
 
@@ -106,7 +111,7 @@
 		* @param (string) $title a title to display in a template file.
 		* @return void
 		*/
-		final public function setTitle($title) {
+		final public function setTitle(string $title) : void {
 			$this->data["title"] = sprintf($this->configuration->get("base_title"), $title);
 		}
 
@@ -114,7 +119,7 @@
 		* Get the current page title to be displayed.
 		* @return string
 		*/
-		final public function getTitle() {
+		final public function getTitle() : string {
 			return $this->data["title"];
 		}
 
@@ -123,19 +128,25 @@
 		* @param (string) $template name of the template file to get path for,
 		* @return string
 		*/
-		final public function getView($template = null) {
+		final public function getView(string $template = null) : string {
 			if($template === null) {
 				$template = $this->view;
 			}
 
-			return $this->theme->getTemplatePath(basename($template).".tpl.php");
+			$view = $this->theme->getTemplatePath($template.".tpl.php");
+
+			if(is_file($view) === false) {
+				throw new Exception("View template file '".$template.".tpl.php' not found in theme.");
+			}
+
+			return $view;
 		}
 
 		/**
 		* Checks if the requested controller has a corresponding view.
 		* @return bool
 		*/
-		final public function hasView() {
+		final public function hasView() : bool {
 			return file_exists($this->getView()) && !CLI;
 		}
 
@@ -144,7 +155,8 @@
 		* @param Name of the view to use, without .tpl.php extensions.
 		* @return bool
 		*/
-		final protected function setView($view) {
+		final protected function setView(string $view) : void {
 			$this->view = $view;
+			$this->children[] = ucfirst($view);
 		}
 	}
