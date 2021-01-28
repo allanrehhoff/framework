@@ -4,14 +4,17 @@
 * @author Allan Rehhoff
 */
 namespace Database {
+	use Exception;
+
 	/**
 	* Represents a CRUD'able entity.
 	*/
 	abstract class Entity {
 		private $key;
 		protected $data;
-		abstract protected function getKeyField();
-		abstract protected function getTableName();
+
+		abstract protected function getKeyField() : string;
+		abstract protected function getTableName() : string;
 
 		/**
 		* Loads a given entity, instantiates a new if none given.
@@ -26,8 +29,13 @@ namespace Database {
 
 			if ($data !== null) {
 				$key = $this->getKeyField();
-				$this->key = $data[$key];
-				unset( $data[$key]);
+
+				if(isset($data[$key])) {
+					$this->key = $data[$key];
+					unset($data[$key]);
+				} else {
+					$this->key = null;
+				}
 			} else {
 				$data = [];
 			}
@@ -54,7 +62,7 @@ namespace Database {
 		* @param (mixed) $value A value to set
 		* @return void
 		*/
-		public function __set($name, $value) {
+		public function __set(string $name, $value) {
 			$this->data[$name] = $value;
 		}
 
@@ -65,9 +73,9 @@ namespace Database {
 		* @throws Exception
 		* @author Allan Thue Rehhoff
 		*/
-		public function __get($name) {
+		public function __get(string $name) {
 			if ($name == $this->getKeyField()) {
-				throw new \Exception("Cannot return key field from getter, try calling ".get_called_class()."::id(); in object context instead.");
+				throw new Exception("Cannot return key field from getter, try calling ".get_called_class()."::id(); in object context instead.");
 			}
 
 			return $this->data[$name];
@@ -97,16 +105,17 @@ namespace Database {
 		* @author Allan Thue Rehhoff
 		* @return (int) Number of rows affected
 		*/
-		public function delete() {
+		public function delete() : int {
 			return Connection::getInstance()->delete($this->getTableName(), $this->getKeyFilter());		
 		}
 
 		/**
 		* Make a given value safe for insertion, could prevent future XSS injections
 		* @author Allan Thue Rehhoff
+		* @param (string) Key of the data value to retrieve
 		* @return (string) a html friendly string
 		*/
-		public function safe($key) {
+		public function safe(string $key) : string {
 			return htmlspecialchars($this->data[$key], ENT_QUOTES, "UTF-8");
 		}
 
@@ -135,16 +144,17 @@ namespace Database {
 		}
 
 		/**
-		* Sets on or more properties to a given value.
+		* Sets ones or more properties to a given value.
 		* @param (array) $values key => value pairs of values to set
 		* @param (array) $allowed_fields keys of fields allowed to be altered
 		* @return (object) The current entity instance
 		* @author Allan Thue Rehhoff
 		*/
-		public function set($values, $allowed_fields = null) {
+		public function set(array $values, array $allowed_fields = null) : Entity {
 			if ($allowed_fields != null) {
 				$values = array_intersect_key($values, array_flip($allowed_fields));
 			}
+
 			$this->data = array_merge($this->data, $values);
 			return $this;
 		}
@@ -154,7 +164,7 @@ namespace Database {
 		* @return (array)
 		* @author Allan Thue Rehhoff
 		*/
-		public function getData() {
+		public function getData() : array {
 			return $this->data;
 		}
 
@@ -164,7 +174,7 @@ namespace Database {
 		* @return (mixed)
 		* @author Allan Thue Rehhoff
 		*/
-		public function get($key) {
+		public function get(string $key) {
 			return isset($this->data[$key]) ? $this->data[$key] : false;
 		}
 
@@ -182,7 +192,7 @@ namespace Database {
 		* @return (array) A filter array
 		* @author Allan Thue Rehhoff
 		*/
-		public function getKeyFilter() {
+		public function getKeyFilter() : array {
 			return [$this->getKeyField() => $this->key];
 		}
 
