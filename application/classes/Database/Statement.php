@@ -6,7 +6,7 @@
 		class Statement extends PDOStatement {
 			private $_connection;
 
-			protected function __construct(PDO $connection) {
+			protected function __construct(Connection $connection) {
 				$this->_connection = $connection;
 			}
 

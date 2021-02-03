@@ -32,7 +32,7 @@ namespace Database {
 
 				if(isset($data[$key])) {
 					$this->key = $data[$key];
-					unset( $data[$key] );
+					unset($data[$key]);
 				} else {
 					$this->key = null;
 				}

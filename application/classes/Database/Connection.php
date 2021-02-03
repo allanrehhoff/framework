@@ -11,7 +11,7 @@
 		use Exception;
 		use PDDException;
 
-		class Connection extends PDO {
+		class Connection {
 			/**
 			* @var (object) Internal PDO connection
 			*/
@@ -26,6 +26,11 @@
 			*@var (object)  The singleton instance of the this class.
 			*/
 			private static $singletonInstance;
+
+			/**
+			* @var Database handle
+			*/
+			private $dbh;
 
 			/**
 			* @var (object) Holds the last prepared statement after execution.
@@ -47,6 +52,7 @@
 			*/
 			public $lastQuery;
 
+
 			/**
 			* Initiate a new database connection through PDO.
 			* @param (string) $hostname Hostname to connect to
@@ -54,7 +60,6 @@
 			* @param (string) $password Password to use for authentication
 			* @param (string) $database Name of the database to use
 			* @return (void)
-			* @throws Exception
 			* @author Allan Thue Rehhoff
 			* @since 1.0
 			*/
@@ -63,14 +68,7 @@
 					throw new Exception("Oh god! PDO does not appear to be enabled for this server.");
 				}
 
-				try {
-					parent::__construct("mysql:host=".$hostname.";dbname=".$database, $username, $password);
-					$this->setAttribute(self::ATTR_ERRMODE, self::ERRMODE_EXCEPTION);
-					$this->setAttribute(self::ATTR_STATEMENT_CLASS, ["Database\Statement", [$this]]);
-					$this->query("SET NAMES utf8mb4");
-				} catch (PDOException $exception) {
-					throw new Exception($exception->getMessage(), $exception->getCode());
-				}
+				$this->connect($hostname, $username, $password, $database);
 
 				self::$singletonInstance = $this;
 			}
@@ -82,7 +80,7 @@
 			* @since 1.3
 			*/
 			public function __destruct() {
-				$this->statement = null;
+				$this->close();
 			}
 
 			/**
@@ -98,6 +96,32 @@
 					throw new Exception("PDO::".$method." no such method.");
 				}
 			} 
+
+			/**
+			* Does the actual connection
+			* @param (string) $hostname Hostname to connect to
+			* @param (string) $username Username to use for authentication
+			* @param (string) $password Password to use for authentication
+			* @param (string) $database Name of the database to use
+			* @return (void)
+			* @since 3.0
+			*/
+			public function connect(string $hostname, string $username, string $password, string $database) {
+				$this->dbh = new PDO("mysql:host=".$hostname.";dbname=".$database, $username, $password);
+				$this->dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+				$this->dbh->setAttribute(PDO::ATTR_STATEMENT_CLASS, ["Database\Statement", [$this]]);
+				$this->dbh->query("SET NAMES utf8mb4");
+			}
+
+			/**
+			* Closes the PDO connection and nullifies any statements
+			* @return (void)
+			* @since 3.0
+			*/
+			public function close() {
+				$this->statement = null;
+				$this->dbh = null;
+			}
 
 			/**
 			* Retrieve the latest initiated \Database\Connection instance.
@@ -127,7 +151,7 @@
 			* @since 2.4
 			*/
 			public function beginTransaction() : bool {
-				return $this->transactionStarted = parent::beginTransaction();
+				return $this->transactionStarted = $this->dbh->beginTransaction();
 			}
 
 			/**
@@ -150,7 +174,7 @@
 			*/
 			public function commit() : bool {
 				if($this->transactionStarted === true) {
-					return parent::commit();
+					return $this->dbh->commit();
 				} else {
 					throw new PDOException("Attempted to commit when not in transaction, or transaction failed to start.");
 				}
@@ -165,7 +189,7 @@
 			*/
 			public function rollback() : bool {
 				if($this->transactionStarted === true) {
-					return parent::rollBack();
+					return $this->dbh->rollBack();
 				} else {
 					throw new PDOException("Attempted rollback when not in transaction.");
 				}
@@ -198,7 +222,7 @@
 					}
 				}
 
-				return parent::prepare($statement, $driverOptions);
+				return $this->dbh->prepare($statement, $driverOptions);
 			}
 
 			/**
@@ -209,10 +233,9 @@
 			* @return (object) The prepared PDO statement after execution. Instance of Database\Connection
 			* @throws Exception
 			* @author Allan Thue Rehhoff
-			* @todo Find and alternative to casting errorcodes to integers for handling error codes.
 			* @since 1.0
 			*/
-			public function query(string $sql, ?array $filters = null, int $fetchMode = self::FETCH_OBJ) : Statement {
+			public function query(string $sql, ?array $filters = null, int $fetchMode = PDO::FETCH_OBJ) : Statement {
 				try {
 					$this->filters 	 = $filters;
 					$this->statement = null;
@@ -304,8 +327,7 @@
 			public function insert(string $table, ?array $variables = null) : int {
 				$variables = ($variables != null) ? $variables : [];
 				$this->createRow("INSERT", $table, $variables);
-
-				return (int) $this->lastInsertId();
+				return (int) $this->dbh->lastInsertId();
 			}
 
 			/**
@@ -462,7 +484,7 @@
 			* @since 1.0
 			*/
 			public function lastInsertId($seqname = null) {
-				return parent::lastInsertId($seqname);
+				return $this->dbh->lastInsertId($seqname);
 			}
 		}
 	}
