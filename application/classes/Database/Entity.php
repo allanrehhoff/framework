@@ -212,5 +212,14 @@ namespace Database {
 			$result = Connection::getInstance()->select($this->getTableName(), $this->getKeyFilter());
 			return empty($result) === false;
 		}
+
+		/**
+		* Determine if the loaded entity is new
+		* @return bool
+		* @author Allan Thue Rehhoff
+		*/
+		public function isNew() : bool {
+			return $this->getKey() === null;
+		}
 	}
 }
