@@ -7,11 +7,11 @@
 			* @return string
 			*/
 			public static function determine() :string {
-				if(defined("IS_DEV") && IS_DEV) {
-					return "dev";
-				}
-
-				if(substr($_SERVER["SERVER_NAME"], 0, 3) == "dev") {
+				if(CLI) {
+					if(in_array($GLOBALS["argv"][1], ["dev", "live"])) {
+						return $GLOBALS["argv"][1];	
+					}
+				} elseif(substr($_SERVER["SERVER_NAME"], 0, 3) == "dev") {
 					return "dev";
 				}
 

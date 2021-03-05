@@ -129,18 +129,16 @@ namespace Database {
 		*/
 		public static function load($ids) {
 			$class = get_called_class();
-			$obj = new $class();
-			$key = $obj->getKeyField();
 
 			if(is_array($ids)) {
 				$objects = [];
-				foreach($ids as $id) $objects[] = new $obj($id);
+				foreach($ids as $id) $objects[] = new $class($id);
 				return $objects;
 			} else if(is_numeric($ids)) {
-				return new $obj((int) $ids);
+				return new $class((int) $ids);
 			}
 
-			throw new Exception($obj."::load(); expects either an array or integer. '".gettype($ids)."' was provided.");
+			throw new Exception($class."::load(); expects either an array or integer. '".gettype($ids)."' was provided.");
 		}
 
 		/**
@@ -203,6 +201,16 @@ namespace Database {
 		*/
 		public function id() {
 			return $this->key;
+		}
+
+		/**
+		* Determine if the loaded entity exists in db
+		* @return (bool)
+		* @author Allan Thue Rehhoff
+		*/
+		public function exists() : bool {
+			$result = Connection::getInstance()->select($this->getTableName(), $this->getKeyFilter());
+			return empty($result) === false;
 		}
 	}
 }

@@ -73,64 +73,14 @@
 	});
 
 	// Error handler
-	// Be super nazi about errors, eliminates most noob mistakes.
+	// Be super conservative about errors, eliminates most noob mistakes.
 	set_error_handler(function($errno, $errstr, $errfile, $errline, $errcontext) {
 		if(!(error_reporting() & $errno)) {
 			return;
 		}
 
-		switch($errno) {
-			case E_STRICT       :
-			case E_NOTICE       :
-			case E_USER_NOTICE  :
-				$type = 'Fatal Notice';
-				break;
-			case E_WARNING      :
-			case E_USER_WARNING :
-				$type = 'Fatal Warning';
-				break;
-			default             :
-				$type = 'Fatal Error';
-				break;
-		}
-
-		$trace = array_reverse(debug_backtrace());
-		array_pop($trace);
-		
-		if(CLI) {
-			print "Backtrace from ".$type." '".$errstr."' at ".$errfile.' '.$errline.':'.LF;
-			foreach($trace as $item) {
-				print '  ' .(isset($item["file"]) ? $item["file"] : "<unknown file>")." line ".(isset($item["line"]) ? $item["line"] : "<unknown line>")." calling ".$item['function']."()".LF;
-			}
-		} else {
-			if(ob_get_length()) ob_clean();
-
-			header("HTTP/1.1 503 Service Temporarily Unavailable");
-			header("Retry-After: 3600");
-
-			print "<pre style=\"background-color: #f44336; border-color: #f32c1e; color:#FFF; padding: 15px 15px 0px 15px;\">".LF;
-			print "<strong style=\"line-height:10px; margin:0px;\">Backtrace from ".$type." '".$errstr."' at ".$errfile.' '.$errline.':'.LF."</strong>";
-			print "<ol style=\"margin-top:0px; line-height:10px; margin-bottom:0px;\">".LF;
-			
-			foreach($trace as $item) {
-				print "<li>" . (isset($item["file"]) ? $item["file"] : "<unknown file>")." line ".(isset($item["line"]) ? $item["line"] : "<unknown line>")." calling ".$item['function']."()</li>".LF;
-			}
-			
-			print "</ol>".LF;
-			print "</pre>".LF;
-		}
-		
-		if(ini_get("log_errors")) {
-			$items = [];
-			foreach($trace as $item) {
-				$items[] = (isset($item["file"]) ? $item["file"] : "<unknown file>") . ' ' . (isset($item["line"]) ? $item["line"] : '<unknown line>')." calling ".$item["function"]."()";
-			}
-			
-			$message = "Backtrace from ".$type." '".$errstr ."' at ".$errfile.' '.$errline.": ".implode(" | ", $items);
-			error_log($message);
-		}
-		
-		exit(-1);
+		$error = $errstr . ' in file ' . $errfile . ' on line ' . $errline;
+		throw new Exception($error, $errno);
 	});
 
 	// Autoloader

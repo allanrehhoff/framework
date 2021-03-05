@@ -157,6 +157,9 @@
 		*/
 		final protected function setView(string $view) : void {
 			$this->view = $view;
-			$this->children[] = ucfirst($view);
+
+			if($this->application->getControllerPath($view) !== null) {
+				$this->children[] = ucfirst($view);
+			}
 		}
 	}

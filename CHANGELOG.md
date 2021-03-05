@@ -1,25 +1,31 @@
 # Changelog #
+v4.3.0
+- Updated environment class with cli compatibility.  
+- Only add to childrens array if controller is found.  
+- Database\Entity::load no longer created redundant objects.  
+- Updated error handler. Now converting errors to exceptions
+
 v4.2.0  
-- Updated to latest Database library version
+- Updated to latest Database library version..  
 
 v4.1.0  
-- Added support for config files one level above current working directory
-- Added Environment class to core library
-- Moved database connection to init earlier in the application layer
+- Added support for config files one level above current working directory.  
+- Added Environment class to core library.  
+- Moved database connection to init earlier in the application layer.  
 
 v4.0-beta  
-- Added feature for language/i18n, enabled in config files
-- Renamed Tools class to Url, as it contains url only realted functions.
-- Functions class renamed to Debug.
-- Introduced argument and return types to functions.
-- Core\Application::arg(); no longer returns all args if argument is ommited, instead use Core\Application::getArgs();
-- Added more error types to Core\Configuration::parse();
+- Added feature for language/i18n, enabled in config files.  
+- Renamed Tools class to Url, as it contains url only realted functions.  
+- Functions class renamed to Debug.  
+- Introduced argument and return types to functions.  
+- Core\Application::arg(); no longer returns all args if argument is ommited, instead use Core\Application::getArgs();  
+- Added more error types to Core\Configuration::parse();  
 
 v3.2  
-- Allow for setting views in subdirectories.
-- Fixed autoloader not allowed short class names.
-- Controller::getView(); now throws exception when view file is not found in theme.
-- Fixes controllers sometimes being dispatched with spaces in them.
+- Allow for setting views in subdirectories.  
+- Fixed autoloader not allowed short class names.  
+- Controller::getView(); now throws exception when view file is not found in theme.  
+- Fixes controllers sometimes being dispatched with spaces in them.  
 
 v3.1  
 - New constant DS  
