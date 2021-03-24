@@ -35,7 +35,6 @@
 	date_default_timezone_set("Europe/Copenhagen");
 
 	// Exception handler
-	// Be super nazi about exception, eliminates most noob mistakes.
 	set_exception_handler(function($exception) {
 		$stacktrace = [];
 		$trace = array_reverse($exception->getTrace());
@@ -53,10 +52,12 @@
 			print "Stacktrace: ".LF;
 			print TAB.implode(TAB, $stacktrace);
 		} else {
-			if(ob_get_length()) ob_clean();
+			while(ob_get_length()) ob_end_clean();
 
-			header("HTTP/1.1 503 Service Temporarily Unavailable");
-			header("Retry-After: 3600");
+			if(headers_sent() === false) {
+				header("HTTP/1.1 503 Service Temporarily Unavailable");
+				header("Retry-After: 3600");
+			}
 
 			print "<div style=\"font-family: monospace; background-color: #f44336; border-color: #f32c1e; color:#FFF; padding: 15px 15px 15px 15px;\">
 					    <h1 style=\"margin:0px;\">Uncaught Exception: ".get_class($exception)."</h1>".BR."</h1>
@@ -74,13 +75,13 @@
 
 	// Error handler
 	// Be super conservative about errors, eliminates most noob mistakes.
-	set_error_handler(function($errno, $errstr, $errfile, $errline, $errcontext) {
+	set_error_handler(function($errno, $errstr, $errfile, $errline) {
 		if(!(error_reporting() & $errno)) {
 			return;
 		}
 
 		$error = $errstr . ' in file ' . $errfile . ' on line ' . $errline;
-		throw new Exception($error, $errno);
+		throw new ErrorException($error, $errno);
 	});
 
 	// Autoloader
