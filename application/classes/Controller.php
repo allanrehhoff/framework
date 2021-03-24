@@ -58,7 +58,7 @@
 		* @uses \Core\Theme
 		* @return void
 		*/
-		final public function __construct() {
+		public function __construct() {
 			//$this->initialize();
 		}
 
@@ -94,7 +94,8 @@
 			$this->data["javascript"]  = $this->document->getJavascript("footer");
 
 			foreach($this->children as $child) {
-				$this->application->executeController($child);
+				$iController = $this->application->executeController($child);
+				$this->data = array_merge($this->data, $iController->getData());
 			}
 		}
 
