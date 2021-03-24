@@ -61,7 +61,7 @@ namespace Core {
 		* Returns the sanitized method name
 		* @return string
 		*/
-		public function getSanitizedMethodName() :string {
+		public function getSanitizedMethodName() : string {
 			return $this->sanitizedMethodName;
 		}
 

@@ -1,9 +1,12 @@
 # Changelog #
+v4.3.1  
+- Fixing error handlerproducing argument count errors.  
+
 v4.3.0
 - Updated environment class with cli compatibility.  
 - Only add to childrens array if controller is found.  
 - Database\Entity::load no longer created redundant objects.  
-- Updated error handler. Now converting errors to exceptions
+- Updated error handler. Now converting errors to exceptions.
 
 v4.2.0  
 - Updated to latest Database library version..  

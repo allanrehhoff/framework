@@ -124,33 +124,31 @@ namespace Core {
 		* @return (object) Controller - the dispatched controller that has just been executed.
 		*/
 		public function executeController(string $base) : \Controller {
-			if($this->getControllerPath($base) === null) {
-				$base = "Notfound";
-			}
+			$iControllerName = new ControllerName($base);
+			$controller = $iControllerName->getSanitiedControllerName();
 
-			//$controller = str_replace(" ", '', $base."Controller");
-			$controller = $base . "Controller";
-			$reflector  = new ReflectionClass($controller);
+			$iReflector = new ReflectionClass($controller);
 
-			if($reflector->isSubclassOf("Controller") !== true) {
+			if($iReflector->isSubclassOf("Controller") !== true) {
 				throw new Exception($controller." must derive from \Controller 'extends \Controller'.");
 			}
 
-			$controller = new $controller;
+			$iController = new $controller;
 
 			$method = '';
 			if($this->arg(1) !== null) {
 				$method = (string) new MethodName($this->arg(1));
 			}
 
-			if($reflector->hasMethod($method) !== true) {
+			if($iReflector->hasMethod($method) !== true) {
 				$method = MethodName::DEFAULT;
 			}
 
-			$controller->$method();
-			$controller->finalize();
+			$iController->initialize();
+			$iController->$method();
+			$iController->finalize();
 
-			return $controller;
+			return $iController;
 		}
 
 		/**
@@ -159,12 +157,7 @@ namespace Core {
 		* @return Instance of extended Controller
 		*/
 		public function run() : \Controller {
-			$base = ucwords(preg_replace("/\W+/", ' ', strtolower($this->arg(0))));
-			$parts = explode(' ', $base);
-			$parts = array_map("ucfirst", $parts);
-			$base = implode('', $parts);
-
-			return $this->executeController($base);
+			return $this->executeController($this->arg(0));
 		}
 	}
 }

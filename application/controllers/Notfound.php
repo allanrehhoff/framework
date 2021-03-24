@@ -12,8 +12,6 @@
 		public function index() {
 			header("HTTP/1.0 404 Not Found");
 
-			// Force the "notfound.tpl.php" file, as arg(0) is potentially unknown at this point.
-			// One should also log this 404 entry here.
 			$this->setTitle("Not found");
 		}
 	}
