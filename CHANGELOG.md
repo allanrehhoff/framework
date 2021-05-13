@@ -1,5 +1,10 @@
 # Changelog #
+v4.3.2  
+- Add support for setting global & theme version.  
+- Theme supports versio cache busters.  
+
 v4.3.1  
+- Finally allow controllers to set views, and automatically execute other view controllers.  
 - Fixing error handlerproducing argument count errors.  
 
 v4.3.0

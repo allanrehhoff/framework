@@ -21,6 +21,10 @@ namespace Core {
 			$this->name = $themename;
 			$this->theme = (new Configuration($this->getTemplatePath("/theme.json")));
 
+			if($this->theme->get("version.version") == "@version") {
+				$this->theme->set("version.version", Registry::get("Core\Configuration")->get("version"));
+			}
+
 			$this->addAssets();
 		}
 
@@ -63,6 +67,24 @@ namespace Core {
 		}
 
 		/**
+		* Maybe add version number to asset urls
+		* @param (string) $url Url to return with version number
+		* @return string
+		*/
+		private function maybeAddVersionNumber(string $url) : string {
+			if($this->theme->get("version.expose")) {
+				$proto = SSL ? "https://" : "http://";
+				$string = $proto . $_SERVER["HTTP_HOST"];
+
+				if(mb_substr($url, 0, mb_strlen($string)) === $string) {
+					$url .= "?v=" . $this->theme->get("version.version");
+				}
+			}
+
+			return $url;
+		}
+
+		/**
 		* Adds configured theme assets to the Document class
 		* If theme assets appears to be an url, they'll be used as-is,
 		* otherwise files are linked absolutely to the theme.
@@ -81,6 +103,8 @@ namespace Core {
 						$src = $this->getDirectoryUri($javascript);
 					}
 
+					$src = $this->maybeAddVersionNumber($src);
+
 					Registry::get("Document")->addJavascript($src);
 				}
 			}
@@ -95,6 +119,8 @@ namespace Core {
 
 						$src = $this->getDirectoryUri($stylesheet);
 					}
+
+					$src = $this->maybeAddVersionNumber($src);
 
 					Registry::get("Document")->addStylesheet($src);
 				}

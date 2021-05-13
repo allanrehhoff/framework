@@ -53,13 +53,10 @@
 		/**
 		* Constructs the overall environment, setting up helpers and initial variables.
 		* By making this final child controllers don't need to call parent::__construct().
-		* @uses \Registry
-		* @uses \Document
-		* @uses \Core\Theme
 		* @return void
 		*/
 		public function __construct() {
-			//$this->initialize();
+			
 		}
 
 		/**
@@ -70,13 +67,21 @@
 			$this->configuration = Registry::get("Core\Configuration");
 			$this->application 	 = Registry::get("Core\Application");
 			$this->database 	 = Registry::get("Database\Connection");
-			$this->request 		 = $_GET + $_POST;
 			$this->view 		 = $this->application->arg(0);
 
 			$this->setTitle(array_slice($this->application->getArgs(), -1)[0]);
 
-			$this->document = Registry::set(new \Document);
-			$this->theme = Registry::set(new \Core\Theme($this->configuration->get("theme")));
+			if(CLI === false) {
+				$this->request 		 = [
+					"get" => $_GET,
+					"post" => $_POST,
+					"files" => $_FILES,
+					"cookie" => $_COOKIE
+				];
+
+				$this->document = Registry::set(new \Document);
+				$this->theme = Registry::set(new \Core\Theme($this->configuration->get("theme")));
+			}
 		}
 
 		/**
