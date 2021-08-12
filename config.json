@@ -2,14 +2,13 @@
     "version": "1.0.0",
     "theme": "default",
     "base_title": "%s | default-title",
-    "base_title": "Framework",
     "default_route": "index",
+    "enable_i18n": false,
+    "default_language": "en",
     "database": {
         "host": "localhost",
         "username": "root",
         "password": "",
         "name": ""
-    },
-    "enable_i18n": false,
-    "default_language": "en"
+    }
 }

@@ -13,11 +13,6 @@
 
 		class Connection {
 			/**
-			* @var (object) Internal PDO connection
-			*/
-			private $_connection;
-
-			/**
 			* @var (boolean) True if a transaction has started, false otherwise.
 			*/
 			private $transactionStarted = false;
@@ -52,7 +47,6 @@
 			*/
 			public $lastQuery;
 
-
 			/**
 			* Initiate a new database connection through PDO.
 			* @param (string) $hostname Hostname to connect to
@@ -65,7 +59,7 @@
 			*/
 			public function __construct(string $hostname, string $username, string $password, string $database) {
 				if (extension_loaded("pdo") === false) {
-					throw new Exception("Oh god! PDO does not appear to be enabled for this server.");
+					throw new Exception("PDO does not appear to be enabled for this server.");
 				}
 
 				$this->connect($hostname, $username, $password, $database);
@@ -106,11 +100,13 @@
 			* @return (void)
 			* @since 3.0
 			*/
-			public function connect(string $hostname, string $username, string $password, string $database) {
+			public function connect(string $hostname, string $username, string $password, string $database) : Connection {
 				$this->dbh = new PDO("mysql:host=".$hostname.";dbname=".$database, $username, $password);
 				$this->dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 				$this->dbh->setAttribute(PDO::ATTR_STATEMENT_CLASS, ["Database\Statement", [$this]]);
 				$this->dbh->query("SET NAMES utf8mb4");
+
+				return $this;
 			}
 
 			/**
@@ -253,6 +249,28 @@
 			}
 
 			/**
+			* Count total number rows in a column
+			* @return int
+			*/
+			public function count(string $table, string $column, ?array $criteria = null) : int {
+				$sql = "SELECT COUNT(`".$column."`) AS total FROM `".$table."`";
+				if($criteria != null) {
+					$sql .= ' WHERE ' . $this->keysToSql($criteria, 'AND');
+				}
+
+				return (int)$this->query($sql, $criteria)->fetch()->total;
+			}
+
+			/**
+			 * Count the results of a query
+			 * @return int
+			 */
+			public function countQuery(string $query, array $criteria = []) : int {
+				$result = $this->query($query, $criteria);
+				return (int)$result->rowCount();
+			}
+
+			/**
 			* Fetch a single row from the given criteria.
 			* Rows are not ordered, make sure your criteria matches the desired row.
 			* @param (string) $table Name of the table containing the row to be fetched
@@ -331,15 +349,17 @@
 			}
 
 			/**
-			* Inserts a new row in the given table.
-			* Already existing rows with matching PRIMARY key or UNIQUE index are deleted prior to inserting.
+			* Replaces a new row into the given table.
+			* Already existing rows with matching PRIMARY key or UNIQUE index are deleted and then re-inserted.
 			* @param (string) $table Name of the table to replace into
 			* @param (array) $variables Column => Value pairs to be inserted
 			* @return (int) The last inserted ID
 			* @since 1.0
 			*/
 			public function replace(string $table, ?array $variables = null) : int {
-				return (int) $this->createRow("REPLACE", $table, $variables)->rowCount();
+				$variables = ($variables != null) ? $variables : [];
+				$this->createRow("REPLACE", $table, $variables);
+				return (int) $this->dbh->lastInsertId();
 			}
 
 			/**
@@ -406,7 +426,9 @@
 
 				$list = [];
 				foreach ($array as $column => $value) {
-					if(is_array($value)) {
+					if($value === null) {
+						$operator = "<=>";
+					} else if(is_array($value)) {
 						$operator = "IN";
 					} else {
 						$operator = '=';
@@ -449,32 +471,6 @@
 			*/
 			public function interpolateQuery(string $query, array $filters) : string {
 				return $this->debugQuery($query, $filters);
-				/*
-				$keys = [];
-				$values = $filters;
-
-				if(is_array($filters)) {
-					foreach ($filters as $key => $value) {
-						if (is_string($key)) {
-							$keys[] = '/:'.$key.'/';
-						} else {
-							$keys[] = '/[?]/';
-						}
-
-						if (is_string($value)) {
-							$values[$key] = "'" . $value . "'";
-						}
-
-				        if (is_array($value)) {
-							$values[$key] = "('" . implode("','", $value) . "')";
-						} else if (is_null($value)) {
-							$values[$key] = "NULL";
-						}
-					}
-				}
-
-				return preg_replace($keys, $values, $query, 1, $count);
-				*/
 			}
 
 			/**
@@ -483,7 +479,7 @@
 			* @author Allan Thue Rehhoff
 			* @since 1.0
 			*/
-			public function lastInsertId($seqname = null) {
+			public function lastInsertId($seqname = null) : int {
 				return $this->dbh->lastInsertId($seqname);
 			}
 		}

@@ -1,4 +1,7 @@
 # Changelog #
+v4.3.3
+- Updated database library to latest version  
+
 v4.3.2  
 - Add support for setting global & theme version.  
 - Theme supports versio cache busters.  
