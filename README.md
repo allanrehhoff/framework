@@ -1,11 +1,10 @@
 # Introduction (Version 4)
-This is not what you'd typically associate with a fully functional MVC framework, there's no "Models" and that is intentional, deal with it.  
-The intention for this is to prevent the developer from writing complete spaghetti, while being lightweight, scaleable and portable.  
+This is not what you'd typically associate with a fully functional MVC framework, there's no "Models" directory, instead "entities" are used, and when needed regular PHP classes. More on that later. 
+The intention for this is to prevent the developer from writing complete spaghetti, while being lightweight and portable.  
 
-I also aim to keep this framework structured, everything has it's place, no variables or function calls in obscure random places.  
-
-Therefore this framework will not be bundled with bloatware such as modules/components/addons/plugins or other third-party libraries, more than absolutely necessary.  
-Only exception to this rule is jQuery, while it is not strictly required, or mandatory to use, it simply is less verbose than native javascript, it is safe to remove this if preffered.
+Therefore this framework will not be bundled with bloatware such as modules/components/addons/plugins or other third-party libraries, other than what will actually speed up development.  
+Currently the only exception to this rule is jQuery, while it is not strictly required, or mandatory to use, it simply is less verbose than native javascript, and often require fewer steps to achieve a certain task.  
+It is completely safe to remove this from the default theme files if preffered.  
 
 In short, all this does is serve as a kickstart to get a readable and stable codebase when starting up a new custom web project.
 
@@ -53,6 +52,7 @@ string(12) "indo-chinese"
 Controllers may also set child controllers to be executed once the parent controller finalizes.  
 
 ```php
+<?php
 	class AnimalController extends Controller {
 		public function index() {
 			$this->children["Tiger"];
@@ -66,6 +66,7 @@ Children controllers will also be able to override any data set by the parent co
 Setting a different view, will automatically add the new view to children controllers, to ensure that the controller for said view is executed.
 
 ```php
+<?php
 	class AnimalController extends Controller {
 		public function index() {
 			$this->setView("predator");
@@ -95,12 +96,14 @@ By default the view to be displayed is the one found matching arg(0), for exampl
 
 You can add a new "partial" or "children" by adding it's path to the controllers data.
 ```php
-	$this->data["sidebar"] = $this->getViewPath("sidebar");
+<?php
+$this->data["sidebar"] = $this->getViewPath("sidebar");
 ```
 
 And then in your template files
 
 ```php
+<?php
 require $sidebar;
 ```
 
@@ -133,6 +136,7 @@ Theme specific configurations such as assets, third-party libraries should be ma
 Configuration is loaded upon controller initialization.  
 Values can be accessed, changed, removed and saved using a dot syntax.  
 ```php
+<?php
 	class RestaurantController extends Controller {
 		public function __construct() {
 			$this->theme->get("menu.pizzas"); // ["Hawaii", "MeatLover", "Vegan", ...]
@@ -148,7 +152,7 @@ The value from such key, will then be replaced upon retrieval with **->get()**
 
 Examples:
 ```json
-"version": "1.0.0"
+"version": "1.0.0",
 "site_name": "Framework",
 "http": {
     "useragent": "{{site_name}}/{{version}}"
@@ -202,6 +206,7 @@ The instance registered, will be returned.
   
 Examples:  
 ```php
+<?php
 	// Exmaple 1
 	$currentUser = Registry::set( new User($uid) );
 
@@ -213,6 +218,7 @@ In case an instance is namespaced the namespace should also be specified (withou
 
 Example:  
 ```php
+<?php
 	Registry::set( new \Alerts\Error("No more cheese for the pizza...") );
 
 	print Registry::get("Alerts\Error")->getMessage(); // Would print: "No more cheese for the pizza"
@@ -221,40 +227,53 @@ Example:
 This structure is in place to avoid singletons being misused.  
 Albeit this framework currently ships with a \Singleton(); class, it's use is discouraged, as it is currently deprecated, and to be removed later on.  
   
-## Database
-This section assumes you have basic knowledge of PDO.  
-(I haven't yet had time to properly test this documentation, as though it may appear outdated, use at own risk.)
-
-1. **\Registry::get("Database\Connection")->query()**  
-
-```php
-\Registry::get("Database\Connection")->query("UPDATE animals SET `extinct` = :value WHERE name = :name", ["value" => true, "name" => "Asian Rhino"]);
-```   
-
-This could also be written as follows:  
-```php
-\Registry::get("Database\Connection")->update("animals", ["extinct" => true], ["name" => "Asian Rhino"]);
-```
-
-Queries with a return value will be fetched as objects, for instance:  
-```php
-\Registry::get("Database\Connection")->select("animals");
-```
-  
-## Database Entities
+## Database Entities  
 For easier data manipulation, data objects should extend the **\Database\Entity** class.  
 Every class that extends **\Database\DBObject** must implement the following methods.  
 
 - getTableName(); // Table in which this data object should store data.  
 - getKeyField(); // The primary key of the table in which this object stores data.  
 
+Inspect the bundled \Database\EntityType.php file, for en example on how to write an entity class.  
+> *NOTE:*  
+> Entities does not have to reside in the Database namespace.
+
 Every data object take an optional parameter [(int) primary_key] upon instantiating,  
 identifying whether a new data object should be instantiated or an already existing row should be loaded from the table.  
 
-If you wish to change data use the **->set(array('column' => 'value'));**  
+If you wish to change data use the **->set(['column' => 'value']);**  
 This will allow you to call **->save();** on an object and thus saving the data to your database.  
 The data object will be saved as a new row if the primary_key key parameter was not present upon instantiating.  
-  
+
+An entity may also be constructed by passing an array to the constructor.  
+If a key matching the column of the primary key is found, the row will be loaded from the database.  
+
+## Database
+
+Use the \Database\Connection class to perform manual queries if needed.  
+
+```php
+<?php
+\Registry::get("Database\Connection")->query("UPDATE animals SET `extinct` = :value WHERE name = :name", ["value" => true, "name" => "Asian Rhino"]);
+```
+
+This could also be written as follows:  
+```php
+<?php
+\Registry::get("Database\Connection")->update("animals", ["extinct" => true], ["name" => "Asian Rhino"]);
+```
+
+Queries with a return value will be fetched as objects, for instance:  
+```php
+<?php
+\Registry::get("Database\Connection")->select("animals");
+```
+
+```php
+<?php
+\Registry::get("Database\Connection")->update("animals", ["extinct" => true], ["name" => "Asian Rhino"]);
+```
+
 ## The Document class
 In the DOM namespace you'll find the Document class, this can be used to add stylesheets and javscript to the page.  
 Do either of the following to achieve this.  
