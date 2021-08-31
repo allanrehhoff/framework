@@ -31,6 +31,7 @@ Any other parts beyond arg(1) ARE NOT passed directly to the controller, these a
 The **\Core\Application()->arg();** method starts from index 0, whereas the first two indices are already used by the core to determine the route.  
 
 ```php
+<?php
 	// Assume this url: yourdomain.tld/animals/tiger/indo-chinese
 	class AnimalController extends Controller {
 		public function index() {
