@@ -1,6 +1,11 @@
 # Changelog #
+v4.4.0
+- Added support for variables in configuration files.  
+- Updated Core\Configuration::parse(); to use JSON TROW_ON_ERROR constant.  
+- Updated Core\Configuration::save() to respect the location of the passed configuration file.  
+
 v4.3.3
-- Updated database library to latest version  
+- Updated database library to latest version.  
 
 v4.3.2  
 - Add support for setting global & theme version.  

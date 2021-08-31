@@ -4,14 +4,15 @@ The intention for this is to prevent the developer from writing complete spaghet
 
 I also aim to keep this framework structured, everything has it's place, no variables or function calls in obscure random places.  
 
-Therefore this framework will not be bundled with bloatware such as modules/components/addons/plugins and third-party libraries, more than absolutely necessary.  
+Therefore this framework will not be bundled with bloatware such as modules/components/addons/plugins or other third-party libraries, more than absolutely necessary.  
+Only exception to this rule is jQuery, while it is not strictly required, or mandatory to use, it simply is less verbose than native javascript, it is safe to remove this if preffered.
 
-In short all this does is serve as a kickstart to get a readable and stable codebase when starting up a new custom web project.
+In short, all this does is serve as a kickstart to get a readable and stable codebase when starting up a new custom web project.
 
 # Documentation
 
 ## Controller & Methods
-If you're familiar with opencart or other MVC frameworks you might already know the url-to-controller concept.  
+If you're familiar with MVC frameworks you might already know the url-to-controller concept.  
 Given the URL **yourdomain.tld/animal** will map to a controller as such **AnimalController.php** in the application/controllers/ directory.  
 
 Your controllers must extend upon **Controller** to have all the neccessary functions available.
@@ -29,8 +30,7 @@ define your methods in camelCaseFormat, so please! for you and the next develope
 Any other parts beyond arg(1) ARE NOT passed directly to the controller, these are for you to pick up using the applications arg() method.  
 The **\Core\Application()->arg();** method starts from index 0, whereas the first two indices are already used by the core to determine the route.  
 
-```
-<?php
+```php
 	// Assume this url: yourdomain.tld/animals/tiger/indo-chinese
 	class AnimalController extends Controller {
 		public function index() {
@@ -41,7 +41,6 @@ The **\Core\Application()->arg();** method starts from index 0, whereas the firs
 			var_dump($this->application->arg(2)); // indo-chinese
 		}
 	}
-?>
 ```
 
 The above example will output something similar to:  
@@ -52,7 +51,7 @@ string(12) "indo-chinese"
 
 Controllers may also set child controllers to be executed once the parent controller finalizes.  
 
-```
+```php
 	class AnimalController extends Controller {
 		public function index() {
 			$this->children["Tiger"];
@@ -65,7 +64,7 @@ Children controllers will also be able to override any data set by the parent co
 
 Setting a different view, will automatically add the new view to children controllers, to ensure that the controller for said view is executed.
 
-```
+```php
 	class AnimalController extends Controller {
 		public function index() {
 			$this->setView("predator");
@@ -94,16 +93,14 @@ Every view file must have the extension **.tpl.php** this is to distinguish them
 By default the view to be displayed is the one found matching arg(0), for example **animal.tpl.php**, unless otherwise specified by the dispatched controller.
 
 You can add a new "partial" or "children" by adding it's path to the controllers data.
-```
-<?php
+```php
 	$this->data["sidebar"] = $this->getViewPath("sidebar");
-?>
 ```
 
 And then in your template files
 
-```
-<?php require $sidebar; ?>
+```php
+require $sidebar;
 ```
 
 Theme assets should be configured in the theme.json file, and paths must be relative to the theme directory, or an absolute url to the asset.  
@@ -134,8 +131,7 @@ Theme specific configurations such as assets, third-party libraries should be ma
 
 Configuration is loaded upon controller initialization.  
 Values can be accessed, changed, removed and saved using a dot syntax.  
-```
-<?php
+```php
 	class RestaurantController extends Controller {
 		public function __construct() {
 			$this->theme->get("menu.pizzas"); // ["Hawaii", "MeatLover", "Vegan", ...]
@@ -144,14 +140,44 @@ Values can be accessed, changed, removed and saved using a dot syntax.
 			$this->theme->save();
 		}
 	}
-?>
+```
+
+Configuration values may contain variables, structured as {{key}}, where the key between the {{ }} brackets should map to another key in the same configation file.
+The value from such key, will then be replaced upon retrieval with **->get()**
+
+Examples:
+```json
+"version": "1.0.0"
+"site_name": "Framework",
+"http": {
+    "useragent": "{{site_name}}/{{version}}"
+}
+```
+
+```php
+	// The following would return Framework/1.0.0
+	Registry::get("Core\Configuration")->get("http.useragent");
+```
+
+Variables are parsed recursively, and therefore values from nested objects can also be used, using a dot syntax.
+```json
+"version": {
+	"dev": "1.0.0",
+	"prod": "1.0.0"
+},
+"site_name": "Framework",
+"http": {
+    "useragent": "{{site_name}}/{{version.prod}}"
+}
 ```
 
 > *WARNING:*  
 > Calling the **Configuration()->save();** method will overwrite the current configuration file and write current configuration settings to the loaded JSON file.  
 
 The core base_title setting only supports one wildcard %s use **(controller)->setTitle($title)** in your controller files to set a dynamic title.  
-  
+
+Custom wildcards and variables aren't affected in other configuration values.
+
 ## Autoloading classes
 Autoloading is a mechanism which requires class, interface and trait definitions (from here on, referenced as instances) on demand.  
 Files containing the definition of a class must share name with the class name, and end on **.php** Obviously...
@@ -174,25 +200,21 @@ Once an instance has been set in the registry, it is immediately accesible by us
 The instance registered, will be returned.  
   
 Examples:  
-```
-<?php
+```php
 	// Exmaple 1
 	$currentUser = Registry::set( new User($uid) );
 
 	// Example 2
 	$currentUser = Registry::get("User");
-?>
 ```
 
 In case an instance is namespaced the namespace should also be specified (without the initial backslash) upon retrieval.
 
 Example:  
-```
-<?php
+```php
 	Registry::set( new \Alerts\Error("No more cheese for the pizza...") );
 
 	print Registry::get("Alerts\Error")->getMessage(); // Would print: "No more cheese for the pizza"
-?>
 ```
   
 This structure is in place to avoid singletons being misused.  
@@ -204,18 +226,18 @@ This section assumes you have basic knowledge of PDO.
 
 1. **\Registry::get("Database\Connection")->query()**  
 
-```
-<?php \Registry::get("Database\Connection")->query("UPDATE animals SET `extinct` = :value WHERE name = :name", ["value" => true, "name" => "Asian Rhino"]); ?>
+```php
+\Registry::get("Database\Connection")->query("UPDATE animals SET `extinct` = :value WHERE name = :name", ["value" => true, "name" => "Asian Rhino"]);
 ```   
 
 This could also be written as follows:  
-```
-<?php \Registry::get("Database\Connection")->update("animals", ["extinct" => true], ["name" => "Asian Rhino"]); ?>
+```php
+\Registry::get("Database\Connection")->update("animals", ["extinct" => true], ["name" => "Asian Rhino"]);
 ```
 
 Queries with a return value will be fetched as objects, for instance:  
-```
-<?php \Registry::get("Database\Connection")->select("animals"); ?>
+```php
+\Registry::get("Database\Connection")->select("animals");
 ```
   
 ## Database Entities

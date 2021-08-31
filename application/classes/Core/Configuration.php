@@ -8,13 +8,14 @@ namespace Core {
 	* @author Allan Thue Rehhoff
 	*/
 	class Configuration {
-		private $parsedConfig;
+		private $parsedConfig, $configurationFile;
 		public $error = '';
 		
 		/**
 		* The constructor starts parsing of the configuration file.
 		*/
 		public function __construct($configurationFile) {
+			$this->configurationFile = $configurationFile;
 			$this->parse($configurationFile);
 		}
 
@@ -29,28 +30,39 @@ namespace Core {
 			}
 			
 			$jsonConfig = file_get_contents($configurationFile);
-			$this->parsedConfig = json_decode($jsonConfig);
+			$this->parsedConfig = json_decode($jsonConfig, null, 512, JSON_THROW_ON_ERROR);
+		}
 
-			$this->error = json_last_error();
+		/**
+		 * Recursively replace {{variables}} in configuration values
+		 * @param $configValue The config value in which to replace variables.
+		 * @return mixed
+		 */
+		protected function replaceVariables($configValue) {
+			if(is_string($configValue) === true) {
+				/*
+					\{{2}      (match 2 literal {)
+					(          (start capture group)
+					 [^{^}]+   (1+ non {} characters)
+					)          (end capture group)
+					\}{2}      (match 2 literal })
+				*/
+				$variables = preg_match_all("/\{{2}([^{^}]+)\}{2}/", $configValue, $matches);
 
-			if($this->error !== JSON_ERROR_NONE) {
-				$jsonErrorMap = [
-					JSON_ERROR_DEPTH => "Maximum stack depth exceeded.",
-					JSON_ERROR_STATE_MISMATCH => "Underflow or the modes mismatch.",
-					JSON_ERROR_CTRL_CHAR => "Unexpected control character found.",
-					JSON_ERROR_SYNTAX => "Syntax error, your configuration file contains malformed JSON.",
-					JSON_ERROR_UTF8 => "Your configuration file may me incorrectly encoded, it contains malformed UTF-8 characters.",
-					JSON_ERROR_RECURSION => "One or more recursive references in the value to be decoded",
-					JSON_ERROR_UNSUPPORTED_TYPE => "A value of a type that cannot be decoded was given",
-					JSON_ERROR_UTF16 => "Malformed UTF-16 characters, possibly incorrectly encoded"
-				];
-
-				if(isset($jsonErrorMap[$this->error])) {
-					throw new ConfigurationException("Unable to parse configuration file, ".$jsonErrorMap[$this->error]);
-				} else {
-					throw new ConfigurationException("Unable to parse configuration file, unknown error.");
+				for ($i = 0; $i < count($matches[0]); $i++) { 
+					$configValue = str_replace($matches[0][$i], $this->get($matches[1][$i]), $configValue);
+				}
+			} else if(is_object($configValue) === true) {
+				foreach($configValue as $key => $value) {
+					$configValue->{$key} = $this->replaceVariables($value);
+				}
+			} else if(is_array($configValue) === true) {
+				foreach($configValue as $key => $value) {
+					$configValue[$key] = $this->replaceVariables($value);
 				}
 			}
+
+			return $configValue;
 		}
 
 		/**
@@ -68,17 +80,21 @@ namespace Core {
 			
 			$paths = explode('.', $conf);
 			$configValue = $this->parsedConfig;
+
 			foreach ($paths as $path) {
 				if(!isset($configValue->$path)) {
 					throw new ConfigurationException($conf." is not a valid configuration");
 					return null;
 				}
+
 				$configValue = $configValue->$path;
 			}
+
+			$configValue = $this->replaceVariables($configValue);
 			
 			return $configValue;
 		}
-		
+
 		/**
 		* Remove a configuration value
 		* @param (string) $conf Key of the setting to delete.
@@ -88,6 +104,7 @@ namespace Core {
 		public function delete(string $conf) : Configuration {
 			$paths = explode('.', $conf);
 			$configValue = $this->parsedConfig;
+
 			foreach ($paths as $path) {
 				if(!isset($configValue->$path)) {
 					throw new ConfigurationException($conf." is not a valid configuration");
@@ -99,7 +116,7 @@ namespace Core {
 			
 			return $this;
 		}
-		
+
 		/**
 		* Alias for ConfigurationParser::delete()
 		* @return value of onfigurationParser::delete()
@@ -107,7 +124,7 @@ namespace Core {
 		public function remove(string $conf) : Configuration {
 			return $this->delete($conf);
 		}
-		
+
 		/**
 		* Dynamically set a configuration setting to a given value.
 		* @param $setting Key of the setting.
@@ -119,29 +136,32 @@ namespace Core {
 			$result = &$this->parsedConfig;
 			
 			$countedPaths = count($paths);
+
 			foreach ($paths as $i => $path) {
 				if ($i < $countedPaths-1) {
 					if (!isset($result->$path)) {
 						$result->$path = new stdClass();
 					}
+
 					$result = &$result->$path;
 				} else {
 					$result->$path = $value;
 				}
 			}
+
 			return $this;
 		}
-		
+
 		/**
 		* Permanently save the current runtime configuration.
 		* @return self
 		*/
 		public function save() : Configuration {
 			$jsonConfig = json_encode($this->get(), JSON_PRETTY_PRINT);
-			file_put_contents(getcwd().'/'.$this->configurationFile, $jsonConfig);
+			file_put_contents($this->configurationFile, $jsonConfig);
 			return $this;
 		}
-		
+
 		/**
 		* I have no idea how this reacts if $user->does->this = 'stupid';
 		* But doing so is discouraged, and at some point I might introduce Exceptions here.
@@ -150,7 +170,7 @@ namespace Core {
 		public function __set($name, $value) {
 			return $this->set($name, $value);
 		}
-		
+
 		/**
 		* Again please use the ->get() and ->set() methods
 		* @see ConfigurationParser::__set();
@@ -159,7 +179,7 @@ namespace Core {
 		public function __get($name) {
 			return $this->get($name);
 		}
-		
+
 		/**
 		* Get debug information by printing the configuration object.
 		* @return string
