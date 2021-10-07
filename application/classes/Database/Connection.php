@@ -426,7 +426,7 @@
 
 				$list = [];
 				foreach ($array as $column => $value) {
-					if($value === null && $seperator != ',')
+					if($value === null && $seperator != ',') {
 						$operator = "<=>";
 					} else if(is_array($value)) {
 						$operator = "IN";

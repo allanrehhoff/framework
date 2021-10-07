@@ -144,13 +144,13 @@ namespace Database {
 		/**
 		* Sets ones or more properties to a given value.
 		* @param (array) $values key => value pairs of values to set
-		* @param (array) $allowed_fields keys of fields allowed to be altered
+		* @param (array) $allowedFields keys of fields allowed to be altered
 		* @return (object) The current entity instance
 		* @author Allan Thue Rehhoff
 		*/
-		public function set(array $values, array $allowed_fields = null) : Entity {
-			if ($allowed_fields != null) {
-				$values = array_intersect_key($values, array_flip($allowed_fields));
+		public function set(array $values, array $allowedFields = null) : Entity {
+			if ($allowedFields != null) {
+				$values = array_intersect_key($values, array_flip($allowedFields));
 			}
 
 			$this->data = array_merge($this->data, $values);
