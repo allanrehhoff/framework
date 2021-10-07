@@ -3,8 +3,6 @@
     "theme": "default",
     "base_title": "%s | default-title",
     "default_route": "index",
-    "enable_i18n": false,
-    "default_language": "en",
     "database": {
         "host": "localhost",
         "username": "root",

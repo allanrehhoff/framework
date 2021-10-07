@@ -1,4 +1,8 @@
 # Changelog #
+v5.0.0
+- Completely removed support for i18n.  
+Note: There's no one-size-fits-all solution to i18n, and all systems I've made so far with this framework I've had to make major alterations to the default implementation.  
+
 v4.4.0
 - Added support for variables in configuration files.  
 - Updated Core\Configuration::parse(); to use JSON TROW_ON_ERROR constant.  

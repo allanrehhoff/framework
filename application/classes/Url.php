@@ -11,14 +11,9 @@
 			$protocol = SSL ? "https://" : "http://";
 			$host  = $_SERVER['HTTP_HOST'];
 			$self = dirname($_SERVER['PHP_SELF']);
-
-			if(\Registry::get("Core\Configuration")->get("enable_i18n") === true) {
-				$langcode = \Registry::get("Core\Language")->getLangcode();
-				$self = $self.$langcode;
-			}
-
 			$path = rtrim($self, '/\\');
 			$baseurl = $protocol.$host.$path."/";
+
 			return $baseurl.ltrim($uri, '/');
 		}
 

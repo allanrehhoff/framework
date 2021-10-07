@@ -59,11 +59,6 @@ namespace Core {
 			if(CLI === false) {
 				$route = $args["route"] ?? $this->configuration->get("default_route");
 				$this->args = explode('/', ltrim($route, '/'));
-
-				if($this->configuration->get("enable_i18n")) {
-					$this->language = Registry::set(new Language);
-					$this->language->negotiate($this->args);
-				}
 			} else {
 				$this->args = array_slice($args, 1);
 			}
