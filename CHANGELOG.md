@@ -7,6 +7,7 @@ v5.0.0
 - Updated documentation.  
 - Added more usage examples to database class documentation.  
 - Completely removed support for i18n.  
+- Renamed properties that are an instance of an object to be prefixed with an i. (lowercase C# style)  
 > *NOTE:* There's no one-size-fits-all solution to i18n, and all systems I've made so far with this framework I've had to make major alterations to the default implementation.  
 
 v4.4.0

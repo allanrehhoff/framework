@@ -16,7 +16,7 @@ namespace Core {
 		/**
 		* @var Holds the theme configuration object.
 		*/
-		private $configuration;
+		private $iConfiguration;
 
 		/**
 		* Doesn't do much of interest, this shouldn't be required to mess with.
@@ -26,10 +26,10 @@ namespace Core {
 			$this->name = $themename;
 
 			$configurationFile = STORAGE . "/config/" . $this->name . ".theme.json";
-			$this->configuration = (new Configuration($configurationFile));
+			$this->iConfiguration = (new Configuration($configurationFile));
 
-			if($this->configuration->get("version.version") == "@version") {
-				$this->configuration->set("version.version", Registry::get("Core\Application")->getConfiguration()->get("version"));
+			if($this->iConfiguration->get("version.version") == "@version") {
+				$this->iConfiguration->set("version.version", Registry::get("Core\Application")->getConfiguration()->get("version"));
 			}
 
 			$this->addAssets();
@@ -40,7 +40,7 @@ namespace Core {
 		 * @return Configuration - application-wide configuration
 		 */
 		public function getConfiguration() : Configuration {
-			return $this->configuration;
+			return $this->iConfiguration;
 		}
 
 		/**
@@ -87,12 +87,12 @@ namespace Core {
 		* @return string
 		*/
 		private function maybeAddVersionNumber(string $url) : string {
-			if($this->configuration->get("version.expose")) {
+			if($this->iConfiguration->get("version.expose")) {
 				$proto = SSL ? "https://" : "http://";
 				$string = $proto . $_SERVER["HTTP_HOST"];
 
 				if(mb_substr($url, 0, mb_strlen($string)) === $string) {
-					$url .= "?v=" . $this->configuration->get("version.version");
+					$url .= "?v=" . $this->iConfiguration->get("version.version");
 				}
 			}
 
@@ -107,8 +107,8 @@ namespace Core {
 		* @return void
 		*/
 		private function addAssets() : void {
-			if(!empty($this->configuration->get("javascript"))) {
-				foreach($this->configuration->get("javascript") as $javascript) {
+			if(!empty($this->iConfiguration->get("javascript"))) {
+				foreach($this->iConfiguration->get("javascript") as $javascript) {
 					if(filter_var($javascript, FILTER_VALIDATE_URL)) {
 						$src = $javascript;
 					} else {
@@ -124,8 +124,8 @@ namespace Core {
 				}
 			}
 
-			if(!empty($this->configuration->get("stylesheets"))) {
-				foreach($this->configuration->get("stylesheets") as $stylesheet) {
+			if(!empty($this->iConfiguration->get("stylesheets"))) {
+				foreach($this->iConfiguration->get("stylesheets") as $stylesheet) {
 					if(filter_var($stylesheet, FILTER_VALIDATE_URL)) {
 						$src = $stylesheet;
 					} else {

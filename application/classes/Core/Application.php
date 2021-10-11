@@ -28,7 +28,7 @@ namespace Core {
 		/**
 		* @var Holds the Application-wide configuration object.
 		*/
-		private $configuration;
+		private $iConfiguration;
 
 		/**
 		* @var Controller to be dispatched.
@@ -46,14 +46,14 @@ namespace Core {
 			$this->configuration = new Configuration($configurationFile);
 
 			\Registry::set(new \Database\Connection(
-				$this->configuration->get("database.host"),
-				$this->configuration->get("database.username"),
-				$this->configuration->get("database.password"),
-				$this->configuration->get("database.name")
+				$this->iConfiguration->get("database.host"),
+				$this->iConfiguration->get("database.username"),
+				$this->iConfiguration->get("database.password"),
+				$this->iConfiguration->get("database.name")
 			));
 
 			if(CLI === false) {
-				$route = $args["route"] ?? $this->configuration->get("default_route");
+				$route = $args["route"] ?? $this->iConfiguration->get("default_route");
 				$this->args = explode('/', ltrim($route, '/'));
 			} else {
 				$this->args = array_slice($args, 1);
@@ -92,6 +92,14 @@ namespace Core {
 		}
 
 		/**
+		 * Returns the configuration object associated with the application
+		 * @return Configuration - application-wide configuration
+		 */
+		public function getConfiguration() : Configuration {
+			return $this->iConfiguration;
+		}
+
+		/**
 		* Get path to the specified controller file. Ommit the .php extension
 		* @todo Cut .php from the $ctrl param, if provided. (Find out if I can use basename()'s second argument)
 		* @param (string) $controller name of the controller file.
@@ -126,28 +134,20 @@ namespace Core {
 
 			$iController = new $controller;
 
-			$method = '';
+			$iMethodName = '';
 			if($this->arg(1) !== null) {
-				$method = (string) new MethodName($this->arg(1));
+				$iMethodName = (string) new MethodName($this->arg(1));
 			}
 
-			if($iReflector->hasMethod($method) !== true) {
-				$method = MethodName::DEFAULT;
+			if($iReflector->hasMethod($iMethodName) !== true) {
+				$iMethodName = MethodName::DEFAULT;
 			}
 
 			$iController->initialize();
-			$iController->$method();
+			$iController->$iMethodName();
 			$iController->finalize();
 
 			return $iController;
-		}
-
-		/**
-		 * Returns the configuration object associated with the application
-		 * @return Configuration - application-wide configuration
-		 */
-		public function getConfiguration() : Configuration {
-			return $this->configuration;
 		}
 
 		/**
