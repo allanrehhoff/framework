@@ -1,14 +1,17 @@
-# Introduction (Version 4)
+# Introduction (Version 5)
 This is not what you'd typically associate with a fully functional MVC framework, there's no "Models" directory, instead "entities" are used, and when needed regular PHP classes. More on that later. 
 The intention for this is to prevent the developer from writing complete spaghetti, while being lightweight and portable.  
 
 Therefore this framework will not be bundled with bloatware such as modules/components/addons/plugins or other third-party libraries, other than what will actually speed up development.  
-Currently the only exception to this rule is jQuery, while it is not strictly required, or mandatory to use, it simply is less verbose than native javascript, and often require fewer steps to achieve a certain task.  
+Rhe only exception to this rule is jQuery, while it is not strictly required, or mandatory to use, it simply is less verbose than native javascript, and often require fewer steps to achieve a certain task.  
 It is completely safe to remove this from the default theme files if preffered.  
 
 In short, all this does is serve as a kickstart to get a readable and stable codebase when starting up a new custom web project.
 
 # Documentation
+
+## Application Directory
+Because configuration files should not reside in the same directory as the application root, you must configure your server to set the **application/** as it's **DocumentRoot**.  
 
 ## Controller & Methods
 If you're familiar with MVC frameworks you might already know the url-to-controller concept.  
@@ -74,7 +77,7 @@ Setting a different view, will automatically add the new view to children contro
 	}
 ```
 
-Will result in `PredatorController` being invoked.  
+Will result in `PredatorController` being added to the end of the children queue.  
 
 > *NOTE:*  
 > The default method invoked is **index** this will happen if arg(1) is nowhere to be found in the given controller, or arg(1) is void.
@@ -87,7 +90,9 @@ Each theme should contain at least the following files.
 - footer.tpl.php (Required)  
 - (default-route).tpl.php (Required) (default-route indicates a filename matching the configured default route.)  
 - notfound.tpl.php (Required)  
-- theme.json (Required) (This is the per-theme configurations)
+- THEMENAME.theme.jsonc (Required) (This is the per-theme configurations)
+
+Theme configuration files must be located in the **storage/config directory**  
 
 It is assumed by the core that your theme has at least the required files, failing to create those files will result in unknown errors.  
   
@@ -107,10 +112,10 @@ And then in your template files
 require $sidebar;
 ```
 
-Theme assets should be configured in the theme.json file, and paths must be relative to the theme directory, or an absolute url to the asset.  
+Theme assets should be configured in the **THEMENAME.theme.json** file, and paths must be relative to the theme directory, or an absolute url to the asset.  
 
 > *NOTE:*  
-> header.tpl.php, footer.data.php, and any other view files you plan to include or require in another view file cannot have a controller file.  
+> header.tpl.php, footer.data.php, and any other view files you plan to include or require in another view file cannot have a controller file, to invoke additional controllers, please refer to the Controllers section.  
 
 ## Command Line Interface
 This framework supports being queried through CLI (albeit, not fully tested), to do so you must query the **index.php** file.  
@@ -129,9 +134,15 @@ Hello from interface
 ```
   
 ## Configuration
-The main configuration resides within the file **config,json**, and should contain nothing but configuration settings used by the core and controllers.  
+A superset of json, called jsonc is used for configuration files, this is to support comments in configuration files.  
 
-Theme specific configurations such as assets, third-party libraries should be managed by the **theme.json** file bundled with the theme.  
+> *NOTE:*  
+> ConfigurationParser still only has partial support for jsonc.  
+
+All config files are to be located in the **storage/config** directory.  
+The main configuration resides within the file **application,jsonc**, and should contain nothing but configuration settings used by the core and controllers.  
+
+Theme specific configurations such as assets, third-party libraries should be managed by the **default.theme.jsonc** file bundled with the theme.  
 
 Configuration is loaded upon controller initialization.  
 Values can be accessed, changed, removed and saved using a dot syntax.  
@@ -176,9 +187,6 @@ Variables are parsed recursively, and therefore values from nested objects can a
 }
 ```
 
-> *WARNING:*  
-> Calling the **Configuration()->save();** method will overwrite the current configuration file and write current configuration settings to the loaded JSON file.  
-
 The core base_title setting only supports one wildcard %s use **(controller)->setTitle($title)** in your controller files to set a dynamic title.  
 
 Custom wildcards and variables aren't affected in other configuration values.
@@ -208,7 +216,7 @@ Examples:
 ```php
 <?php
 	// Exmaple 1
-	$currentUser = Registry::set( new User($uid) );
+	$currentUser = Registry::set(new User($uid));
 
 	// Example 2
 	$currentUser = Registry::get("User");
@@ -272,6 +280,25 @@ Queries with a return value will be fetched as objects, for instance:
 ```php
 <?php
 \Registry::get("Database\Connection")->update("animals", ["extinct" => true], ["name" => "Asian Rhino"]);
+```
+
+```php
+<?php
+\Registry::get("Database\Connection")->insert("animals", ["name" => "Sumatran Tiger", "extinct" => false]);
+```
+
+Advanced filters are also suported in where clauses.
+
+```php
+<?php
+// Perform when WHERE .. IN (...)
+\Registry::get("Database\Connection")->select("animals", ["name" => ["Asian Rhino", "Sumatran Tiger"]]);
+```
+
+```php
+<?php
+// Uses the spaceship-operator in MySQL
+\Registry::get("Database\Connection")->select("animals", ["name" => NULL]);
 ```
 
 ## The Document class

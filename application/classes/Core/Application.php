@@ -18,7 +18,7 @@ namespace Core {
 		/**
 		* @var Current working directory, in which the application resides.
 		*/
-		private $cwd;
+		private $app;
 
 		/**
 		* @var arguments provided through URI parts
@@ -39,22 +39,18 @@ namespace Core {
 		* Parse the current route and set caching as needed.
 		*/
 		public function __construct(array $args) {
-			$this->cwd = CWD;
+			$this->app = APP;
 
-			$configPath = $this->cwd."/config.json";
+			$configurationFile = STORAGE . "/config/application.json";
 
-			if(file_exists($configPath) === false) {
-				$configPath = realpath($this->cwd.'/../config.json');
-			}
+			$this->configuration = new Configuration($configurationFile);
 
-			$this->configuration = Registry::set(new Configuration($configPath));
-
-			\Registry::set(new \Database\Connection(
-				$this->configuration->get("database.host"),
-				$this->configuration->get("database.username"),
-				$this->configuration->get("database.password"),
-				$this->configuration->get("database.name")
-			));
+			// \Registry::set(new \Database\Connection(
+			// 	$this->configuration->get("database.host"),
+			// 	$this->configuration->get("database.username"),
+			// 	$this->configuration->get("database.password"),
+			// 	$this->configuration->get("database.name")
+			// ));
 
 			if(CLI === false) {
 				$route = $args["route"] ?? $this->configuration->get("default_route");
@@ -92,7 +88,7 @@ namespace Core {
 		* @return string
 		*/
 		public function getApplicationPath() : string {
-			return $this->cwd;
+			return $this->app;
 		}
 
 		/**
@@ -144,6 +140,14 @@ namespace Core {
 			$iController->finalize();
 
 			return $iController;
+		}
+
+		/**
+		 * Returns the configuration object associated with the application
+		 * @return Configuration - application-wide configuration
+		 */
+		public function getConfiguration() : Configuration {
+			return $this->configuration;
 		}
 
 		/**

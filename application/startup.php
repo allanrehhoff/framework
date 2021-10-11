@@ -17,8 +17,9 @@
 	define("BR", "<br />");
 	define("SSL", !empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == 'on');
 	define("CLI", php_sapi_name() == "cli");
-	define("CWD", __DIR__);
+	define("APP", __DIR__);
 	define("DS", DIRECTORY_SEPARATOR);
+	define("STORAGE", realpath("../storage"));
 
 	// Output buffering
 	// The ob_gzhandler callback returns false if browser doesn't support gzip
@@ -88,9 +89,9 @@
 	spl_autoload_register(function($className) {
 		$className = str_replace("\\", "/", $className);
 
-		$classFile = CWD."/application/classes/".$className.".php";
+		$classFile = APP."/classes/".$className.".php";
 		if(!file_exists($classFile) && substr($className, -10) == "Controller") {
-			$classFile = CWD."/application/controllers/".substr($className, 0, -10).".php";
+			$classFile = APP."/controllers/".substr($className, 0, -10).".php";
 		}
 
 		require $classFile;

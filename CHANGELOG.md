@@ -1,7 +1,13 @@
 # Changelog #
 v5.0.0
+- **This release is backwards incompatible.**  
+- New file structure to enforce configuration files outside of the application directory.  
+- Removed Core\Configuration from the registry object, moved to Application::getConfiguration() and Theme::getConfiguration().  
+- Switchedd to .jsonc configuration file extension, to support comments in config files.  
+- Updated documentation.  
+- Added more usage examples to database class documentation.  
 - Completely removed support for i18n.  
-Note: There's no one-size-fits-all solution to i18n, and all systems I've made so far with this framework I've had to make major alterations to the default implementation.  
+> *NOTE:* There's no one-size-fits-all solution to i18n, and all systems I've made so far with this framework I've had to make major alterations to the default implementation.  
 
 v4.4.0
 - Added support for variables in configuration files.  
@@ -62,7 +68,7 @@ v3.0-beta8
 - Change some single quote strings to double quotes.  
 
 v3.0-beta7  
-- **This release is backwards incompatible. **  
+- **This release is backwards incompatible.**  
 - Fixed syntax errors introduced in previous version.  
 - Main Controller class moved out from \Core namespace.  
 - Removed PHP version check, as it's outdated now.  
@@ -85,7 +91,7 @@ v3.0-beta5
 - DOM\Document no longer uses a static context.  
 
 v3.0-beta4  
-- **This release is backwards incompatible. **  
+- **This release is backwards incompatible.**  
 - Better support CLI mode support.  
 - Almost completely rewritten exception handler.  
 - Coding style changes, mainly apostrophes.   

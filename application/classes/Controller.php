@@ -52,7 +52,6 @@
 
 		/**
 		* Constructs the overall environment, setting up helpers and initial variables.
-		* By making this final child controllers don't need to call parent::__construct().
 		* @return void
 		*/
 		public function __construct() {
@@ -64,9 +63,10 @@
 		* @return void
 		*/
 		final public function initialize() : void {
-			$this->configuration = Registry::get("Core\Configuration");
 			$this->application 	 = Registry::get("Core\Application");
 			$this->database 	 = Registry::get("Database\Connection");
+
+			$this->configuration = $this->application->getConfiguration();
 			$this->view 		 = $this->application->arg(0);
 
 			$this->setTitle(array_slice($this->application->getArgs(), -1)[0]);

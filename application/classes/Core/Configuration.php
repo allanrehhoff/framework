@@ -1,10 +1,7 @@
 <?php
 namespace Core {
-	use Exception;
-	
 	/**
 	* Handles parsing and saving of a given configuration file.
-	* @extends Singleton
 	* @author Allan Thue Rehhoff
 	*/
 	class Configuration {
@@ -14,9 +11,10 @@ namespace Core {
 		/**
 		* The constructor starts parsing of the configuration file.
 		*/
-		public function __construct($configurationFile) {
-			$this->configurationFile = $configurationFile;
-			$this->parse($configurationFile);
+		public function __construct(string $configurationFile = null) {
+			if($configurationFile !== null) {
+				$this->parse($configurationFile);
+			}
 		}
 
 		/**
@@ -28,8 +26,12 @@ namespace Core {
 			if(!is_file($configurationFile)) {
 				throw new ConfigurationException("The given configuration file '$configurationFile' could not be located.");
 			}
-			
+
+			$this->configurationFile = $configurationFile;
+
 			$jsonConfig = file_get_contents($configurationFile);
+			$jsonConfig = preg_replace('~(" (?:\\\\. | [^"])*+ ") | \# [^\v]*+ | // [^\v]*+ | /\* .*? \*/~xs', '$1', $jsonConfig);
+
 			$this->parsedConfig = json_decode($jsonConfig, null, 512, JSON_THROW_ON_ERROR);
 		}
 
@@ -149,16 +151,6 @@ namespace Core {
 				}
 			}
 
-			return $this;
-		}
-
-		/**
-		* Permanently save the current runtime configuration.
-		* @return self
-		*/
-		public function save() : Configuration {
-			$jsonConfig = json_encode($this->get(), JSON_PRETTY_PRINT);
-			file_put_contents($this->configurationFile, $jsonConfig);
 			return $this;
 		}
 

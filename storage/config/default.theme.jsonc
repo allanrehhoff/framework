@@ -1,0 +1,15 @@
+{
+	// Set version.version to @version to inherit
+	// the application-wide version number.
+	"version": {
+		"version": "@version",
+		"expose": true
+	},
+	"javascript": [
+		"javascript/jquery-3.5.1.min.js"
+	],
+	"stylesheets": [
+		"stylesheets/screen.css",
+		"stylesheets/responsive.css"
+	]
+}

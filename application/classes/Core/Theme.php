@@ -14,18 +14,33 @@ namespace Core {
 		private $name;
 
 		/**
+		* @var Holds the theme configuration object.
+		*/
+		private $configuration;
+
+		/**
 		* Doesn't do much of interest, this shouldn't be required to mess with.
 		* @return void
 		*/
 		public function __construct(string $themename) {
 			$this->name = $themename;
-			$this->theme = (new Configuration($this->getTemplatePath("/theme.json")));
 
-			if($this->theme->get("version.version") == "@version") {
-				$this->theme->set("version.version", Registry::get("Core\Configuration")->get("version"));
+			$configurationFile = STORAGE . "/config/" . $this->name . ".theme.json";
+			$this->configuration = (new Configuration($configurationFile));
+
+			if($this->configuration->get("version.version") == "@version") {
+				$this->configuration->set("version.version", Registry::get("Core\Application")->getConfiguration()->get("version"));
 			}
 
 			$this->addAssets();
+		}
+
+		/**
+		 * Returns the configuration object associated with the application
+		 * @return Configuration - application-wide configuration
+		 */
+		public function getConfiguration() : Configuration {
+			return $this->configuration;
 		}
 
 		/**
@@ -33,7 +48,7 @@ namespace Core {
 		* @return string
 		*/
 		public function getTemplatePath(string $tpl = '') : string {
-			$path = \Registry::get("Core\Application")->getApplicationPath()."/application/themes/".$this->getName();
+			$path = \Registry::get("Core\Application")->getApplicationPath()."/themes/".$this->getName();
 
 			if($tpl != '') {
 				$path .= '/'.$tpl;
@@ -72,12 +87,12 @@ namespace Core {
 		* @return string
 		*/
 		private function maybeAddVersionNumber(string $url) : string {
-			if($this->theme->get("version.expose")) {
+			if($this->configuration->get("version.expose")) {
 				$proto = SSL ? "https://" : "http://";
 				$string = $proto . $_SERVER["HTTP_HOST"];
 
 				if(mb_substr($url, 0, mb_strlen($string)) === $string) {
-					$url .= "?v=" . $this->theme->get("version.version");
+					$url .= "?v=" . $this->configuration->get("version.version");
 				}
 			}
 
@@ -92,8 +107,8 @@ namespace Core {
 		* @return void
 		*/
 		private function addAssets() : void {
-			if(!empty($this->theme->get("javascript"))) {
-				foreach($this->theme->get("javascript") as $javascript) {
+			if(!empty($this->configuration->get("javascript"))) {
+				foreach($this->configuration->get("javascript") as $javascript) {
 					if(filter_var($javascript, FILTER_VALIDATE_URL)) {
 						$src = $javascript;
 					} else {
@@ -109,8 +124,8 @@ namespace Core {
 				}
 			}
 
-			if(!empty($this->theme->get("stylesheets"))) {
-				foreach($this->theme->get("stylesheets") as $stylesheet) {
+			if(!empty($this->configuration->get("stylesheets"))) {
+				foreach($this->configuration->get("stylesheets") as $stylesheet) {
 					if(filter_var($stylesheet, FILTER_VALIDATE_URL)) {
 						$src = $stylesheet;
 					} else {
