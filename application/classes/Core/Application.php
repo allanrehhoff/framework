@@ -45,12 +45,12 @@ namespace Core {
 
 			$this->configuration = new Configuration($configurationFile);
 
-			// \Registry::set(new \Database\Connection(
-			// 	$this->configuration->get("database.host"),
-			// 	$this->configuration->get("database.username"),
-			// 	$this->configuration->get("database.password"),
-			// 	$this->configuration->get("database.name")
-			// ));
+			\Registry::set(new \Database\Connection(
+				$this->configuration->get("database.host"),
+				$this->configuration->get("database.username"),
+				$this->configuration->get("database.password"),
+				$this->configuration->get("database.name")
+			));
 
 			if(CLI === false) {
 				$route = $args["route"] ?? $this->configuration->get("default_route");
