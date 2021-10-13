@@ -5,13 +5,13 @@
 	*/
 	final class Registry {
 		/**
-		* Stores the data objects.
+		* @var array Stores the data objects.
 		*/
 		private static $data = [];
 
 		/**
 		* Get an object by it's class name, namespaces included.
-		* @return (object) on success, null if the object is nowhere to be found
+		* @return object on success, null if the object is nowhere to be found
 		*/
 		public static function get(string $key) {
 			return (isset(self::$data[$key]) ? self::$data[$key] : NULL);
@@ -19,7 +19,7 @@
 
 		/**
 		* Stores a given object by it's class name, namespaces included
-		* @return (object) The instance just stored. 
+		* @return object The instance just stored. 
 		*/
 		public static function set($class) {
 			$key = get_class($class);

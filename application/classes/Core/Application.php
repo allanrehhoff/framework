@@ -16,24 +16,19 @@ namespace Core {
 	*/
 	final class Application {
 		/**
-		* @var Current working directory, in which the application resides.
+		* @var string Current working directory, in which the application resides.
 		*/
 		private $app;
 
 		/**
-		* @var arguments provided through URI parts
+		* @var array Arguments provided through URI parts
 		*/
 		private $args;
 
 		/**
-		* @var Holds the Application-wide configuration object.
+		* @var \Core\Configuration Holds the Application-wide configuration object.
 		*/
 		private $iConfiguration;
-
-		/**
-		* @var Controller to be dispatched.
-		*/
-		private $controller;
 
 		/**
 		* Parse the current route and set caching as needed.
@@ -43,7 +38,7 @@ namespace Core {
 
 			$configurationFile = STORAGE . "/config/application.json";
 
-			$this->configuration = new Configuration($configurationFile);
+			$this->iConfiguration = new Configuration($configurationFile);
 
 			\Registry::set(new \Database\Connection(
 				$this->iConfiguration->get("database.host"),
@@ -64,7 +59,7 @@ namespace Core {
 		* Get an argument from the url. ommit $argIndex to get all arguments passed with the request.
 		* This is set to a string because if the variable passed to this function 
 		* is null it would be easier to debug with a ull rather than getting the whole array.
-		* @param (int) $index the index or the url arg.
+		* @param int $index the index or the url arg.
 		* @return null|string, or null on failure.
 		*/
 		public function arg(int $index = -1) : ?string {
@@ -102,7 +97,7 @@ namespace Core {
 		/**
 		* Get path to the specified controller file. Ommit the .php extension
 		* @todo Cut .php from the $ctrl param, if provided. (Find out if I can use basename()'s second argument)
-		* @param (string) $controller name of the controller file.
+		* @param string $controller name of the controller file.
 		* @return string or null on failure
 		*/
 		public function getControllerPath(string $controller = null) : ?string {
@@ -119,8 +114,8 @@ namespace Core {
 
 		/**
 		* Executes a given controller by name.
-		* @param (string) $base The base name of the controller, alias the class name.
-		* @return (object) Controller - the dispatched controller that has just been executed.
+		* @param string $base The base name of the controller, alias the class name.
+		* @return Controller - The dispatched controller that has just been executed.
 		*/
 		public function executeController(string $base) : \Controller {
 			$iControllerName = new ControllerName($base);
@@ -153,7 +148,7 @@ namespace Core {
 		/**
 		* Dispatches a controller, based upon the requeted path.
 		* Serves a NotfoundController if it doesn't exists
-		* @return Instance of extended Controller
+		* @return Controller Instance of extended Controller
 		*/
 		public function run() : \Controller {
 			return $this->executeController($this->arg(0));

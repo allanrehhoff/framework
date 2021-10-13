@@ -3,8 +3,7 @@
 		/**
 		* Removes any need for having a hardcoded basepath in some obscure place
 		* "cough"wordpress"cough"
-		* @param (string) $url Path to element of which to create a URI.
-		* @author Allan Thue Rehhoff
+		* @param string $url Path to element of which to create a URI.
 		* @return string
 		*/
 		public static function fromUri(string $uri = '') : string {
@@ -19,8 +18,8 @@
 
 		/**
 		* Perform a redirect with a X-Redirect-By header
-		* @param (string) $location Location of the redirect
-		* @param (string) $xRedirectBy Human readable indidcator of who performed this redirect
+		* @param string $location Location of the redirect
+		* @param string $xRedirectBy Human readable indidcator of who performed this redirect
 		* @return void
 		*/
 		public static function redirect(string $location, string $xRedirectBy) : void {

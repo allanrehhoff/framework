@@ -9,12 +9,12 @@ namespace Core {
 	*/
 	class Theme {
 		/**
-		* @var Holds the current theme name
+		* @var string Holds the current theme name
 		*/
 		private $name;
 
 		/**
-		* @var Holds the theme configuration object.
+		* @var \Core\Configuration Holds the theme configuration object.
 		*/
 		private $iConfiguration;
 
@@ -37,7 +37,7 @@ namespace Core {
 
 		/**
 		 * Returns the configuration object associated with the application
-		 * @return Configuration - application-wide configuration
+		 * @return \Core\Configuration - application-wide configuration
 		 */
 		public function getConfiguration() : Configuration {
 			return $this->iConfiguration;
@@ -60,8 +60,7 @@ namespace Core {
 		/**
 		* Removes any need for having a hardcoded basepath in some obscure place
 		* "cough"wordpress"cough"
-		* @param (string) $url Path to element of which to create a URI.
-		* @author Allan Thue Rehhoff
+		* @param string $url Path to element of which to create a URI.
 		* @return string
 		*/
 		public function getDirectoryUri(string $file = '/') : string {
@@ -83,7 +82,7 @@ namespace Core {
 
 		/**
 		* Maybe add version number to asset urls
-		* @param (string) $url Url to return with version number
+		* @param string $url Url to return with version number
 		* @return string
 		*/
 		private function maybeAddVersionNumber(string $url) : string {

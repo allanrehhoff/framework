@@ -3,11 +3,12 @@ v5.0.0
 - **This release is backwards incompatible.**  
 - New file structure to enforce configuration files outside of the application directory.  
 - Removed Core\Configuration from the registry object, moved to Application::getConfiguration() and Theme::getConfiguration().  
-- Switchedd to .jsonc configuration file extension, to support comments in config files.  
+- Switched to .jsonc configuration file extension, to support comments in configuration files.  
 - Updated documentation.  
 - Added more usage examples to database class documentation.  
 - Completely removed support for i18n.  
 - Renamed properties that are an instance of an object to be prefixed with an i. (lowercase C# style)  
+- Updated dockblocks to be more unified.  
 > *NOTE:* There's no one-size-fits-all solution to i18n, and all systems I've made so far with this framework I've had to make major alterations to the default implementation.  
 
 v4.4.0

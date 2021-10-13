@@ -5,8 +5,15 @@ namespace Core {
 	* @author Allan Thue Rehhoff
 	*/
 	class Configuration {
-		private $parsedConfig, $configurationFile;
-		public $error = '';
+		/**
+		 * @var \stdClass The resulting configuration object after being successfully parsed.
+		 */
+		private $parsedConfig;
+
+		/**
+		 * @var string Path to the configuration file being parsed.
+		 */
+		private $configurationFile;
 		
 		/**
 		* The constructor starts parsing of the configuration file.
@@ -19,7 +26,7 @@ namespace Core {
 
 		/**
 		* The actual parsing.
-		* @throws ConfigurationParserException
+		* @throws \Core\ConfigurationParserException
 		* @return void
 		*/
 		private function parse(string $configurationFile) : void {
@@ -71,9 +78,9 @@ namespace Core {
 		* Gets a single configuration value.
 		* If no configuration setting name is provided, the whole configuration object will be returned.
 		* Sub-values can be accessed using a dot syntax.
-		* @param (string) $conf The name of the configuration to get value from.
-		* @return mixed, null on failure.
-		* @throws ConfigurationParserException
+		* @param string $conf The name of the configuration to get value from.
+		* @return mixed null on failure.
+		* @throws \Core\ConfigurationParserException
 		*/
 		public function get($conf = null) {
 			if($conf === null) {
@@ -99,8 +106,8 @@ namespace Core {
 
 		/**
 		* Remove a configuration value
-		* @param (string) $conf Key of the setting to delete.
-		* @throws ConfigurationParserException
+		* @param string $conf Key of the setting to delete.
+		* @throws \Core\ConfigurationParserException
 		* @return self
 		*/
 		public function delete(string $conf) : Configuration {
@@ -121,7 +128,7 @@ namespace Core {
 
 		/**
 		* Alias for ConfigurationParser::delete()
-		* @return value of onfigurationParser::delete()
+		* @return mixed value of onfigurationParser::delete()
 		*/
 		public function remove(string $conf) : Configuration {
 			return $this->delete($conf);
@@ -157,7 +164,7 @@ namespace Core {
 		/**
 		* I have no idea how this reacts if $user->does->this = 'stupid';
 		* But doing so is discouraged, and at some point I might introduce Exceptions here.
-		* @return value of ConfigurationParser::set();
+		* @return mixed value of ConfigurationParser::set();
 		*/
 		public function __set($name, $value) {
 			return $this->set($name, $value);

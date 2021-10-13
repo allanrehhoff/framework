@@ -2,12 +2,12 @@
 namespace Core {   
 	class ControllerName {
 		/**
-		* @var The string to be used as method name
+		* @var string The string to be used as method name
 		*/
 		private $string = '';
 
 		/**
-		* @var Holds the sanitized method name.
+		* @var string Holds the sanitized method name.
 		*/
 		private $sanitizedControllerName = '';
 

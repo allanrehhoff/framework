@@ -2,12 +2,12 @@
 namespace Core {   
 	class MethodName {
 		/**
-		* @var The string to be used as method name
+		* @var string The string to be used as method name
 		*/
 		private $string = '';
 
 		/**
-		* @var Holds the sanitized method name.
+		* @var string Holds the sanitized method name.
 		*/
 		private $sanitizedMethodName = '';
 
@@ -17,7 +17,7 @@ namespace Core {
 		const DEFAULT = "index";
 
 		/**
-		* @param (string) Takes a single argument as a string, this will be the method name to use.
+		* @param string Takes a single argument as a string, this will be the method name to use.
 		* @return void
 		*/
 		public function __construct(string $string) {

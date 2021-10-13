@@ -16,8 +16,8 @@
 
 		/**
 		* Pretty print almost any variable in a human readable format.
-		* @param (mixed) $stuff A variable to debug
-		* @param (boolean) $exit whether to exit the PHP process after printing debug information.
+		* @param mixed $stuff A variable to debug
+		* @param boolean $exit whether to exit the PHP process after printing debug information.
 		* @return void
 		*/
 		public static function pre($stuff, $exit = false) : void {
