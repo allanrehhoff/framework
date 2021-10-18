@@ -25,7 +25,7 @@ namespace Core {
 		public function __construct(string $themename) {
 			$this->name = $themename;
 
-			$configurationFile = STORAGE . "/config/" . $this->name . ".theme.json";
+			$configurationFile = STORAGE . "/config/" . $this->name . ".theme.jsonc";
 			$this->iConfiguration = (new Configuration($configurationFile));
 
 			if($this->iConfiguration->get("version.version") == "@version") {

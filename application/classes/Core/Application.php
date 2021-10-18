@@ -36,7 +36,7 @@ namespace Core {
 		public function __construct(array $args) {
 			$this->app = APP;
 
-			$configurationFile = STORAGE . "/config/application.json";
+			$configurationFile = STORAGE . "/config/application.jsonc";
 
 			$this->iConfiguration = new Configuration($configurationFile);
 

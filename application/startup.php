@@ -82,7 +82,7 @@
 		}
 
 		$error = $errstr . ' in file ' . $errfile . ' on line ' . $errline;
-		throw new ErrorException($error, $errno);
+		throw new ErrorException($error, $errno, E_ERROR, $errfile, $errline);
 	});
 
 	// Autoloader
