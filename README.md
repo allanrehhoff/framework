@@ -58,13 +58,14 @@ Controllers may also set child controllers to be executed once the parent contro
 <?php
 	class AnimalController extends Controller {
 		public function index() {
-			$this->children["Tiger"];
+			$this->children[] = "TigerController";
 		}
 	}
 ```
 Will result in `TigerController` being invoked as if it was a normal controller, AFTER `AnimalController`
 
-Children controllers will also be able to override any data set by the parent controller.
+Children controllers will be able to set or modify any data set by the parent controller.  
+But dhildren controllers cannot override parent controllers view file.  
 
 Setting a different view, will automatically add the new view to children controllers, to ensure that the controller for said view is executed.
 

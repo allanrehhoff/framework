@@ -2,7 +2,7 @@
 	/**
 	* Central class for handling javascripts and stylesheets to be rendered.
 	*/
-	class Document {
+	class Assets {
 		private $stylesheets = [];
 		private $javascript = [];
 		protected $title = '';
@@ -14,9 +14,8 @@
 
 		/**
 		* Add a stylesheet to be linked.
-		* @return voidDocument
-		* @param (string) $style Valid path to the stylesheet. Watch out for casing and whitespaces when using Document::getStylesheets();
-		* @param (string) $media Media query this stylesheet should apply to.
+		* @param string $style Valid path to the stylesheet. Watch out for casing and whitespaces when using Document::getStylesheets();
+		* @param string $media Media query this stylesheet should apply to.
 		* @return void
 		*/
 		public function addStylesheet($style, $media = "all") {
@@ -25,8 +24,8 @@
 
 		/**
 		* Add a javascript file to be rendered.
-		* @param (string) $script Valid path to the javascript file.
-		* @param (string) $region Region of the DOM where this javascript should be rendered.
+		* @param string $script Valid path to the javascript file.
+		* @param string $region Region of the DOM where this javascript should be rendered.
 		* @return void
 		*/
 		public function addJavascript($script, $region = "footer") {
@@ -44,7 +43,7 @@
 
 		/**
 		* Get current javascript files to be rendered.
-		* @param (string) $region Only return javascript files belonging to this region.
+		* @param string $region Only return javascript files belonging to this region.
 		* @return array
 		*/
 		public function getJavascript($region = "footer") {

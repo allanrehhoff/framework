@@ -69,7 +69,7 @@ namespace Core {
 			$path = rtrim(dirname($_SERVER["PHP_SELF"]), "/\\");
 			$baseurl = $protocol.$host.$path;
 
-			return $baseurl."/application/themes/".$this->getName()."/".ltrim($file, '/');
+			return $baseurl."/themes/".$this->getName()."/".ltrim($file, '/');
 		}
 
 		/**
@@ -99,10 +99,10 @@ namespace Core {
 		}
 
 		/**
-		* Adds configured theme assets to the Document class
+		* Adds configured theme assets to the Assets class
 		* If theme assets appears to be an url, they'll be used as-is,
 		* otherwise files are linked absolutely to the theme.
-		* @uses \Document
+		* @uses \Assets
 		* @return void
 		*/
 		private function addAssets() : void {
@@ -119,7 +119,7 @@ namespace Core {
 
 					$src = $this->maybeAddVersionNumber($src);
 
-					Registry::get("Document")->addJavascript($src);
+					Registry::get("Assets")->addJavascript($src);
 				}
 			}
 
@@ -136,7 +136,7 @@ namespace Core {
 
 					$src = $this->maybeAddVersionNumber($src);
 
-					Registry::get("Document")->addStylesheet($src);
+					Registry::get("Assets")->addStylesheet($src);
 				}
 			}
 		}

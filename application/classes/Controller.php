@@ -28,10 +28,10 @@
 		/**
 		* @var string Path to the current view that should be displayed.
 		*/
-		protected $view;
+		protected $view = '';
 
 		/**
-		* @var array $_GET, $_POST, $_FILES and $_COOKIE merged together.
+		* @var object $_GET, $_POST, $_FILES and $_COOKIE merged together.
 		*/
 		protected $request;
 
@@ -77,41 +77,37 @@
 			$this->iDatabase 	 = Registry::get("Database\Connection");
 
 			$this->iConfiguration = $this->iApplication->getConfiguration();
-			$this->view 		  = $this->iApplication->arg(0);
+			// $this->view 		  = $this->iApplication->arg(0);
 
 			$this->setTitle(array_slice($this->iApplication->getArgs(), -1)[0]);
 
 			if(CLI === false) {
-				$this->request = [
+				$this->request = (object) [
 					"get" => $_GET,
 					"post" => $_POST,
 					"files" => $_FILES,
 					"cookie" => $_COOKIE
 				];
 
-				$this->iDocument = Registry::set(new \Document);
+				$this->iAssets = Registry::set(new \Assets);
 				$this->iTheme 	 = Registry::set(new \Core\Theme($this->iConfiguration->get("theme")));
+
+				$this->data["header"] = $this->getView("header");
+				$this->data["footer"] = $this->getView("footer");
+		
+				$this->data["current"] = $this->iApplication->arg(0);		
 			}
 		}
-
+		
 		/**
-		* Contains accessible theme variables.
-		* @uses \Document
-		* @return void
-		*/
+		 * Contains accessible theme variables.
+		 * @uses \Document
+		 * @return void
+		 */
 		final public function finalize() : void {
-			$this->data["header"] = $this->getView("header");
-			$this->data["footer"] = $this->getView("footer");
-
-			$this->data["current"] = $this->iApplication->arg(0);
-
-			$this->data["stylesheets"] = $this->iDocument->getStylesheets();
-			$this->data["javascript"]  = $this->iDocument->getJavascript("footer");
-
-			foreach($this->children as $child) {
-				$iController = $this->iApplication->executeController($child);
-				$this->data = array_merge($this->data, $iController->getData());
-			}
+			// These are put here, to allow controller methods to add/overwrite assets
+			$this->data["stylesheets"] = $this->iAssets->getStylesheets();
+			$this->data["javascript"]  = $this->iAssets->getJavascript("footer");
 		}
 
 		/**
@@ -151,10 +147,6 @@
 
 			$view = $this->iTheme->getTemplatePath($template.".tpl.php");
 
-			if(is_file($view) === false) {
-				throw new Exception("View template file '".$template.".tpl.php' not found in theme.");
-			}
-
 			return $view;
 		}
 
@@ -171,11 +163,28 @@
 		* @param string name of the view to use, without .tpl.php extensions.
 		* @return bool
 		*/
-		final protected function setView(string $view) : void {
+		final public function setView(string $view) : void {
 			$this->view = $view;
 
-			//if($this->iApplication->getControllerPath($view) !== null) {
+			if($this->iApplication->getControllerPath($view) !== null) {
 				$this->children[] = $view;
-			//}
+			}
+		}
+
+		/**
+		 * Get names of children controllers
+		 * @return array
+		 */
+		public function getChildren() : array {
+			return $this->children;
+		}
+
+		/**
+		 * Add data to current controller
+		 * @param array $data Array of data to add to the stack
+		 * @return void
+		 */
+		public function adddData(array $data) {
+			$this->data = array_merge($this->data, $data);
 		}
 	}

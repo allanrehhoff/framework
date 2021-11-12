@@ -100,34 +100,23 @@ namespace Core {
 		* @param string $controller name of the controller file.
 		* @return string or null on failure
 		*/
-		public function getControllerPath(string $controller = null) : ?string {
-			if($controller === null) {
-				$controller = $this->arg(0);
-			}
-
-			if(is_file($this->getApplicationPath()."/application/controllers/".basename($controller).".php")) {
-				return $this->getApplicationPath()."/application/controllers/".basename($controller).".php";
-			} else {
-				return null;
-			}
+		public function getControllerPath(string $controller) : ?string {
+			return $this->getApplicationPath()."/controllers/".basename($controller).".php";
 		}
 
 		/**
 		* Executes a given controller by name.
-		* @param string $base The base name of the controller, alias the class name.
+		* @param string $controller The controller name, alias the class name.
 		* @return Controller - The dispatched controller that has just been executed.
 		*/
-		public function executeController(string $base) : \Controller {
-			$iControllerName = new ControllerName($base);
-			$controller = $iControllerName->getSanitiedControllerName();
-
-			$iReflector = new ReflectionClass($controller);
+		public function executeController(string $controllerClass) : \Controller {
+			$iReflector = new ReflectionClass($controllerClass);
 
 			if($iReflector->isSubclassOf("Controller") !== true) {
-				throw new Exception($controller." must derive from \Controller 'extends \Controller'.");
+				throw new Exception($controllerClass." must derive from \Controller 'extends \Controller'.");
 			}
 
-			$iController = new $controller;
+			$iController = new $controllerClass;
 
 			$iMethodName = '';
 			if($this->arg(1) !== null) {
@@ -142,6 +131,11 @@ namespace Core {
 			$iController->$iMethodName();
 			$iController->finalize();
 
+			foreach($iController->getChildren() as $childControllerName) {
+				$iController2 = $this->executeController($childControllerName);
+				$iController->addData($iController2->getData());
+			}
+
 			return $iController;
 		}
 
@@ -151,7 +145,18 @@ namespace Core {
 		* @return Controller Instance of extended Controller
 		*/
 		public function run() : \Controller {
-			return $this->executeController($this->arg(0));
+			$controllerBase = $this->arg(0);
+
+			$iControllerName = new ControllerName($controllerBase);
+			$controllerName = $iControllerName->getSanitizedControllerName();
+
+			if(file_exists($this->getControllerPath($controllerName)) === true) {
+				$controllerClass = $iControllerName->getSanitizedControllerClass();
+			} else {
+				$controllerClass  = "NotfoundController";
+			}
+
+			return $this->executeController($controllerClass);
 		}
 	}
 }

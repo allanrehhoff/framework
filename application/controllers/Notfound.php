@@ -13,5 +13,7 @@
 			header("HTTP/1.0 404 Not Found");
 
 			$this->setTitle("Not found");
+
+			$this->setView("notfound");
 		}
 	}

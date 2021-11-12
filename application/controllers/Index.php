@@ -7,5 +7,7 @@
 		public function index() {
 			$this->setTitle("Frontpage");
 			$this->data["intro"] = "A sample variable.";
+
+			$this->setView("index");
 		}
 	}
