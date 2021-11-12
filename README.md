@@ -1,4 +1,4 @@
-# Introduction (Version 5)
+# Custom PHP Framework - Introduction (Version 5)
 This is not what you'd typically associate with a fully functional MVC framework, there's no "Models" directory, instead "entities" are used, and when needed regular PHP classes. More on that later. 
 The intention for this is to prevent the developer from writing complete spaghetti, while being lightweight and portable.  
 
@@ -12,6 +12,11 @@ In short, all this does is serve as a kickstart to get a readable and stable cod
 
 ## Application Directory
 Because configuration files should not reside in the same directory as the application root, you must configure your server to set the **application/** as it's **DocumentRoot**.  
+
+## Configuration
+The directory **storage/config/application.jsonc** file holds all application-wide configurations, such as database credentials, and other settings required by your application.  
+
+In general the **storage/** directory should be configured to store all non-code files.  
 
 ## Controller & Methods
 If you're familiar with MVC frameworks you might already know the url-to-controller concept.  
@@ -84,7 +89,7 @@ Each theme should contain at least the following files.
 - footer.tpl.php (Required)  
 - (default-route).tpl.php (Required) (default-route indicates a filename matching the configured default route.)  
 - notfound.tpl.php (Required)  
-- THEMENAME.theme.jsonc (Required) (This is the per-theme configurations)
+- THEMENAME.theme.jsonc (Required) (This is the per-theme configurations, this file should be located in the config/ directory)
 
 Theme configuration files must be located in the **storage/config directory**  
 
@@ -295,11 +300,11 @@ Advanced filters are also suported in where clauses.
 \Registry::get("Database\Connection")->select("animals", ["name" => NULL]);
 ```
 
-## The Document class
+## The Assets class
 In the DOM namespace you'll find the Document class, this can be used to add stylesheets and javscript to the page.  
 Do either of the following to achieve this.  
-**\DOM\Document::addStylesheet();**, **\DOM\Document::addJavascript();** methods.  
+**\Assets::addStylesheet();**, **\Assets::addJavascript();** methods.  
 ressources are rendered in the same order they are added  
   
-If you desire to add custom media stylesheets make use of the second parameter **$media** in **Document::addStylesheet();**  
-Same goes for the **Document::addJavascript();** method for other regions than the footer.  
+If you desire to add custom media stylesheets make use of the second parameter **$media** in **\Assets::addStylesheet();**  
+Same goes for the **\Assets::addJavascript();** method for other regions than the footer.  
