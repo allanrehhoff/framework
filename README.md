@@ -16,6 +16,8 @@ Because configuration files should not reside in the same directory as the appli
 ## Configuration
 The directory **storage/config/application.jsonc** file holds all application-wide configurations, such as database credentials, and other settings required by your application.  
 
+At least one theme configuration file should be present, **default.theme.jsonc** is bundled with this package.  
+
 In general the **storage/** directory should be configured to store all non-code files.  
 
 ## Controller & Methods
@@ -111,7 +113,7 @@ And then in your template files
 require $sidebar;
 ```
 
-Theme assets should be configured in the **THEMENAME.theme.json** file, and paths must be relative to the theme directory, or an absolute url to the asset.  
+Theme assets should be configured in the **THEMENAME.theme.jsonc** file, and paths must reside in the **storage/config/** directory.  
 
 > *NOTE:*  
 > header.tpl.php, footer.data.php, and any other view files you plan to include or require in another view file cannot have a controller file, to invoke additional controllers, please refer to the Controllers section.  
