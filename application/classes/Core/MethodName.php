@@ -2,9 +2,9 @@
 namespace Core {   
 	class MethodName {
 		/**
-		* @var string The string to be used as method name
+		* @const Default method name to be used, if a given method doesn't exist on a class.
 		*/
-		private $string = '';
+		const DEFAULT = "index";
 
 		/**
 		* @var string Holds the sanitized method name.
@@ -12,25 +12,10 @@ namespace Core {
 		private $sanitizedMethodName = '';
 
 		/**
-		* @const Default method name to be used, if a given method doesn't exist on a class.
-		*/
-		const DEFAULT = "index";
-
-		/**
 		* @param string Takes a single argument as a string, this will be the method name to use.
 		* @return void
 		*/
 		public function __construct(string $string) {
-			$this->method = $string;
-			$this->sanitizeToValidMethodName($this->method);
-		}
-
-		/**
-		* Sanitizes the given string to a PHP5 compatible camelCase method/function name.
-		* @param (string) The string to sanitize.
-		* @return string the sanitized method name
-		*/
-		private function sanitizeToValidMethodName(string $string) : string {
 			preg_match_all('/\w+/', $string, $temp);
 
 			$pregLastError = preg_last_error();
@@ -54,7 +39,7 @@ namespace Core {
 				$temp[$key] = ucfirst(strtolower($word)); 
 			}
 
-			return $this->sanitizedMethodName = lcfirst(implode('', $temp));
+			$this->sanitizedMethodName = lcfirst(implode('', $temp));
 		}
 
 		/**

@@ -106,30 +106,33 @@ namespace Core {
 
 		/**
 		* Executes a given controller by name.
+		* Reroutes to NotFouncController if a \Core\NotFoundException is thrown
+		* within the controller or any of it's child controllers.
 		* @param string $controller The controller name, alias the class name.
 		* @return Controller - The dispatched controller that has just been executed.
 		*/
-		public function executeController(string $controllerClass) : \Controller {
+		public function executeController(string $controllerClass, ?string $methodName = MethodName::DEFAULT) : \Controller {
 			$iReflector = new ReflectionClass($controllerClass);
 
 			if($iReflector->isSubclassOf("Controller") !== true) {
 				throw new Exception($controllerClass." must derive from \Controller 'extends \Controller'.");
 			}
 
-			$iController = new $controllerClass;
+			$methodName = (string) new MethodName($methodName);
 
-			$iMethodName = '';
-			if($this->arg(1) !== null) {
-				$iMethodName = (string) new MethodName($this->arg(1));
+			if($iReflector->hasMethod($methodName) !== true) {
+				$methodName = MethodName::DEFAULT;
 			}
 
-			if($iReflector->hasMethod($iMethodName) !== true) {
-				$iMethodName = MethodName::DEFAULT;
-			}
+			try {
+				$iController = new $controllerClass;
 
-			$iController->initialize();
-			$iController->$iMethodName();
-			$iController->finalize();
+				$iController->initialize();
+				$iController->$methodName();
+				$iController->finalize();
+			} catch(NotFoundException $e) {
+				$iController = $this->executeController("NotFoundController");
+			}
 
 			foreach($iController->getChildren() as $childControllerName) {
 				$iController2 = $this->executeController($childControllerName);
@@ -147,16 +150,13 @@ namespace Core {
 		public function run() : \Controller {
 			$controllerBase = $this->arg(0);
 
-			$iControllerName = new ControllerName($controllerBase);
-			$controllerName = $iControllerName->getSanitizedControllerName();
+			$controllerClass = (string) new ControllerName($controllerBase);
 
-			if(file_exists($this->getControllerPath($controllerName)) === true) {
-				$controllerClass = $iControllerName->getSanitizedControllerClass();
-			} else {
-				$controllerClass  = "NotfoundController";
-			}
+			$arguments = [$controllerClass];
 
-			return $this->executeController($controllerClass);
+			if($this->arg(1) !== null) $arguments[] = $this->arg(1);
+
+			return $this->executeController(...$arguments);
 		}
 	}
 }

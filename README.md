@@ -15,21 +15,21 @@ Because configuration files should not reside in the same directory as the appli
 
 ## Controller & Methods
 If you're familiar with MVC frameworks you might already know the url-to-controller concept.  
-Given the URL **yourdomain.tld/animal** will map to a controller as such **AnimalController.php** in the application/controllers/ directory.  
+Given the URL **yourdomain.tld/animal** will map to a controller file **AnimalController.php** in the application/controllers/ directory.  
 
-Your controllers must extend upon **Controller** to have all the neccessary functions available.
+Your controllers must extend upon **Controller** to have all the neccessary methods and properties available.  
 
 Additionally the method to be called on your controller can be set by the next argument in the request URI, alias arg(1).  
 
 **yourdomain.tld/animal/tiger** will trigger **AnimalController()->tiger();** to be called.  
 
-arg(1) will be sanitized to a PHP5 compatible method name in camelCase format, this means that dashes, numbers, everything that's not a word will be stripped
+arg(1) will be sanitized to a PHP5 compatible method name in camelCase format, this means that dashes, numbers, everything that's not a valid letter will be stripped
 and the upcoming word will be uppercased, except the first.  
 
 By design there's no way for PHP to validate that you (namely the developer),
 define your methods in camelCaseFormat, so please! for you and the next developers sake, do this, and be strict about it. 
 
-Any other parts beyond arg(1) ARE NOT passed directly to the controller, these are for you to pick up using the applications arg() method.  
+Any other parts beyond arg(1) ARE NOT passed directly to the controller or any methods, these are for you to pick up using the applications arg() method.  
 The **\Core\Application()->arg();** method starts from index 0, whereas the first two indices are already used by the core to determine the route.  
 
 ```php
@@ -65,20 +65,11 @@ Controllers may also set child controllers to be executed once the parent contro
 Will result in `TigerController` being invoked as if it was a normal controller, AFTER `AnimalController`
 
 Children controllers will be able to set or modify any data set by the parent controller.  
-But dhildren controllers cannot override parent controllers view file.  
+However child controllers cannot override parent controllers view file through the `Controller::setView();` method.  
 
-Setting a different view, will automatically add the new view to children controllers, to ensure that the controller for said view is executed.
+Is such effect desired, use the data variables, and have your children controllers modify a given data variable, and set that as the view in the end.  
 
-```php
-<?php
-	class AnimalController extends Controller {
-		public function index() {
-			$this->setView("predator");
-		}
-	}
-```
-
-Will result in `PredatorController` being added to the end of the children queue.  
+In any controllers of the heirachy you may throw a \Core\NotFoundException to reroute the entire stack to `NotFoundController`
 
 > *NOTE:*  
 > The default method invoked is **index** this will happen if arg(1) is nowhere to be found in the given controller, or arg(1) is void.
@@ -190,7 +181,7 @@ Variables are parsed recursively, and therefore values from nested objects can a
 
 The core base_title setting only supports one wildcard %s use **(controller)->setTitle($title)** in your controller files to set a dynamic title.  
 
-Custom wildcards and variables aren't affected in other configuration values.
+Custom wildcards and variables aren't affected in other configuration values.  
 
 ## Autoloading classes
 Autoloading is a mechanism which requires class, interface and trait definitions (from here on, referenced as instances) on demand.  

@@ -77,7 +77,6 @@
 			$this->iDatabase 	 = Registry::get("Database\Connection");
 
 			$this->iConfiguration = $this->iApplication->getConfiguration();
-			// $this->view 		  = $this->iApplication->arg(0);
 
 			$this->setTitle(array_slice($this->iApplication->getArgs(), -1)[0]);
 
@@ -166,9 +165,9 @@
 		final public function setView(string $view) : void {
 			$this->view = $view;
 
-			if($this->iApplication->getControllerPath($view) !== null) {
-				$this->children[] = $view;
-			}
+			//if($this->iApplication->getControllerPath($view) !== null) {
+			//	$this->children[] = $view;
+			//}
 		}
 
 		/**

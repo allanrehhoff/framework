@@ -45,13 +45,14 @@
 		}
 
 		if(CLI) {
-			print "Uncaught Exception: ".get_class($exception).LF;
+			print "Uncaught ".get_class($exception) . ':'.LF;
 			print "Code: ".$exception->getCode().LF;
 			print "File: ".$exception->getFile().LF;
 			print "Line: ".$exception->getLine().LF;
 			print "Message: ".$exception->getMessage().LF;
 			print "Stacktrace: ".LF;
-			print TAB.implode(TAB, $stacktrace);
+			print TAB.implode(LF, $stacktrace);
+			exit(1);
 		} else {
 			while(ob_get_length()) ob_end_clean();
 
@@ -61,7 +62,7 @@
 			}
 
 			print "<div style=\"font-family: monospace; background-color: #f44336; border-color: #f32c1e; color:#FFF; padding: 15px 15px 15px 15px;\">
-					    <h1 style=\"margin:0px;\">Uncaught Exception: ".get_class($exception)."</h1>".BR."</h1>
+					    <h1 style=\"margin:0px;\">Uncaught ".get_class($exception).":</h1>".BR."</h1>
 						<strong>Code: </strong>".$exception->getCode().BR."
 						<strong>File: </strong>".$exception->getFile().BR."
 						<strong>Line: </strong>".$exception->getLine().BR."
@@ -90,6 +91,7 @@
 		$className = str_replace("\\", "/", $className);
 
 		$classFile = APP."/classes/".$className.".php";
+
 		if(!file_exists($classFile) && substr($className, -10) == "Controller") {
 			$classFile = APP."/controllers/".substr($className, 0, -10).".php";
 		}

@@ -16,27 +16,34 @@ namespace Core {
 		*/
 		private $sanitizedControllerClass = '';
 
+		/**
+		* @param string Takes a single argument as a string,
+		* 				this will sanitized to a valid controller class
+		* @return void
+		*/
 		public function __construct(string $string) {
 			$base = ucwords(preg_replace("/\W+/", ' ', strtolower($string)));
 			$parts = explode(' ', $base);
 			$parts = array_map("ucfirst", $parts);
 			$base = implode('', $parts);
 
-			$this->sanitizedControllerName = $base;
-
 			$this->sanitizedControllerClass = "\\".$base . 'Controller';
 		}
 
-		public function __toString() {
-			return $this->sanitizedControllerName;
-		}
-
-		public function getSanitizedControllerName() : string {
-			return $this->sanitizedControllerName;
-		}
-
+		/**
+		* Returns the sanitized controller class
+		* @return string
+		*/
 		public function getSanitizedControllerClass() : string {
 			return $this->sanitizedControllerClass;
+		}
+
+		/**
+		* Also returns the sanitized controller class
+		* @return string
+		*/
+		public function __toString() {
+			return $this->getSanitizedControllerClass();
 		}
 	}
 }
