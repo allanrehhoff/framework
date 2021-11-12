@@ -62,14 +62,16 @@ Controllers may also set child controllers to be executed once the parent contro
 		}
 	}
 ```
-Will result in `TigerController` being invoked as if it was a normal controller, AFTER `AnimalController`
+Will result in **TigerController** being invoked as if it was a normal controller, AFTER **AnimalController**
+
+A view must be by each controller, throught the **Controller::setView();**
 
 Children controllers will be able to set or modify any data set by the parent controller.  
-However child controllers cannot override parent controllers view file through the `Controller::setView();` method.  
+However child controllers cannot override parent controllers view file through the **Controller::setView();** method.  
 
 Is such effect desired, use the data variables, and have your children controllers modify a given data variable, and set that as the view in the end.  
 
-In any controllers of the heirachy you may throw a \Core\NotFoundException to reroute the entire stack to `NotFoundController`
+In any controllers of the heirachy you may throw a \Core\NotFoundException to reroute the entire stack to **NotFoundController**
 
 > *NOTE:*  
 > The default method invoked is **index** this will happen if arg(1) is nowhere to be found in the given controller, or arg(1) is void.

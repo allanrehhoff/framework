@@ -51,7 +51,7 @@
 		protected $iTheme;
 
 		/**
-		* @var array Child controllers to be executed when the main one finalizes.
+		* @var array Child controllers classes to be executed when the main one finalizes.
 		*/
 		protected $children = [];
 
@@ -164,10 +164,6 @@
 		*/
 		final public function setView(string $view) : void {
 			$this->view = $view;
-
-			//if($this->iApplication->getControllerPath($view) !== null) {
-			//	$this->children[] = $view;
-			//}
 		}
 
 		/**
@@ -183,7 +179,7 @@
 		 * @param array $data Array of data to add to the stack
 		 * @return void
 		 */
-		public function adddData(array $data) {
+		public function adddData(array $data) : void {
 			$this->data = array_merge($this->data, $data);
 		}
 	}

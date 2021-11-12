@@ -32,6 +32,7 @@ namespace Core {
 
 		/**
 		* Parse the current route and set caching as needed.
+		* @param array $args Application arguments, usually url-parts divided by /, or argv.
 		*/
 		public function __construct(array $args) {
 			$this->app = APP;
@@ -108,8 +109,9 @@ namespace Core {
 		* Executes a given controller by name.
 		* Reroutes to NotFouncController if a \Core\NotFoundException is thrown
 		* within the controller or any of it's child controllers.
+		* @throws Exception
 		* @param string $controller The controller name, alias the class name.
-		* @return Controller - The dispatched controller that has just been executed.
+		* @return Controller The dispatched controller that has just been executed.
 		*/
 		public function executeController(string $controllerClass, ?string $methodName = MethodName::DEFAULT) : \Controller {
 			$iReflector = new ReflectionClass($controllerClass);

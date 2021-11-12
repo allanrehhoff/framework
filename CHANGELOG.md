@@ -6,6 +6,11 @@ v5.0.0
 - Controllers must now set their own view files.  
 - New file structure to enforce configuration files outside of the application directory.  
 - Removed Core\Configuration from the registry object, moved to Application::getConfiguration() and Theme::getConfiguration().  
+- Throw \Core\NotFoundException to reroute controller stack to NotFoundController
+- Rewritten MethodName class.  
+- Rewritten ControllerName class.  
+- Updated database library to latest version.  
+- Updated application url routing.  
 - Switched to .jsonc configuration file extension, to support comments in configuration files.  
 - Updated documentation.  
 - Added more usage examples to database class documentation.  
