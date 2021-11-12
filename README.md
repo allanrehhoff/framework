@@ -101,7 +101,7 @@ By default the view to be displayed is the one found matching arg(0), for exampl
 You can add a new "partial" or "children" by adding it's path to the controllers data.
 ```php
 <?php
-$this->data["sidebar"] = $this->getViewPath("sidebar");
+$this->data["sidebar"] = $this->getView("sidebar");
 ```
 
 And then in your template files
