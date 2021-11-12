@@ -7,53 +7,53 @@
 	* @version 2.0
 	*/
 	namespace Database {
-		use PDO;
-		use Exception;
-		use PDDException;
+		use \PDO;
+		use \Exception;
+		use \PDDException;
 
 		class Connection {
 			/**
-			* @var (boolean) True if a transaction has started, false otherwise.
+			* @var boolea) True if a transaction has started, false otherwise.
 			*/
 			private $transactionStarted = false;
 
 			/**
-			*@var (object)  The singleton instance of the this class.
+			*@var object  The singleton instance of the this class.
 			*/
 			private static $singletonInstance;
 
 			/**
-			* @var Database handle
+			* @var PDO Database handle
 			*/
 			private $dbh;
 
 			/**
-			* @var (object) Holds the last prepared statement after execution.
+			* @var Database\Statement Holds the last prepared statement after execution.
 			*/
 			public $statement;
 
 			/**
-			* @var (int) Number of affected rows from last query
+			* @var int Number of affected rows from last query
 			*/
 			public $rowCount;
 
 			/**
-			* @var (int) Number of queries executed.
+			* @var int Number of queries executed.
 			*/
 			public $queryCount = 0;
 
 			/**
-			* @var (string) Last query attempted to be executed.
+			* @var string Last query attempted to be executed.
 			*/
 			public $lastQuery;
 
 			/**
 			* Initiate a new database connection through PDO.
-			* @param (string) $hostname Hostname to connect to
-			* @param (string) $username Username to use for authentication
-			* @param (string) $password Password to use for authentication
-			* @param (string) $database Name of the database to use
-			* @return (void)
+			* @param string $hostname Hostname to connect to
+			* @param string $username Username to use for authentication
+			* @param string $password Password to use for authentication
+			* @param string $database Name of the database to use
+			* @return void
 			* @author Allan Thue Rehhoff
 			* @since 1.0
 			*/
@@ -93,10 +93,10 @@
 
 			/**
 			* Does the actual connection
-			* @param (string) $hostname Hostname to connect to
-			* @param (string) $username Username to use for authentication
-			* @param (string) $password Password to use for authentication
-			* @param (string) $database Name of the database to use
+			* @param string $hostname Hostname to connect to
+			* @param string $username Username to use for authentication
+			* @param string $password Password to use for authentication
+			* @param string $database Name of the database to use
 			* @return (void)
 			* @since 3.0
 			*/
@@ -111,7 +111,7 @@
 
 			/**
 			* Closes the PDO connection and nullifies any statements
-			* @return (void)
+			* @return void
 			* @since 3.0
 			*/
 			public function close() {
@@ -121,7 +121,7 @@
 
 			/**
 			* Retrieve the latest initiated \Database\Connection instance.
-			* @return (object)
+			* @return object
 			* @author Allan Thue Rehhoff
 			* @since 1.0
 			*/
@@ -133,7 +133,7 @@
 			* Retrieve the connection instance used by the current \Database\Connection instance.
 			* You should rarely have a use for this though.
 			* @since 1.0
-			* @return (object)
+			* @return object
 			* @author Allan Thue Rehhoff
 			*/
 			public function getConnection() : Connection {
@@ -143,7 +143,7 @@
 			/**
 			* Turns off autocommit mode. Until changes made to the database are committed.
 			* @author Allan Thue Rehhoff
-			* @return (boolean)
+			* @return boolean
 			* @since 2.4
 			*/
 			public function beginTransaction() : bool {
@@ -154,7 +154,7 @@
 			* Helping wrapper function for PDO::beginTranstion();
 			* @see Database\Connection::beginTransaction();
 			* @author Allan Thue Rehhoff
-			* @return (boolean)
+			* @return boolean
 			* @since 1.3
 			*/
 			public function transaction() : bool {
@@ -165,7 +165,7 @@
 			* Commits a transaction, returning the database connection to autocommit mode.
 			* @author Allan Thue Rehhoff
 			* @throws PDOException
-			* @return (boolean)
+			* @return boolean
 			* @since 1.3
 			*/
 			public function commit() : bool {
@@ -180,7 +180,7 @@
 			* Rolls back the current transaction
 			* @author Allan Thue Rehhoff
 			* @throws PDOException
-			* @return (boolean)
+			* @return boolean
 			* @since 1.3
 			*/
 			public function rollback() : bool {
@@ -193,11 +193,11 @@
 
 			/**
 			* Wrapper around PDO::prepare(); to provide support for the IN keyword.
-			* @param (string) $sql The parameterized SQL string to query against the database
-			* @param (array) $driverOptions Arguments to pass along with the query
+			* @param string $sql The parameterized SQL string to query against the database
+			* @param array $driverOptions Arguments to pass along with the query
 			* @since 2.3
 			* @author Allan Thue Rehhoff
-			* @return Returns a prepared SQL statement, instance of Database\Statement
+			* @return Database\Statement Returns a prepared SQL statement, instance of Database\Statement
 			*/
 			public function prepare($statement, $driverOptions = []) {
 				if(!empty($this->filters)) {
@@ -223,11 +223,11 @@
 
 			/**
 			* Execute a parameterized SQL query.
-			* @param (string) $sql The parameterized SQL string to query against the database
-			* @param (array) $filters Arguments to pass along with the query.
-			* @param (int) $fetchMode Set fetch mode for the query performed. Must be one of PDO::FETCH_* default is PDO::FETCH_OBJECT
-			* @return (object) The prepared PDO statement after execution. Instance of Database\Connection
-			* @throws Exception
+			* @param string $sql The parameterized SQL string to query against the database
+			* @param array $filters Arguments to pass along with the query.
+			* @param int $fetchMode Set fetch mode for the query performed. Must be one of PDO::FETCH_* default is PDO::FETCH_OBJECT
+			* @return object The prepared PDO statement after execution. Instance of Database\Connection
+			* @throws PDOException
 			* @author Allan Thue Rehhoff
 			* @since 1.0
 			*/
@@ -240,7 +240,7 @@
 					$this->statement->setFetchMode($fetchMode);
 					$this->queryCount++;
 				} catch(PDOException $exception) {
-					throw new Exception($exception->getCode().": ".$exception->getMessage(), (int) $exception->getCode());
+					throw new PDOException($exception->getCode().": ".$exception->getMessage(), (int) $exception->getCode());
 				} finally {
 					$this->lastQuery = $sql;
 				}
@@ -273,9 +273,9 @@
 			/**
 			* Fetch a single row from the given criteria.
 			* Rows are not ordered, make sure your criteria matches the desired row.
-			* @param (string) $table Name of the table containing the row to be fetched
-			* @param (array) $criteria Criteria used to filter the rows.
-			* @return (mixed) Returns the first row in the result set, false upon failure.
+			* @param string $table Name of the table containing the row to be fetched
+			* @param array $criteria Criteria used to filter the rows.
+			* @return mixed Returns the first row in the result set, false upon failure.
 			* @author Allan Thue Rehhoff
 			* @since 1.0
 			*/
@@ -286,10 +286,10 @@
 
 			/**
 			* Fetch a cells value from the given criteria.
-			* @param (string) $table Name of the table containing the row to be fetched
-			* @param (string) $column Column name in $table where cell value will be returned
-			* @param (array) $criteria Criteria used to filter the rows.
-			* @return (mixed) Returns a single column from the next row of a result set or FALSE if there are no rows.
+			* @param string $table Name of the table containing the row to be fetched
+			* @param string $column Column name in $table where cell value will be returned
+			* @param array $criteria Criteria used to filter the rows.
+			* @return mixed Returns a single column from the next row of a result set or FALSE if there are no rows.
 			* @author Allan Thue Rehhoff
 			* @since 1.0
 			*/
@@ -308,10 +308,10 @@
 
 			/**
 			* Fetches a column of values from the given table.
-			* @param (string) $table Name of the table containing the rows to be fetched
-			* @param (string) $column Column name in $table where value should be returned from.
-			* @param (array) $criteria Criteria used to filter the rows.
-			* @return (mixed) Returns an array containing all the rows matching in the resultset,
+			* @param string $table Name of the table containing the rows to be fetched
+			* @param string $column Column name in $table where value should be returned from.
+			* @param array $criteria Criteria used to filter the rows.
+			* @return mixed Returns an array containing all the rows matching in the resultset,
 			* 				  An empty array is returned if there are zero results to fetch, or FALSE on failure.
 			* @author Allan Thue Rehhoff
 			* @since 2.4
@@ -323,9 +323,9 @@
 
 			/**
 			* Select rows based on the given criteria
-			* @param (string) $table Name of the table to query
-			* @param (array) $criteria column => value pairs to filter the query results
-			* @return (array)
+			* @param string $table Name of the table to query
+			* @param array $criteria column => value pairs to filter the query results
+			* @return array
 			* @author Allan Thue Rehhoff
 			* @since 1.0
 			*/
@@ -336,9 +336,9 @@
 
 			/**
 			* Inserts a row in the given table.
-			* @param (string) $table Name of the table to insert the row in
-			* @param (array) $variables Column => Value pairs to be inserted
-			* @return (int) The last inserted ID
+			* @param string $table Name of the table to insert the row in
+			* @param array $variables Column => Value pairs to be inserted
+			* @return int The last inserted ID
 			* @author Allan Thue Rehhoff
 			* @since 1.0
 			*/
@@ -351,9 +351,9 @@
 			/**
 			* Replaces a new row into the given table.
 			* Already existing rows with matching PRIMARY key or UNIQUE index are deleted and then re-inserted.
-			* @param (string) $table Name of the table to replace into
-			* @param (array) $variables Column => Value pairs to be inserted
-			* @return (int) The last inserted ID
+			* @param string $table Name of the table to replace into
+			* @param array $variables Column => Value pairs to be inserted
+			* @return int The last inserted ID
 			* @since 1.0
 			*/
 			public function replace(string $table, ?array $variables = null) : int {
@@ -364,10 +364,10 @@
 
 			/**
 			* Update rows in the given table depending on the criteria.
-			* @param (string) $table Name of the table to update rows in
-			* @param (array) $variables Column => Value pairs containg the new values for the row
-			* @param (array) $criteria Array of criterie for updating a row
-			* @return (int) Number of affected rows
+			* @param string $table Name of the table to update rows in
+			* @param array $variables Column => Value pairs containg the new values for the row
+			* @param array $criteria Array of criterie for updating a row
+			* @return int Number of affected rows
 			* @author Allan Thue Rehhoff
 			* @since 1.0
 			*/
@@ -382,10 +382,10 @@
 
 			/**
 			* Delete rows from the given table by criteria.
-			* @param (string) $table Table to delete rows from
-			* @param (array) $criteria Criteria for deletion
+			* @param string $table Table to delete rows from
+			* @param array $criteria Criteria for deletion
 			* @author Allan Thue Rehhoff
-			* @return (int) Number of rows affected.
+			* @return int Number of rows affected.
 			* @since 1.0
 			* @todo Return row count
 			*/
@@ -396,10 +396,10 @@
 
 			/**
 			* Internal function to insert or replace a row.
-			* @param (string) $type SQL operator to with the INTO can be either INSERT or REPLACE
-			* @param (string) $table Table to insert/replace the row in.
-			* @param (array) $variables Column => Value pairs to insert.
-			* @return (int) The last inserted ID
+			* @param string $type SQL operator to with the INTO can be either INSERT or REPLACE
+			* @param string $table Table to insert/replace the row in.
+			* @param array $variables Column => Value pairs to insert.
+			* @return int The last inserted ID
 			* @author Allan Thue Rehhoff
 			* @since 1.0
 			*/
@@ -413,10 +413,10 @@
 			/**
 			* Internal function to convert column=>value pairs into SQL.
 			* If a parameter value is an array, it will be treated as such, using the IN operator.
-			* @param (array) $array Array of arguments to parse (You sure yet that it's an array?)
-			* @param (string) $seperator String seperator to seperate the pairs with
-			* @param (string) $variablePrefix string to use for prefixing values in the SQL
-			* @return (string)
+			* @param array $array Array of arguments to parse (You sure yet that it's an array?)
+			* @param string $seperator String seperator to seperate the pairs with
+			* @param string $variablePrefix string to use for prefixing values in the SQL
+			* @return string
 			* @author Mikkel Jensen
 			* @author Allan Thue Rehhoff
 			* @since 1.0
@@ -444,9 +444,9 @@
 			* Debugging prepared statements can be severely painful, use this as you would with \Database\Connection::query(); to output the resulting SQL
 			* Replaces any parameter placeholders in a query with the corrosponding value that parameter.
 			* Assumes anonymous parameters from $params are are in the same order as specified in $query
-			* @param (string) $query A parameterized SQL query
-			* @param (array) $filter Parameters for $query
-			* @return (string) The interpolated query.
+			* @param string $query A parameterized SQL query
+			* @param array $filter Parameters for $query
+			* @return string The interpolated query.
 			* @author Allan Thue Rehhoff
 			* @since 2.4
 			*/
@@ -463,9 +463,9 @@
 			/**
 			* Wrapper function for debugging purposes
 			* @see Database\Connection::debugQuery()
-			* @param (string) $query A parameterized SQL query
-			* @param (array) $filters Parameters for $query
-			* @return (string)
+			* @param string $query A parameterized SQL query
+			* @param array $filters Parameters for $query
+			* @return string
 			* @author Allan Thue Rehhoff
 			* @since 1.1
 			*/
@@ -475,7 +475,7 @@
 
 			/**
 			* Get the last inserted ID
-			* @return (int) Returns the ID of the last inserted row or sequence value 
+			* @return int Returns the ID of the last inserted row or sequence value 
 			* @author Allan Thue Rehhoff
 			* @since 1.0
 			*/
