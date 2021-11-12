@@ -170,8 +170,8 @@ Examples:
 ```
 
 ```php
-	// The following would return Framework/1.0.0
-	Registry::get("Core\Configuration")->get("http.useragent");
+// The following would return Framework/1.0.0
+Registry::get("Core\Configuration")->get("http.useragent");
 ```
 
 Variables are parsed recursively, and therefore values from nested objects can also be used, using a dot syntax.
