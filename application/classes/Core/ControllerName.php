@@ -1,5 +1,11 @@
 <?php
-namespace Core {   
+namespace Core {
+	use \Exception;
+	use \ReflectionClass;
+
+	/**
+	 * Sanitizes and validates a controller class name is valid for use.
+	 */
 	class ControllerName {
 		/**
 		* @var string The string to be used as base
@@ -27,7 +33,13 @@ namespace Core {
 			$parts = array_map("ucfirst", $parts);
 			$base = implode('', $parts);
 
-			$this->sanitizedControllerClass = "\\".$base . 'Controller';
+			$controllerClass =  "\\".$base . 'Controller';
+
+			if(is_subclass_of($controllerClass, "Controller") !== true) {
+				throw new Exception($controllerClass." must derive from \Controller 'extends \Controller'.");
+			}
+
+			$this->sanitizedControllerClass = $controllerClass;
 		}
 
 		/**

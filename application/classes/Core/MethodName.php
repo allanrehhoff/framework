@@ -1,8 +1,12 @@
 <?php
-namespace Core {   
+namespace Core {
+
+	/**
+	 * Sanitizes a string to a valid callable method name
+	 */
 	class MethodName {
 		/**
-		* @const Default method name to be used, if a given method doesn't exist on a class.
+		* @var string Default method name to be used, if a given method doesn't exist on a class.
 		*/
 		const DEFAULT = "index";
 

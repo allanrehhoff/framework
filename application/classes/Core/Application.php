@@ -1,8 +1,6 @@
 <?php
 namespace Core {
-	use Exception;
 	use Registry;
-	use ReflectionClass;
 	
 	/**
 	* The main class for this application.
@@ -113,16 +111,11 @@ namespace Core {
 		* @param string $controller The controller name, alias the class name.
 		* @return Controller The dispatched controller that has just been executed.
 		*/
-		public function executeController(string $controllerClass, ?string $methodName = MethodName::DEFAULT) : \Controller {
-			$iReflector = new ReflectionClass($controllerClass);
+		public function executeController(string $controllerClass, string $methodName = MethodName::DEFAULT) : \Controller {
+			$controllerClass = (string) new ControllerName($controllerClass);
+			$methodName 	 = (string) new MethodName($methodName);
 
-			if($iReflector->isSubclassOf("Controller") !== true) {
-				throw new Exception($controllerClass." must derive from \Controller 'extends \Controller'.");
-			}
-
-			$methodName = (string) new MethodName($methodName);
-
-			if($iReflector->hasMethod($methodName) !== true) {
+			if(method_exists($controllerClass, $methodName) !== true) {
 				$methodName = MethodName::DEFAULT;
 			}
 
@@ -152,9 +145,7 @@ namespace Core {
 		public function run() : \Controller {
 			$controllerBase = $this->arg(0);
 
-			$controllerClass = (string) new ControllerName($controllerBase);
-
-			$arguments = [$controllerClass];
+			$arguments = [$controllerBase];
 
 			if($this->arg(1) !== null) $arguments[] = $this->arg(1);
 
