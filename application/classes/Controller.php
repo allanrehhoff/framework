@@ -176,10 +176,18 @@
 
 		/**
 		 * Add data to current controller
+		 * This method should not allow child controllers
+		 * to override parent controllers data,
+		 * if we did, the title data variable ends up being empty
+		 * due the to initialize(); method setting a default value
 		 * @param array $data Array of data to add to the stack
 		 * @return void
 		 */
-		public function adddData(array $data) : void {
-			$this->data = array_merge($this->data, $data);
+		final public function addData(array $data) : void {
+			foreach($data as $key => $val) {
+				if(!isset($this->data[$key])) {
+					$this->data[$key] = $val;
+				}
+			}
 		}
 	}

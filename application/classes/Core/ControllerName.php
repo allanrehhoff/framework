@@ -1,7 +1,6 @@
 <?php
 namespace Core {
 	use \Exception;
-	use \ReflectionClass;
 
 	/**
 	 * Sanitizes and validates a controller class name is valid for use.
@@ -28,12 +27,16 @@ namespace Core {
 		* @return void
 		*/
 		public function __construct(string $string) {
-			$base = ucwords(preg_replace("/\W+/", ' ', strtolower($string)));
+			$base = ucwords(preg_replace("/\W+/", ' ', $string));
 			$parts = explode(' ', $base);
 			$parts = array_map("ucfirst", $parts);
 			$base = implode('', $parts);
 
 			$controllerClass =  "\\".$base . 'Controller';
+
+			if(class_exists($controllerClass) === false) {
+				throw new NotFoundException;
+			}
 
 			if(is_subclass_of($controllerClass, "Controller") !== true) {
 				throw new Exception($controllerClass." must derive from \Controller 'extends \Controller'.");

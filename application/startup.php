@@ -92,9 +92,11 @@
 
 		$classFile = APP."/classes/".$className.".php";
 
-		if(!file_exists($classFile) && substr($className, -10) == "Controller") {
+		if(substr($className, -10) == "Controller") {
 			$classFile = APP."/controllers/".substr($className, 0, -10).".php";
 		}
 
-		require $classFile;
+		if(file_exists($classFile) === true) {
+			require $classFile;
+		}
 	});
