@@ -1,6 +1,6 @@
 <?php
 namespace Core {
-	use Registry;
+	use Resource;
 
 	/**
 	* Loads and setups the current configured theme in use.
@@ -29,7 +29,7 @@ namespace Core {
 			$this->iConfiguration = (new Configuration($configurationFile));
 
 			if($this->iConfiguration->get("version.version") == "@version") {
-				$this->iConfiguration->set("version.version", Registry::get("Core\Application")->getConfiguration()->get("version"));
+				$this->iConfiguration->set("version.version", Resource::get("Core\Application")->getConfiguration()->get("version"));
 			}
 
 			$this->addAssets();
@@ -48,7 +48,7 @@ namespace Core {
 		* @return string
 		*/
 		public function getTemplatePath(string $tpl = '') : string {
-			$path = \Registry::get("Core\Application")->getApplicationPath()."/themes/".$this->getName();
+			$path = Resource::get("Core\Application")->getApplicationPath()."/themes/".$this->getName();
 
 			if($tpl != '') {
 				$path .= '/'.$tpl;
@@ -119,7 +119,7 @@ namespace Core {
 
 					$src = $this->maybeAddVersionNumber($src);
 
-					Registry::get("Assets")->addJavascript($src);
+					Resource::get("Assets")->addJavascript($src);
 				}
 			}
 
@@ -136,7 +136,7 @@ namespace Core {
 
 					$src = $this->maybeAddVersionNumber($src);
 
-					Registry::get("Assets")->addStylesheet($src);
+					Resource::get("Assets")->addStylesheet($src);
 				}
 			}
 		}

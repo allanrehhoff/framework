@@ -11,7 +11,7 @@
 	require "startup.php";
 
 	$args = CLI ? $argv : $_GET;
-	$controller = Registry::set(new Core\Application($args))->run();
+	$controller = Resource::set(new Core\Application($args))->run();
 
 	extract($controller->getData(), EXTR_SKIP);
 

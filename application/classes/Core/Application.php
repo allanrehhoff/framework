@@ -1,6 +1,6 @@
 <?php
 namespace Core {
-	use Registry;
+	use Resource;
 	
 	/**
 	* The main class for this application.
@@ -9,7 +9,7 @@ namespace Core {
 	* @author Allan Thue Rehhoff
 	* @uses ReflectionClass
 	* @uses Exception
-	* @uses Registry
+	* @uses Resource
 	* @see README.md
 	*/
 	final class Application {
@@ -39,7 +39,7 @@ namespace Core {
 
 			$this->iConfiguration = new Configuration($configurationFile);
 
-			\Registry::set(new \Database\Connection(
+			\Resource::set(new \Database\Connection(
 				$this->iConfiguration->get("database.host"),
 				$this->iConfiguration->get("database.username"),
 				$this->iConfiguration->get("database.password"),

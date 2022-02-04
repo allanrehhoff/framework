@@ -73,8 +73,8 @@
 		* @return void
 		*/
 		final public function initialize() : void {
-			$this->iApplication  = Registry::get("Core\Application");
-			$this->iDatabase 	 = Registry::get("Database\Connection");
+			$this->iApplication  = Resource::get("Core\Application");
+			$this->iDatabase 	 = Resource::get("Database\Connection");
 
 			$this->iConfiguration = $this->iApplication->getConfiguration();
 
@@ -88,8 +88,8 @@
 					"cookie" => $_COOKIE
 				];
 
-				$this->iAssets = Registry::set(new \Assets);
-				$this->iTheme 	 = Registry::set(new \Core\Theme($this->iConfiguration->get("theme")));
+				$this->iAssets = Resource::set(new \Assets);
+				$this->iTheme 	 = Resource::set(new \Core\Theme($this->iConfiguration->get("theme")));
 
 				$this->data["header"] = $this->getView("header");
 				$this->data["footer"] = $this->getView("footer");

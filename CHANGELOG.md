@@ -17,6 +17,7 @@ v5.0.0
 - Completely removed support for i18n.  
 - Renamed properties that are an instance of an object to be prefixed with an i. (lowercase C# style)  
 - Updated dockblocks to be more unified.  
+- Rename Registry class to more fitting Resource.  
 > *NOTE:* There's no one-size-fits-all solution to i18n, and all systems I've made so far with this framework I've had to make major alterations to the default implementation.  
 
 v4.4.0

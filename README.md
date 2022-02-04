@@ -173,7 +173,7 @@ Examples:
 
 ```php
 // The following would return Framework/1.0.0
-Registry::get("Core\Configuration")->get("http.useragent");
+Resource::get("Core\Configuration")->get("http.useragent");
 ```
 
 Variables are parsed recursively, and therefore values from nested objects can also be used, using a dot syntax.
@@ -207,20 +207,20 @@ The exception handler will still kill your application however, due to exception
 
 Good practice dictates that while developing your custom classes you should also create custom exceptions in the same namespace to match your classes.  
   
-## The Registry
+## The Resource Class
 Is where all instances that should be globally accessible is stored.  
 
-Once an instance has been set in the registry, it is immediately accesible by using **Registry::get()** instances are keyed by their class name definitions.  
+Once an instance has been set in the Resource, it is immediately accesible by using **Resource::get()** instances are keyed by their class name definitions.  
 The instance registered, will be returned.  
   
 Examples:  
 ```php
 <?php
 	// Exmaple 1
-	$currentUser = Registry::set(new User($uid));
+	$currentUser = Resource::set(new User($uid));
 
 	// Example 2
-	$currentUser = Registry::get("User");
+	$currentUser = Resource::get("User");
 ```
 
 In case an instance is namespaced the namespace should also be specified (without the initial backslash) upon retrieval.
@@ -228,9 +228,9 @@ In case an instance is namespaced the namespace should also be specified (withou
 Example:  
 ```php
 <?php
-	Registry::set( new \Alerts\Error("No more cheese for the pizza...") );
+	Resource::set( new \Alerts\Error("No more cheese for the pizza...") );
 
-	print Registry::get("Alerts\Error")->getMessage(); // Would print: "No more cheese for the pizza"
+	print Resource::get("Alerts\Error")->getMessage(); // Would print: "No more cheese for the pizza"
 ```
   
 This structure is in place to avoid singletons being misused.  
@@ -263,29 +263,29 @@ Use the \Database\Connection class to perform manual queries if needed.
 
 ```php
 <?php
-\Registry::get("Database\Connection")->query("UPDATE animals SET `extinct` = :value WHERE name = :name", ["value" => true, "name" => "Asian Rhino"]);
+\Resource::get("Database\Connection")->query("UPDATE animals SET `extinct` = :value WHERE name = :name", ["value" => true, "name" => "Asian Rhino"]);
 ```
 
 This could also be written as follows:  
 ```php
 <?php
-\Registry::get("Database\Connection")->update("animals", ["extinct" => true], ["name" => "Asian Rhino"]);
+\Resource::get("Database\Connection")->update("animals", ["extinct" => true], ["name" => "Asian Rhino"]);
 ```
 
 Queries with a return value will be fetched as objects, for instance:  
 ```php
 <?php
-\Registry::get("Database\Connection")->select("animals");
+\Resource::get("Database\Connection")->select("animals");
 ```
 
 ```php
 <?php
-\Registry::get("Database\Connection")->update("animals", ["extinct" => true], ["name" => "Asian Rhino"]);
+\Resource::get("Database\Connection")->update("animals", ["extinct" => true], ["name" => "Asian Rhino"]);
 ```
 
 ```php
 <?php
-\Registry::get("Database\Connection")->insert("animals", ["name" => "Sumatran Tiger", "extinct" => false]);
+\Resource::get("Database\Connection")->insert("animals", ["name" => "Sumatran Tiger", "extinct" => false]);
 ```
 
 Advanced filters are also suported in where clauses.
@@ -293,13 +293,13 @@ Advanced filters are also suported in where clauses.
 ```php
 <?php
 // Perform when WHERE .. IN (...)
-\Registry::get("Database\Connection")->select("animals", ["name" => ["Asian Rhino", "Sumatran Tiger"]]);
+\Resource::get("Database\Connection")->select("animals", ["name" => ["Asian Rhino", "Sumatran Tiger"]]);
 ```
 
 ```php
 <?php
 // Uses the spaceship-operator in MySQL
-\Registry::get("Database\Connection")->select("animals", ["name" => NULL]);
+\Resource::get("Database\Connection")->select("animals", ["name" => NULL]);
 ```
 
 ## The Assets class

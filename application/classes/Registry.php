@@ -1,9 +1,9 @@
 <?php
 	/**
-	* Registry to hold class objects, used to avoid the usage of singletons.
+	* Resource to hold class objects, used to avoid the usage of singletons.
 	* @author Allan Rehhoff
 	*/
-	final class Registry {
+	final class Resource {
 		/**
 		* @var array Stores the data objects.
 		*/
