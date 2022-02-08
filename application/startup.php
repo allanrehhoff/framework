@@ -92,7 +92,7 @@
 
 		$classFile = APP."/classes/".$className.".php";
 
-		if(substr($className, -10) == "Controller") {
+		if($className != "Controller" && substr($className, -10) == "Controller") {
 			$classFile = APP."/controllers/".substr($className, 0, -10).".php";
 		}
 
