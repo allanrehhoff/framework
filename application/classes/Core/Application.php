@@ -126,7 +126,7 @@ namespace Core {
 				$iController->$methodName();
 				$iController->finalize();
 			} catch(NotFoundException $e) {
-				$iController = $this->executeController("NotFoundController");
+				$iController = $this->executeController("NotFound");
 			}
 
 			foreach($iController->getChildren() as $childControllerName) {
