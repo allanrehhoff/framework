@@ -295,7 +295,12 @@
 			*/
 			public function fetchCell(string $table, string $column, ?array $criteria = null) {
 				$sql = "SELECT `".$column."` FROM `".$table."` WHERE ".$this->keysToSql($criteria, "AND")." LIMIT 1";
-				return $this->query($sql, $criteria)->fetchColumn(0);
+				$result = $this->query($sql, $criteria)->fetchColumn(0);
+
+				// Convert false values to null
+				// If we were to pass a false value to Entity::__construct();
+				// self::crateRow(); will end up trying to insert '0 => :0'
+				return $result !== false ? $result : null;
 			}
 
 			/**
@@ -335,6 +340,20 @@
 			}
 
 			/**
+			 * Performs a search of the given criteria
+			 * @param string $table Name of the table to search
+			 * @param array $searches Sets of expressions to match. e.g. 'filepath LIKE :filepath'
+			 * @param ?array $criteria Criteria variables for the search sets
+			 * @return array
+			 * @author Allan Thue Rehhoff
+			 * @since 3.1.3
+			 */
+			public function search(string $table, array $searches = [], ?array $criteria = null) {
+				$sql = "SELECT * FROM ".$table." WHERE ".implode(" AND ", $searches);
+				return $this->query($sql, $criteria)->fetchAll();
+			}
+
+			/**
 			* Inserts a row in the given table.
 			* @param string $table Name of the table to insert the row in
 			* @param array $variables Column => Value pairs to be inserted
@@ -343,8 +362,8 @@
 			* @since 1.0
 			*/
 			public function insert(string $table, ?array $variables = null) : int {
-				$variables = ($variables != null) ? $variables : [];
-				$this->createRow("INSERT", $table, $variables);
+				$sql = $this->createRowSql("INSERT", $table, $variables);
+				$this->query($sql, $variables);
 				return (int) $this->dbh->lastInsertId();
 			}
 
@@ -357,9 +376,22 @@
 			* @since 1.0
 			*/
 			public function replace(string $table, ?array $variables = null) : int {
-				$variables = ($variables != null) ? $variables : [];
-				$this->createRow("REPLACE", $table, $variables);
+				$sql = $this->createRowSql("REPLACE", $table, $variables);
+				$this->query($sql, $variables);
 				return (int) $this->dbh->lastInsertId();
+			}
+
+			/**
+			 * Update or insert row
+			 * @param $table Table to update or insert again
+			 * @param ?array $variables column => value pairs to insert/update
+			 * @param ?array $criteria Criteria columns, e.g. columns with unique indexes
+			 * @return int Number of rows affected
+			 */
+			public function upsert(string $table, ?array $variables = null, array $criteria = null) : Statement {
+				$args = array_merge($criteria, $variables);
+				$sql = $this->createRowSql("INSERT", $table, $args) . " ON DUPLICATE KEY UPDATE " . $this->keysToSql(array_diff_key($variables, $criteria), ', ');
+				return $this->query($sql, $args);
 			}
 
 			/**
@@ -373,6 +405,7 @@
 			*/
 			public function update(string $table, ?array $variables, ?array $criteria = null) : int {
 				$args = [];
+
 				foreach ($variables as $key => $value) $args["new_".$key] = $value;
 				foreach ($criteria as $key => $value) $args["old_".$key] = $value;
 				
@@ -403,11 +436,14 @@
 			* @author Allan Thue Rehhoff
 			* @since 1.0
 			*/
-			private function createRow(string $type, string $table, ?array $variables) : Statement {
+			private function createRowSql(string $type, string $table, ?array $variables = null) : string {
 				$binds = [];
+				$variables = $variables ?? [];
+
 				foreach ($variables as $key => $value) $binds[] = ":$key";
-				$sql = $type. " INTO "."`$table` (" . implode(", ", array_keys($variables)) . ") VALUES (" . implode(", ", $binds) . ")";
-				return $this->query($sql, $variables);
+				$sql = $type . " INTO "."`$table` (`" . implode("`, `", array_keys($variables)) . "`) VALUES (" . implode(", ", $binds) . ")";
+
+				return $sql;
 			}
 
 			/**
@@ -421,7 +457,7 @@
 			* @author Allan Thue Rehhoff
 			* @since 1.0
 			*/
-			private function keysToSql(?array &$array, string $seperator, string $variablePrefix = "") : string {
+			private function keysToSql(?array $array, string $seperator, string $variablePrefix = "") : string {
 				if ($array == null) return "1";
 
 				$list = [];
@@ -434,6 +470,7 @@
 						$operator = '=';
 					}
 
+					
 					$list[] = " `$column` $operator :".$variablePrefix.$column;
 				}
 

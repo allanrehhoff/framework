@@ -9,7 +9,10 @@
 	*/
 	namespace Database {	
 		class EntityType extends \Database\Entity {
-			protected function getKeyField() : string { return "test_id"; }
-			protected function getTableName() : string { return "test_table"; }
+			const KEYFIELD = "test_field";
+			const TABLENAME = "test_table";
+
+			protected function getKeyField() : string { return self::KEYFIELD; }
+			protected function getTableName() : string { return self::TABLENAME; }
 		}
 	}

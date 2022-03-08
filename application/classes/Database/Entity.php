@@ -11,7 +11,7 @@ namespace Database {
 	*/
 	abstract class Entity {
 		private $key;
-		protected $data;
+		protected $data = [];
 
 		abstract protected function getKeyField() : string;
 		abstract protected function getTableName() : string;
@@ -22,25 +22,8 @@ namespace Database {
 		* @return void
 		* @author Allan Thue Rehhoff
 		*/
-		public function __construct($data = null) {
-			if ($data !== null && gettype($data) != "array") {
-				$data = (array) Connection::getInstance()->fetchRow($this->getTableName(), [$this->getKeyField() => $data]);
-			}
-
-			if ($data !== null) {
-				$key = $this->getKeyField();
-
-				if(isset($data[$key])) {
-					$this->key = $data[$key];
-					unset($data[$key]);
-				} else {
-					$this->key = null;
-				}
-			} else {
-				$data = [];
-			}
-
-			$this->data = $data;
+		public function __construct($data = null, ?array $allowedFields = null) {
+			$this->set($data, $allowedFields);
 		}
 
 		/**
@@ -88,16 +71,23 @@ namespace Database {
 		*/
 		public function save() {
 			try {
-				if ($this->key == null) {
-					$this->key = Connection::getInstance()->insert($this->getTableName(), $this->data);
-					return $this->key;
-				} else {
+				if ($this->exists() === true) {
 					Connection::getInstance()->update($this->getTableName(), $this->data, $this->getKeyFilter());
 					return $this->data;
+				} else {
+					$this->key = Connection::getInstance()->insert($this->getTableName(), $this->data);
+					return $this->key;
 				}
 			} catch(Exception $e) {
 				throw $e;
 			}
+		}
+
+		/**
+		 * Update or insert row
+		 */
+		public function upsert() {
+			return Connection::getInstance()->upsert($this->getTableName(), $this->data, $this->getKeyFilter());
 		}
 		
 		/**
@@ -148,12 +138,36 @@ namespace Database {
 		* @return object The current entity instance
 		* @author Allan Thue Rehhoff
 		*/
-		public function set(array $values, array $allowedFields = null) : Entity {
-			if ($allowedFields != null) {
-				$values = array_intersect_key($values, array_flip($allowedFields));
+		public function set($data = null, ?array $allowedFields = null) : Entity {
+			if(is_object($data) === true) {
+				$data = (array) $data;
 			}
 
-			$this->data = array_merge($this->data, $values);
+			if ($allowedFields != null) {
+				$data = array_intersect_key($data, array_flip($allowedFields));
+			}
+			
+			$key = $this->getKeyField();
+			
+			if ($data !== null && gettype($data) !== "array") {
+				$data = [$key => $data];
+			}
+
+			if(isset($data[$key])) {
+				$exists = Connection::getInstance()->fetchRow($this->getTableName(), [$key => $data[$key]]);
+
+				if(!empty($exists)) {
+					$this->key = $exists->$key;
+					$this->data = (array)$exists;
+					unset($data[$key]);
+				}
+			}
+
+			if($data === null) {
+				$data = [];
+			}
+
+			$this->data = array_merge($this->data, $data);
 			return $this;
 		}
 
@@ -209,8 +223,7 @@ namespace Database {
 		* @author Allan Thue Rehhoff
 		*/
 		public function exists() : bool {
-			$result = Connection::getInstance()->select($this->getTableName(), $this->getKeyFilter());
-			return !empty($result);
+			return $this->key !== null;
 		}
 
 		/**
