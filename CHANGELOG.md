@@ -1,4 +1,10 @@
 # Changelog #
+v5.0.1
+- Fixed a bug where Core\NotFoundException would not properly reroute current controller.  
+- Added support for executing namespaced controllers in Core\ControllerName.  
+- Resource::get(); will not instantiate a new object, if it doesn't already hold one.  
+- Updates database library to latest version.  
+  
 v5.0.0
 - **This release is backwards incompatible.**  
 - Renamed the Document class to Assets  
