@@ -27,15 +27,21 @@ namespace Core {
 		* @return void
 		*/
 		public function __construct(string $string) {
-			$base = ucwords(preg_replace("/\W+/", ' ', $string));
-			$parts = explode(' ', $base);
-			$parts = array_map("ucfirst", $parts);
-			$base = implode('', $parts);
+			$controllerClassParts = [];
 
-			$controllerClass =  "\\".$base . 'Controller';
+			foreach(explode('/', $string) as $segment) {
+				$base = preg_replace("/\W+/", ' ', $segment);
+				$words = explode(' ', $base);
+				$words = array_map("ucfirst", $words);
+
+				$controllerClassParts[] = implode('', $words);
+			}
+
+			$controllerClass = implode("\\", $controllerClassParts);
+			$controllerClass .= 'Controller';
 
 			if(class_exists($controllerClass) === false) {
-				throw new NotFoundException;
+				$controllerClass = "NotFoundController";
 			}
 
 			if(is_subclass_of($controllerClass, "Controller") !== true) {
