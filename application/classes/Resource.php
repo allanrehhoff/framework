@@ -11,9 +11,14 @@
 
 		/**
 		* Get an object by it's class name, namespaces included.
-		* @return object on success, null if the object is nowhere to be found
+		* Instatiates the object if not already existing.
+		* @return object on success
 		*/
 		public static function get(string $key) {
+			if(!self::has($key)) {
+				self::set(new $key);
+			}
+
 			return (isset(self::$data[$key]) ? self::$data[$key] : NULL);
 		}
 
