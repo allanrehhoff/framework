@@ -1,11 +1,11 @@
 <?php
 	class Url {
 		/**
-		* Removes any need for having a hardcoded basepath in some obscure place
-		* "cough"wordpress"cough"
-		* @param string $url Path to element of which to create a URI.
-		* @return string
-		*/
+		 * Removes any need for having a hardcoded basepath in some obscure place
+		 * "cough"wordpress"cough"
+		 * @param string $url Path to element of which to create a URI.
+		 * @return string
+		 */
 		public static function fromUri(string $uri = '') : string {
 			$protocol = SSL ? "https://" : "http://";
 			$host  = $_SERVER['HTTP_HOST'];
@@ -17,11 +17,11 @@
 		}
 
 		/**
-		* Perform a redirect with a X-Redirect-By header
-		* @param string $location Location of the redirect
-		* @param string $xRedirectBy Human readable indidcator of who performed this redirect
-		* @return void
-		*/
+		 * Perform a redirect with a X-Redirect-By header
+		 * @param string $location Location of the redirect
+		 * @param string $xRedirectBy Human readable indidcator of who performed this redirect
+		 * @return void
+		 */
 		public static function redirect(string $location, string $xRedirectBy) : void {
 			header("HTTP/1.1 302 Found");
 			header("Cache-Control: no-cache, must-revalidate");

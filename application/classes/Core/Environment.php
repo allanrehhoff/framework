@@ -2,10 +2,10 @@
 	namespace Core {
 		class Environment {
 			/**
-			* Tries to determine if we're on a
-			* production or development environment
-			* @return string
-			*/
+			 * Tries to determine if we're on a
+			 * production or development environment
+			 * @return string
+			 */
 			public static function determine() :string {
 				if(CLI) {
 					if(in_array($GLOBALS["argv"][1], ["dev", "live"])) {

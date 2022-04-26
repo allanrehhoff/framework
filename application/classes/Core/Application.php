@@ -1,39 +1,37 @@
 <?php
 namespace Core {
-	use Resource;
-	
 	/**
-	* The main class for this application.
-	* Core\Application handles the routes, directory paths and title
-	* Consult the README file for usage examples throughout the framework.
-	* @author Allan Thue Rehhoff
-	* @uses ReflectionClass
-	* @uses Exception
-	* @uses Resource
-	* @see README.md
-	*/
+	 * The main class for this application.
+	 * Core\Application handles the routes, directory paths and title
+	 * Consult the README file for usage examples throughout the framework.
+	 * @author Allan Thue Rehhoff
+	 * @uses ReflectionClass
+	 * @uses Exception
+	 * @uses Resource
+	 * @see README.md
+	 */
 	final class Application {
 		/**
-		* @var string Current working directory, in which the application resides.
-		*/
-		private $app;
+		 * @var string Current working directory, in which the application resides.
+		 */
+		private $applicationPath;
 
 		/**
-		* @var array Arguments provided through URI parts
-		*/
+		 * @var array Arguments provided through URI parts
+		 */
 		private $args;
 
 		/**
-		* @var \Core\Configuration Holds the Application-wide configuration object.
-		*/
+		 * @var \Core\Configuration Holds the Application-wide configuration object.
+		 */
 		private $iConfiguration;
 
 		/**
-		* Parse the current route and set caching as needed.
-		* @param array $args Application arguments, usually url-parts divided by /, or argv.
-		*/
+		 * Parse the current route and set caching as needed.
+		 * @param array $args Application arguments, usually url-parts divided by /, or argv.
+		 */
 		public function __construct(array $args) {
-			$this->app = APP;
+			$this->applicationPath = APP;
 
 			$configurationFile = STORAGE . "/config/application.jsonc";
 
@@ -55,12 +53,12 @@ namespace Core {
 		}
 
 		/**
-		* Get an argument from the url. ommit $argIndex to get all arguments passed with the request.
-		* This is set to a string because if the variable passed to this function 
-		* is null it would be easier to debug with a ull rather than getting the whole array.
-		* @param int $index the index or the url arg.
-		* @return null|string, or null on failure.
-		*/
+		 * Get an argument from the url. ommit $argIndex to get all arguments passed with the request.
+		 * This is set to a string because if the variable passed to this function 
+		 * is null it would be easier to debug with a ull rather than getting the whole array.
+		 * @param int $index the index or the url arg.
+		 * @return null|string, or null on failure.
+		 */
 		public function arg(int $index = -1) : ?string {
 			if(isset($this->args[$index]) && $this->args[$index] !== '') {
 				return $this->args[$index];
@@ -70,19 +68,19 @@ namespace Core {
 		}
 
 		/**
-		* Get all parsed application args
-		* @return array
-		*/
+		 * Get all parsed application args
+		 * @return array
+		 */
 		public function getArgs() : array {
 			return $this->args;
 		}
 
 		/**
-		* Get the current working directory of the application
-		* @return string
-		*/
+		 * Get the current working directory of the application
+		 * @return string
+		 */
 		public function getApplicationPath() : string {
-			return $this->app;
+			return $this->applicationPath;
 		}
 
 		/**
@@ -94,24 +92,24 @@ namespace Core {
 		}
 
 		/**
-		* Get path to the specified controller file. Ommit the .php extension
-		* @todo Cut .php from the $ctrl param, if provided. (Find out if I can use basename()'s second argument)
-		* @param string $controller name of the controller file.
-		* @return string or null on failure
-		*/
+		 * Get path to the specified controller file. Ommit the .php extension
+		 * @todo Cut .php from the $ctrl param, if provided. (Find out if I can use basename()'s second argument)
+		 * @param string $controller name of the controller file.
+		 * @return string or null on failure
+		 */
 		public function getControllerPath(string $controller) : ?string {
 			return $this->getApplicationPath()."/controllers/".basename($controller).".php";
 		}
 
 		/**
-		* Executes a given controller by name.
-		* Reroutes to NotFouncController if a \Core\NotFoundException is thrown
-		* within the controller or any of it's child controllers.
-		* @throws Exception
-		* @param string $controller The controller name, alias the class name.
-		* @return Controller The dispatched controller that has just been executed.
-		*/
-		public function executeController(string $controllerClass, string $methodName = MethodName::DEFAULT) : \Controller {
+		 * Executes a given controller by name.
+		 * Reroutes to NotFouncController if a \Core\NotFoundException is thrown
+		 * within the controller or any of it's child controllers.
+		 * @throws Exception
+		 * @param string $controller The controller name, alias the class name.
+		 * @return Controller The dispatched controller that has just been executed.
+		 */
+		public function executeController(string $controllerClass, string $methodName = MethodName::DEFAULT, ?\Controller $parentController = null) : \Controller {
 			$controllerClass = (string) new ControllerName($controllerClass);
 			$methodName 	 = (string) new MethodName($methodName);
 
@@ -122,26 +120,32 @@ namespace Core {
 			try {
 				$iController = new $controllerClass;
 
-				$iController->initialize();
+				if($parentController !== null) {
+					$iController->setParent($parentController);
+					$iController->setData($parentController->getData());
+				}
+
 				$iController->$methodName();
 				$iController->finalize();
+			} catch(ForbiddenException $e) {
+				$iController = $this->executeController("Forbidden");
 			} catch(NotFoundException $e) {
 				$iController = $this->executeController("NotFound");
 			}
 
 			foreach($iController->getChildren() as $childControllerName) {
-				$iController2 = $this->executeController($childControllerName);
-				$iController->addData($iController2->getData());
+				$childController = $this->executeController($childControllerName, MethodName::DEFAULT, $iController);
+				$iController->setData($childController->getData());
 			}
 
 			return $iController;
 		}
 
 		/**
-		* Dispatches a controller, based upon the requeted path.
-		* Serves a NotfoundController if it doesn't exists
-		* @return Controller Instance of extended Controller
-		*/
+		 * Dispatches a controller, based upon the requeted path.
+		 * Serves a NotfoundController if it doesn't exists
+		 * @return Controller Instance of extended Controller
+		 */
 		public function run() : \Controller {
 			$controllerBase = $this->arg(0);
 

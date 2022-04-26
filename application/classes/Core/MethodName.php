@@ -6,19 +6,19 @@ namespace Core {
 	 */
 	class MethodName {
 		/**
-		* @var string Default method name to be used, if a given method doesn't exist on a class.
-		*/
+		 * @var string Default method name to be used, if a given method doesn't exist on a class.
+		 */
 		const DEFAULT = "index";
 
 		/**
-		* @var string Holds the sanitized method name.
-		*/
+		 * @var string Holds the sanitized method name.
+		 */
 		private $sanitizedMethodName = '';
 
 		/**
-		* @param string Takes a single argument as a string, this will be the method name to use.
-		* @return void
-		*/
+		 * @param string Takes a single argument as a string, this will be the method name to use.
+		 * @return void
+		 */
 		public function __construct(string $string) {
 			preg_match_all('/\w+/', $string, $temp);
 
@@ -47,17 +47,17 @@ namespace Core {
 		}
 
 		/**
-		* Returns the sanitized method name
-		* @return string
-		*/
+		 * Returns the sanitized method name
+		 * @return string
+		 */
 		public function getSanitizedMethodName() : string {
 			return $this->sanitizedMethodName;
 		}
 
 		/**
-		* Also returns the sanitized method name
-		* @return string
-		*/
+		 * Also returns the sanitized method name
+		 * @return string
+		 */
 		public function __toString() {
 			return $this->getSanitizedMethodName();
 		}

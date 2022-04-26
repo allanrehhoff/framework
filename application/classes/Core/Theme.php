@@ -3,25 +3,25 @@ namespace Core {
 	use Resource;
 
 	/**
-	* Loads and setups the current configured theme in use.
-	*
-	* @author Allan Thue Rehhoff
-	*/
+	 * Loads and setups the current configured theme in use.
+	 *
+	 * @author Allan Thue Rehhoff
+	 */
 	class Theme {
 		/**
-		* @var string Holds the current theme name
-		*/
+		 * @var string Holds the current theme name
+		 */
 		private $name;
 
 		/**
-		* @var \Core\Configuration Holds the theme configuration object.
-		*/
+		 * @var \Core\Configuration Holds the theme configuration object.
+		 */
 		private $iConfiguration;
 
 		/**
-		* Doesn't do much of interest, this shouldn't be required to mess with.
-		* @return void
-		*/
+		 * Doesn't do much of interest, this shouldn't be required to mess with.
+		 * @return void
+		 */
 		public function __construct(string $themename) {
 			$this->name = $themename;
 
@@ -44,9 +44,9 @@ namespace Core {
 		}
 
 		/**
-		* Get the path to the current active theme.
-		* @return string
-		*/
+		 * Get the path to the current active theme.
+		 * @return string
+		 */
 		public function getTemplatePath(string $tpl = '') : string {
 			$path = Resource::get("Core\Application")->getApplicationPath()."/themes/".$this->getName();
 
@@ -58,11 +58,11 @@ namespace Core {
 		}
 
 		/**
-		* Removes any need for having a hardcoded basepath in some obscure place
-		* "cough"wordpress"cough"
-		* @param string $url Path to element of which to create a URI.
-		* @return string
-		*/
+		 * Removes any need for having a hardcoded basepath in some obscure place
+		 * "cough"wordpress"cough"
+		 * @param string $url Path to element of which to create a URI.
+		 * @return string
+		 */
 		public function getDirectoryUri(string $file = '/') : string {
 			$protocol = SSL ? "https://" : "http://";
 			$host  = isset($_SERVER["SERVER_NAME"]) ? $_SERVER["SERVER_NAME"] : "127.0.0.1";
@@ -73,18 +73,18 @@ namespace Core {
 		}
 
 		/**
-		* Get the current theme name loaded.
-		* @return string
-		*/
+		 * Get the current theme name loaded.
+		 * @return string
+		 */
 		public function getName() : string {
 			return $this->name;
 		}
 
 		/**
-		* Maybe add version number to asset urls
-		* @param string $url Url to return with version number
-		* @return string
-		*/
+		 * Maybe add version number to asset urls
+		 * @param string $url Url to return with version number
+		 * @return string
+		 */
 		private function maybeAddVersionNumber(string $url) : string {
 			if($this->iConfiguration->get("version.expose")) {
 				$proto = SSL ? "https://" : "http://";
@@ -99,12 +99,12 @@ namespace Core {
 		}
 
 		/**
-		* Adds configured theme assets to the Assets class
-		* If theme assets appears to be an url, they'll be used as-is,
-		* otherwise files are linked absolutely to the theme.
-		* @uses \Assets
-		* @return void
-		*/
+		 * Adds configured theme assets to the Assets class
+		 * If theme assets appears to be an url, they'll be used as-is,
+		 * otherwise files are linked absolutely to the theme.
+		 * @uses \Assets
+		 * @return void
+		 */
 		private function addAssets() : void {
 			if(!empty($this->iConfiguration->get("javascript"))) {
 				foreach($this->iConfiguration->get("javascript") as $javascript) {
