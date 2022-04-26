@@ -5,9 +5,9 @@
     "base_title": "%s | default-title",
     "default_route": "index",
     "database": {
-        "host": "***REMOVED***",
-        "username": "***REMOVED***",
-        "password": "***REMOVED***",
-        "name": "***REMOVED***"
+        "host": "localhost",
+        "username": "root",
+        "password": "",
+        "name": ""
     }
 }
