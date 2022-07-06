@@ -117,7 +117,7 @@ require $sidebar;
 Theme assets should be configured in the **THEMENAME.theme.jsonc** file, and paths must reside in the **storage/config/** directory.  
 
 > *NOTE:*  
-> header.tpl.php, footer.data.php, and any other view files you plan to include or require in another view file cannot have a controller file, to invoke additional controllers, please refer to the Controllers section.  
+> header.tpl.php, footer.data.php, and any other view files you plan to include or require in another view file can have a controller attached, if they were invoked as a child controller, see Controllers and Methods section.
 
 ## Command Line Interface
 This framework supports being queried through CLI (albeit, not fully tested), to do so you must query the **index.php** file.  
