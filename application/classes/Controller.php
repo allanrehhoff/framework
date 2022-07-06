@@ -81,9 +81,6 @@
 
 				$this->iAssets = Resource::set(new \Assets);
 				$this->iTheme  = Resource::set(new \Core\Theme($this->iConfiguration->get("theme")));
-
-				$this->data["header"] = $this->getView("header");
-				$this->data["footer"] = $this->getView("footer");
 		
 				$this->data["current"] = $this->iApplication->arg(0);		
 			}
@@ -95,10 +92,13 @@
 		 * @return void
 		 */
 		final public function finalize() : void {
-			// These are put here, to allow controller methods to add/overwrite assets
-			// Child controllers being finalized should not overwrite end up overwriting
-			// parent controller stylesheets.
-			if($this->getParent() === null) {
+			if(!CLI && $this->getParent() === null) {
+				$this->children[] = "Header";
+				$this->children[] = "Footer";
+
+				// These are put here, to allow controller methods to add/overwrite assets
+				// Child controllers being finalized should not overwrite end up overwriting
+				// parent controller stylesheets.
 				$this->data["stylesheets"] = $this->iAssets->getStylesheets();
 				$this->data["javascript"]  = $this->iAssets->getJavascript("footer");
 			}
