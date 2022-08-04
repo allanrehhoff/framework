@@ -21,6 +21,8 @@ namespace Core {
 		 */
 		private $sanitizedControllerClass = '';
 
+		public static $originalStrings = [];
+
 		/**
 		 * @param string Takes a single argument as a string,
 		 * 				this will sanitized to a valid controller class

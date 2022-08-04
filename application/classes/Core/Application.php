@@ -22,6 +22,16 @@ namespace Core {
 		private $args;
 
 		/**
+		 * @var array Actual controller path routed by given args
+		 */
+		private $executedControllerName;
+
+		/**
+		 * @var array Method name called on the master controller
+		 */
+		private $calledMethodName;
+
+		/**
 		 * @var \Core\Configuration Holds the Application-wide configuration object.
 		 */
 		private $iConfiguration;
@@ -37,12 +47,14 @@ namespace Core {
 
 			$this->iConfiguration = new Configuration($configurationFile);
 
+			/*
 			\Resource::set(new \Database\Connection(
 				$this->iConfiguration->get("database.host"),
 				$this->iConfiguration->get("database.username"),
 				$this->iConfiguration->get("database.password"),
 				$this->iConfiguration->get("database.name")
 			));
+			*/
 
 			if(CLI === false) {
 				$route = $args["route"] ?? $this->iConfiguration->get("default_route");
@@ -73,6 +85,22 @@ namespace Core {
 		 */
 		public function getArgs() : array {
 			return $this->args;
+		}
+
+		/**
+		 * Get controller name/path of the executed main controller
+		 * @return string
+		 */
+		public function getExecutedControllerName() : string {
+			return $this->executedControllerName;
+		}
+
+		/**
+		 * Get controller name/path of the executed main controller
+		 * @return string
+		 */
+		public function getCalledMethodName() : string {
+			return $this->calledMethodName;
 		}
 
 		/**
@@ -116,13 +144,16 @@ namespace Core {
 			if(method_exists($controllerClass, $methodName) !== true) {
 				$methodName = MethodName::DEFAULT;
 			}
-
+			
 			try {
 				$iController = new $controllerClass;
 
 				if($parentController !== null) {
 					$iController->setParent($parentController);
 					$iController->setData($parentController->getData());
+				} else {
+					$this->executedControllerName = $iController->getName();
+					$this->calledMethodName = $methodName;
 				}
 
 				$iController->$methodName();

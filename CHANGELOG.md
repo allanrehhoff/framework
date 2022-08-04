@@ -1,4 +1,10 @@
 # Changelog #
+v5.1.1  
+- New public method Controller::getName()  get called controller name without without appendix.  
+- New public method Core\Application::getExecutedControllerName() returns the master controller name.  
+- New public method Core\Application::getCalledMethodName() return the method name called on the master controller.  
+- New variable added to the <body> tag, containing system fragments for easier identification.  
+
 v5.1.0
 - Allow child controllers to see and modify parent controller data variable.  
 - New controller property to get parent controller object.  

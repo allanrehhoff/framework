@@ -6,4 +6,4 @@
 			<link rel="stylesheet" type="text/css" href="<?php print $style; ?>" media="all" />
 		<?php endforeach; ?>
 	</head>
-	<body>
+	<body class="<?php print $bodyClasses; ?>">

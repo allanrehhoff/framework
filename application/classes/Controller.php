@@ -65,7 +65,7 @@
 		 */
 		public function __construct() {
 			$this->iApplication  = Resource::get("Core\Application");
-			$this->iDatabase 	 = Resource::get("Database\Connection");
+			//$this->iDatabase 	 = Resource::get("Database\Connection");
 
 			$this->iConfiguration = $this->iApplication->getConfiguration();
 
@@ -81,8 +81,6 @@
 
 				$this->iAssets = Resource::set(new \Assets);
 				$this->iTheme  = Resource::set(new \Core\Theme($this->iConfiguration->get("theme")));
-		
-				$this->data["current"] = $this->iApplication->arg(0);		
 			}
 		}
 		
@@ -101,6 +99,7 @@
 				// parent controller stylesheets.
 				$this->data["stylesheets"] = $this->iAssets->getStylesheets();
 				$this->data["javascript"]  = $this->iAssets->getJavascript("footer");
+				$this->data["bodyClasses"] = $this->getBodyClasses();
 			}
 		}
 
@@ -155,6 +154,14 @@
 		}
 
 		/**
+		 * Get called controller name, without 'Controller' appendix
+		 * @return string
+		 */
+		final public function getName() : string {
+			return preg_replace("/Controller$/", '',  get_called_class());
+		}
+
+		/**
 		 * Get the path to a template file, ommit .tpl.php extension
 		 * @param string $template name of the template file to get path for,
 		 * @return string
@@ -164,7 +171,7 @@
 				$template = $this->data["view"];
 			}
 
-			$view = $this->iTheme->getTemplatePath($template.".tpl.php");
+			$view = $this->iTheme->getTemplatePath($template . ".tpl.php");
 
 			return $view;
 		}
@@ -184,6 +191,34 @@
 		 */
 		final public function setView(string $view) : void {
 			$this->data["view"] = $view;
+		}
+
+		/**
+		 * Determines classes suiteable for the <body> tag
+		 * These classes can be used for easier identification of controller and view files used
+		 * or CSS styling for specific conditions 
+		 * @return array
+		 */
+		final public function getBodyClasses() : string {
+			$bodyClasses = [];
+			$bodyClasses[] = $this->iApplication->getExecutedControllerName();
+			$bodyClasses[] = $this->iApplication->getExecutedControllerName() . '-' . $this->iApplication->getCalledMethodName();
+
+			foreach($this->getChildren() as $childControllerName) {
+				$bodyClasses[] = $childControllerName;
+			}
+
+			$bodyClasses[] = $this->data["view"];
+
+			foreach($this->iApplication->getArgs() as $arg) {
+				$bodyClasses[] = htmlentities($arg); // XSS
+			}
+
+			foreach($bodyClasses as $i => $bodyClass) {
+				$bodyClasses[$i] = strtolower(($bodyClasses[$i]));
+			} 
+
+			return implode(' ', array_unique($bodyClasses));
 		}
 
 		/**
