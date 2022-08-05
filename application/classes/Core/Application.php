@@ -47,14 +47,13 @@ namespace Core {
 
 			$this->iConfiguration = new Configuration($configurationFile);
 
-			/*
+			
 			\Resource::set(new \Database\Connection(
 				$this->iConfiguration->get("database.host"),
 				$this->iConfiguration->get("database.username"),
 				$this->iConfiguration->get("database.password"),
 				$this->iConfiguration->get("database.name")
 			));
-			*/
 
 			if(CLI === false) {
 				$route = $args["route"] ?? $this->iConfiguration->get("default_route");

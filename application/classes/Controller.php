@@ -65,7 +65,7 @@
 		 */
 		public function __construct() {
 			$this->iApplication  = Resource::get("Core\Application");
-			//$this->iDatabase 	 = Resource::get("Database\Connection");
+			$this->iDatabase 	 = Resource::get("Database\Connection");
 
 			$this->iConfiguration = $this->iApplication->getConfiguration();
 
