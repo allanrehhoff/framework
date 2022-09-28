@@ -7,6 +7,7 @@ v6.0.0
 - Database\Connection::debugQuery(); no longer represents booleans as strings.  
 - Fixed regression wtih the \Resource class from v5.0.1  
 - Moved \Core exceptions to their own namespace.  
+- Updated some doc blocks.  
 
 v5.1.1  
 - New public method Controller::getName()  get called controller name without without appendix.  
