@@ -1,4 +1,4 @@
-# Custom PHP Framework - Introduction (Version 5)
+# Custom PHP Framework - Introduction (Version 6)
 This is not what you'd typically associate with a fully functional MVC framework, there's no "Models" directory, instead "entities" are used, and when needed regular PHP classes. More on that later. 
 The intention for this is to prevent the developer from writing complete spaghetti, while being lightweight and portable.  
 
