@@ -31,7 +31,7 @@ namespace Core {
 		*/
 		private function parse(string $configurationFile) : void {
 			if(!is_file($configurationFile)) {
-				throw new \Core\Exception\Configuration("The given configuration file '$configurationFile' could not be located.");
+				throw new \Core\Exception\MissingFile("The given configuration file '$configurationFile' could not be located.");
 			}
 
 			$this->configurationFile = $configurationFile;

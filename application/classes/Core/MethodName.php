@@ -17,6 +17,7 @@ namespace Core {
 
 		/**
 		 * @param string Takes a single argument as a string, this will be the method name to use.
+		 * @throws \Error
 		 * @return void
 		 */
 		public function __construct(string $string) {

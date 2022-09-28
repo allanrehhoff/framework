@@ -5,8 +5,6 @@ namespace Core {
 	 * Core\Application handles the routes, directory paths and title
 	 * Consult the README file for usage examples throughout the framework.
 	 * @author Allan Thue Rehhoff
-	 * @uses ReflectionClass
-	 * @uses Exception
 	 * @uses Resource
 	 * @see README.md
 	 */
@@ -119,7 +117,6 @@ namespace Core {
 
 		/**
 		 * Get path to the specified controller file. Ommit the .php extension
-		 * @todo Cut .php from the $ctrl param, if provided. (Find out if I can use basename()'s second argument)
 		 * @param string $controller name of the controller file.
 		 * @return string or null on failure
 		 */
@@ -131,7 +128,6 @@ namespace Core {
 		 * Executes a given controller by name.
 		 * Reroutes to NotFouncController if a \Core\Exception\NotFound is thrown
 		 * within the controller or any of it's child controllers.
-		 * @throws Exception
 		 * @param string $controller The controller name, alias the class name.
 		 * @return Controller The dispatched controller that has just been executed.
 		 */
@@ -174,7 +170,7 @@ namespace Core {
 		/**
 		 * Dispatches a controller, based upon the requeted path.
 		 * Serves a NotfoundController if it doesn't exists
-		 * @return Controller Instance of extended Controller
+		 * @return \Controller Instance of extended Controller
 		 */
 		public function run() : \Controller {
 			$controllerBase = $this->arg(0);
