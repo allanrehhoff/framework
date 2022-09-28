@@ -15,10 +15,6 @@
 		 * @return object on success
 		 */
 		public static function get(string $key) {
-			if(!self::has($key)) {
-				self::set(new $key);
-			}
-
 			return (isset(self::$data[$key]) ? self::$data[$key] : NULL);
 		}
 
