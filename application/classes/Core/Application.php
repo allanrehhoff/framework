@@ -47,7 +47,6 @@ namespace Core {
 
 			$this->iConfiguration = new Configuration($configurationFile);
 
-			
 			\Resource::set(new \Database\Connection(
 				$this->iConfiguration->get("database.host"),
 				$this->iConfiguration->get("database.username"),
@@ -155,8 +154,9 @@ namespace Core {
 					$this->calledMethodName = $methodName;
 				}
 
+				$iController->start();
 				$iController->$methodName();
-				$iController->finalize();
+				$iController->stop();
 			} catch(ForbiddenException $e) {
 				$iController = $this->executeController("Forbidden");
 			} catch(NotFoundException $e) {

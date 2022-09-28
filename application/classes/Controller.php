@@ -63,7 +63,7 @@
 		 * Constructs the overall environment, setting up helpers and initial variables.
 		 * @return void
 		 */
-		public function __construct() {
+		final public function start() {
 			$this->iApplication  = Resource::get("Core\Application");
 			$this->iDatabase 	 = Resource::get("Database\Connection");
 
@@ -82,6 +82,11 @@
 				$this->iAssets = Resource::set(new \Assets);
 				$this->iTheme  = Resource::set(new \Core\Theme($this->iConfiguration->get("theme")));
 			}
+
+			if($this->getParent() === null) {
+				$this->children[] = "Header";
+				$this->children[] = "Footer";
+			}
 		}
 		
 		/**
@@ -89,18 +94,8 @@
 		 * @uses \Document
 		 * @return void
 		 */
-		final public function finalize() : void {
-			if(!CLI && $this->getParent() === null) {
-				$this->children[] = "Header";
-				$this->children[] = "Footer";
-
-				// These are put here, to allow controller methods to add/overwrite assets
-				// Child controllers being finalized should not overwrite end up overwriting
-				// parent controller stylesheets.
-				$this->data["stylesheets"] = $this->iAssets->getStylesheets();
-				$this->data["javascript"]  = $this->iAssets->getJavascript("footer");
-				$this->data["bodyClasses"] = $this->getBodyClasses();
-			}
+		final public function stop() : void {
+			$this->data["bodyClasses"] = $this->getBodyClasses();
 		}
 
 		/**
@@ -225,7 +220,7 @@
 		 * Get names of children controllers
 		 * @return array
 		 */
-		public function getChildren() : array {
+		final public function getChildren() : array {
 			return $this->children;
 		}
 	}
