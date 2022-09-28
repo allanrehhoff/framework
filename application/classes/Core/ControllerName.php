@@ -40,13 +40,24 @@ namespace Core {
 			}
 
 			$controllerClass = implode("\\", $controllerClassParts);
-			$controllerClass .= 'Controller';
+			$controllerClass .= "Controller";
 
 			if(class_exists($controllerClass) === false) {
 				$controllerClass = "NotFoundController";
 			}
 
-			if(is_subclass_of($controllerClass, "Controller") !== true) {
+			$iReflectionClass = new \ReflectionClass($controllerClass); 
+
+			// Constrollers must not have a constructor
+			// as Core\Application relies on a constroller instance
+			// to set the controller parent.
+			// e.g. Header and Footer children being set in Controller
+			if($iReflectionClass->getConstructor() !== null) {
+				throw new Exception("Found defined constructor in " . $controllerClass . ". Use ".$controllerClass."::start(); instead.");
+			}
+
+			// Defined controllers should always extend on the master controller
+			if($iReflectionClass->isSubclassOf("Controller") !== true) {
 				throw new Exception($controllerClass." must derive from \Controller 'extends \Controller'.");
 			}
 
