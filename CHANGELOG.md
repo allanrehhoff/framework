@@ -1,4 +1,13 @@
 # Changelog #
+v6
+- **This release is backwards incompatible.** 
+- Common controller method for all endpoints are now ::start(); instead of ::__construct();  
+- Core\ControllerName now validates constrollers using reflection.  
+- Support for regions (header/footer) when adding theme assets in config.  
+- Database\Connection::debugQuery(); no longer represents booleans as strings.  
+- Fixed regression wtih the \Resource class from v5.0.1  
+- Moved \Core exceptions to their own namespace.  
+
 v5.1.1  
 - New public method Controller::getName()  get called controller name without without appendix.  
 - New public method Core\Application::getExecutedControllerName() returns the master controller name.  
