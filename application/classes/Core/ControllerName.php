@@ -5,7 +5,7 @@ namespace Core {
 	/**
 	 * Sanitizes and validates a controller class name is valid for use.
 	 */
-	class ControllerName {
+	class ControllerName extends NameMatcher {
 		/**
 		 * @var string The string to be used as base
 		 */
@@ -32,7 +32,7 @@ namespace Core {
 			$controllerClassParts = [];
 
 			foreach(explode('/', $string) as $segment) {
-				$base = preg_replace("/\W+/", ' ', $segment);
+				$base = preg_replace(parent::REGEX, ' ', $segment);
 				$words = explode(' ', $base);
 				$words = array_map("ucfirst", $words);
 
@@ -53,12 +53,12 @@ namespace Core {
 			// to set the controller parent.
 			// e.g. Header and Footer children being set in Controller
 			if($iReflectionClass->getConstructor() !== null) {
-				throw new Exception("Found defined constructor in " . $controllerClass . ". Use ".$controllerClass."::start(); instead.");
+				throw new \Core\Exception\Logic("Found defined constructor in " . $controllerClass . ". Use ".$controllerClass."::start(); instead.");
 			}
 
 			// Defined controllers should always extend on the master controller
 			if($iReflectionClass->isSubclassOf("Controller") !== true) {
-				throw new Exception($controllerClass." must derive from \Controller 'extends \Controller'.");
+				throw new \Core\Exception\Logic($controllerClass." must derive from \Controller 'extends \Controller'.");
 			}
 
 			$this->sanitizedControllerClass = $controllerClass;

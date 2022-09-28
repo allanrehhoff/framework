@@ -4,7 +4,7 @@ namespace Core {
 	/**
 	 * Sanitizes a string to a valid callable method name
 	 */
-	class MethodName {
+	class MethodName extends NameMatcher {
 		/**
 		 * @var string Default method name to be used, if a given method doesn't exist on a class.
 		 */
@@ -20,7 +20,7 @@ namespace Core {
 		 * @return void
 		 */
 		public function __construct(string $string) {
-			preg_match_all('/\w+/', $string, $temp);
+			preg_match_all(parent::REGEX, $string, $temp);
 
 			$pregLastError = preg_last_error();
 
@@ -36,7 +36,7 @@ namespace Core {
 				// Only in PHP7
 				if(defined("PREG_JIT_STACKLIMIT_ERROR") == true) $pregErrorMap[PREG_JIT_STACKLIMIT_ERROR] = "PCRE function call failed due to limited JIT stack space.";
 
-				throw new MethodNameException($pregErrorMap[$pregLastError], $pregLastError);
+				throw new \Error($pregErrorMap[$pregLastError], $pregLastError);
 			}
 
 			foreach ($temp[0] as $key => $word) {

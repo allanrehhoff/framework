@@ -129,7 +129,7 @@ namespace Core {
 
 		/**
 		 * Executes a given controller by name.
-		 * Reroutes to NotFouncController if a \Core\NotFoundException is thrown
+		 * Reroutes to NotFouncController if a \Core\Exception\NotFound is thrown
 		 * within the controller or any of it's child controllers.
 		 * @throws Exception
 		 * @param string $controller The controller name, alias the class name.
@@ -157,9 +157,9 @@ namespace Core {
 				$iController->start();
 				$iController->$methodName();
 				$iController->stop();
-			} catch(ForbiddenException $e) {
+			} catch(\Core\Exception\Forbidden $e) {
 				$iController = $this->executeController("Forbidden");
-			} catch(NotFoundException $e) {
+			} catch(\Core\Exception\NotFound $e) {
 				$iController = $this->executeController("NotFound");
 			}
 

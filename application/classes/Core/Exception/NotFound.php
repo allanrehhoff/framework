@@ -1,9 +1,8 @@
 <?php
-namespace Core {
+namespace Core\Exception {
 	use \Exception;
 
-	class NotFoundException extends Exception {
-
+	class NotFound extends Exception {
 		/**
 		 * Throw this whenever you want to redirect the current controller to a not found controller
 		 */

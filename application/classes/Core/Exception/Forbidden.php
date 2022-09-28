@@ -1,9 +1,6 @@
 <?php
-namespace Core {
-	use \Exception;
-
-	class ForbiddenException extends Exception {
-
+namespace Core\Exception {
+	class Forbidden extends \Exception {
 		/**
 		 * Throw this whenever you want to redirect the current controller to a "forbidden" controller
 		 */

@@ -26,12 +26,12 @@ namespace Core {
 
 		/**
 		* The actual parsing.
-		* @throws \Core\ConfigurationParserException
+		* @throws \Core\Exception\Configuration
 		* @return void
 		*/
 		private function parse(string $configurationFile) : void {
 			if(!is_file($configurationFile)) {
-				throw new ConfigurationException("The given configuration file '$configurationFile' could not be located.");
+				throw new \Core\Exception\Configuration("The given configuration file '$configurationFile' could not be located.");
 			}
 
 			$this->configurationFile = $configurationFile;
@@ -80,7 +80,7 @@ namespace Core {
 		* Sub-values can be accessed using a dot syntax.
 		* @param string $conf The name of the configuration to get value from.
 		* @return mixed null on failure.
-		* @throws \Core\ConfigurationParserException
+		* @throws \Core\Exception\Configuration
 		*/
 		public function get($conf = null) {
 			if($conf === null) {
@@ -92,7 +92,7 @@ namespace Core {
 
 			foreach ($paths as $path) {
 				if(!isset($configValue->$path)) {
-					throw new ConfigurationException($conf." is not a valid configuration");
+					throw new \Core\Exception\Configuration($conf." is not a valid configuration");
 					return null;
 				}
 
@@ -107,7 +107,7 @@ namespace Core {
 		/**
 		* Remove a configuration value
 		* @param string $conf Key of the setting to delete.
-		* @throws \Core\ConfigurationParserException
+		* @throws \Core\Exception\Configuration
 		* @return self
 		*/
 		public function delete(string $conf) : Configuration {
@@ -116,7 +116,7 @@ namespace Core {
 
 			foreach ($paths as $path) {
 				if(!isset($configValue->$path)) {
-					throw new ConfigurationException($conf." is not a valid configuration");
+					throw new \Core\Exception\Configuration($conf." is not a valid configuration");
 					return false;
 				}
 			}
