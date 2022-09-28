@@ -492,7 +492,23 @@
 				$statement = $this->prepare($query);
 
 				$tmpFilters = [];
-				foreach ($this->filters as $column => $value) $tmpFilters[":".$column] = "'".$value."'";
+				foreach ($this->filters as $column => $value) {
+					if(substr($column, 0, 1) !== ':') {
+						$arg = ":".$column;
+					} else {
+						$arg = $column;
+					}
+
+					$type = gettype($value);
+
+					if($type == "string") {
+						$value = "'".$value."'";
+					} else if($type == "boolean") {
+						$value = $value ? 1 : 0;
+					}
+
+					$tmpFilters[$arg] = $value;
+				}
 
 				return strtr($statement->queryString, $tmpFilters);
 			}
