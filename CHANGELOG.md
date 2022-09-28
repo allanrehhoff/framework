@@ -1,5 +1,5 @@
 # Changelog #
-v6
+v6.0.0
 - **This release is backwards incompatible.** 
 - Common controller method for all endpoints are now ::start(); instead of ::__construct();  
 - Core\ControllerName now validates constrollers using reflection.  
