@@ -86,7 +86,7 @@ namespace Core {
 		 * @return string
 		 */
 		private function maybeAddVersionNumber(string $url) : string {
-			if($this->iConfiguration->get("version.expose")) {
+			if($this->iConfiguration->get("version.expose") === true) {
 				$proto = SSL ? "https://" : "http://";
 				$string = $proto . $_SERVER["HTTP_HOST"];
 
@@ -106,37 +106,41 @@ namespace Core {
 		 * @return void
 		 */
 		private function addAssets() : void {
-			if(!empty($this->iConfiguration->get("javascript"))) {
-				foreach($this->iConfiguration->get("javascript") as $javascript) {
-					if(filter_var($javascript, FILTER_VALIDATE_URL)) {
-						$src = $javascript;
-					} else {
-						// Do not add files that does not exist in theme
-						if(file_exists($this->getTemplatePath($javascript)) === false) continue;
+			if(!empty($this->iConfiguration->get("assets.js"))) {
+				foreach($this->iConfiguration->get("assets.js") as $region => $javascripts) {
+					foreach($javascripts as $javascript) {
+						if(filter_var($javascript, FILTER_VALIDATE_URL)) {
+							$src = $javascript;
+						} else {
+							// Do not add files that does not exist in theme
+							if(file_exists($this->getTemplatePath($javascript)) === false) continue;
 
-						$src = $this->getDirectoryUri($javascript);
+							$src = $this->getDirectoryUri($javascript);
+						}
+
+						$src = $this->maybeAddVersionNumber($src);
+
+						Resource::get("Assets")->addJavascript($src);
 					}
-
-					$src = $this->maybeAddVersionNumber($src);
-
-					Resource::get("Assets")->addJavascript($src);
 				}
 			}
 
-			if(!empty($this->iConfiguration->get("stylesheets"))) {
-				foreach($this->iConfiguration->get("stylesheets") as $stylesheet) {
-					if(filter_var($stylesheet, FILTER_VALIDATE_URL)) {
-						$src = $stylesheet;
-					} else {
-						// Do not add files that does not exist in theme
-						if(file_exists($this->getTemplatePath($stylesheet)) === false) continue;
+			if(!empty($this->iConfiguration->get("assets.css"))) {
+				foreach($this->iConfiguration->get("assets.css") as $region => $stylesheets) {
+					foreach($stylesheets as $stylesheet) {
+						if(filter_var($stylesheet, FILTER_VALIDATE_URL)) {
+							$src = $stylesheet;
+						} else {
+							// Do not add files that does not exist in theme
+							if(file_exists($this->getTemplatePath($stylesheet)) === false) continue;
 
-						$src = $this->getDirectoryUri($stylesheet);
+							$src = $this->getDirectoryUri($stylesheet);
+						}
+
+						$src = $this->maybeAddVersionNumber($src);
+
+						Resource::get("Assets")->addStylesheet($src, $region);
 					}
-
-					$src = $this->maybeAddVersionNumber($src);
-
-					Resource::get("Assets")->addStylesheet($src);
 				}
 			}
 		}

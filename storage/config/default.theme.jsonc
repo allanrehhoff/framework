@@ -5,11 +5,17 @@
 		"version": "@version",
 		"expose": true
 	},
-	"javascript": [
-		"javascript/jquery-3.5.1.min.js"
-	],
-	"stylesheets": [
-		"stylesheets/screen.css",
-		"stylesheets/responsive.css"
-	]
+	"assets": {
+		"js": {
+			"footer": [
+				"assets/js/jquery-3.5.1.min.js"
+			]
+		},
+		"css": {
+			"header": [
+				"assets/css/screen.css",
+				"assets/css/responsive.css"
+			]
+		}
+	}
 }

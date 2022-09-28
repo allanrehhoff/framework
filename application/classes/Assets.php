@@ -18,8 +18,8 @@
 		* @param string $media Media query this stylesheet should apply to.
 		* @return void
 		*/
-		public function addStylesheet($style, $media = "all") {
-			$this->stylesheets[$media][] = $style;
+		public function addStylesheet(string $style, string $region = "header") {
+			$this->stylesheets[$region][] = $style;
 		}
 
 		/**
@@ -28,17 +28,17 @@
 		* @param string $region Region of the DOM where this javascript should be rendered.
 		* @return void
 		*/
-		public function addJavascript($script, $region = "footer") {
+		public function addJavascript(string $script, string $region = "footer") {
 			$this->javascript[$region][] = $script;
 		}
 
 		/**
 		* Get current stylesheets to be linked.
-		* @param $media Only return stylesheets in this media query.
+		* @param $region Only return stylesheets in this region.
 		* @return array
 		*/
-		public function getStylesheets($media = "all") {
-			return isset($this->stylesheets[$media]) ? $this->stylesheets[$media] : [];
+		public function getStylesheets(string $region = "header") {
+			return isset($this->stylesheets[$region]) ? $this->stylesheets[$region] : [];
 		}
 
 		/**
@@ -46,7 +46,7 @@
 		* @param string $region Only return javascript files belonging to this region.
 		* @return array
 		*/
-		public function getJavascript($region = "footer") {
+		public function getJavascript(string $region = "footer") {
 			return isset($this->javascript[$region]) ? $this->javascript[$region] : [];
 		}
 	}
