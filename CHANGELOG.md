@@ -1,4 +1,9 @@
 # Changelog #
+v6.0.1
+- Fixed several bugs from previous release.  
+- Error handler now responds with JSON if header is set X-Requested-With: XMLHttpRequest.  
+- Coding standards
+  
 v6.0.0
 - **This release is backwards incompatible.** 
 - Common controller method for all endpoints are now ::start(); instead of ::__construct();  

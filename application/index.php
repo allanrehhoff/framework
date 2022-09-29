@@ -5,14 +5,14 @@
 	*
 	* Don't forget to read the documentation.
 	*
-	* @link https://bitbucket.org/allanrehhoff/framework
+	* @link https://github.com/allanrehhoff/framework
 	* @author Allan Thue Rehhoff
 	*/
 	require "startup.php";
 
 	$args = CLI ? $argv : $_GET;
-	$controller = Resource::set(new Core\Application($args))->run();
+	$iController = Resource::set(new Core\Application($args))->run();
 
-	extract($controller->getData(), EXTR_SKIP);
+	extract($iController->getData(), EXTR_SKIP);
 
-	require $controller->getView();
+	require $iController->getView();

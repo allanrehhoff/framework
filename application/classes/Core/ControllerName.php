@@ -5,7 +5,7 @@ namespace Core {
 	/**
 	 * Sanitizes and validates a controller class name is valid for use.
 	 */
-	class ControllerName extends NameMatcher {
+	class ControllerName {
 		/**
 		 * @var string The string to be used as base
 		 */
@@ -31,7 +31,7 @@ namespace Core {
 			$controllerClassParts = [];
 
 			foreach(explode('/', $string) as $segment) {
-				$base = preg_replace(parent::REGEX, ' ', $segment);
+				$base = preg_replace("/\W+/", ' ', $segment);
 				$words = explode(' ', $base);
 				$words = array_map("ucfirst", $words);
 

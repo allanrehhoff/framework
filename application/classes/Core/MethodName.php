@@ -4,7 +4,7 @@ namespace Core {
 	/**
 	 * Sanitizes a string to a valid callable method name
 	 */
-	class MethodName extends NameMatcher {
+	class MethodName {
 		/**
 		 * @var string Default method name to be used, if a given method doesn't exist on a class.
 		 */
@@ -21,7 +21,7 @@ namespace Core {
 		 * @return void
 		 */
 		public function __construct(string $string) {
-			preg_match_all(parent::REGEX, $string, $temp);
+			preg_match_all("/\w+/", $string, $temp);
 
 			$pregLastError = preg_last_error();
 

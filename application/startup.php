@@ -15,11 +15,12 @@
 	define("TAB", "\t");
 	define("CRLF", CR.LF);
 	define("BR", "<br />");
+	define("AJAX", "xmlhttprequest" == strtolower( $_SERVER["HTTP_X_REQUESTED_WITH"] ?? '' ));
 	define("SSL", !empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == 'on');
 	define("CLI", php_sapi_name() == "cli");
 	define("APP", __DIR__);
 	define("DS", DIRECTORY_SEPARATOR);
-	define("STORAGE", realpath("../storage"));
+	define("STORAGE", realpath(APP."/../storage"));
 
 	// Output buffering
 	// The ob_gzhandler callback returns false if browser doesn't support gzip
@@ -36,20 +37,20 @@
 	date_default_timezone_set("Europe/Copenhagen");
 
 	// Exception handler
-	set_exception_handler(function($exception) {
+	set_exception_handler(function($iException) {
 		$stacktrace = [];
-		$trace = array_reverse($exception->getTrace());
+		$trace = array_reverse($iException->getTrace());
 
 		foreach($trace as $item) {
 			$stacktrace[] = (isset($item["file"]) ? $item["file"] : "<unknown file>")." line ".(isset($item["line"]) ? $item["line"] : "<unknown line>")." calling ".$item["function"]."()".LF;
 		}
 
 		if(CLI) {
-			print "Uncaught ".get_class($exception) . ':'.LF;
-			print "Code: ".$exception->getCode().LF;
-			print "File: ".$exception->getFile().LF;
-			print "Line: ".$exception->getLine().LF;
-			print "Message: ".$exception->getMessage().LF;
+			print "Uncaught ".get_class($iException) . ':'.LF;
+			print "Message: ".$iException->getMessage().LF;
+			print "Code: ".$iException->getCode().LF;
+			print "File: ".$iException->getFile().LF;
+			print "Line: ".$iException->getLine().LF;
 			print "Stacktrace: ".LF;
 			print TAB.implode(LF, $stacktrace);
 			exit(1);
@@ -61,17 +62,32 @@
 				header("Retry-After: 3600");
 			}
 
-			print "<div style=\"font-family: monospace; background-color: #f44336; border-color: #f32c1e; color:#FFF; padding: 15px 15px 15px 15px;\">
-					    <h1 style=\"margin:0px;\">Uncaught ".get_class($exception).":</h1>".BR."</h1>
-						<strong>Code: </strong>".$exception->getCode().BR."
-						<strong>File: </strong>".$exception->getFile().BR."
-						<strong>Line: </strong>".$exception->getLine().BR."
-						<strong>Message: </strong>".$exception->getMessage().BR."
-						<strong>Stacktrace: </strong>".BR."
-						<ol style=\"margin-top:0px;\">".LF."
-							<li>".implode("</li><li>", $stacktrace)."</li>
-						</ol>
-					</div>";
+			if(AJAX) {
+				header("Content-Type: applicattion/json");
+				print json_encode([
+					"status" => "error",
+					"data" => [
+						"uncaught" => get_class($iException),
+						"message" => $iException->getMessage(),
+						"code" => $iException->getCode(),
+						"file" => $iException->getFile(),
+						"line" => $iException->getLine()
+					],
+					"trace" => $stacktrace
+				]);
+			} else {
+				print "<div style=\"font-family: monospace; background-color: #f44336; border-color: #f32c1e; color:#FFF; padding: 15px 15px 15px 15px;\">
+							<h1 style=\"margin:0px;\">Uncaught ".get_class($iException).":</h1>".BR."</h1>
+							<strong>Message: </strong>".$iException->getMessage().BR."
+							<strong>Code: </strong>".$iException->getCode().BR."
+							<strong>File: </strong>".$iException->getFile().BR."
+							<strong>Line: </strong>".$iException->getLine().BR."
+							<strong>Stacktrace: </strong>".BR."
+							<ol style=\"margin-top:0px;\">".LF."
+								<li>".implode("</li><li>", $stacktrace)."</li>
+							</ol>
+						</div>";
+			}
 		}
 	});
 
