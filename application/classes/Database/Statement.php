@@ -4,18 +4,21 @@
 		use PDOStatement;
 
 		class Statement extends PDOStatement {
-			private $_connection;
-
 			protected function __construct(Connection $connection) {
-				$this->_connection = $connection;
+
 			}
 
 			/**
 			 * Fetch the column queried
+			 * 
 			 * @return array
 			 */
 			public function fetchCol() : array {
-				return $this->fetchAll(PDO::FETCH_COLUMN);
+				$result = $this->fetchAll(PDO::FETCH_COLUMN);
+				
+				// PHP < 8.0.0 compat. PDOStatement::fetchAll(); will return false
+				// if the result set was empty, fixed in PHP 8.0.0
+				return $result !== false ? $result : [];
 			}
 		}
 	}
