@@ -1,26 +1,9 @@
 <?php
 namespace Core {
-	use \Exception;
-
 	/**
 	 * Sanitizes and validates a controller class name is valid for use.
 	 */
-	class ControllerName {
-		/**
-		 * @var string The string to be used as base
-		 */
-		private $string = '';
-
-		/**
-		 * @var string Holds the sanitized name.
-		 */
-		private $sanitizedControllerName = '';
-
-		/**
-		 * @var string Holds the sanitized class.
-		 */
-		private $sanitizedControllerClass = '';
-
+	class ControllerName extends MVCStructure {
 		/**
 		 * @param string Takes a single argument as a string,
 		 * 				this will sanitized to a valid controller class
@@ -39,20 +22,18 @@ namespace Core {
 			}
 
 			$controllerClass = implode("\\", $controllerClassParts);
-			$controllerClass .= "Controller";
-
-			if(class_exists($controllerClass) === false) {
-				$controllerClass = "NotFoundController";
-			}
-
-			$iReflectionClass = new \ReflectionClass($controllerClass); 
+			$controllerClass .= \Controller::class;
 
 			// Constrollers must not have a constructor
-			// as Core\Application relies on a constroller instance
-			// to set the controller parent.
-			// e.g. Header and Footer children being set in Controller
-			if($iReflectionClass->getConstructor() !== null) {
-				throw new \Core\Exception\Logic("Found defined constructor in " . $controllerClass . ". Use ".$controllerClass."::start(); instead.");
+			// as \Core\Application relies on a constroller instance
+			// to set the controller parent, and dependency objects
+			// Fx. Header and Footer children being set as children
+			// in controllers, and \Core\Request being injected
+			$iReflectionClass = new \ReflectionClass($controllerClass);
+			$iReflectionMethod = $iReflectionClass->getConstructor();
+
+			if($iReflectionMethod !== null && $iReflectionMethod->getDeclaringClass()->getName() !== \Controller::class) {
+				throw new \Core\Exception\Logic("Illegal constructor method in " . $controllerClass . "; Use ".$controllerClass."::start(); instead.");
 			}
 
 			// Defined controllers should always extend on the master controller
@@ -60,23 +41,7 @@ namespace Core {
 				throw new \Core\Exception\Logic($controllerClass." must derive from \Controller 'extends \Controller'.");
 			}
 
-			$this->sanitizedControllerClass = $controllerClass;
-		}
-
-		/**
-		 * Returns the sanitized controller class
-		 * @return string
-		 */
-		public function getSanitizedControllerClass() : string {
-			return $this->sanitizedControllerClass;
-		}
-
-		/**
-		 * Also returns the sanitized controller class
-		 * @return string
-		 */
-		public function __toString() {
-			return $this->getSanitizedControllerClass();
+			$this->sanitizedString = $controllerClass;
 		}
 	}
 }

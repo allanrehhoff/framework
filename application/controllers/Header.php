@@ -5,6 +5,6 @@
 			if($this->getParent() == null) throw new \Core\Exception\NotFound();
 
 			$this->data["header"] = $this->getView("header");
-			$this->data["javascript"]  = $this->iAssets->getJavascript("footer");
+			$this->data["javascript"]  = $this->getTheme()->getAssets()->getJavascript("footer");
 		}
 	}

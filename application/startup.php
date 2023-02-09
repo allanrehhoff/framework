@@ -15,12 +15,13 @@
 	define("TAB", "\t");
 	define("CRLF", CR.LF);
 	define("BR", "<br />");
-	define("AJAX", "xmlhttprequest" == strtolower( $_SERVER["HTTP_X_REQUESTED_WITH"] ?? '' ));
-	define("SSL", !empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == 'on');
-	define("CLI", php_sapi_name() == "cli");
-	define("APP", __DIR__);
 	define("DS", DIRECTORY_SEPARATOR);
-	define("STORAGE", realpath(APP."/../storage"));
+
+	define("IS_AJAX", "xmlhttprequest" == strtolower( $_SERVER["HTTP_X_REQUESTED_WITH"] ?? '' ));
+	define("IS_SSL", !empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == 'on');
+	define("IS_CLI", php_sapi_name() == "cli");
+	define("APP_PATH", __DIR__);
+	define("STORAGE", realpath(APP_PATH."/../storage"));
 
 	// Output buffering
 	// The ob_gzhandler callback returns false if browser doesn't support gzip
@@ -45,7 +46,7 @@
 			$stacktrace[] = (isset($item["file"]) ? $item["file"] : "<unknown file>")." line ".(isset($item["line"]) ? $item["line"] : "<unknown line>")." calling ".$item["function"]."()".LF;
 		}
 
-		if(CLI) {
+		if(IS_CLI) {
 			print "Uncaught ".get_class($iException) . ':'.LF;
 			print "Message: ".$iException->getMessage().LF;
 			print "Code: ".$iException->getCode().LF;
@@ -62,7 +63,7 @@
 				header("Retry-After: 3600");
 			}
 
-			if(AJAX) {
+			if(IS_AJAX) {
 				header("Content-Type: applicattion/json");
 				print json_encode([
 					"status" => "error",
@@ -106,10 +107,10 @@
 	spl_autoload_register(function($className) {
 		$className = str_replace("\\", "/", $className);
 
-		$classFile = APP."/classes/".$className.".php";
+		$classFile = APP_PATH."/classes/".$className.".php";
 
 		if($className != "Controller" && substr($className, -10) == "Controller") {
-			$classFile = APP."/controllers/".substr($className, 0, -10).".php";
+			$classFile = APP_PATH."/controllers/".substr($className, 0, -10).".php";
 		}
 
 		if(file_exists($classFile) === true) {

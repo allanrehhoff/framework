@@ -1,9 +1,8 @@
-# Custom PHP Framework - Introduction (Version 6)
-This is not what you'd typically associate with a fully functional MVC framework, there's no "Models" directory, instead "entities" are used, and when needed regular PHP classes. More on that later. 
-The intention for this is to prevent the developer from writing complete spaghetti, while being lightweight and portable.  
+# Custom PHP Framework - Introduction (Version 7)
+A lightweight custom framework using well-known and intuitive patterns, without the need for manually defining routes.
 
-Therefore this framework will not be bundled with bloatware such as modules/components/addons/plugins or other third-party libraries, other than what will actually speed up development.  
-Rhe only exception to this rule is jQuery, while it is not strictly required, or mandatory to use, it simply is less verbose than native javascript, and often require fewer steps to achieve a certain task.  
+This framework will not be bundled with bloatware such as modules/components/addons/plugins or other third-party libraries.   
+The only exception to this rule is jQuery, while it is not strictly required, or mandatory to use, it simply is less verbose than native javascript, and often require fewer steps to achieve a certain task.  
 It is completely safe to remove this from the default theme files if preffered.  
 
 In short, all this does is serve as a kickstart to get a readable and stable codebase when starting up a new custom web project.
@@ -37,7 +36,7 @@ By design there's no way for PHP to validate that you (namely the developer),
 define your methods in camelCaseFormat, so please! for you and the next developers sake, do this, and be strict about it. 
 
 Any other parts beyond arg(1) ARE NOT passed directly to the controller or any methods, these are for you to pick up using the applications arg() method.  
-The **\Core\Application()->arg();** method starts from index 0, whereas the first two indices are already used by the core to determine the route.  
+The **\Resource::getRouter()->arg();** method starts from index 0, whereas the first two indices are already used by the core to determine the route.  
 
 ```php
 <?php
@@ -48,7 +47,7 @@ The **\Core\Application()->arg();** method starts from index 0, whereas the firs
 		}
 
 		public function tiger() {
-			var_dump($this->application->arg(2)); // indo-chinese
+			var_dump(\Resource::getRouter()->arg(2)); // indo-chinese
 		}
 	}
 ```
@@ -75,8 +74,8 @@ A view must be by each controller, throught the **Controller::setView();**
 
 Children controllers will be able to set or modify any data set by the parent controller.  
 
-In any controllers of the heirachy you may throw a `\Core\NotFoundException` to reroute the entire stack to **NotFoundController**   
-You may also throw a `\Core\ForbiddenException` to instead reroute to **ForbiddenController**
+In any controllers of the heirachy you may throw a `\Core\Exceptions\NotFound` to reroute the entire stack to **NotFoundController**   
+You may also throw a `\Core\Exceptions\Forbidden` to instead reroute to **ForbiddenController**
 
 > *NOTE:*  
 > The default method invoked is **index** this will happen if arg(1) is nowhere to be found in the given controller, or arg(1) is void.
@@ -174,7 +173,7 @@ Examples:
 
 ```php
 // The following would return Framework/1.0.0
-Resource::get("Core\Configuration")->get("http.useragent");
+Resource::getConfiguration()->get("http.useragent");
 ```
 
 Variables are parsed recursively, and therefore values from nested objects can also be used, using a dot syntax.
@@ -235,11 +234,10 @@ Example:
 ```
   
 This structure is in place to avoid singletons being misused.  
-Albeit this framework currently ships with a \Singleton(); class, it's use is discouraged, as it is currently deprecated, and to be removed later on.  
   
 ## Database Entities  
 For easier data manipulation, data objects should extend the **\Database\Entity** class.  
-Every class that extends **\Database\DBObject** must implement the following methods.  
+Every class that extends **\Database\Entity** must implement the following methods.  
 
 - getTableName(); // Table in which this data object should store data.  
 - getKeyField(); // The primary key of the table in which this object stores data.  
@@ -264,29 +262,29 @@ Use the \Database\Connection class to perform manual queries if needed.
 
 ```php
 <?php
-\Resource::get("Database\Connection")->query("UPDATE animals SET `extinct` = :value WHERE name = :name", ["value" => true, "name" => "Asian Rhino"]);
+\Resource::getDatabaseConnection()->query("UPDATE animals SET `extinct` = :value WHERE name = :name", ["value" => true, "name" => "Asian Rhino"]);
 ```
 
 This could also be written as follows:  
 ```php
 <?php
-\Resource::get("Database\Connection")->update("animals", ["extinct" => true], ["name" => "Asian Rhino"]);
+\Resource::getDatabaseConnection()->update("animals", ["extinct" => true], ["name" => "Asian Rhino"]);
 ```
 
 Queries with a return value will be fetched as objects, for instance:  
 ```php
 <?php
-\Resource::get("Database\Connection")->select("animals");
+\Resource::getDatabaseConnection()->select("animals");
 ```
 
 ```php
 <?php
-\Resource::get("Database\Connection")->update("animals", ["extinct" => true], ["name" => "Asian Rhino"]);
+\Resource::getDatabaseConnection()->update("animals", ["extinct" => true], ["name" => "Asian Rhino"]);
 ```
 
 ```php
 <?php
-\Resource::get("Database\Connection")->insert("animals", ["name" => "Sumatran Tiger", "extinct" => false]);
+\Resource::getDatabaseConnection()->insert("animals", ["name" => "Sumatran Tiger", "extinct" => false]);
 ```
 
 Advanced filters are also suported in where clauses.
@@ -294,20 +292,26 @@ Advanced filters are also suported in where clauses.
 ```php
 <?php
 // Perform when WHERE .. IN (...)
-\Resource::get("Database\Connection")->select("animals", ["name" => ["Asian Rhino", "Sumatran Tiger"]]);
+\Resource::getDatabaseConnection()->select("animals", ["name" => ["Asian Rhino", "Sumatran Tiger"]]);
 ```
 
 ```php
 <?php
 // Uses the spaceship-operator in MySQL
-\Resource::get("Database\Connection")->select("animals", ["name" => NULL]);
+\Resource::getDatabaseConnection()->select("animals", ["name" => NULL]);
+```
+
+```php
+<?php
+// Uses the spaceship-operator in MySQL
+\Resource::getDatabaseConnection()->search("animals", ["name NOT IN :animalNames"], ["animalNames" => ["Indo chinese", "Alligator"]]);
 ```
 
 ## The Assets class
 In the DOM namespace you'll find the Document class, this can be used to add stylesheets and javscript to the page.  
 Do either of the following to achieve this.  
-**\Assets::addStylesheet();**, **\Assets::addJavascript();** methods.  
+**\Resource::getAssets::addStylesheet();**, **\Resource::getAssets()->addJavascript();** methods.  
 ressources are rendered in the same order they are added  
   
-If you desire to add custom media stylesheets make use of the second parameter **$media** in **\Assets::addStylesheet();**  
-Same goes for the **\Assets::addJavascript();** method for other regions than the footer.  
+If you desire to add custom media stylesheets make use of the second parameter **$media** in **\\Resource::getAssets()->addStylesheet();**  
+Same goes for the **\\Resource::getAssets()->addJavascript();** method for other regions than the footer.  

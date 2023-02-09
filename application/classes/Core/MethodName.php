@@ -4,16 +4,11 @@ namespace Core {
 	/**
 	 * Sanitizes a string to a valid callable method name
 	 */
-	class MethodName {
+	class MethodName extends MVCStructure {
 		/**
 		 * @var string Default method name to be used, if a given method doesn't exist on a class.
 		 */
 		const DEFAULT = "index";
-
-		/**
-		 * @var string Holds the sanitized method name.
-		 */
-		private $sanitizedMethodName = '';
 
 		/**
 		 * @param string Takes a single argument as a string, this will be the method name to use.
@@ -40,27 +35,11 @@ namespace Core {
 				throw new \Error($pregErrorMap[$pregLastError], $pregLastError);
 			}
 
-			foreach ($temp[0] as $key => $word) {
+			foreach($temp[0] as $key => $word) {
 				$temp[$key] = ucfirst(strtolower($word)); 
 			}
 
-			$this->sanitizedMethodName = lcfirst(implode('', $temp));
-		}
-
-		/**
-		 * Returns the sanitized method name
-		 * @return string
-		 */
-		public function getSanitizedMethodName() : string {
-			return $this->sanitizedMethodName;
-		}
-
-		/**
-		 * Also returns the sanitized method name
-		 * @return string
-		 */
-		public function __toString() {
-			return $this->getSanitizedMethodName();
+			$this->sanitizedString = lcfirst(implode('', $temp));
 		}
 	}
 }

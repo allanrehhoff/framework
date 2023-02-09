@@ -1,4 +1,21 @@
 # Changelog #
+v7.0.0  
+- **This release is backwards incompatible.** 
+- Updating Database\Conection library to latest version. 
+- Added helper methods to \Resource.  
+- Added new \Core\Router class.  
+- Added new \Core\Request class.  
+- Restructured index.php.  
+- First steps in moving towards a dependency injection pattern.  
+- .htaccess no longer rewrites request URI to $_GET["route"]
+- Moved \Core\Configuration to global namespace, as it's likely to be used elsewhere.  
+- Added new class \Core\MVCStructure used by \Core\ControllerName and \Core\MethodName.  
+- Updated README.md documentation.  
+- Dropping PHP7 support, as it has reached end of life.  
+
+v6.0.2  
+- Empty strings in data arrays will now be converted to NULL values
+
 v6.0.1
 - Fixed several bugs from previous release.  
 - Error handler now responds with JSON if header is set X-Requested-With: XMLHttpRequest.  

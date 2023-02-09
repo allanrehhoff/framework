@@ -5,6 +5,6 @@
 			if($this->getParent() == null) throw new \Core\Exception\NotFound();
 
 			$this->data["footer"] = $this->getView("footer");
-			$this->data["stylesheets"] = $this->iAssets->getStylesheets("header");
+			$this->data["stylesheets"] = $this->getTheme()->getAssets()->getStylesheets("header");
 		}
 	}

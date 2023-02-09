@@ -1,4 +1,5 @@
 <?php
+namespace Core {
 	/**
 	* Central class for handling javascripts and stylesheets to be rendered.
 	*/
@@ -50,3 +51,4 @@
 			return isset($this->javascript[$region]) ? $this->javascript[$region] : [];
 		}
 	}
+}

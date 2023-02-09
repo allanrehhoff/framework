@@ -106,7 +106,6 @@
 			 * 
 			 * @return mixed
 			 */
-			#[\ReturnTypeWillChange]
 			public function next() : void {
 				next($this->items);
 			}

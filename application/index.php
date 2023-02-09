@@ -10,8 +10,25 @@
 	*/
 	require "startup.php";
 
-	$args = CLI ? $argv : $_GET;
-	$iController = Resource::set(new Core\Application($args))->run();
+	// Global state objects
+	\Resource::set(new \Configuration(STORAGE . "/config/application.jsonc"));
+
+	\Resource::set(new \Database\Connection(
+		\Resource::getConfiguration()->get("database.host"),
+		\Resource::getConfiguration()->get("database.username"),
+		\Resource::getConfiguration()->get("database.password"),
+		\Resource::getConfiguration()->get("database.name")
+	));
+
+	// Other objects
+	$iRequest = new \Core\Request();
+
+	$iRouter = new \Core\Router($iRequest);
+
+	$iApplication = new \Core\Application($iRouter);
+
+	// Render the entire thing
+	$iController = $iApplication->run();
 
 	extract($iController->getData(), EXTR_SKIP);
 

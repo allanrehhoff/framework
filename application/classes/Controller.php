@@ -4,35 +4,36 @@
 	* @author Allan Thue Rehhoff
 	*/
 	abstract class Controller {
+
 		/**
 		 * @var \Controller Holds the parent controller instance
 		 */
 		protected $parent = null;
 
 		/**
-		 * @var \Core\Application Holds the current application instance.
-		 */
-		protected $iApplication;
-
-		/**
-		 * @var \Document Holds the \Document instance
-		 */
-		protected $iDocument;
-
-		/**
-		 * @var \Core\Configuration Holds the \Configuration instance
-		 */
-		protected $iConfiguration;
-
-		/**
-		 * @var \Database\Connection Holds the \Database instance
-		 */
-		protected $iDatabase;
-
-		/**
-		 * @var object $_GET, $_POST, $_FILES and $_COOKIE merged together.
+		 * @var \Core\Request Current request object
 		 */
 		protected $request;
+
+		/**
+		 * @var \Core\Application The application object
+		 */
+		protected $application;
+
+		/**
+		 * @var \Core\Router Current router object in use
+		 */
+		protected $router;
+
+		/**
+		 * @var \Core\Theme Current theme object
+		 */
+		protected $theme;
+
+		/**
+		 * @var \Core\Assets
+		 */
+		protected $assets;
 
 		/**
 		 * @var string Page title to be displayed
@@ -45,11 +46,6 @@
 		protected $data = [];
 
 		/**
-		 * @var \Core\Theme The current theme instance.
-		 */
-		protected $iTheme;
-
-		/**
 		 * @var array Child controllers classes to be executed when the main one finalizes.
 		 */
 		protected $children = [];
@@ -60,42 +56,50 @@
 		abstract protected function index();
 
 		/**
+		 * Extending child controllers must not have a constructor.
+		 */
+		public function __construct(\Core\Application $iApplication) {
+			$this->application = $iApplication;
+			$this->router = $this->application->getRouter();
+			$this->request = $this->router->getRequest();
+		}
+
+		/**
 		 * Constructs the overall environment, setting up helpers and initial variables.
+		 * 
 		 * @return void
 		 */
 		final public function start() {
-			$this->iApplication  = Resource::get("Core\Application");
-			$this->iDatabase 	 = Resource::get("Database\Connection");
+			if(IS_CLI === false) {
+				//$this->request = (object) [
+				//	"get" => $_GET,
+				//	"post" => $_POST,
+				//	"files" => $_FILES,
+				//	"cookie" => $_COOKIE
+				//];
 
-			$this->iConfiguration = $this->iApplication->getConfiguration();
-
-			$this->setTitle(array_slice($this->iApplication->getArgs(), -1)[0]);
-
-			if(CLI === false) {
-				$this->request = (object) [
-					"get" => $_GET,
-					"post" => $_POST,
-					"files" => $_FILES,
-					"cookie" => $_COOKIE
-				];
-
-				$this->iAssets = Resource::set(new \Assets);
-				$this->iTheme  = Resource::set(new \Core\Theme($this->iConfiguration->get("theme")));
+				$this->assets = new \Core\Assets();
+				$this->theme = new \Core\Theme($this->assets);
 			}
 
 			if($this->getParent() === null) {
-				$this->children[] = "Header";
-				$this->children[] = "Footer";
+				$this->children[] = new \Core\ControllerName("Header");
+				$this->children[] = new \Core\ControllerName("Footer");
+
+				$this->setTitle(array_slice($this->router->getArgs(), -1)[0]);
 			}
 		}
 		
 		/**
 		 * Contains accessible theme variables.
+		 * 
 		 * @uses \Document
 		 * @return void
 		 */
 		final public function stop() : void {
-			$this->data["bodyClasses"] = $this->getBodyClasses();
+			if($this->getParent() === null) {
+				$this->data["bodyClasses"] = $this->getBodyClasses();
+			}
 		}
 
 		/**
@@ -108,6 +112,7 @@
 
 		/**
 		 * Set data in current controller
+		 * 
 		 * @param array $data Array of data to set.
 		 * @return void
 		 */
@@ -117,31 +122,44 @@
 
 		/**
 		 * Set current controllers parent.
+		 * 
 		 * @param \Controller $iController Controller instance to use as parent.
 		 */
-		final public function setParent(Controller $iController) {
+		final public function setParent(\Controller $iController) {
 			$this->parent = $iController;
 		}
 
 		/**
 		 * Get current parent controller instance
+		 * 
 		 * @return \Controller The current parent controller instance, will be null for the root controller.
 		 */
-		final public function getParent() : ?Controller {
+		final public function getParent() : ?\Controller {
 			return $this->parent;
+		}
+		
+		/**
+		 * Get names of children controllers
+		 * 
+		 * @return array
+		 */
+		final public function getChildren() : array {
+			return $this->children;
 		}
 
 		/**
 		 * Set a dynamic value for the title tag.
+		 * 
 		 * @param string $title a title to display in a template file.
 		 * @return void
 		 */
 		final public function setTitle(string $title) : void {
-			$this->data["title"] = sprintf($this->iConfiguration->get("base_title"), $title);
+			$this->data["title"] = sprintf(\Resource::getConfiguration()->get("base_title"), $title);
 		}
 
 		/**
 		 * Get the current page title to be displayed.
+		 * 
 		 * @return string
 		 */
 		final public function getTitle() : string {
@@ -149,15 +167,8 @@
 		}
 
 		/**
-		 * Get called controller name, without 'Controller' appendix
-		 * @return string
-		 */
-		final public function getName() : string {
-			return preg_replace("/Controller$/", '',  get_called_class());
-		}
-
-		/**
 		 * Get the path to a template file, ommit .tpl.php extension
+		 * 
 		 * @param string $template name of the template file to get path for,
 		 * @return string
 		 */
@@ -166,21 +177,23 @@
 				$template = $this->data["view"];
 			}
 
-			$view = $this->iTheme->getTemplatePath($template . ".tpl.php");
+			$view = $this->theme->getTemplatePath($template . ".tpl.php");
 
 			return $view;
 		}
 
 		/**
 		 * Checks if the requested controller has a corresponding view.
+		 * 
 		 * @return bool
 		 */
 		final public function hasView() : bool {
-			return file_exists($this->getView()) && !CLI;
+			return file_exists($this->getView()) && !IS_CLI;
 		}
 
 		/**
 		 * Convenience wrapper, for setting/overriding a view within any controller
+		 * 
 		 * @param string name of the view to use, without .tpl.php extensions.
 		 * @return bool
 		 */
@@ -191,36 +204,60 @@
 		/**
 		 * Determines classes suiteable for the <body> tag
 		 * These classes can be used for easier identification of controller and view files used
-		 * or CSS styling for specific conditions 
+		 * or CSS styling for specific conditions
+		 * 
 		 * @return array
 		 */
 		final public function getBodyClasses() : string {
+			$controllerName = $this->application->getExecutedControllerName()->toStringWithoutSuffix();
+			$methodName 	= $this->application->getCalledMethodName()->toStringWithoutSuffix();
+
 			$bodyClasses = [];
-			$bodyClasses[] = $this->iApplication->getExecutedControllerName();
-			$bodyClasses[] = $this->iApplication->getExecutedControllerName() . '-' . $this->iApplication->getCalledMethodName();
+			$bodyClasses[] = $controllerName;
+			$bodyClasses[] = $controllerName . '-' . $methodName;
 
 			foreach($this->getChildren() as $childControllerName) {
-				$bodyClasses[] = $childControllerName;
+				$bodyClasses[] = $childControllerName->toStringWithoutSuffix();
 			}
 
 			$bodyClasses[] = $this->data["view"];
 
-			foreach($this->iApplication->getArgs() as $arg) {
+			foreach($this->router->getArgs() as $arg) {
 				$bodyClasses[] = htmlentities($arg); // XSS
 			}
 
 			foreach($bodyClasses as $i => $bodyClass) {
-				$bodyClasses[$i] = strtolower(($bodyClasses[$i]));
+				$bodyClasses[$i] = strtolower($bodyClass);
 			} 
 
 			return implode(' ', array_unique($bodyClasses));
 		}
 
 		/**
-		 * Get names of children controllers
-		 * @return array
+		 * @return \Core\Theme
 		 */
-		final public function getChildren() : array {
-			return $this->children;
+		protected function getTheme() : \Core\Theme {
+			return $this->theme;
+		}
+
+		/**
+		 * @return \Core\Application
+		 */
+		protected function getApplication() : \Core\Application {
+			return $this->application;
+		}
+
+		/**
+		 * @return \Core\Router
+		 */
+		protected function getRouter() : \Core\router {
+			return $this->router;
+		}
+
+		/**
+		 * @return \Core\Router
+		 */
+		protected function getRequest() : \Core\Request {
+			return $this->request;
 		}
 	}
