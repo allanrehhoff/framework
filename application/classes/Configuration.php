@@ -91,7 +91,6 @@ class Configuration {
 		foreach ($paths as $path) {
 			if(!isset($configValue->$path)) {
 				throw new \Core\Exception\Logic($conf." is not a valid configuration");
-				return null;
 			}
 
 			$configValue = $configValue->$path;
