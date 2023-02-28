@@ -71,13 +71,6 @@
 		 */
 		final public function start() {
 			if(IS_CLI === false) {
-				//$this->request = (object) [
-				//	"get" => $_GET,
-				//	"post" => $_POST,
-				//	"files" => $_FILES,
-				//	"cookie" => $_COOKIE
-				//];
-
 				$this->assets = new \Core\Assets();
 				$this->theme = new \Core\Theme($this->assets);
 			}
