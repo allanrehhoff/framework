@@ -45,7 +45,7 @@ namespace Core {
 		 * Get path that should be used by the router
 		 * @return string|array
 		 */
-		public function getPath() : string|array {
+		public function getPath() : array {
 			return IS_CLI ? $this->server["argv"] : $this->server["REQUEST_URI"];
 		}
 
