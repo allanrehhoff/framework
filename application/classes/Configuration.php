@@ -12,7 +12,7 @@ class Configuration {
 	 * @var string Path to the configuration file being parsed.
 	 */
 	private $configurationFile;
-	
+
 	/**
 	* The constructor starts parsing of the configuration file.
 	*/
@@ -56,7 +56,7 @@ class Configuration {
 			*/
 			$variables = preg_match_all("/\{{2}([^{^}]+)\}{2}/", $configValue, $matches);
 
-			for ($i = 0; $i < count($matches[0]); $i++) { 
+			for($i = 0; $i < count($matches[0]); $i++) { 
 				$configValue = str_replace($matches[0][$i], $this->get($matches[1][$i]), $configValue);
 			}
 		} else if(is_object($configValue) === true) {
@@ -88,7 +88,7 @@ class Configuration {
 		$paths = explode('.', $conf);
 		$configValue = $this->parsedConfig;
 
-		foreach ($paths as $path) {
+		foreach($paths as $path) {
 			if(!isset($configValue->$path)) {
 				throw new \Core\Exception\Logic($conf." is not a valid configuration");
 			}
