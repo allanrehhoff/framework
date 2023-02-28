@@ -35,6 +35,10 @@ namespace Core {
 			$this->server = $_SERVER;
 			$this->files = $_FILES;
 			$this->cookie = $_COOKIE;
+
+			if(empty($this->files) !== true) {
+				$this->files = $this->reArrangeFilesArray($this->files);
+			}
 		}
 
 		/**
@@ -43,6 +47,25 @@ namespace Core {
 		 */
 		public function getPath() : string|array {
 			return IS_CLI ? $this->server["argv"] : $this->server["REQUEST_URI"];
+		}
+
+		/**
+		 * Re-arrange a $_FILES array to a more intuitive format
+		 * @param array $files the $_FILES array
+		 * @return array The re-arranged files array
+		 */
+		private function reArrangeFilesArray(array $files) {
+			$result = [];
+			$count  = count($files["name"]);
+			$keys   = array_keys($files);
+		
+			for($i = 0; $i < $count; $i++) {
+				foreach($keys as $key) {
+					$result[$i][$key] = $files[$key][$i];
+				}
+			}
+		
+			return $result;
 		}
 	}
 }
