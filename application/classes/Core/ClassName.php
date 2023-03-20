@@ -3,7 +3,7 @@ namespace Core {
 	/**
 	 * Sanitizes and validates a controller class name is valid for use.
 	 */
-	class ControllerName extends MVCStructure {
+	class ClassName extends MVCStructure {
 		/**
 		 * @param string Takes a single argument as a string,
 		 * 				this will sanitized to a valid controller class

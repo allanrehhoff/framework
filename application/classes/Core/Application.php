@@ -2,11 +2,6 @@
 namespace Core {
 	/**
 	 * The main class for this application.
-	 * Core\Application handles the routes, directory paths and title
-	 * Consult the README file for usage examples throughout the framework.
-	 * @author Allan Thue Rehhoff
-	 * @uses Resource
-	 * @see README.md
 	 */
 	final class Application {
 		/**
@@ -15,9 +10,9 @@ namespace Core {
 		private $applicationPath;
 
 		/**
-		 * @var ControllerName Actual controller path routed by given args
+		 * @var ClassName Actual controller path routed by given args
 		 */
-		private $executedControllerName;
+		private $executedClassName;
 
 		/**
 		 * @var MethodName Method name called on the master controller
@@ -41,10 +36,10 @@ namespace Core {
 		/**
 		 * Get controller name/path of the executed main controller
 		 * 
-		 * @return ControllerName Called controller name
+		 * @return ClassName Called controller name
 		 */
-		public function getExecutedControllerName() : ControllerName {
-			return $this->executedControllerName;
+		public function getExecutedClassName() : ClassName {
+			return $this->executedClassName;
 		}
 
 		/**
@@ -81,11 +76,11 @@ namespace Core {
 		 * @param string $controller The controller name, alias the class name.
 		 * @return \Controller The dispatched controller that has just been executed.
 		 */
-		public function executeController(ControllerName $iControllerName, ?MethodName $iMethodName = MethodName::DEFAULT, ?\Controller $parentController = null) : \Controller {			
-			$controllerName = $iControllerName->toString();
+		public function executeController(ClassName $iClassName, ?MethodName $iMethodName = MethodName::DEFAULT, ?\Controller $parentController = null) : \Controller {			
+			$controllerName = $iClassName->toString();
 			$methodName = $iMethodName->toString();
 
-			$this->executedControllerName = $iControllerName;
+			$this->executedClassName = $iClassName;
 			$this->calledMethodName = $iMethodName;
 
 			try {
@@ -100,9 +95,9 @@ namespace Core {
 				$iController->$methodName();
 				$iController->stop();
 			} catch(\Core\Exception\Forbidden $e) {
-				$iController = $this->executeController(new ControllerName("Forbidden"));
+				$iController = $this->executeController(new ClassName("Forbidden"));
 			} catch(\Core\Exception\NotFound $e) {
-				$iController = $this->executeController(new ControllerName("NotFound"));
+				$iController = $this->executeController(new ClassName("NotFound"));
 			}
 
 			foreach($iController->getChildren() as $childControllerName) {

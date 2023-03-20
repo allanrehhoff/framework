@@ -75,8 +75,8 @@
 			}
 
 			if($this->getParent() === null) {
-				$this->children[] = new \Core\ControllerName("Header");
-				$this->children[] = new \Core\ControllerName("Footer");
+				$this->children[] = new \Core\ClassName("Header");
+				$this->children[] = new \Core\ClassName("Footer");
 
 				$this->setTitle(array_slice($this->router->getArgs(), -1)[0]);
 			}
@@ -207,8 +207,8 @@
 		 * @return array
 		 */
 		final public function getBodyClasses() : string {
-			$controllerName = $this->application->getExecutedControllerName()->toStringWithoutSuffix();
-			$methodName 	= $this->application->getCalledMethodName()->toStringWithoutSuffix();
+			$controllerName = $this->getApplication()->getExecutedClassName()->toStringWithoutSuffix();
+			$methodName 	= $this->getApplication()->getCalledMethodName()->toStringWithoutSuffix();
 
 			$bodyClasses = [];
 			$bodyClasses[] = $controllerName;
@@ -220,7 +220,7 @@
 
 			$bodyClasses[] = $this->data["view"];
 
-			foreach($this->router->getArgs() as $arg) {
+			foreach($this->getRouter()->getArgs() as $arg) {
 				$bodyClasses[] = htmlentities($arg); // XSS
 			}
 
