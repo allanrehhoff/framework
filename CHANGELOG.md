@@ -1,15 +1,18 @@
 # Changelog #
 v7.0.0  
 - **This release is backwards incompatible.** 
-- Updating Database\Conection library to latest version. 
+- First steps in moving towards a dependency injection pattern.  
+- Updating Database\Conection library to latest version.  
 - Added helper methods to \Resource.  
 - Added new \Core\Router class.  
 - Added new \Core\Request class.  
+- Added new \HtmlEscape class.  
+- Added new \Core\MVCStructure class used by \Core\ControllerName and \Core\MethodName.  
+- Renamed \Core\ControllerName to \Core\ClassName.  
 - Restructured index.php.  
-- First steps in moving towards a dependency injection pattern.  
+- More streamlined coding standards and updated comments.  
 - .htaccess no longer rewrites request URI to $_GET["route"]
 - Moved \Core\Configuration to global namespace, as it's likely to be used elsewhere.  
-- Added new class \Core\MVCStructure used by \Core\ControllerName and \Core\MethodName.  
 - Updated README.md documentation.  
 - Dropping PHP7 support, as it has reached end of life.  
 
