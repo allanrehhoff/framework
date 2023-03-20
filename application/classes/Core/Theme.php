@@ -69,16 +69,12 @@ namespace Core {
 		}
 
 		/**
-		 * Removes any need for having a hardcoded basepath in some obscure place
-		 * "cough"wordpress"cough"
+		 * Get URI path to this theme
 		 * @param string $url Path to element of which to create a URI.
 		 * @return string
 		 */
 		public function getDirectoryUri(string $file = '/') : string {
-			$protocol = IS_SSL ? "https://" : "http://";
-			$host  = isset($_SERVER["SERVER_NAME"]) ? $_SERVER["SERVER_NAME"] : "127.0.0.1";
-			$path = rtrim(dirname($_SERVER["PHP_SELF"]), "/\\");
-			$baseurl = $protocol.$host.$path;
+			$baseurl = \Url::getBaseurl();
 
 			return $baseurl."/themes/".$this->getName()."/".ltrim($file, '/');
 		}
