@@ -2,8 +2,6 @@
 namespace Core {
 	/**
 	 * Loads and setups the current configured theme in use.
-	 *
-	 * @author Allan Thue Rehhoff
 	 */
 	class Theme {
 		/**
@@ -23,9 +21,10 @@ namespace Core {
 
 		/**
 		 * Doesn't do much of interest, this shouldn't be required to mess with.
+		 * @param \Core\Assets $iAssets Instance of assets to be rendered later on
 		 * @return void
 		 */
-		public function __construct(Assets $iAssets) {
+		public function __construct(\Core\Assets $iAssets) {
 			$this->name = \Resource::getConfiguration()->get("theme");
 			$this->assets = $iAssets;
 
@@ -39,7 +38,11 @@ namespace Core {
 			$this->addAssets();
 		}
 
-		public function getAssets() : Assets {
+		/**
+		 * Get the \Core\Assets instance
+		 * @return \Core\Assets
+		 */
+		public function getAssets() : \Core\Assets {
 			return $this->assets;
 		}
 

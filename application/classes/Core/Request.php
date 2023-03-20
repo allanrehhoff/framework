@@ -32,9 +32,9 @@ namespace Core {
 		public function __construct() {
 			$this->get = $_GET;
 			$this->post = $_POST;
-			$this->server = $_SERVER;
 			$this->files = $_FILES;
 			$this->cookie = $_COOKIE;
+			$this->server = $_SERVER;
 
 			if(empty($this->files) !== true) {
 				$this->files = $this->reArrangeFilesArray($this->files);

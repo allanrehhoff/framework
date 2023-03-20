@@ -1,7 +1,6 @@
 <?php
 	/**
 	* The core controller which subcontrollers should extend upon.
-	* @author Allan Thue Rehhoff
 	*/
 	abstract class Controller {
 
@@ -86,7 +85,6 @@
 		/**
 		 * Contains accessible theme variables.
 		 * 
-		 * @uses \Document
 		 * @return void
 		 */
 		final public function stop() : void {
