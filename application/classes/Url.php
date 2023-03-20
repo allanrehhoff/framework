@@ -14,7 +14,7 @@
 			$baseurl .= $protocol . $domainName;
 			
 			// Add port number to base URL if it"s not the default
-			if ($_SERVER["SERVER_PORT"] != ($protocol === "https://" ? 443 : 80)) {
+			if($_SERVER["SERVER_PORT"] != ($protocol === "https://" ? 443 : 80)) {
 				$baseurl .= ":" . $_SERVER["SERVER_PORT"];
 			}
 			
