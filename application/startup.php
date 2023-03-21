@@ -17,22 +17,18 @@
 	define("BR", "<br />");
 	define("DS", DIRECTORY_SEPARATOR);
 
-	define("IS_AJAX", "xmlhttprequest" == strtolower( $_SERVER["HTTP_X_REQUESTED_WITH"] ?? '' ));
 	define("IS_SSL", !empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == 'on');
 	define("IS_CLI", php_sapi_name() == "cli");
 	define("APP_PATH", __DIR__);
 	define("STORAGE", realpath(APP_PATH."/../storage"));
-
-	// Output buffering
-	// The ob_gzhandler callback returns false if browser doesn't support gzip
-	//!CLI ? ob_start("ob_gzhandler") ? : ob_start() : false;
+	define("ACCEPT_JSON", (str_contains(strtolower((getallheaders()["Accept"] ?? "*/*")), "application/json")));
 
 	// Error reporting
 	ini_set("display_errors", "On");
 	error_reporting(E_ALL);
 
-	// Include paths.
-	set_include_path(dirname(__FILE__));
+	// Include paths
+	set_include_path(APP_PATH);
 
 	// Default timezone
 	date_default_timezone_set("Europe/Copenhagen");
@@ -54,7 +50,6 @@
 			print "Line: ".$iException->getLine().LF;
 			print "Stacktrace: ".LF;
 			print TAB.implode(LF, $stacktrace);
-			exit(1);
 		} else {
 			while(ob_get_length()) ob_end_clean();
 
@@ -63,7 +58,7 @@
 				header("Retry-After: 3600");
 			}
 
-			if(IS_AJAX) {
+			if(ACCEPT_JSON) {
 				header("Content-Type: applicattion/json");
 				print json_encode([
 					"status" => "error",
@@ -90,6 +85,7 @@
 						</div>";
 			}
 		}
+		exit(1);
 	});
 
 	// Error handler
@@ -99,21 +95,20 @@
 			return;
 		}
 
-		$error = $errstr . ' in file ' . $errfile . ' on line ' . $errline;
+		$error = $errstr . " in file " . $errfile . " on line " . $errline;
 		throw new ErrorException($error, $errno, E_ERROR, $errfile, $errline);
 	});
 
 	// Autoloader
 	spl_autoload_register(function($className) {
+		$controllerClass = "Controller";
 		$className = str_replace("\\", "/", $className);
 
-		$classFile = APP_PATH."/classes/".$className.".php";
-
-		if($className != "Controller" && substr($className, -10) == "Controller") {
-			$classFile = APP_PATH."/controllers/".substr($className, 0, -10).".php";
+		if($className != $controllerClass && str_ends_with($className, $controllerClass)) {
+			$classFile = APP_PATH."/controllers/".substr($className, 0, -strlen($controllerClass)).".php";
+		} else {
+			$classFile = APP_PATH."/classes/".$className.".php";
 		}
 
-		if(file_exists($classFile) === true) {
-			require $classFile;
-		}
+		require $classFile;
 	});
