@@ -204,7 +204,7 @@
 		 * These classes can be used for easier identification of controller and view files used
 		 * or CSS styling for specific conditions
 		 * 
-		 * @return array
+		 * @return string An escaped string suitable for printing to the 'class' attribute of the <body> tag
 		 */
 		final public function getBodyClasses() : string {
 			$controllerName = $this->getApplication()->getExecutedClassName()->toStringWithoutSuffix();
@@ -213,22 +213,23 @@
 			$bodyClasses = [];
 			$bodyClasses[] = $controllerName;
 			$bodyClasses[] = $controllerName . '-' . $methodName;
+			$bodyClasses[] = $this->data["view"];
 
 			foreach($this->getChildren() as $childControllerName) {
 				$bodyClasses[] = $childControllerName->toStringWithoutSuffix();
 			}
 
-			$bodyClasses[] = $this->data["view"];
-
 			foreach($this->getRouter()->getArgs() as $arg) {
-				$bodyClasses[] = htmlentities($arg); // XSS
+				$bodyClasses[] = $arg;
 			}
 
 			foreach($bodyClasses as $i => $bodyClass) {
 				$bodyClasses[$i] = strtolower($bodyClass);
-			} 
+			}
 
-			return implode(' ', array_unique($bodyClasses));
+			$classesString = implode(' ', array_unique($bodyClasses));
+
+			return \HtmlEscape::escape($classesString);
 		}
 
 		/**
