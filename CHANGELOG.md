@@ -9,8 +9,10 @@ v7.0.0
 - Added new \HtmlEscape class.  
 - Added new \Core\MVCStructure class used by \Core\ControllerName and \Core\MethodName.  
 - Renamed \Core\ControllerName to \Core\ClassName.  
+- Better baseurl support.  
 - Restructured index.php.  
 - More streamlined coding standards and updated comments.  
+- Updated `startup.php` to consider 'application/json' present in HTTP `Accept` header.  
 - .htaccess no longer rewrites request URI to $_GET["route"]
 - Moved \Core\Configuration to global namespace, as it's likely to be used elsewhere.  
 - Updated README.md documentation.  
