@@ -31,6 +31,7 @@ namespace Core {
 
 		/**
 		 * Get the \Core\Request object
+		 * @return Request
 		 */
 		public function getRequest() : Request {
 			return $this->request;
@@ -73,11 +74,11 @@ namespace Core {
 
 			$methodName = $this->arg(1) !== null ? $this->arg(1) : MethodName::DEFAULT;
 
-			$iControllerName = new ControllerName($controllerBase);
+			$iControllerName = new ClassName($controllerBase);
 			$iMethodName 	 = new MethodName($methodName);
 
 			if(class_exists($iControllerName->toString()) === false) {
-				$iControllerName = new ControllerName("NotFound");
+				$iControllerName = new ClassName("NotFound");
 			}
 
 			if(method_exists($iControllerName, $iMethodName) !== true) {
