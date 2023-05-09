@@ -88,16 +88,24 @@
 		 * @return void
 		 */
 		final public function stop() : void {
-			// Stopping here, will prevent errors such as
-			// "Call to a member function getTemplatePath() on null"
-			// This is fine as we don't need a view layer for CLI
-			if(IS_CLI) {
-				exit(0);
-			}
-
 			if($this->getParent() === null) {
 				$this->data["bodyClasses"] = $this->getBodyClasses();
 			}
+		}
+
+		/**
+		 * Extracts controller data property as variables and renders the view
+		 * @return void
+		 */
+		final public function render() : void {
+			// Stopping here, will prevent errors such as
+			// "Call to a member function getTemplatePath() on null"
+			// This is fine as we don't need a view layer for CLI
+			if(IS_CLI) exit(0);
+
+			extract($this->getData(), EXTR_SKIP);
+
+			require $this->getView();
 		}
 
 		/**

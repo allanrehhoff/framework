@@ -25,8 +25,4 @@
 	$iApplication = new \Core\Application($iRouter);
 
 	// Render the entire thing
-	$iController = $iApplication->run();
-
-	extract($iController->getData(), EXTR_SKIP);
-
-	require $iController->getView();
+	$iApplication->run()->render();
