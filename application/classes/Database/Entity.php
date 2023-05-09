@@ -9,9 +9,21 @@ namespace Database {
 	* Represents a CRUD'able entity.
 	*/
 	abstract class Entity {
-		private $key;
-		protected $data = [];
+		/**
+		 * @var mixed $key Value of the primary key field
+		 */
+		private mixed $key = null;
 
+		/**
+		 * @var array $data General data for this entity, usually this is simply all  database columns for a row
+		 */
+		protected array $data = [];
+
+		/**
+		 * Subclasses must define the following two methods
+		 * as 'late static binding' will be used to load
+		 * entities, and identify primary key + table.
+		 */
 		abstract protected static function getKeyField() : string;
 		abstract protected static function getTableName() : string;
 
@@ -76,10 +88,11 @@ namespace Database {
 		* Saves the entity to a long term storage.
 		* Empty strings are converted to null values
 		*
-		* @throws \Exception
+		* @throws \Throwable
 		* @return mixed if a new entity was just inserted, returns the primary key for that entity, otherwise the current data is returned
 		*/
-		public function save() {
+		#[\ReturnTypeWillChange]
+		public function save() : mixed {
 			if ($this->exists() === true) {
 				Connection::getInstance()->update($this->getTableName(), $this->data, $this->getKeyFilter());
 				return $this->data;
@@ -125,12 +138,12 @@ namespace Database {
 		/**
 		* Load one or more ID's into entities
 		*
-		* @param mixed $ids an array of ID's or an integer to load
+		* @param mixed $rows an array of ID's or a single ID to load
 		* @param bool $indexByIDs If loading multiple ID's set this to true, to index the resulting array by entity IDs
 		* @return mixed The loaded entities
 		* @throws \TypeError
 		*/
-		public static function load($rows, bool $indexByIDs = true) {
+		public static function load(mixed $rows, bool $indexByIDs = true) {
 			$class = get_called_class();
 
 			if(is_iterable($rows)) {
@@ -147,7 +160,23 @@ namespace Database {
 				return new $class((int) $rows);
 			}
 
-			throw new \TypeError($class."::load(); expects either an array or integer. '".gettype($rows)."' was provided.");
+			throw new \InvalidArgumentException($class."::load(); expects either an array or integer. '".gettype($rows)."' was provided.");
+		}
+
+		/**
+		 * Loads an entity from a given field and value
+		 * @param string $field The database column/field to match
+		 * @param string $value The value that $field is to be matched against
+		 * @return Entity
+		 */
+		public static function from(string $field, mixed $value) : Entity {
+			$ID = Connection::getInstance()->fetchCell(static::getTableName(), static::getKeyField(), [
+				$field => $value
+			]);
+
+			$class = get_called_class();
+
+			return new $class($ID);
 		}
 
 		/**
@@ -170,7 +199,7 @@ namespace Database {
 		* @param array $allowedFields keys of fields allowed to be altered
 		* @return object The current entity instance
 		*/
-		public function set($data = null, ?array $allowedFields = null) : Entity {
+		public function set(mixed $data = null, ?array $allowedFields = null) : Entity {
 			if(is_object($data) === true) {
 				$data = (array) $data;
 			}
