@@ -15,26 +15,26 @@
 			/** @var object  The singleton instance of the this class. */
 			private static $singletonInstance;
 
-			/** @var PDO Database handle */
-			private $dbh;
+			/** @var ?\PDO PDO Database handle */
+			private ?\PDO $dbh;
 
-			/** @var array Filters to prepare before querying */
-			private $filters;
+			/** @var ?array Filters to prepare before querying */
+			private ?array $filters = [];
 
-			/** @var Statement Holds the last prepared statement after execution. */
-			public $statement;
+			/** @var ?Statement Holds the last prepared statement after execution. */
+			public ?Statement $statement;
 
-			/** @var int Number of affected rows from last query */
-			public $rowCount;
+			/** @var ?int Number of affected rows from last query */
+			public int $rowCount = 0;
 
 			/** @var int Number of queries executed. */
-			public $queryCount = 0;
+			public int $queryCount = 0;
 
-			/** @var string Last query attempted to be executed. */
-			public $lastQuery;
+			/** @var ?string Last query attempted to be executed. */
+			public ?string $lastQuery = null;
 
 			/** @var int Number When an array is passed as criteria this will be incremented for each value across all arrays */
-			private $arrayINCounter = 0;
+			private int $arrayINCounter = 0;
 
 			/**
 			* Initiate a new database connection using PDO as a driver.
