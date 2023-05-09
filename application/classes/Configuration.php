@@ -1,6 +1,7 @@
 <?php
 /**
-* Handles parsing and saving of a given configuration file.
+* Parses a JSON file, and let's you access properties using a dot syntax
+* also supports .jsonc files
 */
 class Configuration {
 	/**
@@ -78,7 +79,7 @@ class Configuration {
 	* Sub-values can be accessed using a dot syntax.
 	* @param string $conf The name of the configuration to get value from.
 	* @return mixed null on failure.
-	* @throws \Core\Exception\Logic
+	* @throws \LogicException
 	*/
 	public function get($conf = null) {
 		if($conf === null) {
@@ -90,7 +91,7 @@ class Configuration {
 
 		foreach($paths as $path) {
 			if(!isset($configValue->$path)) {
-				throw new \Core\Exception\Logic($conf." is not a valid configuration");
+				throw new \LogicException($conf." is not a valid configuration");
 			}
 
 			$configValue = $configValue->$path;
@@ -113,7 +114,7 @@ class Configuration {
 
 		foreach ($paths as $path) {
 			if(!isset($configValue->$path)) {
-				throw new \Core\Exception\Logic($conf." is not a valid configuration");
+				throw new \LogicException($conf." is not a valid configuration");
 				return false;
 			}
 		}
@@ -124,8 +125,8 @@ class Configuration {
 	}
 
 	/**
-	* Alias for ConfigurationParser::delete()
-	* @return mixed value of onfigurationParser::delete()
+	* Alias for JsonParser::delete()
+	* @return \Configuration value of onfigurationParser::delete()
 	*/
 	public function remove(string $conf) : Configuration {
 		return $this->delete($conf);
@@ -135,7 +136,7 @@ class Configuration {
 	* Dynamically set a configuration setting to a given value.
 	* @param $setting Key of the setting.
 	* @param $value Value of $setting
-	* @return self
+	* @return \Configuration
 	*/
 	public function set(string $setting, $value) : Configuration {
 		$paths = explode('.', $setting);
