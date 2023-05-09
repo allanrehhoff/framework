@@ -4,9 +4,11 @@
 		use PDOStatement;
 
 		class Statement extends PDOStatement {
-			protected function __construct(Connection $connection) {
-				// Dear future me, PDOStatement has to __construct() method
-			}
+			/**
+			 * Dear future me, PDOStatement has no __construct() method
+			 * No need not to add a parent::__construct(); call in here
+			 */
+			protected function __construct(Connection $connection) {}
 
 			/**
 			 * Fetch the column queried
