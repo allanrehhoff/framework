@@ -13,7 +13,8 @@
 		 * Get an object by it's class name, namespaces included.
 		 * Instatiates the object if not already existing.
 		 * 
-		 * @return object on success
+		 * @param string $key alias/classname to retrieve from global state
+		 * @return mixed A class object
 		 */
 		public static function get(string $key) {
 			return self::$data[$key] ?? null;
@@ -22,10 +23,17 @@
 		/**
 		 * Stores a given object by it's class name, namespaces included
 		 * 
+		 * @param mixed $class The resource class to have a global state
+		 * @param ?string $alias An alias to save the resource by, if null class name of object will be used
 		 * @return object The instance just stored. 
 		 */
-		public static function set($class) {
-			$key = get_class($class);
+		public static function set(mixed $class, ?string $alias = null) {
+			if($alias === null) {
+				$key = get_class($class);
+			} else {
+				$key = $alias;
+			}
+
 			self::$data[$key] = $class;
 
 			return $class;
@@ -34,6 +42,7 @@
 		/**
 		 * Checks if the registry contains a given object.
 		 * 
+		 * @param string $key Check if this key/alias is available globally
 		 * @return bool
 		 */
 		public static function has(string $key) : bool {
@@ -43,9 +52,9 @@
 		/**
 		 * Get core application configuration object
 		 * 
-		 * @return \Core\Configuration
+		 * @return \JsonParser
 		 */
-		public static function getConfiguration() {
+		public static function getConfiguration() : Configuration {
 			return self::get("Configuration");
 		}
 
