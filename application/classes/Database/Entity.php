@@ -174,9 +174,15 @@ namespace Database {
 				$field => $value
 			]);
 
-			$class = get_called_class();
+			return new static($ID);
+		}
 
-			return new $class($ID);
+		/**
+		 * Creates a new instance of any given entity
+		 * @return Entity
+		 */
+		public static function new() : Entity {
+			return new static;
 		}
 
 		/**
