@@ -1,0 +1,27 @@
+#!/usr/bin/env php
+<?php
+	if(file_exists("application/startup.php") == true) {
+		chdir("application/");
+	}
+
+	$startupFile = "startup.php";
+
+	if(file_exists($startupFile) !== true) {
+		throw new RuntimeException("Neither current working directory or its parent is a valid application directory");
+	}
+
+	require $startupFile;
+
+	\Resource::set(new \Configuration(STORAGE . "/config/application.jsonc"));
+
+	\Resource::set(new \Database\Connection(
+		\Resource::getConfiguration()->get("database.host"),
+		\Resource::getConfiguration()->get("database.username"),
+		\Resource::getConfiguration()->get("database.password"),
+		\Resource::getConfiguration()->get("database.name")
+	));
+	$iRouter = new \Core\Router(new \Core\Request(), new \Core\Response());
+
+	$iApplication = new \Core\Application($iRouter);
+
+	$iApplication->run();

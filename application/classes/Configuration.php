@@ -25,12 +25,12 @@ class Configuration {
 
 	/**
 	* The actual parsing.
-	* @throws \Core\Exception\MissingFile
+	* @throws \Core\Exception\FileNotFound
 	* @return void
 	*/
 	private function parse(string $configurationFile) : void {
 		if(!is_file($configurationFile)) {
-			throw new \Core\Exception\MissingFile("The given configuration file '$configurationFile' could not be located.");
+			throw new \Core\Exception\FileNotFound("The given configuration file '$configurationFile' could not be located.");
 		}
 
 		$this->configurationFile = $configurationFile;
@@ -79,7 +79,7 @@ class Configuration {
 	* Sub-values can be accessed using a dot syntax.
 	* @param string $conf The name of the configuration to get value from.
 	* @return mixed null on failure.
-	* @throws \LogicException
+	* @throws \InvalidArgumentException 
 	*/
 	public function get($conf = null) {
 		if($conf === null) {
@@ -91,7 +91,7 @@ class Configuration {
 
 		foreach($paths as $path) {
 			if(!isset($configValue->$path)) {
-				throw new \LogicException($conf." is not a valid configuration");
+				throw new \InvalidArgumentException($conf." is not a valid configuration");
 			}
 
 			$configValue = $configValue->$path;
@@ -105,16 +105,16 @@ class Configuration {
 	/**
 	* Remove a configuration value
 	* @param string $conf Key of the setting to delete.
-	* @throws \Core\Exception\Logic
+	* @throws \InvalidArgumentException
 	* @return self
 	*/
 	public function delete(string $conf) : Configuration {
 		$paths = explode('.', $conf);
 		$configValue = $this->parsedConfig;
 
-		foreach ($paths as $path) {
+		foreach($paths as $path) {
 			if(!isset($configValue->$path)) {
-				throw new \LogicException($conf." is not a valid configuration");
+				throw new \InvalidArgumentException($conf." is not a valid configuration");
 				return false;
 			}
 		}

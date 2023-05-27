@@ -27,10 +27,8 @@ namespace Core {
 					PREG_RECURSION_LIMIT_ERROR => "PCRE's recursion limit was reached, pcre.recursion_limit may not be set to high as it consume all the available process stack.",
 					PREG_BAD_UTF8_ERROR => "Malformed UTF8 data in string.",
 					PREG_BAD_UTF8_OFFSET_ERROR => "The offset didn't correspond to the begin of a valid UTF-8 code point",
+					PREG_JIT_STACKLIMIT_ERROR => "PCRE function call failed due to limited JIT stack space."
 				];
-
-				// Only in PHP7
-				if(defined("PREG_JIT_STACKLIMIT_ERROR") == true) $pregErrorMap[PREG_JIT_STACKLIMIT_ERROR] = "PCRE function call failed due to limited JIT stack space.";
 
 				throw new \Error($pregErrorMap[$pregLastError], $pregLastError);
 			}

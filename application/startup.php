@@ -1,37 +1,11 @@
 <?php
 	/**
 	* Sets error handling and other useful PHP configurations, to help you write proper code.
-	* @author Allan Thue Rehhoff
 	*/
-
-	// Cache headers
-	header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-	header("Cache-Control: post-check=0, pre-check=0", false);
-	header("Pragma: no-cache");
-
-	// Helper constants
-	define("CR", "\r");
-	define("LF", "\n");
-	define("TAB", "\t");
-	define("CRLF", CR.LF);
-	define("BR", "<br />");
-	define("DS", DIRECTORY_SEPARATOR);
-
-	define("IS_SSL", !empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == 'on');
-	define("IS_CLI", php_sapi_name() == "cli");
-	define("APP_PATH", __DIR__);
-	define("STORAGE", realpath(APP_PATH."/../storage"));
-	define("ACCEPT_JSON", (str_contains(strtolower((getallheaders()["Accept"] ?? "*/*")), "application/json")));
 
 	// Error reporting
 	ini_set("display_errors", "On");
 	error_reporting(E_ALL);
-
-	// Include paths
-	set_include_path(APP_PATH);
-
-	// Default timezone
-	date_default_timezone_set("Europe/Copenhagen");
 
 	// Exception handler
 	set_exception_handler(function($iException) {
@@ -63,7 +37,7 @@
 				print json_encode([
 					"status" => "error",
 					"data" => [
-						"uncaught" => get_class($iException),
+						"class" => get_class($iException),
 						"message" => $iException->getMessage(),
 						"code" => $iException->getCode(),
 						"file" => $iException->getFile(),
@@ -73,7 +47,7 @@
 				]);
 			} else {
 				print "<div style=\"font-family: monospace; background-color: #f44336; border-color: #f32c1e; color:#FFF; padding: 15px 15px 15px 15px;\">
-							<h1 style=\"margin:0px;\">Uncaught ".get_class($iException).":</h1>".BR."</h1>
+							<h1 style=\"margin:0px;\">Uncaught \\".get_class($iException)."</h1>".BR."
 							<strong>Message: </strong>".$iException->getMessage().BR."
 							<strong>Code: </strong>".$iException->getCode().BR."
 							<strong>File: </strong>".$iException->getFile().BR."
@@ -96,19 +70,50 @@
 		}
 
 		$error = $errstr . " in file " . $errfile . " on line " . $errline;
-		throw new ErrorException($error, $errno, E_ERROR, $errfile, $errline);
+		throw new \ErrorException($error, $errno, E_ERROR, $errfile, $errline);
 	});
+
+	// Cache headers
+	header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+	header("Cache-Control: post-check=0, pre-check=0", false);
+	header("Pragma: no-cache");
+
+	// Helper constants
+	define("CR", "\r");
+	define("LF", "\n");
+	define("TAB", "\t");
+	define("SPACE", " ");
+	define("CRLF", CR.LF);
+	define("BR", "<br />");
+	define("DS", DIRECTORY_SEPARATOR);
+	define("IS_SSL", !empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == 'on');
+	define("IS_CLI", php_sapi_name() == "cli");
+	define("APP_PATH", __DIR__);
+	define("STORAGE", realpath(APP_PATH."/../storage"));
+	define("ACCEPT_JSON", !IS_CLI && (str_contains(strtolower((getallheaders()["Accept"] ?? "*/*")), "application/json")));
+
+	// Include paths
+	set_include_path(APP_PATH);
+
+	// Default timezone
+	date_default_timezone_set("Europe/Copenhagen");
 
 	// Autoloader
 	spl_autoload_register(function($className) {
+
 		$controllerClass = "Controller";
 		$className = str_replace("\\", "/", $className);
 
 		if($className != $controllerClass && str_ends_with($className, $controllerClass)) {
 			$classFile = APP_PATH."/controllers/".substr($className, 0, -strlen($controllerClass)).".php";
+
+			if(file_exists($classFile) !== true) {
+				throw new \Core\Exception\FileNotFound;
+			}
+
+			require $classFile;
 		} else {
 			$classFile = APP_PATH."/classes/".$className.".php";
+			require $classFile;
 		}
-
-		require $classFile;
 	});

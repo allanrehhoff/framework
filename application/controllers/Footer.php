@@ -4,7 +4,7 @@
 			// Do not allow this controller to be access directly
 			if($this->getParent() == null) throw new \Core\Exception\NotFound();
 
-			$this->data["footer"] = $this->getView("footer");
-			$this->data["stylesheets"] = $this->getTheme()->getAssets()->getStylesheets("header");
+			$this->response->data["footer"] = $this->getTheme()->getTemplatePath("footer");
+			$this->response->data["stylesheets"] = $this->getTheme()->getAssets()->getStylesheets("header");
 		}
 	}

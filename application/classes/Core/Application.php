@@ -76,7 +76,7 @@ namespace Core {
 		 * @param string $controller The controller name, alias the class name.
 		 * @return \Controller The dispatched controller that has just been executed.
 		 */
-		public function executeController(ClassName $iClassName, ?MethodName $iMethodName = MethodName::DEFAULT, ?\Controller $parentController = null) : \Controller {			
+		public function executeController(ClassName $iClassName, ?MethodName $iMethodName = new MethodName(MethodName::DEFAULT), ?\Controller $parentController = null) : \Controller {			
 			$controllerName = $iClassName->toString();
 			$methodName = $iMethodName->toString();
 
@@ -88,21 +88,23 @@ namespace Core {
 
 				if($parentController !== null) {
 					$iController->setParent($parentController);
-					$iController->setData($parentController->getData());
+					$iController->getResponse()->setData($parentController->getResponse()->getData());
 				}
-				
+
 				$iController->start();
 				$iController->$methodName();
 				$iController->stop();
-			} catch(\Core\Exception\Forbidden $e) {
+			} catch(\Core\Exception\Forbidden $iForbiddenException) {
+				$iController->getResponse()->sendHttpCode($iForbiddenException->getHttpCode());
 				$iController = $this->executeController(new ClassName("Forbidden"));
-			} catch(\Core\Exception\NotFound $e) {
+			} catch(\Core\Exception\NotFound $iNotFoundException) {
+				$iController->getResponse()->sendHttpCode($iNotFoundException->getHttpCode());
 				$iController = $this->executeController(new ClassName("NotFound"));
 			}
 
 			foreach($iController->getChildren() as $childControllerName) {
-				$childController = $this->executeController($childControllerName, new MethodName(MethodName::DEFAULT), $iController);
-				$iController->setData($childController->getData());
+				$childController = $this->executeController($childControllerName, parentController: $iController);
+				$iController->getResponse()->setData($childController->getResponse()->getData());
 			}
 
 			return $iController;

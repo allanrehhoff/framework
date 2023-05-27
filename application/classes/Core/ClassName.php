@@ -7,7 +7,7 @@ namespace Core {
 		/**
 		 * @param string Takes a single argument as a string,
 		 * 				this will sanitized to a valid controller class
-		 * @throws \Core\Exception\Logic
+		 * @throws \Core\Exception\Governance
 		 * @return void
 		 */
 		public function __construct(string $string) {
@@ -33,12 +33,12 @@ namespace Core {
 			$iReflectionMethod = $iReflectionClass->getConstructor();
 
 			if($iReflectionMethod !== null && $iReflectionMethod->getDeclaringClass()->getName() !== \Controller::class) {
-				throw new \Core\Exception\Logic("Illegal constructor method in " . $controllerClass . "; Use ".$controllerClass."::start(); instead.");
+				throw new \Core\Exception\Governance("Illegal constructor method in " . $controllerClass . "; Use ".$controllerClass."::start(); instead.");
 			}
-
+			
 			// Defined controllers should always extend on the master controller
 			if($iReflectionClass->isSubclassOf("Controller") !== true) {
-				throw new \Core\Exception\Logic($controllerClass." must derive from \Controller 'extends \Controller'.");
+				throw new \Core\Exception\Governance($controllerClass." must derive from \Controller 'extends \Controller'.");
 			}
 
 			$this->sanitizedString = $controllerClass;

@@ -1,18 +1,14 @@
 <?php
 	/**
-	 * Default controller for paths that cannot be routed.
-	 * @author Allan Thue Rehhoff
+	 * Controller for paths that is inaccessible in the current environment.
 	 */
 	class ForbiddenController extends Controller {
 
 		/**
-		 * Constructs an indicates the path wasn't found
-		 * @return void
+		 * Constructs an indicates the path was not allowed
 		 */
 		public function index() {
-			header("HTTP/1.0 501 Forbidden");
-
-			$this->setTitle("Forbidden");
-			$this->setView("forbidden");
+			$this->response->setTitle("Forbidden");
+			$this->response->setView("forbidden");
 		}
 	}

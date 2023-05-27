@@ -1,7 +1,6 @@
 <?php
 	/**
-	 * Resource to hold class objects, used to avoid the usage of singletons.
-	 * @author Allan Rehhoff
+	 * Resource to hold global state objects, used to avoid the usage of singletons.
 	 */
 	final class Resource {
 		/**

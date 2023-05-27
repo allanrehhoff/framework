@@ -103,7 +103,7 @@ By default the view to be displayed is the one found matching arg(0), for exampl
 You can add a new "partial" or "children" by adding it's path to the controllers data.
 ```php
 <?php
-$this->data["sidebar"] = $this->getView("sidebar");
+$this->response->data["sidebar"] = $this->theme->getTemplatePath("header");
 ```
 
 And then in your template files
@@ -120,6 +120,7 @@ Theme assets should be configured in the **THEMENAME.theme.jsonc** file, and pat
 
 ## Command Line Interface
 This framework supports being queried through CLI (albeit, not fully tested), to do so you must query the **index.php** file.  
+Or use the bundled **bin/app** file, remember to add execution permissions to this file, should you decide to use it.  
 
 ```
 $ php index.php <controller> <method> <argument> ...
@@ -149,7 +150,7 @@ Configuration is loaded upon controller initialization.
 Values can be accessed, changed, removed and saved using a dot syntax.  
 ```php
 <?php
-	class RestaurantController extends Controller {
+	class RestaurantController extends \Controller {
 		public function __construct() {
 			$this->theme->get("menu.pizzas"); // ["Hawaii", "MeatLover", "Vegan", ...]
 			$this->theme->set("menu.pizzas.Hawaii", "Ananas"); // ["Ananas", "MeatLover", "Vegan", ...]
@@ -173,7 +174,7 @@ Examples:
 
 ```php
 // The following would return Framework/1.0.0
-Resource::getConfiguration()->get("http.useragent");
+\Resource::getConfiguration()->get("http.useragent");
 ```
 
 Variables are parsed recursively, and therefore values from nested objects can also be used, using a dot syntax.
@@ -217,10 +218,10 @@ Examples:
 ```php
 <?php
 	// Exmaple 1
-	$currentUser = Resource::set(new User($uid));
+	$currentUser = \Resource::set(new User($uid));
 
 	// Example 2
-	$currentUser = Resource::get("User");
+	$currentUser = \Resource::get("User");
 ```
 
 In case an instance is namespaced the namespace should also be specified (without the initial backslash) upon retrieval.
@@ -228,9 +229,9 @@ In case an instance is namespaced the namespace should also be specified (withou
 Example:  
 ```php
 <?php
-	Resource::set( new \Alerts\Error("No more cheese for the pizza...") );
+	\Resource::set( new \Alerts\Error("No more cheese for the pizza...") );
 
-	print Resource::get("Alerts\Error")->getMessage(); // Would print: "No more cheese for the pizza"
+	print \Resource::get("Alerts\Error")->getMessage(); // Would print: "No more cheese for the pizza"
 ```
   
 This structure is in place to avoid singletons being misused.  

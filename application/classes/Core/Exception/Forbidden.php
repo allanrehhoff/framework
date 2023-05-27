@@ -1,11 +1,12 @@
 <?php
 namespace Core\Exception {
-	class Forbidden extends \Exception {
+	/**
+	 * Throw this whenever you want to redirect the current controller to a "forbidden" controller
+	 */
+	class Forbidden extends \Exception implements \Core\Contract\HttpExceptionInterface {
 		/**
-		 * Throw this whenever you want to redirect the current controller to a "forbidden" controller
+		 * @return int
 		 */
-		public function __construct(string $message = '', int $code = 0, ?Throwable $previous = null) {
-			parent::__construct($message, $code, $previous);
-		}
+		public function getHttpCode(): int { return 403; }
 	}
 }

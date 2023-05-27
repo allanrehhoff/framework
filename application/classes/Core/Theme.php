@@ -61,9 +61,9 @@ namespace Core {
 		public function getTemplatePath(string $tpl = '') : string {
 			$path = APP_PATH."/themes/".$this->getName();
 
-			if($tpl != '') {
-				$path .= '/'.$tpl;
-			}
+			if($tpl != '') $path .= '/'.$tpl;
+
+			$path .= ".tpl.php";
 
 			return $path;
 		}

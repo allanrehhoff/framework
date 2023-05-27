@@ -4,7 +4,7 @@
 			// Do not allow this controller to be access directly
 			if($this->getParent() == null) throw new \Core\Exception\NotFound();
 
-			$this->data["header"] = $this->getView("header");
-			$this->data["javascript"]  = $this->getTheme()->getAssets()->getJavascript("footer");
+			$this->response->data["header"] = $this->theme->getTemplatePath("header");
+			$this->response->data["javascript"]  = $this->theme->getAssets()->getJavascript("footer");
 		}
 	}

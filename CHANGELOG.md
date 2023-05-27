@@ -3,13 +3,19 @@ v7.0.0
 - **This release is backwards incompatible.** 
 - First steps in moving towards a dependency injection pattern.  
 - Updating Database\Conection library to latest version.  
+- Bundled app binary file for exeucting controllers in cli.  
+- Bundling generated documentation of classes.  
 - Added helper methods to \Resource.  
 - Added new \Core\Router class.  
 - Added new \Core\Request class.  
-- Added new \HtmlEscape class.  
+- Added new \Core\Response class.  
+- - Controller data now has to be added to \Core\Response class.  
 - Added new \Core\MVCStructure class used by \Core\ControllerName and \Core\MethodName.  
+- Added new \Console class.  
+- Added new \HtmlEscape class.  
 - Renamed \Core\ControllerName to \Core\ClassName.  
 - Better baseurl support.  
+- Various new core exceptions.  
 - Restructured index.php.  
 - More streamlined coding standards and updated comments.  
 - Updated `startup.php` to consider 'application/json' present in HTTP `Accept` header.  

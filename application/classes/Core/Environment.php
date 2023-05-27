@@ -7,7 +7,7 @@
 			 * @return string
 			 */
 			public static function determine() :string {
-				if(CLI) {
+				if(IS_CLI) {
 					if(in_array($GLOBALS["argv"][1], ["dev", "live"])) {
 						return $GLOBALS["argv"][1];	
 					}

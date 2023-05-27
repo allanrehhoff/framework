@@ -1,5 +1,9 @@
 <?php
 namespace Core {
+	/**
+	 * Basic router for handling HTTP requests and routing them to appropriate controllers
+	 * Follows a simple routing mechanism to match URLs and execute the corresponding controller for each route..
+	 */
 	class Router {
 		/**
 		 * @var array Arguments provided through URI parts
@@ -12,17 +16,24 @@ namespace Core {
 		private $request = null;
 
 		/**
+		 * @var Response $iResponse holds the request object
+		 */
+		private $response = null;
+
+		/**
 		 * Router constructor parses args from current environment.
 		 * 
 		 * @param Request $iRequest The global request object
+		 * @param Response $iResponse The response object
 		 * @return void
 		 */
-		public function __construct(Request $iRequest) {
+		public function __construct(Request $iRequest, Response $iResponse) {
 			$this->request = $iRequest;
+			$this->response = $iResponse;
 			$args = $iRequest->getPath();
 
 			if(IS_CLI === false) {
-				$route = trim($args, '/') != '' ? $args : \Resource::getConfiguration()->get("default_route");
+				$route = $args != '' ? $args : \Resource::getConfiguration()->get("default_route");
 				$this->args = explode('/', $route);
 			} else {
 				$this->args = array_slice($args, 1);
@@ -35,6 +46,14 @@ namespace Core {
 		 */
 		public function getRequest() : Request {
 			return $this->request;
+		}
+
+		/**
+		 * Get the \Core\Request object
+		 * @return Response
+		 */
+		public function getResponse() : Response {
+			return $this->response;
 		}
 
 		/**
@@ -71,17 +90,20 @@ namespace Core {
 		 */
 		public function getRoute() : array {
 			$controllerBase = $this->arg(0);
+			$methodNameBase = $this->arg(1) !== null ? $this->arg(1) : MethodName::DEFAULT;;
 
-			$methodName = $this->arg(1) !== null ? $this->arg(1) : MethodName::DEFAULT;
-
-			$iControllerName = new ClassName($controllerBase);
-			$iMethodName 	 = new MethodName($methodName);
-
-			if(class_exists($iControllerName->toString()) === false) {
+			try {
+				$iControllerName = new ClassName($controllerBase);
+			} catch(\Core\Exception\FileNotFound) {
 				$iControllerName = new ClassName("NotFound");
 			}
 
-			if(method_exists($iControllerName, $iMethodName) !== true) {
+			$controllerName = $iControllerName->toString();
+
+			$iMethodName = new MethodName($methodNameBase);
+			$methodName = $iMethodName->toString();
+
+			if(method_exists($controllerName, $methodName) !== true) {
 				$iMethodName = new MethodName(MethodName::DEFAULT);
 			}
 

@@ -5,9 +5,9 @@
 	 */
 	class IndexController extends Controller {
 		public function index() {
-			$this->data["intro"] = "A sample variable.";
+			$this->response->data["intro"] = "A sample variable.";
 
-			$this->setTitle("Frontpage");
-			$this->setView("index");
+			$this->response->setTitle("Frontpage");
+			$this->response->setView("index");
 		}
 	}

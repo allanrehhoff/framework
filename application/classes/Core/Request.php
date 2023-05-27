@@ -1,5 +1,10 @@
 <?php
 namespace Core {
+
+	/**
+	 * Encapsulates the details of a request and simplifies the process of working with incoming HTTP requests.
+	 * It provides functionality for retrieving request parameters, headers, and simplifying file uploads.
+	 */
 	class Request {		
 		/**
 		 * @var array Contents of the $_GET super global
@@ -46,7 +51,7 @@ namespace Core {
 		 * @return string|array
 		 */
 		public function getPath() : string|array {
-			return IS_CLI ? $this->server["argv"] : $this->server["REQUEST_URI"];
+			return IS_CLI ? $this->server["argv"] : trim($this->server["REQUEST_URI"], '/');
 		}
 
 		/**

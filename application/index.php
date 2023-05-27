@@ -18,9 +18,7 @@
 	));
 
 	// Other objects
-	$iRequest = new \Core\Request();
-
-	$iRouter = new \Core\Router($iRequest);
+	$iRouter = new \Core\Router(new \Core\Request(), new \Core\Response());
 
 	$iApplication = new \Core\Application($iRouter);
 
