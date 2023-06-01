@@ -148,24 +148,6 @@
 		}
 
 		/**
-		* Provides data set by extending controllers.
-		* @return array
-		*/
-		// final public function getData() : array {
-		// 	return $this->data;
-		// }
-
-		/**
-		 * Set data in current controller
-		 * 
-		 * @param array $data Array of data to set.
-		 * @return void
-		 */
-		//final public function setData(array $data) : void {
-		//	$this->data = $data;
-		//}
-
-		/**
 		 * Set current controllers parent.
 		 * 
 		 * @param \Controller $iController Controller instance to use as parent.
@@ -191,41 +173,6 @@
 		final public function getChildren() : array {
 			return $this->children;
 		}
-
-		/**
-		 * Get the path to a template file, ommit .tpl.php extension
-		 * 
-		 * @param string $template name of the template file to get path for,
-		 * @return string
-		 */
-		//final public function getView(string $template = null) : string {
-		//	if($template === null) {
-		//		$template = $this->data["view"];
-		//	}
-
-		//	$view = $this->theme->getTemplatePath($template . ".tpl.php");
-
-		//	return $view;
-		//}
-
-		/**
-		 * Checks if the requested controller has a corresponding view.
-		 * 
-		 * @return bool
-		 */
-		//final public function hasView() : bool {
-		//	return file_exists($this->getView()) && !IS_CLI;
-		//}
-
-		/**
-		 * Convenience wrapper, for setting/overriding a view within any controller
-		 * 
-		 * @param string name of the view to use, without .tpl.php extensions.
-		 * @return bool
-		 */
-		//final public function setView(string $view) : void {
-		//	$this->data["view"] = $view;
-		//}
 
 		/**
 		 * Determines classes suiteable for the <body> tag
