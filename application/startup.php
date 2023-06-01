@@ -87,7 +87,7 @@
 	define("BR", "<br />");
 	define("DS", DIRECTORY_SEPARATOR);
 	define("IS_SSL", !empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == 'on');
-	define("IS_CLI", php_sapi_name() == "cli");
+	define("IS_CLI", PHP_SAPI === "cli");
 	define("APP_PATH", __DIR__);
 	define("STORAGE", realpath(APP_PATH."/../storage"));
 	define("ACCEPT_JSON", !IS_CLI && (str_contains(strtolower((getallheaders()["Accept"] ?? "*/*")), "application/json")));
@@ -100,7 +100,6 @@
 
 	// Autoloader
 	spl_autoload_register(function($className) {
-
 		$controllerClass = "Controller";
 		$className = str_replace("\\", "/", $className);
 
@@ -110,10 +109,19 @@
 			if(file_exists($classFile) !== true) {
 				throw new \Core\Exception\FileNotFound;
 			}
-
-			require $classFile;
 		} else {
 			$classFile = APP_PATH."/classes/".$className.".php";
+		}
+
+		// NOTE:
+		// Do not remove the file_exists(); check, it'll break
+		// the PHPunit testsuite, by throw the erro
+		// 'PHPUnit/Composer/Autoload/ClassLoader.php' Failed to open stream
+		if(file_exists($classFile) === true) {
 			require $classFile;
 		}
 	});
+
+	if(file_exists(APP_PATH."/vendor/autoload.php")) {
+		require APP_PATH."/vendor/autoload.php";
+	}
