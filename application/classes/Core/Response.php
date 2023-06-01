@@ -60,7 +60,7 @@ namespace Core {
 		 * @return void
 		 */
 		final public function setTitle(string $title) : void {
-			$this->data["title"] = sprintf(\Resource::getConfiguration()->get("base_title"), $title);
+			$this->data["title"] = sprintf(\Resource::getConfiguration()->get("titleFormat"), $title);
 		}
 
 		/**
