@@ -32,6 +32,11 @@ namespace Core {
 		public $cookie;
 
 		/**
+		 * @var array 
+		 */
+		private array $arguments;
+
+		/**
 		 * Sets initial state of super globals
 		 */
 		public function __construct() {
@@ -44,14 +49,32 @@ namespace Core {
 			if(empty($this->files) !== true) {
 				$this->files = $this->reArrangeFilesArray($this->files);
 			}
+
+			if(IS_CLI === true) {
+				$args = $this->server["argv"];
+			} else {
+				$args = trim($this->server["REQUEST_URI"], '/');
+				$args = explode('/', $args);
+				$args = array_filter($args);
+			}
+
+			$this->setArguments($args);
+		}
+
+		/**
+		 * Set arguments parsed from path
+		 * @param array $arguments
+		 */
+		public function setArguments(array $arguments) {
+			$this->arguments = $arguments;
 		}
 
 		/**
 		 * Get path that should be used by the router
-		 * @return string|array
+		 * @return array
 		 */
-		public function getPath() : string|array {
-			return IS_CLI ? $this->server["argv"] : trim($this->server["REQUEST_URI"], '/');
+		public function getArguments() : array {
+			return $this->arguments;
 		}
 
 		/**

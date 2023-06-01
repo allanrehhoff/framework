@@ -11,12 +11,12 @@ namespace Core {
 		private $args;
 
 		/**
-		 * @var Request $iRequest holds the request object
+		 * @var \Core\Request $iRequest holds the request object
 		 */
 		private $request = null;
 
 		/**
-		 * @var Response $iResponse holds the request object
+		 * @var \Core\Response $iResponse holds the request object
 		 */
 		private $response = null;
 
@@ -30,11 +30,16 @@ namespace Core {
 		public function __construct(Request $iRequest, Response $iResponse) {
 			$this->request = $iRequest;
 			$this->response = $iResponse;
-			$args = $iRequest->getPath();
+			$args = $iRequest->getArguments();
 
 			if(IS_CLI === false) {
-				$route = $args != '' ? $args : \Resource::getConfiguration()->get("default_route");
-				$this->args = explode('/', $route);
+				$defaultRoute = \Resource::getConfiguration()->get("defaultRoute");
+
+				if(is_array($defaultRoute) !== true) {
+					throw new \Core\Exception\Governance("Setting 'defaultRoute' is not an array");
+				}
+
+				$this->args = empty($args) ? $defaultRoute : $args;
 			} else {
 				$this->args = array_slice($args, 1);
 			}
@@ -49,7 +54,7 @@ namespace Core {
 		}
 
 		/**
-		 * Get the \Core\Request object
+		 * Get the \Core\Response object
 		 * @return Response
 		 */
 		public function getResponse() : Response {
