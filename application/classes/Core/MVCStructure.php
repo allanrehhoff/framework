@@ -27,8 +27,8 @@ namespace Core {
 		 * Also returns the sanitized controller class
 		 * @return string
 		 */
-		public function __toString() {
-			return $this->toString();
-		}
+		//public function __toString() {
+		//	return $this->toString();
+		//}
 	}
 }
