@@ -1,9 +1,9 @@
 {
     "version": "1.0.0",
     "theme": "default",
-    // base_title supports only one wildcard
-    "base_title": "%s | default-title",
-    "default_route": "index",
+    // titleFormat supports only one wildcard
+    "titleFormat": "%s | default-title",
+    "defaultRoute": ["index"],
     "database": {
         "host": "localhost",
         "username": "root",
