@@ -1,5 +1,8 @@
-error_log
 .DS_Store
+.phpunit.result.cache
 .well-known/
 .vscode/
 .phpdoc/
+error_log
+composer.lock
+application/vendor/
