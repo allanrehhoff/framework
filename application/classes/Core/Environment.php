@@ -2,8 +2,8 @@
 	namespace Core {
 		class Environment {
 			/**
-			 * Tries to determine if we're on a
-			 * production or development environment
+			 * Tries to determine if we're on a production or development environment
+			 * @todo This class needs to be more integrated with actual env vars.
 			 * @return string
 			 */
 			public static function determine() :string {

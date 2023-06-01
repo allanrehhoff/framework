@@ -53,7 +53,7 @@
 		 * 
 		 * @return \JsonParser
 		 */
-		public static function getConfiguration() : Configuration {
+		public static function getConfiguration() : \Configuration {
 			return self::get("Configuration");
 		}
 

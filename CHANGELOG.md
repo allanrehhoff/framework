@@ -1,4 +1,8 @@
 # Changelog #
+v7.0.1  
+- Added tests support.  
+- Refactor argument input handling for lighter coupling.  
+
 v7.0.0  
 - **This release is backwards incompatible.** 
 - First steps in moving towards a dependency injection pattern.  

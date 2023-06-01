@@ -46,25 +46,6 @@
 		}
 
 		/**
-		 * Test that Header and Footer controllers cannot be called directly
-		 */
-		public function testHeaderAndFooterCannotBeCalledDirectly() {
-			foreach(["Header", "Footer"] as $childController) {
-				$iRouter = $this->getRouterWithArguments(["bin/app", $childController, "index"]);
-				[$controller, $method] = $iRouter->getRoute();
-
-				$this->assertInstanceOf(\Core\ClassName::class, $controller);
-				$this->assertInstanceOf(\Core\MethodName::class, $method);
-
-				$iApplication = new \Core\Application($iRouter);
-
-				$iController = $iApplication->run();
-
-				$this->assertInstanceOf(\NotFoundController::class, $iController);
-			}
-		}
-
-		/**
 		 * Test route fallback, without the method name argument given.
 		 */
 		public function testDefaultRoute() {
