@@ -3,7 +3,7 @@ Search.appendIndex(
                 {
             "fqsen": "\\Configuration",
             "name": "Configuration",
-            "summary": "Parses\u0020a\u0020JSON\u0020file,\u0020and\u0020let\u0027s\u0020you\u0020access\u0020properties\u0020using\u0020a\u0020dot\u0020syntax\nalso\u0020supports\u0020.jsonc\u0020files",
+            "summary": "Parses\u0020a\u0020JSONC\u0020file,\u0020and\u0020let\u0027s\u0020you\u0020access\u0020properties\u0020using\u0020a\u0020dot\u0020syntax\nalso\u0020supports\u0020.jsonc\u0020files",
             "url": "classes/Configuration.html"
         },                {
             "fqsen": "\\Configuration\u003A\u003A__construct\u0028\u0029",
