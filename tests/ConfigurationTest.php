@@ -69,7 +69,7 @@
 			$iConfiguration->delete("testkey");
 
 			$this->expectException(\InvalidArgumentException::class);
-			\Resource::getConfiguration()->get("testkey");
+			$var = Resource::getConfiguration()->get("testkey");
 		}
 
 		/**
@@ -84,13 +84,13 @@
 			$this->assertEquals($iConfiguration->get("test.key"), $iConfiguration->get("theme"));
 
 			/** @todo The delete method current throws "test.key" is not a valid configuration */
-			$this->markTestIncomplete('This test has not been implemented yet.');
+//			$this->markTestIncomplete('This test has not been implemented yet.');
 
 			$iConfiguration->delete("test.key");
 
-			//$this->expectException(\InvalidArgumentException::class);
-			//\Resource::getConfiguration()->get("test.key");
+			$this->expectException(\InvalidArgumentException::class);
+			\Resource::getConfiguration()->get("test.key");
 
-			//$this->assertEquals($iConfiguration->get("test.key2"), $iConfiguration->get("theme"));
+			$this->assertEquals($iConfiguration->get("test.key2"), $iConfiguration->get("theme"));
 		}
 	}

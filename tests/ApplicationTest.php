@@ -29,4 +29,21 @@
 				$this->assertInstanceOf(\NotFoundController::class, $iController);
 			}
 		}
+
+		/**
+		 * Test child controllers can set data
+		 */
+		public function testChildControllersCanSetData() {
+			$iRouter = $this->getRouterWithArguments(["bin/app", "mock"]);
+			$iApplication = new \Core\Application($iRouter);
+
+			[$controller, $method] = $iRouter->getRoute();
+
+			$iController = $iApplication->executeController($controller, $method);
+
+			$data = $iController->getResponse()->getData();
+
+			$this->assertArrayHasKey("header", $data);
+			$this->assertArrayHasKey("javascript", $data);
+		}
 	}
