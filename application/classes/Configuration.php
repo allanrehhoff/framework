@@ -1,21 +1,22 @@
 <?php
 /**
-* Parses a JSON file, and let's you access properties using a dot syntax
+* Parses a JSONC file, and let's you access properties using a dot syntax
 * also supports .jsonc files
 */
 class Configuration {
 	/**
 	 * @var \stdClass The resulting configuration object after being successfully parsed.
 	 */
-	private $parsedConfig;
+	private \stdClass $parsedConfig;
 
 	/**
 	 * @var string Path to the configuration file being parsed.
 	 */
-	private $configurationFile;
+	private string $configurationFile;
 
 	/**
 	* The constructor starts parsing of the configuration file.
+	* @param string $configurationFile Absolute filesystem path to a .jsonc file
 	*/
 	public function __construct(string $configurationFile = null) {
 		if($configurationFile !== null) {
@@ -81,17 +82,17 @@ class Configuration {
 	* @return mixed null on failure.
 	* @throws \InvalidArgumentException 
 	*/
-	public function get($conf = null) {
-		if($conf === null) {
+	public function get(string $key = null) {
+		if($key === null) {
 			return $this->parsedConfig;
 		}
 		
-		$paths = explode('.', $conf);
+		$paths = explode('.', $key);
 		$configValue = $this->parsedConfig;
 
 		foreach($paths as $path) {
 			if(!isset($configValue->$path)) {
-				throw new \InvalidArgumentException($conf." is not a valid configuration");
+				throw new \InvalidArgumentException($key." is not a valid configuration");
 			}
 
 			$configValue = $configValue->$path;
@@ -104,41 +105,48 @@ class Configuration {
 
 	/**
 	* Remove a configuration value
-	* @param string $conf Key of the setting to delete.
+	* @param string $key Key of the setting to delete.
 	* @throws \InvalidArgumentException
 	* @return self
 	*/
-	public function delete(string $conf) : Configuration {
-		$paths = explode('.', $conf);
+	public function delete(string $key) : Configuration {
 		$configValue = $this->parsedConfig;
+
+		$paths = explode('.', $key);
+		$unsetKey = array_slice($paths, -1)[0];
 
 		foreach($paths as $path) {
 			if(!isset($configValue->$path)) {
-				throw new \InvalidArgumentException($conf." is not a valid configuration");
+				throw new \InvalidArgumentException($key." is not a valid configuration");
 				return false;
 			}
+
+			if(isset($configValue->$unsetKey)) {
+				unset($configValue->$unsetKey);
+			} else {
+				$configValue = &$configValue->$path;
+			}
 		}
-		
-		unset($configValue->$path);
 		
 		return $this;
 	}
 
 	/**
-	* Alias for JsonParser::delete()
+	* Alias for \Configuration::delete()
+	* @see \Configuration::delete();
 	* @return \Configuration value of onfigurationParser::delete()
 	*/
-	public function remove(string $conf) : Configuration {
-		return $this->delete($conf);
+	public function remove(string $key) : Configuration {
+		return $this->delete($key);
 	}
 
 	/**
 	* Dynamically set a configuration setting to a given value.
-	* @param $setting Key of the setting.
-	* @param $value Value of $setting
+	* @param string $setting Key of the setting.
+	* @param string $value Value of $setting
 	* @return \Configuration
 	*/
-	public function set(string $setting, $value) : Configuration {
+	public function set(string $setting, mixed $value) : Configuration {
 		$paths = explode('.', $setting);
 		$result = &$this->parsedConfig;
 		
@@ -160,9 +168,7 @@ class Configuration {
 	}
 
 	/**
-	* I have no idea how this reacts if $user->does->this = 'stupid';
-	* But doing so is discouraged, and at some point I might introduce Exceptions here.
-	* @return mixed value of ConfigurationParser::set();
+	* @return mixed value of Configuration::set();
 	*/
 	public function __set($name, $value) {
 		return $this->set($name, $value);
@@ -170,7 +176,7 @@ class Configuration {
 
 	/**
 	* Again please use the ->get() and ->set() methods
-	* @see ConfigurationParser::__set();
+	* @see Configuration::__set();
 	* @return mixed
 	*/
 	public function __get($name) {

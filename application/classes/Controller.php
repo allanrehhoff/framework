@@ -90,16 +90,21 @@
 		 * @return void
 		 */
 		final public function start() : void {
-			if(IS_CLI === false) {
-				$this->assets = new \Core\Assets();
-				$this->theme = new \Core\Theme($this->assets);
-			
-				if($this->getParent() === null) {
-					$this->children[] = new \Core\ClassName("Header");
-					$this->children[] = new \Core\ClassName("Footer");
+			// assets and theme properties are set
+			// here to enable compatibility with
+			// the test suite, placing them inside
+			// the below if block will yild errors
+			$this->assets = new \Core\Assets();
+			$this->theme = new \Core\Theme($this->assets);
 
-					$this->response->setTitle(array_slice($this->router->getArgs(), -1)[0]);
-				}
+			// While it's safe to load these children class in cli
+			// there's as of yet, no beneficial reason to.
+			// So we'll save the memory and CPU cycles
+			if(IS_CLI === false && $this->getParent() === null) {
+				$this->children[] = new \Core\ClassName("Header");
+				$this->children[] = new \Core\ClassName("Footer");
+
+				$this->response->setTitle(array_slice($this->router->getArgs(), -1)[0]);
 			}
 		}
 		
