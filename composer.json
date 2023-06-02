@@ -3,7 +3,7 @@
     "description": "A lightweight custom framework using well-known and intuitive patterns",
     "type": "project",
     "scripts": {
-        "build-docs": "phpdoc -d application/ -t documentation/",
+        "build-docs": "phpdoc",
         "test": "phpunit"
     },
     "require-dev": {
