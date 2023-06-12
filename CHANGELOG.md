@@ -1,9 +1,11 @@
 # Changelog #
+v7.1.1
+- Support for pulling environment variables, constants, and ini settings through config files.  
+- Updated the configuration documentation section in README.  
+
 v7.1.0  
 - Added tests support.  
 - Refactor argument input handling for lighter coupling.  
-- Support for pulling environment variables, constants, and ini settings through config files.  
-- Updated the configuration documentation section in README.  
 
 v7.0.0  
 - **This release is backwards incompatible.** 
