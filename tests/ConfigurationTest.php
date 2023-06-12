@@ -74,7 +74,6 @@
 
 		/**
 		 * Test deleting nested config key
-		 * @todo Finnish implementing this test
 		 */
 		public function testDeleteNestedConfigKey() {
 			$iConfiguration = \Resource::getConfiguration();
@@ -83,14 +82,75 @@
 
 			$this->assertEquals($iConfiguration->get("test.key"), $iConfiguration->get("theme"));
 
-			/** @todo The delete method current throws "test.key" is not a valid configuration */
-//			$this->markTestIncomplete('This test has not been implemented yet.');
-
 			$iConfiguration->delete("test.key");
 
 			$this->expectException(\InvalidArgumentException::class);
 			\Resource::getConfiguration()->get("test.key");
 
 			$this->assertEquals($iConfiguration->get("test.key2"), $iConfiguration->get("theme"));
+		}
+
+		/**
+		 * Test that environment variables can be pulled from config
+		 */
+		public function testEnvironmentFunction() {
+			putenv("FRAMEWORK_TEST=TEST1");
+
+			$iConfiguration = \Resource::getConfiguration();
+			$iConfiguration->set("envkey", "{{getenv('FRAMEWORK_TEST')}}");
+
+			$this->assertEquals("TEST1", $iConfiguration->get("envkey"));
+		}
+		
+		/**
+		 * Test that constants can be pulled from config
+		 */
+		public function testConstantFunction() {
+			$expect = PHP_VERSION;
+
+			$iConfiguration = \Resource::getConfiguration();
+			$iConfiguration->set("constkey", "{{constant('PHP_VERSION')}}");
+
+			$this->assertEquals($expect, $iConfiguration->get("constkey"));
+		}
+
+		/**
+		 * Test that constants can be pulled from config
+		 */
+		public function testInigetFunction() {
+			$expect = ini_get("display_errors");
+
+			$iConfiguration = \Resource::getConfiguration();
+			$iConfiguration->set("inikey", "{{ini_get('display_errors')}}");
+
+			$this->assertEquals($expect, $iConfiguration->get("inikey"));
+		}
+
+		/**
+		 * Test that not-allowed functions cannot be used
+		 */
+		public function testDisallowedFunction() {
+			$expect = ini_get("display_errors");
+
+			$iConfiguration = \Resource::getConfiguration();
+			$iConfiguration->set("setkey", "{{ini_set('display_errors', 1)}}");
+
+			$this->expectException(\InvalidArgumentException::class);
+			$iConfiguration->get("setkey");
+		}
+
+		/**
+		 * Test that using a function does not collide with
+		 * a manually set setting
+		 */
+		public function testFunctionsDoesNotCollide() {
+			$expect = PHP_VERSION;
+
+			$iConfiguration = \Resource::getConfiguration();
+			$iConfiguration->set("constant", "myownvalue");
+			$iConfiguration->set("constkey", "{{constant('PHP_VERSION')}}");
+
+			$this->assertNotEquals($expect, $iConfiguration->get("constkey"));
+			$this->assertEquals("myownvalue", $iConfiguration->get("constkey"));
 		}
 	}

@@ -47,7 +47,7 @@ class Configuration {
 	 * @param $configValue The config value in which to replace variables.
 	 * @return mixed
 	 */
-	protected function replaceVariables($configValue) {
+	protected function replaceVariables($configValue) : mixed {
 		if(is_string($configValue) === true) {
 			/*
 				\{{2}      (match 2 literal {)
@@ -56,10 +56,18 @@ class Configuration {
 				)          (end capture group)
 				\}{2}      (match 2 literal })
 			*/
-			$variables = preg_match_all("/\{{2}([^{^}]+)\}{2}/", $configValue, $matches);
+			preg_match_all("/\{{2}([^{^}]+)\}{2}/", $configValue, $variables);
 
-			for($i = 0; $i < count($matches[0]); $i++) { 
-				$configValue = str_replace($matches[0][$i], $this->get($matches[1][$i]), $configValue);
+			$allowedFunctions = ["getenv", "constant", "defined", "ini_get"];
+
+			for($i = 0; $i < count($variables[0]); $i++) {
+				$token = strtok($variables[1][$i], "(");
+
+				if(in_array($token, $allowedFunctions) === true && $this->has($token) === false) {
+					$configValue = eval("return ".$variables[1][$i].';');
+				} else {	
+					$configValue = str_replace($variables[0][$i], $this->get($token), $configValue);
+				}
 			}
 		} else if(is_object($configValue) === true) {
 			foreach($configValue as $key => $value) {
@@ -82,7 +90,7 @@ class Configuration {
 	* @return mixed null on failure.
 	* @throws \InvalidArgumentException 
 	*/
-	public function get(string $key = null) {
+	public function get(string $key = null) : mixed {
 		if($key === null) {
 			return $this->parsedConfig;
 		}
@@ -101,6 +109,20 @@ class Configuration {
 		$configValue = $this->replaceVariables($configValue);
 		
 		return $configValue;
+	}
+
+	/**
+	 * Test if current config holds a value for a given key
+	 * @param string $key The config key to test
+	 * @return bool
+	 */
+	public function has(string $key) : bool {
+		try {
+			$this->get($key);
+			return true;
+		} catch(\InvalidArgumentException) {
+			return false;
+		}
 	}
 
 	/**
