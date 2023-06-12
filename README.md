@@ -138,24 +138,21 @@ Hello from interface
 ## Configuration
 A superset of json, called jsonc is used for configuration files, this is to support comments in configuration files.  
 
-> *NOTE:*  
-> ConfigurationParser still only has partial support for jsonc.  
-
 All config files are to be located in the **storage/config** directory.  
 The main configuration resides within the file **application,jsonc**, and should contain nothing but configuration settings used by the core and controllers.  
 
-Theme specific configurations such as assets, third-party libraries should be managed by the **default.theme.jsonc** file bundled with the theme.  
+Theme specific configurations such as assets, third-party libraries should be managed by the **default.theme.jsonc** or their respective `.jsonc` file file bundled with the theme.  
 
-Configuration is loaded upon controller initialization.  
 Values can be accessed, changed, removed and saved using a dot syntax.  
+
 ```php
 <?php
 	class RestaurantController extends \Controller {
 		public function __construct() {
-			$this->theme->get("menu.pizzas"); // ["Hawaii", "MeatLover", "Vegan", ...]
-			$this->theme->set("menu.pizzas.Hawaii", "Ananas"); // ["Ananas", "MeatLover", "Vegan", ...]
-			$this->theme->remove("menu.pizzass.Vegan"); // ["Ananas", "MeatLover", ...]
-			$this->theme->save();
+			\Resource::getConfgiration()->get("menu.pizzas"); // ["Hawaii", "MeatLover", "Vegan", ...]
+			\Resource::getConfgiration()->set("menu.pizzas.Hawaii", "Ananas"); // ["Ananas", "MeatLover", "Vegan", ...]
+			\Resource::getConfgiration()->remove("menu.pizzass.Vegan"); // ["Ananas", "MeatLover", ...]
+			\Resource::getConfgiration()->save();
 		}
 	}
 ```
@@ -186,6 +183,21 @@ Variables are parsed recursively, and therefore values from nested objects can a
 "site_name": "Framework",
 "http": {
     "useragent": "{{site_name}}/{{version.prod}}"
+}
+```
+
+A limited set of standard PHP functions are supported to return values from config files.
+There are `getenv`, `constant`, `defined` and `ini_get`
+
+Using getenv();  
+```json
+"version": "constant('PHP_VERSION')",
+"site_name": "Framework",
+"database": {
+    "DB_HOST": "getenv('DB_HOST')",
+	"DB_USER": "getenv('DB_USER')",
+	"DB_PASS": "getenv('DB_PASS')",
+	"DB_NAME": "getenv('DB_NAME')"
 }
 ```
 
