@@ -60,11 +60,11 @@
 </h4>
     <ul class="phpdocumentor-list">
                     <li>
-                <a href="namespaces/core-contract.html" class="">Contract</a>
+                <a href="namespaces/core-exception.html" class="">Exception</a>
                 
             </li>
                     <li>
-                <a href="namespaces/core-exception.html" class="">Exception</a>
+                <a href="namespaces/core-httperror.html" class="">HttpError</a>
                 
             </li>
             </ul>
@@ -336,8 +336,6 @@
 </h3>
 
 <dl class="phpdocumentor-table-of-contents">
-            <dt class="phpdocumentor-table-of-contents__entry -interface"><a href="classes/Core-Contract-HttpExceptionInterface.html"><abbr title="\Core\Contract\HttpExceptionInterface">HttpExceptionInterface</abbr></a></dt>
-        <dd></dd>
             <dt class="phpdocumentor-table-of-contents__entry -interface"><a href="classes/DeepCopy-Filter-Filter.html"><abbr title="\DeepCopy\Filter\Filter">Filter</abbr></a></dt>
         <dd>Filter to apply to a property while copying an object</dd>
             <dt class="phpdocumentor-table-of-contents__entry -interface"><a href="classes/DeepCopy-Matcher-Matcher.html"><abbr title="\DeepCopy\Matcher\Matcher">Matcher</abbr></a></dt>
@@ -567,13 +565,9 @@ also supports .jsonc files</dd>
         <dd></dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Core-Exception-FileNotFound.html"><abbr title="\Core\Exception\FileNotFound">FileNotFound</abbr></a></dt>
         <dd>FileNotFound is thrown when core is missing a required file.</dd>
-            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Core-Exception-Forbidden.html"><abbr title="\Core\Exception\Forbidden">Forbidden</abbr></a></dt>
-        <dd>Throw this whenever you want to redirect the current controller to a &quot;forbidden&quot; controller</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Core-Exception-Governance.html"><abbr title="\Core\Exception\Governance">Governance</abbr></a></dt>
         <dd>\Core\Exception\Governance is raised when something should not be done
 You should rarely have the need for catching this.</dd>
-            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Core-Exception-NotFound.html"><abbr title="\Core\Exception\NotFound">NotFound</abbr></a></dt>
-        <dd>Throw this whenever you want to redirect the current controller to a not found controller</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Core-MethodName.html"><abbr title="\Core\MethodName">MethodName</abbr></a></dt>
         <dd>Sanitizes a string to a valid callable method name</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Core-MVCStructure.html"><abbr title="\Core\MVCStructure">MVCStructure</abbr></a></dt>
@@ -2239,6 +2233,16 @@ listing only changes lines. Does not include line numbers.</dd>
         <dd></dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/TheSeer-Tokenizer-XMLSerializer.html"><abbr title="\TheSeer\Tokenizer\XMLSerializer">XMLSerializer</abbr></a></dt>
         <dd></dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Core-HttpError-Forbidden.html"><abbr title="\Core\HttpError\Forbidden">Forbidden</abbr></a></dt>
+        <dd>Throw this whenever you want to redirect the current controller to a &quot;forbidden&quot; controller</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Core-HttpError-NotFound.html"><abbr title="\Core\HttpError\NotFound">NotFound</abbr></a></dt>
+        <dd>Throw this whenever you want to redirect the current controller to a not found controller</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Core-HttpError-StatusCode.html"><abbr title="\Core\HttpError\StatusCode">StatusCode</abbr></a></dt>
+        <dd>The base class for all HTTP exceptions to extend upon
+This class is intentionally abstract
+As it should not be instantiated directly
+and only serves as a catch-all class for
+all http error exceptions extending this</dd>
     
     
     </dl>

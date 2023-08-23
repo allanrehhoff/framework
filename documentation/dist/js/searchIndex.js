@@ -26,6 +26,11 @@ Search.appendIndex(
             "summary": "Gets\u0020a\u0020single\u0020configuration\u0020value.",
             "url": "classes/Configuration.html#method_get"
         },                {
+            "fqsen": "\\Configuration\u003A\u003Ahas\u0028\u0029",
+            "name": "has",
+            "summary": "Test\u0020if\u0020current\u0020config\u0020holds\u0020a\u0020value\u0020for\u0020a\u0020given\u0020key",
+            "url": "classes/Configuration.html#method_has"
+        },                {
             "fqsen": "\\Configuration\u003A\u003Adelete\u0028\u0029",
             "name": "delete",
             "summary": "Remove\u0020a\u0020configuration\u0020value",
@@ -331,16 +336,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Core-ClassName.html#method___construct"
         },                {
-            "fqsen": "\\Core\\Contract\\HttpExceptionInterface",
-            "name": "HttpExceptionInterface",
-            "summary": "",
-            "url": "classes/Core-Contract-HttpExceptionInterface.html"
-        },                {
-            "fqsen": "\\Core\\Contract\\HttpExceptionInterface\u003A\u003AgetHttpCode\u0028\u0029",
-            "name": "getHttpCode",
-            "summary": "Return\u0020an\u0020integer\u0020representing\u0020a\u0020HTTP\u0020code",
-            "url": "classes/Core-Contract-HttpExceptionInterface.html#method_getHttpCode"
-        },                {
             "fqsen": "\\Core\\Environment",
             "name": "Environment",
             "summary": "",
@@ -356,30 +351,10 @@ Search.appendIndex(
             "summary": "FileNotFound\u0020is\u0020thrown\u0020when\u0020core\u0020is\u0020missing\u0020a\u0020required\u0020file.",
             "url": "classes/Core-Exception-FileNotFound.html"
         },                {
-            "fqsen": "\\Core\\Exception\\Forbidden",
-            "name": "Forbidden",
-            "summary": "Throw\u0020this\u0020whenever\u0020you\u0020want\u0020to\u0020redirect\u0020the\u0020current\u0020controller\u0020to\u0020a\u0020\u0022forbidden\u0022\u0020controller",
-            "url": "classes/Core-Exception-Forbidden.html"
-        },                {
-            "fqsen": "\\Core\\Exception\\Forbidden\u003A\u003AgetHttpCode\u0028\u0029",
-            "name": "getHttpCode",
-            "summary": "Return\u0020an\u0020integer\u0020representing\u0020a\u0020HTTP\u0020code",
-            "url": "classes/Core-Exception-Forbidden.html#method_getHttpCode"
-        },                {
             "fqsen": "\\Core\\Exception\\Governance",
             "name": "Governance",
             "summary": "\\Core\\Exception\\Governance\u0020is\u0020raised\u0020when\u0020something\u0020should\u0020not\u0020be\u0020done\nYou\u0020should\u0020rarely\u0020have\u0020the\u0020need\u0020for\u0020catching\u0020this.",
             "url": "classes/Core-Exception-Governance.html"
-        },                {
-            "fqsen": "\\Core\\Exception\\NotFound",
-            "name": "NotFound",
-            "summary": "Throw\u0020this\u0020whenever\u0020you\u0020want\u0020to\u0020redirect\u0020the\u0020current\u0020controller\u0020to\u0020a\u0020not\u0020found\u0020controller",
-            "url": "classes/Core-Exception-NotFound.html"
-        },                {
-            "fqsen": "\\Core\\Exception\\NotFound\u003A\u003AgetHttpCode\u0028\u0029",
-            "name": "getHttpCode",
-            "summary": "",
-            "url": "classes/Core-Exception-NotFound.html#method_getHttpCode"
         },                {
             "fqsen": "\\Core\\MethodName",
             "name": "MethodName",
@@ -31401,6 +31376,41 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/TheSeer-Tokenizer-XMLSerializer.html#property_xmlns"
         },                {
+            "fqsen": "\\Core\\HttpError\\Forbidden",
+            "name": "Forbidden",
+            "summary": "Throw\u0020this\u0020whenever\u0020you\u0020want\u0020to\u0020redirect\u0020the\u0020current\u0020controller\u0020to\u0020a\u0020\u0022forbidden\u0022\u0020controller",
+            "url": "classes/Core-HttpError-Forbidden.html"
+        },                {
+            "fqsen": "\\Core\\HttpError\\Forbidden\u003A\u003AgetHttpCode\u0028\u0029",
+            "name": "getHttpCode",
+            "summary": "Return\u0020an\u0020integer\u0020representing\u0020a\u0020HTTP\u0020code",
+            "url": "classes/Core-HttpError-Forbidden.html#method_getHttpCode"
+        },                {
+            "fqsen": "\\Core\\HttpError\\NotFound",
+            "name": "NotFound",
+            "summary": "Throw\u0020this\u0020whenever\u0020you\u0020want\u0020to\u0020redirect\u0020the\u0020current\u0020controller\u0020to\u0020a\u0020not\u0020found\u0020controller",
+            "url": "classes/Core-HttpError-NotFound.html"
+        },                {
+            "fqsen": "\\Core\\HttpError\\NotFound\u003A\u003AgetHttpCode\u0028\u0029",
+            "name": "getHttpCode",
+            "summary": "Return\u0020an\u0020integer\u0020representing\u0020a\u0020HTTP\u0020code",
+            "url": "classes/Core-HttpError-NotFound.html#method_getHttpCode"
+        },                {
+            "fqsen": "\\Core\\HttpError\\StatusCode",
+            "name": "StatusCode",
+            "summary": "The\u0020base\u0020class\u0020for\u0020all\u0020HTTP\u0020exceptions\u0020to\u0020extend\u0020upon\nThis\u0020class\u0020is\u0020intentionally\u0020abstract\nAs\u0020it\u0020should\u0020not\u0020be\u0020instantiated\u0020directly\nand\u0020only\u0020serves\u0020as\u0020a\u0020catch\u002Dall\u0020class\u0020for\nall\u0020http\u0020error\u0020exceptions\u0020extending\u0020this",
+            "url": "classes/Core-HttpError-StatusCode.html"
+        },                {
+            "fqsen": "\\Core\\HttpError\\StatusCode\u003A\u003AgetHttpCode\u0028\u0029",
+            "name": "getHttpCode",
+            "summary": "Return\u0020an\u0020integer\u0020representing\u0020a\u0020HTTP\u0020code",
+            "url": "classes/Core-HttpError-StatusCode.html#method_getHttpCode"
+        },                {
+            "fqsen": "\\Core\\HttpError\\StatusCode\u003A\u003AgetClassName\u0028\u0029",
+            "name": "getClassName",
+            "summary": "Returns\u0020a\u0020class\u0020shortname\u0020matching\u0020the\u0020name\nof\u0020the\u0020http\u0020error\u0020exception\u0020being\u0020thrown.",
+            "url": "classes/Core-HttpError-StatusCode.html#method_getClassName"
+        },                {
             "fqsen": "\\",
             "name": "\\",
             "summary": "",
@@ -31411,15 +31421,15 @@ Search.appendIndex(
             "summary": "",
             "url": "namespaces/core.html"
         },                {
-            "fqsen": "\\Core\\Contract",
-            "name": "Contract",
-            "summary": "",
-            "url": "namespaces/core-contract.html"
-        },                {
             "fqsen": "\\Core\\Exception",
             "name": "Exception",
             "summary": "",
             "url": "namespaces/core-exception.html"
+        },                {
+            "fqsen": "\\Core\\HttpError",
+            "name": "HttpError",
+            "summary": "",
+            "url": "namespaces/core-httperror.html"
         },                {
             "fqsen": "\\Database",
             "name": "Database",
