@@ -74,8 +74,8 @@ A view must be by each controller, throught the **Controller::setView();**
 
 Children controllers will be able to set or modify any data set by the parent controller.  
 
-In any controllers of the heirachy you may throw a `\Core\Exceptions\NotFound` to reroute the entire stack to **NotFoundController**   
-You may also throw a `\Core\Exceptions\Forbidden` to instead reroute to **ForbiddenController**
+In any controllers of the heirachy you may throw a `\Core\HttpError\NotFound` to reroute the entire stack to **NotFoundController**   
+You may also throw a `\Core\HttpError\Forbidden` to instead reroute to **ForbiddenController**
 
 > *NOTE:*  
 > The default method invoked is **index** this will happen if arg(1) is nowhere to be found in the given controller, or arg(1) is void.
