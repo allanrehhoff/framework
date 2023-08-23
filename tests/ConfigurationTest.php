@@ -153,4 +153,13 @@
 			$this->assertNotEquals($expect, $iConfiguration->get("constkey"));
 			$this->assertEquals("myownvalue", $iConfiguration->get("constkey"));
 		}
+
+		/**
+		 * Test that passing a non-existant file throws exception
+		 */
+		public function testFileNotFoundException() {
+			$this->expectException(\Core\Exception\FileNotFound::class);
+
+			new \Configuration("filenotfound.jsonc");
+		}
 	}

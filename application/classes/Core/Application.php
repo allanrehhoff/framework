@@ -94,12 +94,9 @@ namespace Core {
 				$iController->start();
 				$iController->$methodName();
 				$iController->stop();
-			} catch(\Core\Exception\Forbidden $iForbiddenException) {
-				$iController->getResponse()->sendHttpCode($iForbiddenException->getHttpCode());
-				$iController = $this->executeController(new ClassName("Forbidden"));
-			} catch(\Core\Exception\NotFound $iNotFoundException) {
-				$iController->getResponse()->sendHttpCode($iNotFoundException->getHttpCode());
-				$iController = $this->executeController(new ClassName("NotFound"));
+			} catch(\Core\HttpError\StatusCode $iStatusCode) {
+				$iController->getResponse()->sendHttpCode($iStatusCode->getHttpCode());
+				$iController = $this->executeController(new ClassName($iStatusCode->getClassName()));
 			}
 
 			foreach($iController->getChildren() as $childControllerName) {

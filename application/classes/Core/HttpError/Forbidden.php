@@ -1,9 +1,9 @@
 <?php
-namespace Core\Exception {
+namespace Core\HttpError {
 	/**
 	 * Throw this whenever you want to redirect the current controller to a "forbidden" controller
 	 */
-	class Forbidden extends \Exception implements \Core\Contract\HttpExceptionInterface {
+	class Forbidden extends StatusCode {
 		/**
 		 * @return int
 		 */
