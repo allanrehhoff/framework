@@ -1,7 +1,8 @@
 # Changelog #
 v7.2.0
-- Simplified the way HTTP code exceptions are handled
-- Added another test related to \Configuration class
+- Simplified the way HTTP code exceptions are handled.  
+- Added another test related to \Configuration class.  
+- Updated database class to latest version.  
 
 v7.1.1
 - Support for pulling environment variables, constants, and ini settings through config files.  
