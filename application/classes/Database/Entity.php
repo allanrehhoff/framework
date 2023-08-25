@@ -28,12 +28,19 @@ namespace Database {
 		abstract protected static function getTableName() : string;
 
 		/**
-		* Loads a given entity, instantiates a new if none given.
+		* Loads a given entity, usually by an ID. Instantiates a new if none given.
 		*
 		* @param mixed $data Can be either an array of existing data or an entity ID to load.
+		* @param ?array $allowedFields Fields allowed to be set as data
 		* @return void
 		*/
-		public function __construct($data = null, ?array $allowedFields = null) {
+		public function __construct(mixed $data = null, ?array $allowedFields = null) {
+			if(gettype($data) === "string" || gettype($data) === "integer") {
+				$keyField = static::getKeyField();
+				$exists = Connection::getInstance()->fetchRow($this->getTableName(), [$keyField => $data]);
+				$data = (array)$exists;
+			}
+
 			$this->set($data, $allowedFields);
 		}
 
@@ -97,7 +104,7 @@ namespace Database {
 				Connection::getInstance()->update($this->getTableName(), $this->data, $this->getKeyFilter());
 				return $this->data;
 			} else {
-				if(empty($this->data)) throw new \Exception("Data variable is empty");
+				if(empty($this->data)) throw new \BadMethodCallException("Data variable is empty");
 				$this->key = Connection::getInstance()->insert($this->getTableName(), $this->data);
 				return $this->key;
 			}
@@ -143,8 +150,8 @@ namespace Database {
 		* @return mixed The loaded entities
 		* @throws \TypeError
 		*/
-		public static function load(mixed $rows, bool $indexByIDs = true) {
-			$class = get_called_class();
+		public static function load(mixed $rows, bool $indexByIDs = true) : Collection|Entity {
+			$class = static::class;
 
 			if(is_iterable($rows)) {
 				$objects = [];
@@ -156,11 +163,24 @@ namespace Database {
 				}
 
 				return new Collection($objects);
-			} else if(is_numeric($rows)) {
-				return new $class((int) $rows);
+			} else {
+				return new $class($rows);
 			}
 
 			throw new \InvalidArgumentException($class."::load(); expects either an array or integer. '".gettype($rows)."' was provided.");
+		}
+
+		/**
+		 * Performs a search of the given criteria
+		 *
+		 * @param array $searches Sets of expressions to match. e.g. 'filepath LIKE :filepath'
+		 * @param ?array $criteria Criteria variables for the search sets
+		 * @return array
+		 * @since 3.3.0
+		 */
+		public static function search(array $searches = [], ?array $criteria = null) : Collection|Entity {
+			$rows = Connection::getInstance()->search(static::getTableName(), $searches, $criteria);
+			return self::load($rows);
 		}
 
 		/**
@@ -170,11 +190,11 @@ namespace Database {
 		 * @return Entity
 		 */
 		public static function from(string $field, mixed $value) : Entity {
-			$ID = Connection::getInstance()->fetchCell(static::getTableName(), static::getKeyField(), [
+			$row = Connection::getInstance()->fetchRow(static::getTableName(), [
 				$field => $value
 			]);
 
-			return new static($ID);
+			return new static($row);
 		}
 
 		/**
@@ -186,69 +206,41 @@ namespace Database {
 		}
 
 		/**
-		 * Performs a search of the given criteria
-		 *
-		 * @param array $searches Sets of expressions to match. e.g. 'filepath LIKE :filepath'
-		 * @param ?array $criteria Criteria variables for the search sets
-		 * @return array
-		 * @since 3.3.0
-		 */
-		public static function search(array $searches = [], ?array $criteria = null) {
-			$rows = Connection::getInstance()->search(static::getTableName(), $searches, $criteria);
-			return self::load($rows);
-		}
-
-		/**
 		* Sets ones or more properties to a given value.
 		*
 		* @param array $values key => value pairs of values to set
-		* @param array $allowedFields keys of fields allowed to be altered
+		* @param ?array $allowedFields keys of fields allowed to be altered
 		* @return object The current entity instance
 		*/
-		public function set(mixed $data = null, ?array $allowedFields = null) : Entity {
-			if(is_object($data) === true) {
+		public function set(null|array|object $data = null, ?array $allowedFields = null) : Entity {
+			if($data !== null) {
+				// Convert object to array
+				// So we can merge it later
 				$data = (array) $data;
-			}
 
-			if(is_array($data) === true) {
 				// Find empty strings in dataset and convert to null instead.
 				// JSON fields doesn't allow empty strings to be stored.
 				// This also helps against empty strings telling exists(); to return true
 				foreach($data as $key => $value) {
-					$data[$key] = is_string($value) && trim($value) === '' ? null : $value;
+					$data[$key] = $value === '' ? null : $value;
 				}
-			}
 
-			// Again empty strings should be null
-			if(is_string($data) && trim($data) === '') {
-				$data = null;
-			}
+				$keyField = static::getKeyField();
 
-			if($allowedFields != null) {
-				$data = array_intersect_key($data, array_flip($allowedFields));
-			}
-			
-			$key = static::getKeyField();
-			
-			if($data !== null && gettype($data) !== "array") {
-				$data = [$key => $data];
-			}
-
-			if(isset($data[$key])) {
-				$exists = Connection::getInstance()->fetchRow($this->getTableName(), [$key => $data[$key]]);
-
-				if(!empty($exists)) {
-					$this->key = $exists->$key;
-					$this->data = (array)$exists;
-					unset($data[$key]);
+				if(isset($data[$keyField])) {
+					$this->key = $data[$keyField];
+					unset($data[$keyField]);
 				}
+
+				if($allowedFields != null) {
+					$data = array_intersect_key($data, array_flip($allowedFields));
+				}
+
+				$data = array_merge($this->data, $data ?? []);
 			}
 
-			if($data === null) {
-				$data = [];
-			}
+			$this->data = $data ?? [];
 
-			$this->data = array_merge($this->data, $data);
 			return $this;
 		}
 

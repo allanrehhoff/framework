@@ -10,16 +10,16 @@
 	namespace Database {
 		class Connection {
 			/** @var boolean True if a transaction has started, false otherwise. */
-			private $transactionStarted = false;
+			protected $transactionStarted = false;
 
 			/** @var object  The singleton instance of the this class. */
-			private static $singletonInstance;
+			protected static $singletonInstance;
 
 			/** @var ?\PDO PDO Database handle */
-			private ?\PDO $dbh;
+			protected ?\PDO $dbh;
 
 			/** @var ?array Filters to prepare before querying */
-			private ?array $filters = [];
+			protected ?array $filters = [];
 
 			/** @var ?Statement Holds the last prepared statement after execution. */
 			public ?Statement $statement;
@@ -34,7 +34,7 @@
 			public ?string $lastQuery = null;
 
 			/** @var int Number When an array is passed as criteria this will be incremented for each value across all arrays */
-			private int $arrayINCounter = 0;
+			protected int $arrayINCounter = 0;
 
 			/**
 			* Initiate a new database connection using PDO as a driver.
@@ -372,7 +372,7 @@
 			 * @return array
 			 * @since 3.1.3
 			 */
-			public function search(string $table, array $searches = [], ?array $criteria = null) {
+			public function search(string $table, array $searches = [], ?array $criteria = null) : array {
 				$sql = "SELECT * FROM ".$table." WHERE ".implode(" AND ", $searches);
 				return $this->query($sql, $criteria)->fetchAll();
 			}
