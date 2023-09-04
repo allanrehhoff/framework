@@ -10,6 +10,10 @@
 		public function index() {
 			$this->children[] = new \Core\ClassName("Header"); 
 		}
+
+		private function privateFunction() {}
+
+		protected function protectedFunction() {}
 	}
 
 	ini_set("display_errors", 1);

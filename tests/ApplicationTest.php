@@ -46,4 +46,32 @@
 			$this->assertArrayHasKey("header", $data);
 			$this->assertArrayHasKey("javascript", $data);
 		}
+
+		/**
+		 * Test private methods does not route
+		 */
+		public function testPrivateMethodsDoesNotRoute() {
+			$iRouter = $this->getRouterWithArguments(["bin/app", "mock", "private-function"]);
+			$iApplication = new \Core\Application($iRouter);
+
+			[$controller, $method] = $iRouter->getRoute();
+
+			$iController = $iApplication->executeController($controller, $method);
+
+			$this->assertInstanceOf(NotFoundController::class, $iController);
+		}
+
+		/**
+		 * Test private methods does not route
+		 */
+		public function testProtectedMethodsDoesNotRoute() {
+			$iRouter = $this->getRouterWithArguments(["bin/app", "mock", "protected-function"]);
+			$iApplication = new \Core\Application($iRouter);
+
+			[$controller, $method] = $iRouter->getRoute();
+
+			$iController = $iApplication->executeController($controller, $method);
+
+			$this->assertInstanceOf(NotFoundController::class, $iController);
+		}
 	}
