@@ -1,4 +1,7 @@
 # Changelog #
+v7.2.1
+- Fix private and protected methods on controllers being call.  
+
 v7.2.0
 - Simplified the way HTTP code exceptions are handled.  
 - Added another test related to \Configuration class.  

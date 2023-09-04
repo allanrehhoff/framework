@@ -85,10 +85,15 @@ namespace Core {
 
 			try {
 				$iController = new $controllerName($this);
+				$iReflection = new \ReflectionMethod($iController, $methodName);
 
 				if($parentController !== null) {
 					$iController->setParent($parentController);
 					$iController->getResponse()->setData($parentController->getResponse()->getData());
+				}
+
+				if($iReflection->isPublic() !== true) {
+					throw new \Core\HttpError\NotFound();
 				}
 
 				$iController->start();
