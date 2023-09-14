@@ -95,7 +95,7 @@ namespace Core {
 		 */
 		public function getRoute() : array {
 			$controllerBase = $this->arg(0);
-			$methodNameBase = $this->arg(1) !== null ? $this->arg(1) : MethodName::DEFAULT;;
+			$methodNameBase = $this->arg(1);
 
 			// Instantiating a new ReflectionClass will call autoloader
 			// which will throw \Core\Exception\FileNotFound if file is not found
@@ -111,7 +111,7 @@ namespace Core {
 			// as end-users could accidently end up unwanted methods if simply re-routed to MethodName::DEFAULT
 			// However we still want our fallback to MethodName::DEFAULT if the method is simply not defined.
 			try {
-				$iMethodName = new MethodName($methodNameBase);
+				$iMethodName = new MethodName($methodNameBase ?? MethodName::DEFAULT);
 				$iReflectionMethod = $iReflectionClass->getMethod($iMethodName->toString());
 				if($iReflectionMethod->isPublic() !== true) throw new \Core\Exception\Governance;
 			} catch(\ReflectionException) {
