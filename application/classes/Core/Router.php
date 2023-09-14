@@ -97,22 +97,31 @@ namespace Core {
 			$controllerBase = $this->arg(0);
 			$methodNameBase = $this->arg(1) !== null ? $this->arg(1) : MethodName::DEFAULT;;
 
+			// Instantiating a new ReflectionClass will call autoloader
+			// which will throw \Core\Exception\FileNotFound if file is not found
+			// class_exists(); is not used because we'll need the reflection later
 			try {
-				$iControllerName = new ClassName($controllerBase);
+				$iClassName = new ClassName($controllerBase);
+				$iReflectionClass = new \ReflectionClass($iClassName->toString());
 			} catch(\Core\Exception\FileNotFound) {
-				$iControllerName = new ClassName("NotFound");
+				return [new ClassName("NotFound"), new MethodName(MethodName::DEFAULT)];
 			}
 
-			$controllerName = $iControllerName->toString();
-
-			$iMethodName = new MethodName($methodNameBase);
-			$methodName = $iMethodName->toString();
-
-			if(method_exists($controllerName, $methodName) !== true) {
+			// \Core\Exception\Governance is deliberately thrown for non-public methods
+			// as end-users could accidently end up unwanted methods if simply re-routed to MethodName::DEFAULT
+			// However we still want our fallback to MethodName::DEFAULT if the method is simply not defined.
+			try {
+				$iMethodName = new MethodName($methodNameBase);
+				$iReflectionMethod = $iReflectionClass->getMethod($iMethodName->toString());
+				if($iReflectionMethod->isPublic() !== true) throw new \Core\Exception\Governance;
+			} catch(\ReflectionException) {
+				$iMethodName = new \Core\MethodName(MethodName::DEFAULT);
+			} catch(\Core\Exception\Governance) {
+				$iClassName = new ClassName("NotFound");
 				$iMethodName = new MethodName(MethodName::DEFAULT);
 			}
 
-			return [$iControllerName, $iMethodName];
+			return [$iClassName, $iMethodName];
 		}
 	}
 }

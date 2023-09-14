@@ -24,11 +24,12 @@ namespace Core {
 			$controllerClass = implode("\\", $controllerClassParts);
 			$controllerClass .= \Controller::class;
 
-			// Constrollers must not have a constructor
+			// Controllers must not have a constructor
 			// as \Core\Application relies on a constroller instance
 			// to set the controller parent, and dependency objects
 			// Fx. Header and Footer children being set as children
 			// in controllers, and \Core\Request being injected
+			/*
 			$iReflectionClass = new \ReflectionClass($controllerClass);
 			$iReflectionMethod = $iReflectionClass->getConstructor();
 
@@ -40,6 +41,7 @@ namespace Core {
 			if($iReflectionClass->isSubclassOf("Controller") !== true) {
 				throw new \Core\Exception\Governance($controllerClass." must derive from \Controller 'extends \Controller'.");
 			}
+			*/
 
 			$this->sanitizedString = $controllerClass;
 		}
