@@ -87,7 +87,7 @@
 			 * @return mixed
 			 */
 			#[\ReturnTypeWillChange]
-			public function current() {
+			public function current() : mixed {
 				return current($this->items);
 			}
 
@@ -97,7 +97,7 @@
 			 * @return mixed
 			 */
 			#[\ReturnTypeWillChange]
-			public function key() {
+			public function key() : mixed {
 				return key($this->items);
 			}
 

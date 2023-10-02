@@ -3,11 +3,9 @@
 * The base class for any CRUD'able entity.
 */
 namespace Database {
-	use Exception;
-
 	/**
-	* Represents a CRUD'able entity.
-	*/
+	 * Represents a CRUD'able entity.
+	 */
 	abstract class Entity {
 		/**
 		 * @var mixed $key Value of the primary key field
@@ -20,11 +18,19 @@ namespace Database {
 		protected array $data = [];
 
 		/**
-		 * Subclasses must define the following two methods
-		 * as 'late static binding' will be used to load
+		 * Subclasses must define getKeyField
+		 * 'late static binding' will be used to load
 		 * entities, and identify primary key + table.
+		 * @return string
 		 */
 		abstract protected static function getKeyField() : string;
+
+		/**
+		 * Subclasses must define getTableName
+		 * 'late static binding' will be used to load
+		 * entities, and identify primary key + table.
+		 * @return string
+		 */
 		abstract protected static function getTableName() : string;
 
 		/**
@@ -49,7 +55,7 @@ namespace Database {
 		*
 		* @return string
 		*/
-		function __toString() {
+		public function __toString() : string {
 			$result = get_class($this)."(".$this->key."):\n";
 			foreach ($this->data as $key => $value) {
 				$result .= " [".$key."] ".$value."\n";
@@ -100,7 +106,7 @@ namespace Database {
 		*/
 		#[\ReturnTypeWillChange]
 		public function save() : mixed {
-			if ($this->exists() === true) {
+			if($this->exists() === true) {
 				Connection::getInstance()->update($this->getTableName(), $this->data, $this->getKeyFilter());
 				return $this->data;
 			} else {
@@ -190,10 +196,7 @@ namespace Database {
 		 * @return Entity
 		 */
 		public static function from(string $field, mixed $value) : Entity {
-			$row = Connection::getInstance()->fetchRow(static::getTableName(), [
-				$field => $value
-			]);
-
+			$row = Connection::getInstance()->fetchRow(static::getTableName(), [$field => $value]);
 			return new static($row);
 		}
 
@@ -285,7 +288,7 @@ namespace Database {
 		* @return mixed the key value
 		*/
 		public function getKey() {
-			return is_numeric($this->key) ? (int)$this->key : $this->safe(static::getKeyField());
+			return is_numeric($this->key) ? (int)$this->key : htmlspecialchars($this->key, ENT_QUOTES, "UTF-8");;
 		}
 
 		/**
@@ -302,7 +305,7 @@ namespace Database {
 		*
 		* @return mixed A key value
 		*/
-		public function id() {
+		public function id() : mixed {
 			return $this->getKey();
 		}
 
