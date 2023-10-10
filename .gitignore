@@ -5,5 +5,5 @@
 .phpdoc/
 error_log
 composer.lock
-application/vendor/
-documentation/cache/
+vendor/
+docs/cache/

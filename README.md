@@ -36,7 +36,7 @@ By design there's no way for PHP to validate that you (namely the developer),
 define your methods in camelCaseFormat, so please! for you and the next developers sake, do this, and be strict about it. 
 
 Any other parts beyond arg(1) ARE NOT passed directly to the controller or any methods, these are for you to pick up using the applications arg() method.  
-The **\Resource::getRouter()->arg();** method starts from index 0, whereas the first two indices are already used by the core to determine the route.  
+The **\Singleton::getRouter()->arg();** method starts from index 0, whereas the first two indices are already used by the core to determine the route.  
 
 ```php
 <?php
@@ -47,7 +47,7 @@ The **\Resource::getRouter()->arg();** method starts from index 0, whereas the f
 		}
 
 		public function tiger() {
-			var_dump(\Resource::getRouter()->arg(2)); // indo-chinese
+			var_dump(\Singleton::getRouter()->arg(2)); // indo-chinese
 		}
 	}
 ```
@@ -149,10 +149,10 @@ Values can be accessed, changed, removed and saved using a dot syntax.
 <?php
 	class RestaurantController extends \Controller {
 		public function __construct() {
-			\Resource::getConfgiration()->get("menu.pizzas"); // ["Hawaii", "MeatLover", "Vegan", ...]
-			\Resource::getConfgiration()->set("menu.pizzas.Hawaii", "Ananas"); // ["Ananas", "MeatLover", "Vegan", ...]
-			\Resource::getConfgiration()->remove("menu.pizzass.Vegan"); // ["Ananas", "MeatLover", ...]
-			\Resource::getConfgiration()->save();
+			\Singleton::getConfgiration()->get("menu.pizzas"); // ["Hawaii", "MeatLover", "Vegan", ...]
+			\Singleton::getConfgiration()->set("menu.pizzas.Hawaii", "Ananas"); // ["Ananas", "MeatLover", "Vegan", ...]
+			\Singleton::getConfgiration()->remove("menu.pizzass.Vegan"); // ["Ananas", "MeatLover", ...]
+			\Singleton::getConfgiration()->save();
 		}
 	}
 ```
@@ -171,7 +171,7 @@ Examples:
 
 ```php
 // The following would return Framework/1.0.0
-\Resource::getConfiguration()->get("http.useragent");
+\Singleton::getConfiguration()->get("http.useragent");
 ```
 
 Variables are parsed recursively, and therefore values from nested objects can also be used, using a dot syntax.
@@ -230,10 +230,10 @@ Examples:
 ```php
 <?php
 	// Exmaple 1
-	$currentUser = \Resource::set(new User($uid));
+	$currentUser = \Singleton::set(new User($uid));
 
 	// Example 2
-	$currentUser = \Resource::get("User");
+	$currentUser = \Singleton::get("User");
 ```
 
 In case an instance is namespaced the namespace should also be specified (without the initial backslash) upon retrieval.
@@ -241,9 +241,9 @@ In case an instance is namespaced the namespace should also be specified (withou
 Example:  
 ```php
 <?php
-	\Resource::set( new \Alerts\Error("No more cheese for the pizza...") );
+	\Singleton::set( new \Alerts\Error("No more cheese for the pizza...") );
 
-	print \Resource::get("Alerts\Error")->getMessage(); // Would print: "No more cheese for the pizza"
+	print \Singleton::get("Alerts\Error")->getMessage(); // Would print: "No more cheese for the pizza"
 ```
   
 This structure is in place to avoid singletons being misused.  
@@ -275,29 +275,29 @@ Use the \Database\Connection class to perform manual queries if needed.
 
 ```php
 <?php
-\Resource::getDatabaseConnection()->query("UPDATE animals SET `extinct` = :value WHERE name = :name", ["value" => true, "name" => "Asian Rhino"]);
+\Singleton::getDatabaseConnection()->query("UPDATE animals SET `extinct` = :value WHERE name = :name", ["value" => true, "name" => "Asian Rhino"]);
 ```
 
 This could also be written as follows:  
 ```php
 <?php
-\Resource::getDatabaseConnection()->update("animals", ["extinct" => true], ["name" => "Asian Rhino"]);
+\Singleton::getDatabaseConnection()->update("animals", ["extinct" => true], ["name" => "Asian Rhino"]);
 ```
 
 Queries with a return value will be fetched as objects, for instance:  
 ```php
 <?php
-\Resource::getDatabaseConnection()->select("animals");
+\Singleton::getDatabaseConnection()->select("animals");
 ```
 
 ```php
 <?php
-\Resource::getDatabaseConnection()->update("animals", ["extinct" => true], ["name" => "Asian Rhino"]);
+\Singleton::getDatabaseConnection()->update("animals", ["extinct" => true], ["name" => "Asian Rhino"]);
 ```
 
 ```php
 <?php
-\Resource::getDatabaseConnection()->insert("animals", ["name" => "Sumatran Tiger", "extinct" => false]);
+\Singleton::getDatabaseConnection()->insert("animals", ["name" => "Sumatran Tiger", "extinct" => false]);
 ```
 
 Advanced filters are also suported in where clauses.
@@ -305,26 +305,26 @@ Advanced filters are also suported in where clauses.
 ```php
 <?php
 // Perform when WHERE .. IN (...)
-\Resource::getDatabaseConnection()->select("animals", ["name" => ["Asian Rhino", "Sumatran Tiger"]]);
+\Singleton::getDatabaseConnection()->select("animals", ["name" => ["Asian Rhino", "Sumatran Tiger"]]);
 ```
 
 ```php
 <?php
 // Uses the spaceship-operator in MySQL
-\Resource::getDatabaseConnection()->select("animals", ["name" => NULL]);
+\Singleton::getDatabaseConnection()->select("animals", ["name" => NULL]);
 ```
 
 ```php
 <?php
 // Uses the spaceship-operator in MySQL
-\Resource::getDatabaseConnection()->search("animals", ["name NOT IN :animalNames"], ["animalNames" => ["Indo chinese", "Alligator"]]);
+\Singleton::getDatabaseConnection()->search("animals", ["name NOT IN :animalNames"], ["animalNames" => ["Indo chinese", "Alligator"]]);
 ```
 
 ## The Assets class
 In the DOM namespace you'll find the Document class, this can be used to add stylesheets and javscript to the page.  
 Do either of the following to achieve this.  
-**\Resource::getAssets::addStylesheet();**, **\Resource::getAssets()->addJavascript();** methods.  
+**\Singleton::getAssets::addStylesheet();**, **\Singleton::getAssets()->addJavascript();** methods.  
 ressources are rendered in the same order they are added  
   
-If you desire to add custom media stylesheets make use of the second parameter **$media** in **\\Resource::getAssets()->addStylesheet();**  
-Same goes for the **\\Resource::getAssets()->addJavascript();** method for other regions than the footer.  
+If you desire to add custom media stylesheets make use of the second parameter **$media** in **\\Singleton::getAssets()->addStylesheet();**  
+Same goes for the **\\Singleton::getAssets()->addJavascript();** method for other regions than the footer.  

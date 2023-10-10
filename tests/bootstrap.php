@@ -1,7 +1,7 @@
 <?php
-	require __DIR__."/../application/startup.php";
+	require __DIR__."/../src/startup.php";
 
-	\Resource::set(new \Configuration(STORAGE . "/config/application.jsonc"));
+	\Singleton::set(new \Configuration(STORAGE . "/config/application.jsonc"));
 
 	/**
 	 * A simple controller class used for testing purposes only

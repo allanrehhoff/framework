@@ -1,4 +1,13 @@
 # Changelog #
+v8.0.0
+- **This release is backwards incompatible.** 
+- Static analysis fixes.  
+- New folder structure to match some industry standards.  
+- \Resource renamed to \Singleton for better describing its purpose.  
+- Controller filenames now requires an ending of 'Controller.php' to differentiate from libraries/models.  
+- HTTPS redirect in .htaccess is now enabled by default.  
+- Removing unused and unreachable code.  
+
 v7.2.1
 - Fix private and protected methods on controllers being call.  
 
@@ -21,7 +30,7 @@ v7.0.0
 - Updating Database\Conection library to latest version.  
 - Bundled app binary file for exeucting controllers in cli.  
 - Bundling generated documentation of classes.  
-- Added helper methods to \Resource.  
+- Added helper methods to \Singleton.  
 - Added new \Core\Router class.  
 - Added new \Core\Request class.  
 - Added new \Core\Response class.  
@@ -54,7 +63,7 @@ v6.0.0
 - Core\ControllerName now validates constrollers using reflection.  
 - Support for regions (header/footer) when adding theme assets in config.  
 - Database\Connection::debugQuery(); no longer represents booleans as strings.  
-- Fixed regression wtih the \Resource class from v5.0.1  
+- Fixed regression wtih the \Singleton class from v5.0.1  
 - Moved \Core exceptions to their own namespace.  
 - Updated some doc blocks.  
 
