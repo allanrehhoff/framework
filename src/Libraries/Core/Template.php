@@ -3,7 +3,7 @@ namespace Core {
 	/**
 	 * Loads and setups the current configured theme in use.
 	 */
-	class Theme {
+	class Template {
 		/**
 		 * @var string Holds the current theme name
 		 */
@@ -12,7 +12,7 @@ namespace Core {
 		/**
 		 * @var \Core\Assets The assets class
 		 */
-		private $assets;
+		public $assets;
 
 		/**
 		 * @var \Configuration Holds the theme configuration object.
@@ -35,7 +35,9 @@ namespace Core {
 				$this->iConfiguration->set("version.version", \Singleton::getConfiguration()->get("version"));
 			}
 
-			$this->addAssets();
+			$this->registerAssets(
+				$this->iConfiguration->get("assets")
+			);
 		}
 
 		/**
@@ -56,14 +58,19 @@ namespace Core {
 
 		/**
 		 * Get the path to the current active theme.
+		 * @param string $shortname The shortened template name e.g partials/sidebar 
 		 * @return string
 		 */
-		public function getTemplatePath(string $tpl = '') : string {
+		public function getPath(string $shortname = '') : string {
 			$path = APP_PATH . "/Templates/" . $this->getName();
 
-			if($tpl != '') $path .= '/'.$tpl;
+			if($shortname != '') {
+				$path .= '/'.$shortname;
+			}
 
-			$path .= ".tpl.php";
+			if(str_ends_with($path, ".tpl.php") !== true) {
+				$path .= ".tpl.php";
+			}
 
 			return $path;
 		}
@@ -74,9 +81,18 @@ namespace Core {
 		 * @return string
 		 */
 		public function getDirectoryUri(string $file = '/') : string {
-			$baseurl = \Url::getBaseurl();
+			if(filter_var($file, FILTER_VALIDATE_URL) == $file) return $file;
 
-			return $baseurl . "/Templates/" . $this->getName()."/".ltrim($file, '/');
+			$result = sprintf(
+				"%s/Templates/%s/%s",
+				\Url::getBaseurl(),
+				$this->getName(),
+				ltrim($file, '/')
+			);
+
+			$result = $this->maybeAddVersionNumber($result);
+
+			return $result;
 		}
 
 		/**
@@ -88,16 +104,17 @@ namespace Core {
 		}
 
 		/**
-		 * Maybe add version number to asset urls
+		 * Maybe add version number to asset urls, only if the follow conditions are met
+		 * 1. version.expose is set to true in application config
+		 * 2. $url matches own baseurl
 		 * @param string $url Url to return with version number
 		 * @return string
 		 */
 		private function maybeAddVersionNumber(string $url) : string {
 			if($this->iConfiguration->get("version.expose") === true) {
-				$proto = IS_SSL ? "https://" : "http://";
-				$string = $proto . $_SERVER["HTTP_HOST"];
+				$baseurl = \Url::getBaseurl();
 
-				if(mb_substr($url, 0, mb_strlen($string)) === $string) {
+				if(str_starts_with($url, $baseurl) === true) {
 					$url .= "?v=" . $this->iConfiguration->get("version.version");
 				}
 			}
@@ -112,42 +129,20 @@ namespace Core {
 		 * @uses \Assets
 		 * @return void
 		 */
-		private function addAssets() : void {
-			if(!empty($this->iConfiguration->get("assets.js"))) {
-				foreach($this->iConfiguration->get("assets.js") as $region => $javascripts) {
-					foreach($javascripts as $javascript) {
-						if(filter_var($javascript, FILTER_VALIDATE_URL)) {
-							$src = $javascript;
-						} else {
-							// Do not add files that does not exist in theme
-							if(file_exists($this->getTemplatePath($javascript)) === false) continue;
+		private function registerAssets(\stdClass $files) : void {
+			foreach($files->js as $region => $javascripts) {
+				foreach($javascripts as $javascript) {
+					$src = $this->getDirectoryUri($javascript);
 
-							$src = $this->getDirectoryUri($javascript);
-						}
-
-						$src = $this->maybeAddVersionNumber($src);
-
-						$this->assets->addJavascript($src);
-					}
+					$this->assets->addJavascript($src);
 				}
 			}
 
-			if(!empty($this->iConfiguration->get("assets.css"))) {
-				foreach($this->iConfiguration->get("assets.css") as $region => $stylesheets) {
-					foreach($stylesheets as $stylesheet) {
-						if(filter_var($stylesheet, FILTER_VALIDATE_URL)) {
-							$src = $stylesheet;
-						} else {
-							// Do not add files that does not exist in theme
-							if(file_exists($this->getTemplatePath($stylesheet)) === false) continue;
+			foreach($files->css as $region => $stylesheets) {
+				foreach($stylesheets as $stylesheet) {
+					$src = $this->getDirectoryUri($stylesheet);
 
-							$src = $this->getDirectoryUri($stylesheet);
-						}
-
-						$src = $this->maybeAddVersionNumber($src);
-
-						$this->assets->addStylesheet($src, $region);
-					}
+					$this->assets->addStylesheet($src, $region);
 				}
 			}
 		}

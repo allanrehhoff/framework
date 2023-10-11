@@ -58,6 +58,7 @@ namespace Core {
 
 		/**
 		 * Get the router being used
+		 * @return \Core\Router
 		 */
 		public function getRouter() : Router {
 			return $this->router;

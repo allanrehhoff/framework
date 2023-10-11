@@ -4,9 +4,13 @@ v8.0.0
 - Static analysis fixes.  
 - New folder structure to match some industry standards.  
 - \Resource renamed to \Singleton for better describing its purpose.  
+- \Core\Theme renamed to \Core\Template to better reflect the new folder structure.  
 - Controller filenames now requires an ending of 'Controller.php' to differentiate from libraries/models.  
 - HTTPS redirect in .htaccess is now enabled by default.  
 - Removing unused and unreachable code.  
+- HeaderController & FooterController now correctly handles default assets.  
+- Test suite no longer depends on HeaderController for it's tests, replaced with mock controllers.  
+- New class \Core\Renderer.  
 
 v7.2.1
 - Fix private and protected methods on controllers being call.  

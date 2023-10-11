@@ -4,7 +4,16 @@
 			// Do not allow this controller to be access directly
 			if($this->getParent() == null) throw new \Core\HttpError\NotFound;
 
-			$this->response->data["footer"] = $this->getTheme()->getTemplatePath("footer");
-			$this->response->data["stylesheets"] = $this->getTheme()->getAssets()->getStylesheets("header");
+			$this->response->data["footer"] = $this->template->getPath("footer");
+
+			$this->response->data["stylesheets"] = array_merge(
+				$this->response->data["stylesheets"] ?? [],
+				$this->template->assets->getStylesheets("footer")
+			);
+
+			$this->response->data["javascript"] = array_merge(
+				$this->response->data["javascript"] ?? [],
+				$this->template->assets->getJavascript("footer")
+			);
 		}
 	}

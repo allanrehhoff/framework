@@ -23,4 +23,4 @@
 	$iApplication = new \Core\Application($iRouter);
 
 	// Render the entire thing
-	$iApplication->run()->render();
+	$iApplication->run()->output();

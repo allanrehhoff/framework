@@ -1,4 +1,4 @@
-# Custom PHP Framework - Introduction (Version 7)
+# Custom PHP Framework - Introduction (Version 8)
 A lightweight custom framework using well-known and intuitive patterns, without the need for manually defining routes.
 
 This framework will not be bundled with bloatware such as modules/components/addons/plugins or other third-party libraries.   
@@ -149,10 +149,9 @@ Values can be accessed, changed, removed and saved using a dot syntax.
 <?php
 	class RestaurantController extends \Controller {
 		public function __construct() {
-			\Singleton::getConfgiration()->get("menu.pizzas"); // ["Hawaii", "MeatLover", "Vegan", ...]
-			\Singleton::getConfgiration()->set("menu.pizzas.Hawaii", "Ananas"); // ["Ananas", "MeatLover", "Vegan", ...]
-			\Singleton::getConfgiration()->remove("menu.pizzass.Vegan"); // ["Ananas", "MeatLover", ...]
-			\Singleton::getConfgiration()->save();
+			\Singleton::getConfigiration()->get("menu.pizzas"); // ["Hawaii", "MeatLover", "Vegan", ...]
+			\Singleton::getConfigiration()->set("menu.pizzas.Hawaii", "Ananas"); // ["Ananas", "MeatLover", "Vegan", ...]
+			\Singleton::getConfigiration()->remove("menu.pizzass.Vegan"); // ["Ananas", "MeatLover", ...]
 		}
 	}
 ```
@@ -220,10 +219,10 @@ The exception handler will still kill your application however, due to exception
 
 Good practice dictates that while developing your custom classes you should also create custom exceptions in the same namespace to match your classes.  
   
-## The Resource Class
+## The Singleton Class
 Is where all instances that should be globally accessible is stored.  
 
-Once an instance has been set in the Resource, it is immediately accesible by using **Resource::get()** instances are keyed by their class name definitions.  
+Once an instance has been set in the Singleton, it is immediately accesible by using **\Singleton::get()** instances are keyed by their class name definitions.  
 The instance registered, will be returned.  
   
 Examples:  

@@ -43,8 +43,7 @@
 
 			$data = $iController->getResponse()->getData();
 
-			$this->assertArrayHasKey("header", $data);
-			$this->assertArrayHasKey("javascript", $data);
+			$this->assertArrayHasKey(MockChildController::$testkey, $data);
 		}
 
 		/**
