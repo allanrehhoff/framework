@@ -35,7 +35,7 @@ By design there's no way for PHP to validate that you (namely the developer),
 define your methods in camelCaseFormat, so please! for you and the next developers sake, do this, and be strict about it. 
 
 Any other parts beyond arg(1) ARE NOT passed directly to the controller or any methods, these are for you to pick up using the applications arg() method.  
-The **$this->request->getArg();** method starts from index 0, whereas the first two indices are already used by the core to determine the route.  
+The **$this->request->getrg();** method starts from index 0, whereas the first two indices are already used by the core to determine the route.  
 
 > [!NOTE] 
 > `index` is the default method invoked, if arg(1) is nowhere to be found in the given controller, or arg(1) is void.  
@@ -83,7 +83,7 @@ You may also throw a `\Core\HttpError\Forbidden` to instead reroute to **Forbidd
 ## Templates folder
 > [!WARNING] 
 > This framework does not (as of yet) bundle any template/theming engine.  
-> You'll therefore have to handle escaping of all output using the helper methods `$entity->safe("key")` or `\HtmlEscape::escape("content")`
+> You'll therefore have to handle escaping of all output using the helper methods `$entity->safe("key")` or `\HtmlEscape::escape("content")`  
 > Alternatively you may composer install/bundle, your preffered engine, and alter `\Core\Renderer` accordingly.  
 
 This is where all your theming goes.  
