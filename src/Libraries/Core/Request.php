@@ -5,34 +5,34 @@ namespace Core {
 	 * Encapsulates the details of a request and simplifies the process of working with incoming HTTP requests.
 	 * It provides functionality for retrieving request parameters, headers, and simplifying file uploads.
 	 */
-	class Request {		
+	final class Request {		
 		/**
-		 * @var array Contents of the $_GET super global
+		 * @var array $get Contents of the $_GET super global
 		 */
-		public $get;
+		public array $get;
 		
 		/**
 		 * @var array $post Contents of the $_POST super global
 		 */
-		public $post;
+		public array $post;
 
 		/**
-		 * @var array Contents of the $_SERVER super global
+		 * @var array $server Contents of the $_SERVER super global
 		 */
-		public $server;
+		public array $server;
 
 		/**
-		 * @var array Contents of the $_FILES super global
+		 * @var array $files Contents of the $_FILES super global
 		 */
-		public $files;
+		public array $files;
 
 		/**
-		 * @var array Contents of the $_COOKIE super global
+		 * @var array $cookie Contents of the $_COOKIE super global
 		 */
-		public $cookie;
+		public array $cookie;
 
 		/**
-		 * @var array 
+		 * @var array $arguments
 		 */
 		private array $arguments;
 
@@ -52,6 +52,7 @@ namespace Core {
 
 			if(IS_CLI === true) {
 				$args = $this->server["argv"];
+				$args = array_slice($args, 1);
 			} else {
 				$args = trim($this->server["REQUEST_URI"], '/');
 				$args = explode('/', $args);
@@ -75,6 +76,20 @@ namespace Core {
 		 */
 		public function getArguments() : array {
 			return $this->arguments;
+		}
+
+		/**
+		 * Get arg by an index.
+		 * Args are the global arg vector (argv), or the exploded (by /) request URI.
+		 * Default args may be optionally provided if given index is out of range.
+		 * Should the index not be present in $defaults either, null is returned.
+		 * @todo Add test suite for this method
+		 * @param int The numeric index of argument to get
+		 * @param array $defaults Fallback to this index value, default empty array
+		 * @return ?string
+		 */
+		public function getArg(int $index, array $defaults = []) : ?string {
+			return $this->arguments[$index] ?? $defaults[$index] ?? null;
 		}
 
 		/**

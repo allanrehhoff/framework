@@ -3,11 +3,22 @@ namespace Core {
 	/**
 	* Central class for handling javascripts and stylesheets to be rendered.
 	*/
-	class Assets {
-		private $stylesheets = [];
-		private $javascript = [];
-		protected $title = '';
+	final class Assets {
+		/**
+		 * Holds registered stylesheets
+		 * @var array $stylesheets
+		 */
+		private array $stylesheets = [];
 
+		/**
+		 * Holds registered javascript files
+		 * @var array $javascript
+		 */
+		private array $javascript = [];
+
+		/**
+		 * Constructor
+		 */
 		public function __construct() {
 			$this->stylesheets["all"] = [];
 			$this->javascript["footer"] = [];

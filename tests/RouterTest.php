@@ -23,7 +23,7 @@
 		 * Test a route that exists
 		 */
 		public function testSimpleRoute() {
-			[$controller, $method] = $this->getRouteFromArguments(["bin/app", "cli", "my-method"]);
+			[$controller, $method] = $this->getRouteFromArguments(["cli", "my-method"]);
 
 			$this->assertInstanceOf(\Core\ClassName::class, $controller);
 			$this->assertInstanceOf(\Core\MethodName::class, $method);
@@ -36,7 +36,7 @@
 		 * Test a route that routes to NotFoundController
 		 */
 		public function testNotFoundRoute() {
-			[$controller, $method] = $this->getRouteFromArguments(["bin/app", "animal", "indo-chinese"]);
+			[$controller, $method] = $this->getRouteFromArguments(["animal", "indo-chinese"]);
 
 			$this->assertInstanceOf(\Core\ClassName::class, $controller);
 			$this->assertInstanceOf(\Core\MethodName::class, $method);
@@ -49,7 +49,7 @@
 		 * Test route fallback, without the method name argument given.
 		 */
 		public function testDefaultRoute() {
-			[$controller, $method] = $this->getRouteFromArguments(["bin/app", "cli"]);
+			[$controller, $method] = $this->getRouteFromArguments(["cli"]);
 
 			$this->assertInstanceOf(\Core\ClassName::class, $controller);
 			$this->assertInstanceOf(\Core\MethodName::class, $method);

@@ -6,7 +6,7 @@ namespace Core {
      *
      * This class is responsible for rendering views with data.
      */
-    class Renderer {
+    final class Renderer {
 
         /**
          * Render a view with data.

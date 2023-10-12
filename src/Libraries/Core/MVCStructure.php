@@ -1,8 +1,11 @@
 <?php
 namespace Core {
+	/**
+	 * Extended by \Core\ClassName and \Core\MethodName
+	 */
 	class MVCStructure {
 		/**
-		 * @var string holds the sanitized structure string, set by children
+		 * @var string $sanitizedString Holds the sanitized structure string, set by children
 		 */
 		protected $sanitizedString = '';
 
@@ -21,14 +24,5 @@ namespace Core {
 		public function toStringWithoutSuffix() : string {
 			return preg_replace("/Controller$/", '',  $this->toString());
 		}
-
-
-		/**
-		 * Also returns the sanitized controller class
-		 * @return string
-		 */
-		//public function __toString() {
-		//	return $this->toString();
-		//}
 	}
 }

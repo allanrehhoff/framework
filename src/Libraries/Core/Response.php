@@ -5,7 +5,7 @@ namespace Core {
 	 *
 	 * Encapsulates the data necessary for rendering a view template.
 	 */
-	class Response {
+	final class Response {
 		/**
 		 * @var string The name or path of the view template.
 		 */
@@ -28,6 +28,14 @@ namespace Core {
 		public function getView(): string {
 			return $this->view;
 		}
+		
+		/**
+		 * @param string $view template name of the view
+		 * @return void
+		 */
+		public function setView(string $view) : void {
+			$this->view = $view;
+		}
 
 		/**
 		 * Get the data to be passed to the view template.
@@ -35,14 +43,6 @@ namespace Core {
 		 */
 		public function getData(): array {
 			return $this->data;
-		}
-
-		/**
-		 * @param string $view template name of the view
-		 * @return void
-		 */
-		public function setView(string $view) : void {
-			$this->view = $view;
 		}
 
 		/**
@@ -54,22 +54,33 @@ namespace Core {
 		}
 
 		/**
+		 * Get the current page title to be displayed.
+		 * 
+		 * @return string
+		 */
+		public function getTitle() : string {
+			return $this->data["title"];
+		}
+
+		/**
 		 * Set a dynamic value for the title tag.
 		 * 
 		 * @param string $title a title to display in a template file.
 		 * @return void
 		 */
-		final public function setTitle(string $title) : void {
+		public function setTitle(string $title) : void {
 			$this->data["title"] = sprintf(\Singleton::getConfiguration()->get("titleFormat"), $title);
 		}
 
 		/**
-		 * Get the current page title to be displayed.
-		 * 
-		 * @return string
+		 * Send default HTTP headers
+		 * @return void
 		 */
-		final public function getTitle() : string {
-			return $this->data["title"];
+		public function sendHttpHeaders() : void {
+			// Cache headers
+			header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+			header("Cache-Control: post-check=0, pre-check=0", false);
+			header("Pragma: no-cache");
 		}
 
 		/**
@@ -77,7 +88,7 @@ namespace Core {
 		 * @param int $httpCode A http code to send
 		 * @return void
 		 */
-		final public function sendHttpCode(int $httpCode) : void {
+		public function sendHttpCode(int $httpCode) : void {
 			http_response_code($httpCode);
 		}
 	}

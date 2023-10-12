@@ -3,7 +3,7 @@ namespace Core {
 	/**
 	 * Loads and setups the current configured theme in use.
 	 */
-	class Template {
+	final class Template {
 		/**
 		 * @var string Holds the current theme name
 		 */

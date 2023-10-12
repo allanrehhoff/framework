@@ -16,7 +16,7 @@
 		 */
 		public function testHeaderAndFooterCannotBeCalledDirectly() {
 			foreach(["Header", "Footer"] as $childController) {
-				$iRouter = $this->getRouterWithArguments(["bin/app", $childController, "index"]);
+				$iRouter = $this->getRouterWithArguments([$childController, "index"]);
 				[$controller, $method] = $iRouter->getRoute();
 
 				$this->assertInstanceOf(\Core\ClassName::class, $controller);
@@ -34,7 +34,7 @@
 		 * Test child controllers can set data
 		 */
 		public function testChildControllersCanSetData() {
-			$iRouter = $this->getRouterWithArguments(["bin/app", "mock"]);
+			$iRouter = $this->getRouterWithArguments(["mock"]);
 			$iApplication = new \Core\Application($iRouter);
 
 			[$controller, $method] = $iRouter->getRoute();
@@ -50,7 +50,7 @@
 		 * Test private methods does not route
 		 */
 		public function testPrivateMethodsDoesNotRoute() {
-			$iRouter = $this->getRouterWithArguments(["bin/app", "mock", "private-function"]);
+			$iRouter = $this->getRouterWithArguments(["mock", "private-function"]);
 			$iApplication = new \Core\Application($iRouter);
 
 			[$controller, $method] = $iRouter->getRoute();
@@ -64,7 +64,7 @@
 		 * Test private methods does not route
 		 */
 		public function testProtectedMethodsDoesNotRoute() {
-			$iRouter = $this->getRouterWithArguments(["bin/app", "mock", "protected-function"]);
+			$iRouter = $this->getRouterWithArguments(["mock", "protected-function"]);
 			$iApplication = new \Core\Application($iRouter);
 
 			[$controller, $method] = $iRouter->getRoute();

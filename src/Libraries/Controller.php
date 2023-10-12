@@ -138,6 +138,8 @@
 				));
 			}
 
+			$this->response->sendHttpHeaders();
+
 			$this->renderer->render(
 				$this->template->getPath($view), 
 				$this->response->getData()
