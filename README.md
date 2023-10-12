@@ -9,6 +9,8 @@ In short, all this does is serve as a kickstart to get a readable and stable cod
 
 # Documentation
 
+:warning: **TIP:** Use the github provided table of contents menu, for quicker navigation.
+
 ## Application Directory
 Because configuration files should not reside in the same directory as the application root, you must configure your server to set the `src/` as its document root.  
 
@@ -33,11 +35,11 @@ By design there's no way for PHP to validate that you (namely the developer),
 define your methods in camelCaseFormat, so please! for you and the next developers sake, do this, and be strict about it. 
 
 Any other parts beyond arg(1) ARE NOT passed directly to the controller or any methods, these are for you to pick up using the applications arg() method.  
-The **\Singleton::getRouter()->arg();** method starts from index 0, whereas the first two indices are already used by the core to determine the route.  
+The **$this->request->getArg();** method starts from index 0, whereas the first two indices are already used by the core to determine the route.  
 
 > [!NOTE] 
-> The default method invoked is **index** this will happen if arg(1) is nowhere to be found in the given controller, or arg(1) is void.  
-> This will also be the method called for all child controllers.  
+> `index` is the default method invoked, if arg(1) is nowhere to be found in the given controller, or arg(1) is void.  
+> Same method will also be the method called for all child controllers set by any parent.  
 
 ```php
 <?php
