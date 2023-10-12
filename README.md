@@ -221,13 +221,22 @@ The exception handler will still kill your application however, due to exception
 
 Good practice dictates that while developing your custom classes you should also create custom exceptions in the same namespace to match your classes.  
   
+## The Assets class
+In the DOM namespace you'll find the Document class, this can be used to add stylesheets and javscript to the page.  
+Do either of the following to achieve this.  
+`$this->template->assets->addStylesheet();`, `$this->template->assets->addJavascript();` methods, inside any controller.  
+ressources are rendered in the same order they are added  
+  
+If you desire to add custom media stylesheets make use of the second parameter `$media` in `$this->template->assets->addJavascript()`  
+Same goes for the `$this->template->assets->addStylesheet();` method for other regions than the footer.  
+
 ## The Singleton Class
-Is where all instances that should be globally accessible is stored.  
+Is where all instances that should be globally accessible, and only instantiated once, is stored.  
 
 Once an instance has been set in the Singleton, it is immediately accesible by using `\Singleton::get()` instances are keyed by their class name definitions.  
 The instance registered, will be returned.  
   
-Examples:  
+Example:  
 ```php
 <?php
 	// Exmaple 1
@@ -247,87 +256,153 @@ Example:
 
 	print \Singleton::get("User")->id(); // Would get whatever ID was passed in to the user object
 ```
-  
-This structure is in place to avoid singletons being misused.  
-  
-## Database Entities  
-> [!NOTE]  
-> Entities does not have to reside in the Database namespace, but may be placed in the top-level of the `Libraries/` folder for convenience.  
 
+## Database queries ##
+This section assumes you have basic knowledge of PDO.  
+(I haven't yet had time to properly test this documentation, as though it may appear outdated, use at own risk.)  
+The \Database\Connection(); class wraps around PHP's PDO, so you are able to call all of the built-in PDO functions on the instantiated object as you normally would.  
+With the exception of the \Database\Connection::query(); method, this has been overloaded to a more convenient way and usage, such that it supports all the below methods.  
+
+1. `\Singleton::getDatabaseConnection()->query()`  
+
+If all you want to do, is a simple parameterized query, this line is the one you're looking for.  
+This will return a custom statement class of \Database\Statement, which also extends the default PDOStatement class.  
+
+```php
+<?php \Singleton::getDatabaseConnection()->query("UPDATE animals SET `extinct` = :value WHERE name = :name", ["value" => true, "name" => "Asian Rhino"]); ?>
+```   
+
+2. `\Singleton::getDatabaseConnection()->select()`  
+
+Simple queries with a return value will be fetched as objects, The second argument should be an array of key-value pairs.
+Second argument for methods, insert(), update() and delete() is always the WHERE clause.  
+
+The following queries:  
+
+```php
+<?php \Singleton::getDatabaseConnection()->select("animals"); ?>
+
+<?php \Singleton::getDatabaseConnection()->select("animals", ["name" => "Asian Rhino"]]); ?>
+```
+
+Will both return a `Database\Collection` of objects, if the given criterias matched any rows, otherwise the resultset is empty.
+
+This method also supports IN-like requests.
+
+```php
+<?php \Singleton::getDatabaseConnection()->select("animals", ["name" => ["Asian Rhino", "Platypus"]]); ?>
+```
+  
+```php
+<?php \Singleton::getDatabaseConnection()->update("animals", ["extinct" => true], ["name" => "Asian Rhino"]); ?>
+```
+
+3. `\Singleton::getDatabaseConnection()->update()`  
+```php
+<?php \Singleton::getDatabaseConnection()->update("animals", ["extinct" => false], ["name" => "Asian Rhino"]]); ?>
+```
+
+4. `\Singleton::getDatabaseConnection()->delete()`  
+```php
+<?php \Singleton::getDatabaseConnection()->delete("animals", ["extinct" => true]); ?>
+```
+
+5. `\Singleton::getDatabaseConnection()->insert()`  
+```php
+<?php \Singleton::getDatabaseConnection()->insert("animals", ["name" => "Asian Rhino", "extinct" => false]]); ?>
+```
+
+6. `\Singleton::getDatabaseConnection()->insertMultiple()`  
+```php
+<?php
+	\Singleton::getDatabaseConnection()->update("animals",
+		["name" => "Asian Rhino", "extinct" => true],
+		["name" => "Platypus", "extinct" => false]
+	]);
+?>
+```
+
+## Database entities ##
 For easier data manipulation, data objects should extend the `\Database\Entity` class.  
 Every class that extends `\Database\Entity` must implement the following methods.  
 
 - getTableName(); // Table in which this data object should store data.  
 - getKeyField(); // The primary key of the table in which this object stores data.  
 
-Inspect the bundled \Database\EntityType.php file, for en example on how to write an entity class.  
-
 Every data object take an optional parameter [(int) primary_key] upon instantiating,  
 identifying whether a new data object should be instantiated or an already existing row should be loaded from the table.  
 
 If you wish to change data use the **->set(['column' => 'value']);**  
 This will allow you to call **->save();** on an object and thus saving the data to your database.  
-The data object will be saved as a new row if the primary_key key parameter was not present upon instantiating.  
+The data object will be saved as a new row if the primary_key key parameter was not present upon instantiating. 
 
-An entity may also be constructed by passing an array to the constructor.  
-If a key matching the column of the primary key is found, the row will be loaded from the database.  
+**Animal.php**  
+```php
+<?php
+	class Animal extends Database\Entity {
+		protected function getKeyField() : string { return "animal_id"; } // The column with your primary key index
+		protected function getTableName() : string { return "animals"; }  // Name of the table to work with
 
-## Database
+		/**
+		* Develop whatever functions your might need below.
+		*/
+		public function myCustomFunction() {
 
-Use the \Database\Connection class to perform manual queries if needed.  
+		}
+	}
+?> 
+```
+
+You can now select a row presented as an object by it's primary key.
+```php
+<?php
+if(isset($this->request->get["animalID"])) {
+	$iAnimal = new Animal($this->request->get["animalID"]);
+} else {
+	$iAnimal = new Animal();
+}
+```
+
+Objects can **not** be loaded with the primary key passed as data.  
+In the following example `$iAnimal` would be treated as a new object upon saving.  
 
 ```php
 <?php
-\Singleton::getDatabaseConnection()->query("UPDATE animals SET `extinct` = :value WHERE name = :name", ["value" => true, "name" => "Asian Rhino"]);
+$iAnimal = new Animal;
+$iAnimal->set([
+	"animalID" => 42,
+	"extinct" => false
+]);
+$iAnimal->save();
 ```
 
-This could also be written as follows:  
-```php
-<?php
-\Singleton::getDatabaseConnection()->update("animals", ["extinct" => true], ["name" => "Asian Rhino"]);
-```
+This will likely trigger a duplicate key error.
 
-Queries with a return value will be fetched as objects, for instance:  
-```php
-<?php
-\Singleton::getDatabaseConnection()->select("animals");
-```
+## Collections / Result sets ##
+The `Database\Collection` class is heavily inspired by Laravel collections.  
 
 ```php
-<?php
-\Singleton::getDatabaseConnection()->update("animals", ["extinct" => true], ["name" => "Asian Rhino"]);
+<?php \Singleton::getDatabaseConnection()->select("animals")->getColumn("name"); ?>
 ```
 
+Get row (assuming your criteria matches only one row) 
+```php
+<?php \Singleton::getDatabaseConnection()->select("animals", ["name" => "Asian Rhino"])->getFirst(); ?>
+```
+or
+```php
+<?php \Singleton::getDatabaseConnection()->select("animals", ["name" => "Asian Rhino"])->getLast(); ?>
+```
+
+other methods include:
 ```php
 <?php
-\Singleton::getDatabaseConnection()->insert("animals", ["name" => "Sumatran Tiger", "extinct" => false]);
+	\Singleton::getDatabaseConnection()->select("animals", ["name" => "Asian Rhino"])->all();
+
+	\Singleton::getDatabaseConnection()->select("animals", ["name" => "Asian Rhino"])->count();
+
+	\Singleton::getDatabaseConnection()->select("animals", ["name" => "Asian Rhino"])->isEmpty();
+?>
 ```
 
-Advanced filters are also suported in where clauses.
-
-```php
-<?php
-// Perform when WHERE .. IN (...)
-\Singleton::getDatabaseConnection()->select("animals", ["name" => ["Asian Rhino", "Sumatran Tiger"]]);
-```
-
-```php
-<?php
-// Uses the spaceship-operator in MySQL
-\Singleton::getDatabaseConnection()->select("animals", ["name" => NULL]);
-```
-
-```php
-<?php
-// Uses the spaceship-operator in MySQL
-\Singleton::getDatabaseConnection()->search("animals", ["name NOT IN :animalNames"], ["animalNames" => ["Indo chinese", "Alligator"]]);
-```
-
-## The Assets class
-In the DOM namespace you'll find the Document class, this can be used to add stylesheets and javscript to the page.  
-Do either of the following to achieve this.  
-`$this->template->assets->addStylesheet();`, `$this->template->assets->addJavascript();` methods, inside any controller.  
-ressources are rendered in the same order they are added  
-  
-If you desire to add custom media stylesheets make use of the second parameter `$media` in `$this->template->assets->addJavascript()`  
-Same goes for the `$this->template->assets->addStylesheet();` method for other regions than the footer.  
+And any methods from the following interfaces `\ArrayAccess`, `\Iterator` and `\Countable`
