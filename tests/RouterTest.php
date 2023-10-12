@@ -1,22 +1,9 @@
 <?php
 	class RouterTest extends PHPUnit\Framework\TestCase {
-		private function getRouterWithArguments(array $arguments) : \Core\Router {
-			$iRequest = new \Core\Request();
-			$iRequest->setArguments($arguments);
-
-			$iResponse = new \Core\Response();
-
-			$iRouter = new \Core\Router($iRequest, $iResponse);
-
-			return $iRouter;
-		}
-
 		private function getRouteFromArguments(array $arguments) : array {
-			$iRouter = $this->getRouterWithArguments($arguments);
+			$iRouter = \RouterFactory::withRequestArguments($arguments);
 
-			$route = $iRouter->getRoute();
-
-			return $route;
+			return $iRouter->getRoute();
 		}
 
 		/**

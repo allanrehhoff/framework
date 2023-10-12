@@ -10,14 +10,11 @@ In short, all this does is serve as a kickstart to get a readable and stable cod
 # Documentation
 
 ## Application Directory
-Because configuration files should not reside in the same directory as the application root, you must configure your server to set the **application/** as it's **DocumentRoot**.  
+Because configuration files should not reside in the same directory as the application root, you must configure your server to set the `src/` as its document root.  
 
-## Configuration
-The directory **storage/config/application.jsonc** file holds all application-wide configurations, such as database credentials, and other settings required by your application.  
-
-At least one theme configuration file should be present, **default.theme.jsonc** is bundled with this package.  
-
-In general the **storage/** directory should be configured to store all non-code files.  
+## Updating Core
+Because you'll likely find yourself in the need of modifying core classes/libraries, there is no official update channel provided for this framework.
+Semantic versioning is respected, which means you will theoretically be able to manually apply patches up to the next major version.  
 
 ## Controller & Methods
 If you're familiar with MVC frameworks you might already know the url-to-controller concept.  
@@ -37,6 +34,10 @@ define your methods in camelCaseFormat, so please! for you and the next develope
 
 Any other parts beyond arg(1) ARE NOT passed directly to the controller or any methods, these are for you to pick up using the applications arg() method.  
 The **\Singleton::getRouter()->arg();** method starts from index 0, whereas the first two indices are already used by the core to determine the route.  
+
+> [!NOTE] 
+> The default method invoked is **index** this will happen if arg(1) is nowhere to be found in the given controller, or arg(1) is void.  
+> This will also be the method called for all child controllers.  
 
 ```php
 <?php
@@ -77,33 +78,32 @@ Children controllers will be able to set or modify any data set by the parent co
 In any controllers of the heirachy you may throw a `\Core\HttpError\NotFound` to reroute the entire stack to **NotFoundController**   
 You may also throw a `\Core\HttpError\Forbidden` to instead reroute to **ForbiddenController**
 
-> *NOTE:*  
-> The default method invoked is **index** this will happen if arg(1) is nowhere to be found in the given controller, or arg(1) is void.
+## Templates folder
+> [!WARNING] 
+> This framework does not (as of yet) bundle any template/theming engine.  
+> You'll therefore have to handle escaping of all output using the helper methods `$entity->safe("key")` or `\HtmlEscape::escape("content")`
+> Alternatively you may composer install/bundle, your preffered engine, and alter `\Core\Renderer` accordingly.  
 
-> *NOTE:*  
-> **index** will also be the method called for all children controllers.
-
-## Themes folder
-This is where all your theming goes (obviously du'h).  
-Each theme should contain at least the following files.  
+This is where all your theming goes.  
+Each theme/template should contain at least the following files.  
 
 - header.tpl.php (Required)  
 - footer.tpl.php (Required)  
-- (default-route).tpl.php (Required) (default-route indicates a filename matching the configured default route.)  
+- (default-route).tpl.php (Required) (default-route indicates a filename matching the view set by the controller.)  
 - notfound.tpl.php (Required)  
 - THEMENAME.theme.jsonc (Required) (This is the per-theme configurations, this file should be located in the config/ directory)
 
-Theme configuration files must be located in the **storage/config directory**  
+Theme configuration files must be located in the `storage/config directory`  
 
-It is assumed by the core that your theme has at least the required files, failing to create those files will result in unknown errors.  
+It is assumed by the core that your theme has at least the required files, failing to create those files will result in errors.  
   
-Every view file must have the extension **.tpl.php** this is to distinguish them from their representative controller files.  
+Every view file must have the extension `.tpl.php` this is to distinguish them from their representative controller files.  
 By default the view to be displayed is the one found matching arg(0), for example **animal.tpl.php**, unless otherwise specified by the dispatched controller.
 
 You can add a new "partial" or "children" by adding it's path to the controllers data.
 ```php
 <?php
-$this->response->data["sidebar"] = $this->theme->getTemplatePath("header");
+$this->response->data["sidebar"] = $this->template->getPath("header");
 ```
 
 And then in your template files
@@ -115,12 +115,12 @@ require $sidebar;
 
 Theme assets should be configured in the **THEMENAME.theme.jsonc** file, and paths must reside in the **storage/config/** directory.  
 
-> *NOTE:*  
-> header.tpl.php, footer.data.php, and any other view files you plan to include or require in another view file can have a controller attached, if they were invoked as a child controller, see Controllers and Methods section.
+> [!NOTE]
+> header.tpl.php, footer.tpl.php, and any other view files you plan to include or require in another view file can have a controller attached, if they were invoked as a child controller, see Controllers and Methods section.
 
 ## Command Line Interface
-This framework supports being queried through CLI (albeit, not fully tested), to do so you must query the **index.php** file.  
-Or use the bundled **bin/app** file, remember to add execution permissions to this file, should you decide to use it.  
+This framework supports being queried through CLI (albeit, not fully tested), to do so you must query the `index.php` file.  
+Or use the bundled `bin/app` file, remember to add execution permissions to this file, should you decide to use it.  
 
 ```
 $ php index.php <controller> <method> <argument> ...
@@ -138,10 +138,10 @@ Hello from interface
 ## Configuration
 A superset of json, called jsonc is used for configuration files, this is to support comments in configuration files.  
 
-All config files are to be located in the **storage/config** directory.  
-The main configuration resides within the file **application,jsonc**, and should contain nothing but configuration settings used by the core and controllers.  
+All config files are to be located in the `storage/config` directory.  
+The main configuration resides within the file `application,jsonc`, and should contain nothing but configuration settings used by the core and controllers.  
 
-Theme specific configurations such as assets, third-party libraries should be managed by the **default.theme.jsonc** or their respective `.jsonc` file file bundled with the theme.  
+Theme specific configurations such as assets, third-party libraries should be managed by the `default.theme.jsonc` or their respective `.jsonc` file file bundled with the theme.  
 
 Values can be accessed, changed, removed and saved using a dot syntax.  
 
@@ -157,7 +157,7 @@ Values can be accessed, changed, removed and saved using a dot syntax.
 ```
 
 Configuration values may contain variables, structured as {{key}}, where the key between the {{ }} brackets should map to another key in the same configation file.
-The value from such key, will then be replaced upon retrieval with **->get()**
+The value from such key, will then be replaced upon retrieval with `->get()`
 
 Examples:
 ```json
@@ -222,7 +222,7 @@ Good practice dictates that while developing your custom classes you should also
 ## The Singleton Class
 Is where all instances that should be globally accessible is stored.  
 
-Once an instance has been set in the Singleton, it is immediately accesible by using **\Singleton::get()** instances are keyed by their class name definitions.  
+Once an instance has been set in the Singleton, it is immediately accesible by using `\Singleton::get()` instances are keyed by their class name definitions.  
 The instance registered, will be returned.  
   
 Examples:  
@@ -240,23 +240,25 @@ In case an instance is namespaced the namespace should also be specified (withou
 Example:  
 ```php
 <?php
-	\Singleton::set( new \Alerts\Error("No more cheese for the pizza...") );
+	// Assume \User extends \Database\Entity
+	\Singleton::set(new \User($userID));
 
-	print \Singleton::get("Alerts\Error")->getMessage(); // Would print: "No more cheese for the pizza"
+	print \Singleton::get("User")->id(); // Would get whatever ID was passed in to the user object
 ```
   
 This structure is in place to avoid singletons being misused.  
   
 ## Database Entities  
-For easier data manipulation, data objects should extend the **\Database\Entity** class.  
-Every class that extends **\Database\Entity** must implement the following methods.  
+> [!NOTE]  
+> Entities does not have to reside in the Database namespace, but may be placed in the top-level of the `Libraries/` folder for convenience.  
+
+For easier data manipulation, data objects should extend the `\Database\Entity` class.  
+Every class that extends `\Database\Entity` must implement the following methods.  
 
 - getTableName(); // Table in which this data object should store data.  
 - getKeyField(); // The primary key of the table in which this object stores data.  
 
 Inspect the bundled \Database\EntityType.php file, for en example on how to write an entity class.  
-> *NOTE:*  
-> Entities does not have to reside in the Database namespace.
 
 Every data object take an optional parameter [(int) primary_key] upon instantiating,  
 identifying whether a new data object should be instantiated or an already existing row should be loaded from the table.  
@@ -322,8 +324,8 @@ Advanced filters are also suported in where clauses.
 ## The Assets class
 In the DOM namespace you'll find the Document class, this can be used to add stylesheets and javscript to the page.  
 Do either of the following to achieve this.  
-**\Singleton::getAssets::addStylesheet();**, **\Singleton::getAssets()->addJavascript();** methods.  
+`$this->template->assets->addStylesheet();`, `$this->template->assets->addJavascript();` methods, inside any controller.  
 ressources are rendered in the same order they are added  
   
-If you desire to add custom media stylesheets make use of the second parameter **$media** in **\\Singleton::getAssets()->addStylesheet();**  
-Same goes for the **\\Singleton::getAssets()->addJavascript();** method for other regions than the footer.  
+If you desire to add custom media stylesheets make use of the second parameter `$media` in `$this->template->assets->addJavascript()`  
+Same goes for the `$this->template->assets->addStylesheet();` method for other regions than the footer.  

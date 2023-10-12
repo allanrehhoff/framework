@@ -3,9 +3,6 @@
 
 	\Singleton::set(new \Configuration(STORAGE . "/config/application.jsonc"));
 
-	/**
-	 * A simple controller class used for testing purposes only
-	 */
 	class MockController extends \Controller {
 		public function index() {
 			$this->children[] = new \Core\ClassName("MockChild"); 
@@ -21,6 +18,36 @@
 
 		public function index() {
 			$this->response->data[self::$testkey] = "hello world";
+		}
+	}
+
+	class RequestFactory {
+		public static function new() : \Core\Request {
+			return new \Core\Request();
+		}
+
+		public static function withArguments(array $arguments) {
+			$iRequest = self::new();
+			$iRequest->setArguments($arguments);
+
+			return $iRequest;
+		}
+	}
+
+	class ResponseFactory {
+		public static function new() : \Core\Response {
+			return new \Core\Response;
+		}
+	}
+
+	class RouterFactory {
+		public static function withRequestArguments(array $arguments) : \Core\Router {		
+			$iRouter = new \Core\Router(
+				\RequestFactory::withArguments($arguments),
+				\ResponseFactory::new()
+			);
+
+			return $iRouter;
 		}
 	}
 

@@ -1,7 +1,9 @@
 # Changelog #
 v8.0.0
-- **This release is backwards incompatible.** 
+- **This release is backwards incompatible.**  
+- README documentation updated.  
 - Static analysis fixes.  
+- Test suite refactor.  
 - New folder structure to match some industry standards.  
 - Controller filenames now requires an ending of 'Controller.php' to differentiate from libraries/models.  
 - HTTPS redirect in .htaccess is now enabled by default.  

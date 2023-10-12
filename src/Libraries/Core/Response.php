@@ -69,7 +69,10 @@ namespace Core {
 		 * @return void
 		 */
 		public function setTitle(string $title) : void {
-			$this->data["title"] = sprintf(\Singleton::getConfiguration()->get("titleFormat"), $title);
+			$this->data["title"] = sprintf(
+				\Singleton::getConfiguration()->get("titleFormat"),
+				\HtmlEscape::escape($title)
+			);
 		}
 
 		/**

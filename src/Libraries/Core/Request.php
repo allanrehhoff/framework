@@ -83,7 +83,6 @@ namespace Core {
 		 * Args are the global arg vector (argv), or the exploded (by /) request URI.
 		 * Default args may be optionally provided if given index is out of range.
 		 * Should the index not be present in $defaults either, null is returned.
-		 * @todo Add test suite for this method
 		 * @param int The numeric index of argument to get
 		 * @param array $defaults Fallback to this index value, default empty array
 		 * @return ?string
