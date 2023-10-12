@@ -397,11 +397,11 @@ or
 other methods include:
 ```php
 <?php
-	\Singleton::getDatabaseConnection()->select("animals", ["name" => "Asian Rhino"])->all();
+	\Singleton::getDatabaseConnection()->select("animals")->all();
 
-	\Singleton::getDatabaseConnection()->select("animals", ["name" => "Asian Rhino"])->count();
+	\Singleton::getDatabaseConnection()->select("animals")->count();
 
-	\Singleton::getDatabaseConnection()->select("animals", ["name" => "Asian Rhino"])->isEmpty();
+	\Singleton::getDatabaseConnection()->select("animals")->isEmpty();
 ?>
 ```
 
