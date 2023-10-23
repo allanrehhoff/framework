@@ -101,7 +101,7 @@
 					$this->children[] = new \Core\ClassName("Header");
 					$this->children[] = new \Core\ClassName("Footer");
 
-					$this->response->setTitle(array_slice($this->router->getArgs(), -1)[0]);
+					$this->response->setTitle(array_slice($this->request->getArguments(), -1)[0]);
 				}
 			}
 		}
@@ -193,7 +193,7 @@
 				$bodyClasses[] = $childControllerName->toStringWithoutSuffix();
 			}
 
-			foreach($this->getRouter()->getArgs() as $arg) {
+			foreach($this->request->getArguments() as $arg) {
 				$bodyClasses[] = $arg;
 			}
 
