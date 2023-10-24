@@ -803,7 +803,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Database\\Connection",
             "name": "Connection",
-            "summary": "Base\u0020cpmmectopm\u0020class",
+            "summary": "Base\u0020connection\u0020class",
             "url": "classes/Database-Connection.html"
         },                {
             "fqsen": "\\Database\\Connection\u003A\u003A__construct\u0028\u0029",
