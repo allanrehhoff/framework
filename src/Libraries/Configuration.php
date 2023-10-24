@@ -155,7 +155,7 @@ class Configuration {
 
 	/**
 	* Alias for \Configuration::delete()
-	* @see \Configuration::delete();
+	* @see \Configuration::delete()	For removing entries
 	* @return \Configuration value of onfigurationParser::delete()
 	*/
 	public function remove(string $key) : Configuration {
@@ -198,7 +198,7 @@ class Configuration {
 
 	/**
 	* Again please use the ->get() and ->set() methods
-	* @see Configuration::__set();
+	* @see \Configuration::set() For setting config values dynamically
 	* @return mixed
 	*/
 	public function __get($name) {

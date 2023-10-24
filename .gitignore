@@ -6,4 +6,4 @@
 error_log
 composer.lock
 vendor/
-docs/cache/
+docs/reference/cache/

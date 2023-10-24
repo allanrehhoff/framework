@@ -1,6 +1,6 @@
 <?php
 	/**
-	* This PHP class provides utility methods for working with URLs,
+	* This class provides utility methods for working with URLs,
 	* such as parsing and manipulating URL components.
 	*
 	* It allows developers to extract specific parts of a URL,

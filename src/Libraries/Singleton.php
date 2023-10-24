@@ -1,6 +1,7 @@
 <?php
 	/**
-	 * Resource to hold global state objects, used to avoid the usage of singletons.
+	 * Class used to hold global state objects.
+	 * Such as database connections, configurations and environments.
 	 */
 	final class Singleton {
 		/**
