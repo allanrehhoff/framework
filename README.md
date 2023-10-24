@@ -11,12 +11,7 @@ In short, all this does is serve as a kickstart to get a readable and stable cod
 
 :warning: **TIP:** Use the github provided table of contents menu, for quicker navigation.
 
-## Application Directory
-Because configuration files should not reside in the same directory as the application root, you must configure your server to set the `src/` as its document root.  
-
-## Updating Core
-Because you'll likely find yourself in the need of modifying core classes/libraries, there is no official update channel provided for this framework.
-Semantic versioning is respected, which means you will theoretically be able to manually apply patches up to the next major version.  
+[Basics](docs/manual/basics.md)
 
 ## Controller & Methods
 If you're familiar with MVC frameworks you might already know the url-to-controller concept.  
