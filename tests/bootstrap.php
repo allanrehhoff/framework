@@ -74,4 +74,8 @@
 
 			return new \Environment($tmpfile);
 		}
+
+		public static function fromCleanState() {
+			return new \Environment;
+		}
 	}

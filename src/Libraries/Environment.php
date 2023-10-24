@@ -4,11 +4,11 @@ class Environment {
     /**
      * Constructor for the Environment class.
      *
-     * @param string $environmentFile The path to the environment file (e.g., '.env').
+     * @param ?string $environmentFile The path to the environment file (e.g., '.env').
      */
-    public function __construct(string $environmentFile) {
-        if(file_exists($environmentFile) === true) {
-            $this->parse($environmentFile);
+    public function __construct(?string $environmentFile = null) {
+        if($environmentFile !== null && file_exists($environmentFile) === true) {
+            static::parse($environmentFile);
         }
     }
 

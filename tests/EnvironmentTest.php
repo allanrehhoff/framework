@@ -102,4 +102,33 @@
 			$this->assertArrayHasKey("ANIMAL", $_ENV);
 			$this->assertArrayHasKey("RACE", $_ENV["ANIMAL"]);
 		}
+
+		public function testPutSimpleVariableToSuperGlobal() {
+			$iEnvironment = \EnvironmentFactory::fromCleanState();
+			$iEnvironment->put("TESTVAR", "hello world");
+
+			$this->arrayHasKey("TESTVAR", $_ENV);
+			$this->assertEquals("hello world", $_ENV["TESTVAR"]);
+		}
+
+		public function testPutSimpleVariableToLocal() {
+			$iEnvironment = \EnvironmentFactory::fromCleanState();
+			$iEnvironment->put("TESTVAR2", "hello country");
+
+			$this->assertEquals("hello country", $iEnvironment->get("TESTVAR2"));
+		}
+
+		public function testPutArrayToSection() {
+			$iEnvironment = \EnvironmentFactory::fromCleanState();
+			$iEnvironment->put("SECTION", ["ONE" => "hello world"]);
+
+			$this->assertEquals("hello world", $iEnvironment->get("SECTION.ONE"));
+		}
+
+		public function testPutDotNotation() {
+			$iEnvironment = \EnvironmentFactory::fromCleanState();
+			$iEnvironment->put("SECTION.TWO", "star wars");
+
+			$this->assertEquals("star wars", $iEnvironment->get("SECTION.TWO"));
+		}
 	}

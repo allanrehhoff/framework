@@ -16,9 +16,9 @@ class Configuration {
 
 	/**
 	* The constructor starts parsing of the configuration file.
-	* @param string $configurationFile Absolute filesystem path to a .jsonc file
+	* @param ?string $configurationFile Absolute filesystem path to a .jsonc file
 	*/
-	public function __construct(string $configurationFile = null) {
+	public function __construct(?string $configurationFile = null) {
 		if($configurationFile !== null) {
 			$this->parse($configurationFile);
 		}
@@ -86,11 +86,11 @@ class Configuration {
 	* Gets a single configuration value.
 	* If no configuration setting name is provided, the whole configuration object will be returned.
 	* Sub-values can be accessed using a dot syntax.
-	* @param string $key The name of the configuration to get value from.
+	* @param ?string $key The name of the configuration to get value from.
 	* @return mixed null on failure.
 	* @throws \InvalidArgumentException 
 	*/
-	public function get(string $key = null) : mixed {
+	public function get(?string $key = null) : mixed {
 		if($key === null) {
 			return $this->parsedConfig;
 		}
