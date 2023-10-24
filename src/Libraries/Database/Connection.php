@@ -77,7 +77,6 @@ namespace Database {
 		/**
 		 * Allow methods not implemented by this class to be called on the connection
 		 *
-		 * @todo Consider removing the \Database\Connection::getConnection(); method now that we have this.
 		 * @throws \Exception
 		 * @since 1.3
 		 * @return mixed
@@ -298,7 +297,6 @@ namespace Database {
 		/**
 		 * Count total number rows in a column
 		 *
-		 * @todo Find out if this can be replaced by countQuery();
 		 * @return int
 		 */
 		public function count(string $table, ?array $criteria = null) : int {
@@ -473,7 +471,6 @@ namespace Database {
 		 * @param array $criteria Criteria for deletion
 		 * @return int Number of rows affected.
 		 * @since 1.0
-		 * @todo Return affected row count
 		 */
 		public function delete(string $table, ?array $criteria = null) : int {
 			$sql = "DELETE FROM `".$this->safeTable($table)."` WHERE ".$this->keysToSql($criteria, " AND");
