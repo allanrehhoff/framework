@@ -7,7 +7,7 @@ namespace Core {
 		/**
 		 * @var string $sanitizedString Holds the sanitized structure string, set by children
 		 */
-		protected $sanitizedString = '';
+		protected string $sanitizedString = '';
 
 		/**
 		 * Returns the sanitized string

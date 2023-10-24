@@ -7,17 +7,17 @@ namespace Core {
 		/**
 		 * @var string Holds the current theme name
 		 */
-		private $name;
+		private string $name;
 
 		/**
 		 * @var \Core\Assets The assets class
 		 */
-		public $assets;
+		public Assets $assets;
 
 		/**
 		 * @var \Configuration Holds the theme configuration object.
 		 */
-		private $iConfiguration;
+		private \Configuration $iConfiguration;
 
 		/**
 		 * Doesn't do much of interest, this shouldn't be required to mess with.

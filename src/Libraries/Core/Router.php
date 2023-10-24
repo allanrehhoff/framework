@@ -8,12 +8,12 @@ namespace Core {
 		/**
 		 * @var \Core\Request $iRequest holds the request object
 		 */
-		private $request = null;
+		private Request $request;
 
 		/**
 		 * @var \Core\Response $iResponse holds the request object
 		 */
-		private $response = null;
+		private Response $response ;
 
 		/**
 		 * Router constructor parses args from current environment.

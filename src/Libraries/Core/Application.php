@@ -7,17 +7,17 @@ namespace Core {
 		/**
 		 * @var ClassName Actual controller path routed by given args
 		 */
-		private $executedClassName;
+		private ClassName $executedClassName;
 
 		/**
 		 * @var MethodName Method name called on the master controller
 		 */
-		private $calledMethodName;
+		private MethodName $calledMethodName;
 
 		/**
 		 * @var Router The router responsible for parsing request uri to callable system path
 		 */
-		private $router;
+		private Router $router;
 
 		/**
 		 * Parse the current route and set caching as needed.
@@ -50,7 +50,7 @@ namespace Core {
 		 * Get path to the specified controller file. Ommit the .php extension
 		 * 
 		 * @param string $controller name of the controller file.
-		 * @return string or null on failure
+		 * @return ?string or null on failure
 		 */
 		public function getControllerPath(string $controller) : ?string {
 			return APP_PATH."/Controllers/".basename($controller).".php";
@@ -78,8 +78,10 @@ namespace Core {
 			$controllerName = $iClassName->toString();
 			$methodName = $iMethodName->toString();
 
-			$this->executedClassName = $iClassName;
-			$this->calledMethodName = $iMethodName;
+			if($parentController === null) {
+				$this->executedClassName = $iClassName;
+				$this->calledMethodName = $iMethodName;
+			}
 
 			try {
 				$iController = new $controllerName($this);

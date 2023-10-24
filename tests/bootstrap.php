@@ -1,11 +1,22 @@
 <?php
+	ini_set("display_errors", 1);
+
 	require __DIR__."/../src/startup.php";
 
 	\Singleton::set(new \Configuration(STORAGE . "/config/application.jsonc"));
 
+	/**
+	 * Controllers
+	 */
 	class MockController extends \Controller {
 		public function index() {
-			$this->children[] = new \Core\ClassName("MockChild"); 
+			$this->children[] = new \Core\ClassName("MockChild");
+
+			$this->response->setView("mock");
+		}
+
+		public function withoutChildren() {
+			$this->response->setView("without-children");
 		}
 
 		private function privateFunction() {}
@@ -18,9 +29,14 @@
 
 		public function index() {
 			$this->response->data[self::$testkey] = "hello world";
+
+			$this->response->setView("mockchild");
 		}
 	}
 
+	/**
+	 * Factories
+	 */
 	class RequestFactory {
 		public static function new() : \Core\Request {
 			return new \Core\Request();
@@ -51,4 +67,11 @@
 		}
 	}
 
-	ini_set("display_errors", 1);
+	class EnvironmentFactory {
+		public static function createFromString(string $string) : \Environment {
+			$tmpfile = tempnam(sys_get_temp_dir(), "framework-env-test");
+			file_put_contents($tmpfile, $string);
+
+			return new \Environment($tmpfile);
+		}
+	}

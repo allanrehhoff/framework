@@ -9,12 +9,12 @@ namespace Core {
 		/**
 		 * @var string The name or path of the view template.
 		 */
-		private $view = '';
+		private string $view = '';
 
 		/**
 		 * @var array The data to be passed to the view template.
 		 */
-		public $data = [];
+		public array $data = [];
 
 		/**
 		 * Response constructor.

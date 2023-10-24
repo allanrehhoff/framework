@@ -17,7 +17,10 @@ v8.0.0
 - New class \Core\Renderer.  
 - New method \Core\Router::getDefaultRoute();  
 - New method \Core\Response::sendHttpHeaders();  
+- New method \Singleton::getEnvironment(); for deeper integrations with environment variables.  
 - Declared top level \Core namespace classes as final (with the exception of \Core\MVCStructure)  
+- Added typehints to more controllers and properties.  
+- Added tests for better code coverage.  
 
 v7.2.1
 - Fix private and protected methods on controllers being call.  

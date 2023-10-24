@@ -116,7 +116,7 @@
 		 * @param string $string The string to encode.
 		 * @return string The encoded string.
 		 */
-		public static function encode($string) : string {
+		public static function encode(string $string) : string {
 			return urlencode($string);
 		}
 
@@ -125,7 +125,7 @@
 		 * @param string $string The string to decode.
 		 * @return string The decoded string.
 		 */
-		public static function decode($string) : string {
+		public static function decode(string $string) : string {
 			return urldecode($string);
 		}
 
@@ -134,7 +134,7 @@
 		 * @param array $params An associative array of URL parameters.
 		 * @return string The built query string.
 		 */
-		public static function buildQueryString($params) : string {
+		public static function buildQueryString(array $params) : string {
 			return http_build_query($params);
 		}
 
@@ -143,7 +143,7 @@
 		 * @param string $queryString The query string to parse.
 		 * @return array|false An associative array of query parameters, or false on failure.
 		 */
-		public static function parseQueryString($queryString) : mixed {
+		public static function parseQueryString(string $queryString) : mixed {
 			parse_str($queryString, $params);
 			return $params;
 		}

@@ -58,6 +58,13 @@
 		}
 
 		/**
+		 * @return \Environment
+		 */
+		public static function getEnvironment() : \Environment {
+			return self::get("Environment");
+		}
+
+		/**
 		 * Get instance of Database\Connection
 		 * 
 		 * @return \Database\Connection

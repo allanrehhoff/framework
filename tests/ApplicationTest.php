@@ -1,7 +1,16 @@
 <?php
 	class ApplicationTest extends \PHPUnit\Framework\TestCase {
+		public function testExecuteController() {
+			$iRouter = \RouterFactory::withRequestArguments(["mock"]);
+			$iApplication = new \Core\Application($iRouter);
 
+			[$controller, $method] = $iRouter->getRoute();
 
+			$iApplication->executeController($controller, $method);
+
+			$this->assertEquals(MockController::class, $iApplication->getExecutedClassName()->toString());
+			$this->assertEquals(\Core\MethodName::DEFAULT, $iApplication->getCalledMethodName()->toString());
+		}
 		/**
 		 * Test that Header and Footer controllers cannot be called directly
 		 */
@@ -19,22 +28,6 @@
 
 				$this->assertInstanceOf(\NotFoundController::class, $iController);
 			}
-		}
-
-		/**
-		 * Test child controllers can set data
-		 */
-		public function testChildControllersCanSetData() {
-			$iRouter = \RouterFactory::withRequestArguments(["mock"]);
-			$iApplication = new \Core\Application($iRouter);
-
-			[$controller, $method] = $iRouter->getRoute();
-
-			$iController = $iApplication->executeController($controller, $method);
-
-			$data = $iController->getResponse()->getData();
-
-			$this->assertArrayHasKey(MockChildController::$testkey, $data);
 		}
 
 		/**

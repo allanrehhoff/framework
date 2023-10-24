@@ -1,53 +1,55 @@
 <?php
 	/**
-	* The core controller which subcontrollers should extend upon.
+	* This is the controller which subcontrollers should extend upon.
+	* Every controller must define their own 'index' method, which is
+	* the default method invoked for all controllers.
 	*/
 	abstract class Controller {
 
 		/**
-		 * @var \Controller Holds the parent controller instance
+		 * @var ?\Controller Holds the parent controller instance
 		 */
-		protected $parent = null;
+		protected ?\Controller $parent = null;
 
 		/**
 		 * @var \Core\Request Current request object
 		 */
-		protected $request;
+		protected \Core\Request $request;
 
 		/**
 		 * @var \Core\Response Current request object
 		 */
-		protected $response;
+		protected \Core\Response $response;
 
 		/**
 		 * @var \Core\Application The application object
 		 */
-		protected $application;
+		protected \Core\Application $application;
 
 		/**
 		 * @var \Core\Router Current router object in use
 		 */
-		protected $router;
+		protected \Core\Router $router;
 
 		/**
 		 * @var \Core\Template Current template object
 		 */
-		protected $template;
+		protected \Core\Template $template;
 
 		/**
 		 * @var \Core\Assets
 		 */
-		protected $assets;
+		protected \Core\Assets $assets;
 
 		/**
 		 * @var \Core\Renderer
 		 */
-		protected $renderer;
+		protected \Core\Renderer $renderer;
 
 		/**
 		 * @var array Child controllers classes to be executed when the main one finalizes.
 		 */
-		protected $children = [];
+		protected array $children = [];
 
 		/**
 		 * Controllers should declare this function instead of a constructor.
@@ -56,6 +58,7 @@
 
 		/**
 		 * Extending child controllers must not have a constructor.
+		 * @param \Core\Application $iApplication
 		 */
 		public function __construct(\Core\Application $iApplication) {
 			$this->application = $iApplication;
@@ -80,12 +83,13 @@
 		}
 
 		/**
+		 * Function that is called for all requests, before the default controller method.
 		 * Constructs the overall environment, setting up helpers and initial variables.
 		 * 
 		 * @return void
 		 */
 		final public function start() : void {
-			// assets and templatre properties are
+			// assets and template properties are
 			// set here to enable compatibility with
 			// the test suite, placing them inside
 			// the below if block will yild errors
@@ -101,22 +105,18 @@
 					$this->children[] = new \Core\ClassName("Header");
 					$this->children[] = new \Core\ClassName("Footer");
 
-					$this->response->setTitle(array_slice($this->request->getArguments(), -1)[0]);
+					$this->response->setTitle(array_slice($this->request->getArguments(), -1)[0] ?? '');
 				}
 			}
 		}
 		
 		/**
-		 * Contains accessible theme variables.
+		 * Method that is called for all requests will be run before sending output
 		 * 
 		 * @return void
 		 */
 		final public function stop() : void {
-			if(IS_CLI === false) {
-				if($this->getParent() === null) {
-					$this->response->data["bodyClasses"] = $this->getBodyTagClasses();
-				}
-			}
+
 		}
 
 		/**
@@ -171,39 +171,6 @@
 		 */
 		final public function getChildren() : array {
 			return $this->children;
-		}
-
-		/**
-		 * Determines classes suiteable for the <body> tag
-		 * These classes can be used for easier identification of controller and view files used
-		 * or CSS styling for specific conditions
-		 * 
-		 * @return string An escaped string suitable for printing to the 'class' attribute of the <body> tag
-		 */
-		final public function getBodyTagClasses() : string {
-			$controllerName = $this->getApplication()->getExecutedClassName()->toStringWithoutSuffix();
-			$methodName 	= $this->getApplication()->getCalledMethodName()->toStringWithoutSuffix();
-
-			$bodyClasses = [];
-			$bodyClasses[] = $controllerName;
-			$bodyClasses[] = $controllerName . '-' . $methodName;
-			$bodyClasses[] = $this->getResponse()->getView();
-
-			foreach($this->getChildren() as $childControllerName) {
-				$bodyClasses[] = $childControllerName->toStringWithoutSuffix();
-			}
-
-			foreach($this->request->getArguments() as $arg) {
-				$bodyClasses[] = $arg;
-			}
-
-			foreach($bodyClasses as $i => $bodyClass) {
-				$bodyClasses[$i] = strtolower($bodyClass);
-			}
-
-			$classesString = implode(' ', array_unique($bodyClasses));
-
-			return \HtmlEscape::escape($classesString);
 		}
 
 		/**

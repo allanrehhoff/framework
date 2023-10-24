@@ -10,6 +10,8 @@
 	// Global state objects
 	\Singleton::set(new \Configuration(STORAGE . "/config/application.jsonc"));
 
+	\Singleton::set(new \Environment(APP_PATH . "/.env"));
+
 	\Singleton::set(new \Database\Connection(
 		\Singleton::getConfiguration()->get("database.host"),
 		\Singleton::getConfiguration()->get("database.username"),
