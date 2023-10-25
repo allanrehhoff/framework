@@ -22,7 +22,7 @@ namespace Core {
 		 * @return string
 		 */
 		public function toStringWithoutSuffix() : string {
-			return preg_replace("/Controller$/", '',  $this->toString());
+			return preg_replace("/".\Controller::class."$/", '',  $this->toString());
 		}
 	}
 }
