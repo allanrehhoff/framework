@@ -1,6 +1,6 @@
 {
     "name": "rehhoff/framework",
-    "description": "A lightweight custom framework using well-known and intuitive patterns",
+    "description": "A lightweight custom framework using well-known and intuitive design patterns",
     "type": "project",
     "scripts": {
         "build-docs": "phpdoc",
