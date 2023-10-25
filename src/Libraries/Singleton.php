@@ -7,7 +7,7 @@
 		/**
 		 * @var array Stores the data objects.
 		 */
-		private static $data = [];
+		private static $store = [];
 
 		/**
 		 * Get an object by it's class name, namespaces included.
@@ -17,7 +17,7 @@
 		 * @return mixed A class object
 		 */
 		public static function get(string $key) {
-			return self::$data[$key] ?? null;
+			return self::$store[$key] ?? null;
 		}
 
 		/**
@@ -27,16 +27,12 @@
 		 * @param ?string $alias An alias to save the resource by, if null class name of object will be used
 		 * @return object The instance just stored. 
 		 */
-		public static function set(object $class, ?string $alias = null) {
-			if($alias === null) {
-				$key = $class::class;
-			} else {
-				$key = $alias;
-			}
+		public static function set(object $object, ?string $alias = null) {
+			$key = $alias ?? $object::class;
 
-			self::$data[$key] = $class;
+			self::$store[$key] = $object;
 
-			return $class;
+			return $object;
 		}
 
 		/**
@@ -46,7 +42,7 @@
 		 * @return bool
 		 */
 		public static function has(string $key) : bool {
-			return isset(self::$data[$key]);
+			return isset(self::$store[$key]);
 		}
 
 		/**
