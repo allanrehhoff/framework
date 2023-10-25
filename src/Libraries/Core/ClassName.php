@@ -5,8 +5,8 @@ namespace Core {
 	 */
 	final class ClassName extends MVCStructure {
 		/**
-		 * @param string $string Takes a single argument as a string,
-		 * 				 this will sanitized to a valid controller class
+		 * @param string $string Takes a single request argument as a string,
+		 * 				 this will be sanitized to a valid controller class
 		 * @return void
 		 */
 		public function __construct(string $string) {
