@@ -13,8 +13,7 @@ namespace Core {
 			$controllerClassParts = [];
 
 			foreach(explode('/', $string) as $segment) {
-				$base = preg_replace("/\W+/", ' ', $segment);
-				$words = explode(' ', $base);
+				$words = preg_split("/\W+/", $segment, -1, PREG_SPLIT_NO_EMPTY);
 				$words = array_map("ucfirst", $words);
 
 				$controllerClassParts[] = implode('', $words);
