@@ -23,13 +23,13 @@
 		/**
 		 * Stores a given object by it's class name, namespaces included
 		 * 
-		 * @param mixed $class The resource class to have a global state
+		 * @param object $class The resource class to have a global state
 		 * @param ?string $alias An alias to save the resource by, if null class name of object will be used
 		 * @return object The instance just stored. 
 		 */
-		public static function set(mixed $class, ?string $alias = null) {
+		public static function set(object $class, ?string $alias = null) {
 			if($alias === null) {
-				$key = get_class($class);
+				$key = $class::class;
 			} else {
 				$key = $alias;
 			}

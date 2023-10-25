@@ -50,7 +50,7 @@
 				BASE=flour
 			");
 
-			$this->assertEquals(["TOPPING" => "cheese", "BASE" => "flour"], $iEnvironment->get("RECIPE2"));
+			$this->assertSame(["TOPPING" => "cheese", "BASE" => "flour"], $iEnvironment->get("RECIPE2"));
 		}
 
 		public function testDotNotationSection() {
@@ -60,7 +60,7 @@
 				EXTINCT=true
 			");
 
-			$this->assertEquals(["NAME" => "Asian Rhino", "EXTINCT" => "1"], $iEnvironment->get("ANIMALS.SPECIES"));
+			$this->assertSame(["NAME" => "Asian Rhino", "EXTINCT" => "1"], $iEnvironment->get("ANIMALS.SPECIES"));
 		}
 
 		public function testSectionArray() {
@@ -70,7 +70,7 @@
 				GENDERS[]=female
 			");
 
-			$this->assertEquals(["male", "female"], $iEnvironment->get("HUMANKIND.GENDERS"));
+			$this->assertSame(["male", "female"], $iEnvironment->get("HUMANKIND.GENDERS"));
 		}
 
 		public function testSemicolonCommentsAreTreatedAsInvalid() {
