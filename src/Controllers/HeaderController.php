@@ -49,6 +49,6 @@
 
 			$classesString = implode(' ', array_unique($bodyClasses));
 
-			return \HtmlEscape::escape($classesString);
+			return \Escape::string($classesString);
 		}
 	}

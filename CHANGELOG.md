@@ -51,7 +51,7 @@ v7.0.0
 - - Controller data now has to be added to \Core\Response class.  
 - Added new \Core\MVCStructure class used by \Core\ControllerName and \Core\MethodName.  
 - Added new \Console class.  
-- Added new \HtmlEscape class.  
+- Added new \Escape class.  
 - Renamed \Core\ControllerName to \Core\ClassName.  
 - Better baseurl support.  
 - Various new core exceptions.  

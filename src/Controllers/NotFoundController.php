@@ -8,9 +8,9 @@
 		 * Constructs an indicates the path wasn't found
 		 */
 		public function index() {
-			$this->response->data["httpHost"] = \HtmlEscape::escape($this->request->server["HTTP_HOST"] ?? '');
-			$this->response->data["requestUri"] = \HtmlEscape::escape($this->request->server["REQUEST_URI"] ?? '');
-			$this->response->data["httpReferer"] = \HtmlEscape::escape($this->request->server["HTTP_REFERER"] ?? '');
+			$this->response->data["httpHost"] = \Escape::string($this->request->server["HTTP_HOST"] ?? '');
+			$this->response->data["requestUri"] = \Escape::string($this->request->server["REQUEST_URI"] ?? '');
+			$this->response->data["httpReferer"] = \Escape::string($this->request->server["HTTP_REFERER"] ?? '');
 
 			$this->response->setTitle("Not found");
 			$this->response->setView("notfound");
