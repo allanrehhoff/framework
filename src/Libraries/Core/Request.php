@@ -96,7 +96,7 @@ namespace Core {
 		 * @param array $files the $_FILES array
 		 * @return array The re-arranged files array
 		 */
-		private function reArrangeFilesArray(array $files) {
+		private function reArrangeFilesArray(array $files) : array {
 			$result = [];
 			$count  = count($files["name"]);
 			$keys   = array_keys($files);
