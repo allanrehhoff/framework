@@ -16,7 +16,8 @@ v8.0.0
 - \Core\Router::getArgs(); moved to \Core\Response::getArguments()  
 - New class \Core\Renderer.  
 - New method \Core\Router::getDefaultRoute();  
-- New method \Core\Response::sendHttpHeaders();  
+- New method \Core\Response::addHeader(); for setting custom headers to be sent by controllers.
+- New method \Core\Response::sendHttpHeaders(); Sends queued HTTP headers to browser.
 - New method \Singleton::getEnvironment(); for deeper integrations with environment variables.  
 - Declared top level \Core namespace classes as final (with the exception of \Core\MVCStructure)  
 - Added typehints to more controllers and properties.  

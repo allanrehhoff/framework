@@ -17,6 +17,16 @@ namespace Core {
 		public array $data = [];
 
 		/**
+		 * @var array Headers to be sent when sendHttpHeaders are called
+		 * 			  Default headers includes no-cache headers.
+		 */
+		private array $headers = [
+			["Cache-Control: no-store, no-cache, must-revalidate, max-age=0"],
+			["Cache-Control: post-check=0, pre-check=0", false],
+			["Pragma: no-cache"]
+		];
+
+		/**
 		 * Response constructor.
 		 */
 		public function __construct() {}
@@ -76,14 +86,25 @@ namespace Core {
 		}
 
 		/**
+		 * Queue header to be sent
+		 * @param string $header A fully constructed header to sent.
+		 * @param bool $replace [optional] The optional replace parameter indicates
+		 * 						whether the header should replace a previous similar header,
+		 * 						or add a second header of the same type. By default it will replace,
+		 * 						but if you pass in false as the second argument you can force multiple headers of the same type.
+		 */
+		public function addHeader(string $header, bool $replace = true) {
+			$this->headers[] = [$header, $replace];
+		}
+
+		/**
 		 * Send default HTTP headers
 		 * @return void
 		 */
 		public function sendHttpHeaders() : void {
-			// Cache headers
-			header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-			header("Cache-Control: post-check=0, pre-check=0", false);
-			header("Pragma: no-cache");
+			foreach($this->headers as $header) {
+				header(...$header);
+			}
 		}
 
 		/**
