@@ -1241,26 +1241,6 @@ Search.appendIndex(
             "summary": "Get\u0020the\u0020value\u0020of\u0020an\u0020environment\u0020variable.",
             "url": "classes/Environment.html#method_get"
         },                {
-            "fqsen": "\\HtmlEscape",
-            "name": "HtmlEscape",
-            "summary": "This\u0020PHP\u0020class\u0020provides\u0020static\u0020methods\u0020for\u0020escaping\u0020HTML\u0020entitiet\nto\u0020prevent\u0020cross\u002Dsite\u0020scripting\u0020\u0028XSS\u0029\u0020attacks.",
-            "url": "classes/HtmlEscape.html"
-        },                {
-            "fqsen": "\\HtmlEscape\u003A\u003Aescape\u0028\u0029",
-            "name": "escape",
-            "summary": "Escapes\u0020special\u0020characters\u0020in\u0020a\u0020string\u0020for\u0020use\u0020in\u0020HTML.",
-            "url": "classes/HtmlEscape.html#method_escape"
-        },                {
-            "fqsen": "\\HtmlEscape\u003A\u003AescapeArray\u0028\u0029",
-            "name": "escapeArray",
-            "summary": "Escapes\u0020an\u0020array\u0020of\u0020strings\u0020for\u0020use\u0020in\u0020HTML.",
-            "url": "classes/HtmlEscape.html#method_escapeArray"
-        },                {
-            "fqsen": "\\HtmlEscape\u003A\u003AescapeObject\u0028\u0029",
-            "name": "escapeObject",
-            "summary": "Escapes\u0020an\u0020object\u0027s\u0020properties\u0020for\u0020use\u0020in\u0020HTML.",
-            "url": "classes/HtmlEscape.html#method_escapeObject"
-        },                {
             "fqsen": "\\Singleton",
             "name": "Singleton",
             "summary": "Class\u0020used\u0020to\u0020hold\u0020global\u0020state\u0020objects.",
@@ -1410,6 +1390,26 @@ Search.appendIndex(
             "name": "ACCEPT_JSON",
             "summary": "",
             "url": "namespaces/default.html#constant_ACCEPT_JSON"
+        },                {
+            "fqsen": "\\Escape",
+            "name": "Escape",
+            "summary": "This\u0020PHP\u0020class\u0020provides\u0020static\u0020methods\u0020for\u0020escaping\u0020HTML\u0020and\u0020string\u0020entities\nto\u0020prevent\u0020cross\u002Dsite\u0020scripting\u0020\u0028XSS\u0029\u0020attacks.",
+            "url": "classes/Escape.html"
+        },                {
+            "fqsen": "\\Escape\u003A\u003Astring\u0028\u0029",
+            "name": "string",
+            "summary": "Escapes\u0020special\u0020characters\u0020in\u0020a\u0020string\u0020for\u0020use\u0020in\u0020HTML.",
+            "url": "classes/Escape.html#method_string"
+        },                {
+            "fqsen": "\\Escape\u003A\u003Aarray\u0028\u0029",
+            "name": "array",
+            "summary": "Escapes\u0020an\u0020array\u0020of\u0020strings\u0020for\u0020use\u0020in\u0020HTML.",
+            "url": "classes/Escape.html#method_array"
+        },                {
+            "fqsen": "\\Escape\u003A\u003Aobject\u0028\u0029",
+            "name": "object",
+            "summary": "Escapes\u0020an\u0020object\u0027s\u0020properties\u0020for\u0020use\u0020in\u0020HTML.",
+            "url": "classes/Escape.html#method_object"
         },                {
             "fqsen": "\\",
             "name": "\\",

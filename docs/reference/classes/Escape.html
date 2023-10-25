@@ -101,7 +101,7 @@
 
     <article class="phpdocumentor-element -class">
         <h2 class="phpdocumentor-content__title">
-    Environment
+    Escape
 
     
             <div class="phpdocumentor-element__package">
@@ -115,14 +115,18 @@
     </h2>
 
         <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Environment.php"><a href="files/src-libraries-environment.html"><abbr title="src/Libraries/Environment.php">Environment.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Escape.php"><a href="files/src-libraries-escape.html"><abbr title="src/Libraries/Escape.php">Escape.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">3</span>
+    <span class="phpdocumentor-element-found-in__line">9</span>
 
     </aside>
 
-        
-    <section class="phpdocumentor-description"></section>
+            <p class="phpdocumentor-summary">This PHP class provides static methods for escaping HTML and string entities
+to prevent cross-site scripting (XSS) attacks.</p>
+
+    <section class="phpdocumentor-description"><p>It offers a convenient way to sanitize user-generated content before displaying it in HTML output.
+The class uses the htmlspecialchars() function to escape special characters and preserve the integrity of the content.</p>
+</section>
 
 
 
@@ -138,32 +142,25 @@
 
 <dl class="phpdocumentor-table-of-contents">
                         <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Environment.html#method___construct">__construct()</a>
+    <a href="classes/Escape.html#method_array">array()</a>
     <span>
-                                &nbsp;: mixed    </span>
+                                &nbsp;: array&lt;string|int, mixed&gt;    </span>
 </dt>
-<dd>Constructor for the Environment class.</dd>
+<dd>Escapes an array of strings for use in HTML.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Environment.html#method_get">get()</a>
+    <a href="classes/Escape.html#method_object">object()</a>
     <span>
-                                &nbsp;: mixed    </span>
+                                &nbsp;: object    </span>
 </dt>
-<dd>Get the value of an environment variable.</dd>
+<dd>Escapes an object&#039;s properties for use in HTML.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Environment.html#method_put">put()</a>
+    <a href="classes/Escape.html#method_string">string()</a>
     <span>
-                                &nbsp;: void    </span>
+                                &nbsp;: string    </span>
 </dt>
-<dd>Set an environment variable with a given name and value.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -private">
-    <a href="classes/Environment.html#method_parse">parse()</a>
-    <span>
-                                &nbsp;: void    </span>
-</dt>
-<dd>Parse the environment file and populate the environment variables.</dd>
+<dd>Escapes special characters in a string for use in HTML.</dd>
 
         </dl>
 
@@ -176,90 +173,40 @@
             <section class="phpdocumentor-methods">
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
-            <a href="classes/Environment.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Escape.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
         </h3>
                     <article
         class="phpdocumentor-element
             -method
             -public
-                                                        "
+                                    -static                    "
 >
-    <h4 class="phpdocumentor-element__name" id="method___construct">
-        __construct()
-        <a href="classes/Environment.html#method___construct" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_array">
+        array()
+        <a href="classes/Escape.html#method_array" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Environment.php"><a href="files/src-libraries-environment.html"><abbr title="src/Libraries/Environment.php">Environment.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Escape.php"><a href="files/src-libraries-escape.html"><abbr title="src/Libraries/Escape.php">Escape.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">9</span>
+    <span class="phpdocumentor-element-found-in__line">26</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Constructor for the Environment class.</p>
+        <p class="phpdocumentor-summary">Escapes an array of strings for use in HTML.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$environmentFile</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">array</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$array</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$environmentFile</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The path to the environment file (e.g., '.env').</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">mixed</span>
-            &mdash;
-        
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_get">
-        get()
-        <a href="classes/Environment.html#method_get" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Environment.php"><a href="files/src-libraries-environment.html"><abbr title="src/Libraries/Environment.php">Environment.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">85</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Get the value of an environment variable.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">get</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$name</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
-
-        <section class="phpdocumentor-description"><p>Variables may be accessed using dot notations.
-If no variable by the given name was found in
-the local, set by the operating system or putenv, scope,
-fallback to the value in $_ENV, or false if not found.</p>
-</section>
-
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$name</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                <span class="phpdocumentor-signature__argument__name">$array</span>
+                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The name of the environment variable to retrieve.</p>
+                    <section class="phpdocumentor-description"><p>The array to escape.</p>
 </section>
 
             </dd>
@@ -268,9 +215,9 @@ fallback to the value in $_ENV, or false if not found.</p>
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">mixed</span>
+    <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
             &mdash;
-            <section class="phpdocumentor-description"><p>The value of the environment variable or false if not found.</p>
+            <section class="phpdocumentor-description"><p>The escaped array.</p>
 </section>
 
     
@@ -279,45 +226,34 @@ fallback to the value in $_ENV, or false if not found.</p>
         class="phpdocumentor-element
             -method
             -public
-                                                        "
+                                    -static                    "
 >
-    <h4 class="phpdocumentor-element__name" id="method_put">
-        put()
-        <a href="classes/Environment.html#method_put" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_object">
+        object()
+        <a href="classes/Escape.html#method_object" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Environment.php"><a href="files/src-libraries-environment.html"><abbr title="src/Libraries/Environment.php">Environment.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Escape.php"><a href="files/src-libraries-escape.html"><abbr title="src/Libraries/Escape.php">Escape.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">47</span>
+    <span class="phpdocumentor-element-found-in__line">48</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Set an environment variable with a given name and value.</p>
+        <p class="phpdocumentor-summary">Escapes an object&#039;s properties for use in HTML.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">put</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$name</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">int|float|string|array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$value</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">object</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">object&nbsp;</span><span class="phpdocumentor-signature__argument__name">$iStdClass</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">object</span></code>
 
-        <section class="phpdocumentor-description"><p>All names given will be converted to uppercase automatically.</p>
-</section>
-
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$name</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                <span class="phpdocumentor-signature__argument__name">$iStdClass</span>
+                : <span class="phpdocumentor-signature__argument__return-type">object</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The name of the environment variable.</p>
-</section>
-
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$value</span>
-                : <span class="phpdocumentor-signature__argument__return-type">int|float|string|array&lt;string|int, mixed&gt;</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The value of the environment variable.</p>
+                    <section class="phpdocumentor-description"><p>The object to escape.</p>
 </section>
 
             </dd>
@@ -326,43 +262,45 @@ fallback to the value in $_ENV, or false if not found.</p>
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
+    <span class="phpdocumentor-signature__response_type">object</span>
             &mdash;
-        
+            <section class="phpdocumentor-description"><p>The escaped object.</p>
+</section>
+
     
 </article>
                     <article
         class="phpdocumentor-element
             -method
-            -private
-                                                        "
+            -public
+                                    -static                    "
 >
-    <h4 class="phpdocumentor-element__name" id="method_parse">
-        parse()
-        <a href="classes/Environment.html#method_parse" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_string">
+        string()
+        <a href="classes/Escape.html#method_string" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Environment.php"><a href="files/src-libraries-environment.html"><abbr title="src/Libraries/Environment.php">Environment.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Escape.php"><a href="files/src-libraries-escape.html"><abbr title="src/Libraries/Escape.php">Escape.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">20</span>
+    <span class="phpdocumentor-element-found-in__line">16</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Parse the environment file and populate the environment variables.</p>
+        <p class="phpdocumentor-summary">Escapes special characters in a string for use in HTML.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">private</span>
-                    <span class="phpdocumentor-signature__name">parse</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$environmentFile</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+    <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">string</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$string</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$environmentFile</span>
+                <span class="phpdocumentor-signature__argument__name">$string</span>
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The path to the environment file (e.g., '.env').</p>
+                    <section class="phpdocumentor-description"><p>The string to escape.</p>
 </section>
 
             </dd>
@@ -371,9 +309,11 @@ fallback to the value in $_ENV, or false if not found.</p>
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
+    <span class="phpdocumentor-signature__response_type">string</span>
             &mdash;
-        
+            <section class="phpdocumentor-description"><p>The escaped string.</p>
+</section>
+
     
 </article>
             </section>
@@ -454,7 +394,7 @@ fallback to the value in $_ENV, or false if not found.</p>
 </section>
             </div>
         </div>
-        <a href="classes/Environment.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+        <a href="classes/Escape.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
     </main>
 

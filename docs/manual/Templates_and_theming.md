@@ -1,7 +1,7 @@
 ## Templates and theming
 > [!WARNING] 
 > This framework does not (as of yet) bundle any template/theming engine.  
-> You'll therefore have to handle escaping of all output using the helper methods `$entity->safe("key")` or `\HtmlEscape::escape("content")`  
+> You'll therefore have to handle escaping of all output using the helper methods `$entity->safe("key")` or `\Escape::string("content")`  
 > Alternatively you may composer install/bundle, your preffered engine, and alter `\Core\Renderer` accordingly.  
 
 Template files must be created in your configured theme folder (`default` is the default theme bundled)
