@@ -60,11 +60,15 @@
 </h4>
     <ul class="phpdocumentor-list">
                     <li>
+                <a href="namespaces/core-contenttype.html" class="">ContentType</a>
+                
+            </li>
+                    <li>
                 <a href="namespaces/core-exception.html" class="">Exception</a>
                 
             </li>
                     <li>
-                <a href="namespaces/core-httperror.html" class="">HttpError</a>
+                <a href="namespaces/core-statuscode.html" class="">StatusCode</a>
                 
             </li>
             </ul>
@@ -163,7 +167,7 @@ Follows a simple routing mechanism to match URLs and execute the corresponding c
 <dd>Router constructor parses args from current environment.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Core-Router.html#method_getDefaultRoute">getDefaultRoute()</a>
+    <a href="classes/Core-Router.html#method_getConfiguredDefaultRoute">getConfiguredDefaultRoute()</a>
     <span>
                                 &nbsp;: array&lt;string|int, mixed&gt;    </span>
 </dt>
@@ -191,6 +195,27 @@ Follows a simple routing mechanism to match URLs and execute the corresponding c
 <dd>Returns the resolved route from path arguments
 First index will always be the controller to invoke
 second index, if present, will be the method name</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -private">
+    <a href="classes/Core-Router.html#method_getDefaultMethodName">getDefaultMethodName()</a>
+    <span>
+                                &nbsp;: <a href="classes/Core-MethodName.html"><abbr title="\Core\MethodName">MethodName</abbr></a>    </span>
+</dt>
+<dd>Get default MethodName to be called on controlelrs</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -private">
+    <a href="classes/Core-Router.html#method_getNotFoundClassName">getNotFoundClassName()</a>
+    <span>
+                                &nbsp;: <a href="classes/Core-ClassName.html"><abbr title="\Core\ClassName">ClassName</abbr></a>    </span>
+</dt>
+<dd>Get ClassName for requests that cannot be routed</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -private">
+    <a href="classes/Core-Router.html#method_handleUnroutableRequest">handleUnroutableRequest()</a>
+    <span>
+                                &nbsp;: array&lt;string|int, mixed&gt;    </span>
+</dt>
+<dd>Handle requests that cannot be routed.</dd>
 
         </dl>
 
@@ -339,9 +364,9 @@ second index, if present, will be the method name</dd>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_getDefaultRoute">
-        getDefaultRoute()
-        <a href="classes/Core-Router.html#method_getDefaultRoute" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_getConfiguredDefaultRoute">
+        getConfiguredDefaultRoute()
+        <a href="classes/Core-Router.html#method_getConfiguredDefaultRoute" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Core/Router.php"><a href="files/src-libraries-core-router.html"><abbr title="src/Libraries/Core/Router.php">Router.php</abbr></a></abbr>
@@ -354,7 +379,7 @@ second index, if present, will be the method name</dd>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getDefaultRoute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">getConfiguredDefaultRoute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
 
     
     
@@ -459,7 +484,7 @@ second index, if present, will be the method name</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Core/Router.php"><a href="files/src-libraries-core-router.html"><abbr title="src/Libraries/Core/Router.php">Router.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">66</span>
+    <span class="phpdocumentor-element-found-in__line">91</span>
 
     </aside>
 
@@ -479,6 +504,107 @@ second index, if present, will be the method name</p>
     <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
             &mdash;
         
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -private
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getDefaultMethodName">
+        getDefaultMethodName()
+        <a href="classes/Core-Router.html#method_getDefaultMethodName" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Core/Router.php"><a href="files/src-libraries-core-router.html"><abbr title="src/Libraries/Core/Router.php">Router.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">72</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Get default MethodName to be called on controlelrs</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+                    <span class="phpdocumentor-signature__name">getDefaultMethodName</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Core-MethodName.html"><abbr title="\Core\MethodName">MethodName</abbr></a></span></code>
+
+    
+    
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/Core-MethodName.html"><abbr title="\Core\MethodName">MethodName</abbr></a></span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -private
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getNotFoundClassName">
+        getNotFoundClassName()
+        <a href="classes/Core-Router.html#method_getNotFoundClassName" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Core/Router.php"><a href="files/src-libraries-core-router.html"><abbr title="src/Libraries/Core/Router.php">Router.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">64</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Get ClassName for requests that cannot be routed</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+                    <span class="phpdocumentor-signature__name">getNotFoundClassName</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Core-ClassName.html"><abbr title="\Core\ClassName">ClassName</abbr></a></span></code>
+
+    
+    
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/Core-ClassName.html"><abbr title="\Core\ClassName">ClassName</abbr></a></span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -private
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_handleUnroutableRequest">
+        handleUnroutableRequest()
+        <a href="classes/Core-Router.html#method_handleUnroutableRequest" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Core/Router.php"><a href="files/src-libraries-core-router.html"><abbr title="src/Libraries/Core/Router.php">Router.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">80</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Handle requests that cannot be routed.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+                    <span class="phpdocumentor-signature__name">handleUnroutableRequest</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
+
+    
+    
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
+            &mdash;
+            <section class="phpdocumentor-description"><p>An array with two elements: [0] ClassName An instance of ClassName. [1] MethodName An instance of MethodName.</p>
+</section>
+
     
 </article>
             </section>

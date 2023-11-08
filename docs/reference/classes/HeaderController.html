@@ -60,11 +60,15 @@
 </h4>
     <ul class="phpdocumentor-list">
                     <li>
+                <a href="namespaces/core-contenttype.html" class="">ContentType</a>
+                
+            </li>
+                    <li>
                 <a href="namespaces/core-exception.html" class="">Exception</a>
                 
             </li>
                     <li>
-                <a href="namespaces/core-httperror.html" class="">HttpError</a>
+                <a href="namespaces/core-statuscode.html" class="">StatusCode</a>
                 
             </li>
             </ul>
@@ -161,6 +165,13 @@ the default method invoked for all controllers.</p>
     <a href="classes/Controller.html#property_children">$children</a>
     <span>
                         &nbsp;: array&lt;string|int, mixed&gt;            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+    <a href="classes/Controller.html#property_contentType">$contentType</a>
+    <span>
+                        &nbsp;: <a href="classes/Core-ContentType-ContentType.html"><abbr title="\Core\ContentType\ContentType">ContentType</abbr></a>            </span>
 </dt>
 <dd></dd>
 
@@ -268,7 +279,7 @@ This is because it is the array stored in $this-&gt;data that is being modified 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Controller.html#method_getTemplate">getTemplate()</a>
     <span>
-                                &nbsp;: <abbr title="\Core\Theme">Theme</abbr>    </span>
+                                &nbsp;: <a href="classes/Core-Template.html"><abbr title="\Core\Template">Template</abbr></a>    </span>
 </dt>
 <dd></dd>
 
@@ -284,7 +295,7 @@ This is because it is the array stored in $this-&gt;data that is being modified 
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd>Extracts controller data property as variables and renders the view</dd>
+<dd>Send output to client based on their preffered media type</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Controller.html#method_setParent">setParent()</a>
@@ -292,20 +303,6 @@ This is because it is the array stored in $this-&gt;data that is being modified 
                                 &nbsp;: mixed    </span>
 </dt>
 <dd>Set current controllers parent.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Controller.html#method_start">start()</a>
-    <span>
-                                &nbsp;: void    </span>
-</dt>
-<dd>Function that is called for all requests, before the default controller method.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Controller.html#method_stop">stop()</a>
-    <span>
-                                &nbsp;: void    </span>
-</dt>
-<dd>Method that is called for all requests will be run before sending output</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
     <a href="classes/HeaderController.html#method_getBodyTagClasses">getBodyTagClasses()</a>
@@ -410,7 +407,7 @@ or CSS styling for specific conditions</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Controller.php"><a href="files/src-libraries-controller.html"><abbr title="src/Libraries/Controller.php">Controller.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">52</span>
+    <span class="phpdocumentor-element-found-in__line">57</span>
 
     </aside>
 
@@ -425,6 +422,38 @@ or CSS styling for specific conditions</dd>
         <section class="phpdocumentor-description"><p>Child controllers classes to be executed when the main one finalizes.</p>
 </section>
 
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_contentType">
+        $contentType
+        <a href="classes/Controller.html#property_contentType" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Controller.php"><a href="files/src-libraries-controller.html"><abbr title="src/Libraries/Controller.php">Controller.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">47</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/Core-ContentType-ContentType.html"><abbr title="\Core\ContentType\ContentType">ContentType</abbr></a></span>
+    <span class="phpdocumentor-signature__name">$contentType</span>
+    </code>
+
+    
+    
     
 
 </article>
@@ -478,7 +507,7 @@ or CSS styling for specific conditions</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Controller.php"><a href="files/src-libraries-controller.html"><abbr title="src/Libraries/Controller.php">Controller.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">47</span>
+    <span class="phpdocumentor-element-found-in__line">52</span>
 
     </aside>
 
@@ -650,7 +679,7 @@ or CSS styling for specific conditions</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Controller.php"><a href="files/src-libraries-controller.html"><abbr title="src/Libraries/Controller.php">Controller.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">63</span>
+    <span class="phpdocumentor-element-found-in__line">68</span>
 
     </aside>
 
@@ -658,7 +687,7 @@ or CSS styling for specific conditions</dd>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Core-Application.html"><abbr title="\Core\Application">Application</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$iApplication</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Core-Application.html"><abbr title="\Core\Application">Application</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$iApplication</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Controller.html"><abbr title="\Controller">Controller</abbr></a>|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$iController</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -669,6 +698,14 @@ or CSS styling for specific conditions</dd>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$iController</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Controller.html"><abbr title="\Controller">Controller</abbr></a>|null</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
             </dl>
 
@@ -693,7 +730,7 @@ or CSS styling for specific conditions</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Controller.php"><a href="files/src-libraries-controller.html"><abbr title="src/Libraries/Controller.php">Controller.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">77</span>
+    <span class="phpdocumentor-element-found-in__line">110</span>
 
     </aside>
 
@@ -740,7 +777,7 @@ This is because it is the array stored in $this-&gt;data that is being modified 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Controller.php"><a href="files/src-libraries-controller.html"><abbr title="src/Libraries/Controller.php">Controller.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">186</span>
+    <span class="phpdocumentor-element-found-in__line">170</span>
 
     </aside>
 
@@ -772,7 +809,7 @@ This is because it is the array stored in $this-&gt;data that is being modified 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Controller.php"><a href="files/src-libraries-controller.html"><abbr title="src/Libraries/Controller.php">Controller.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">172</span>
+    <span class="phpdocumentor-element-found-in__line">156</span>
 
     </aside>
 
@@ -805,7 +842,7 @@ This is because it is the array stored in $this-&gt;data that is being modified 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Controller.php"><a href="files/src-libraries-controller.html"><abbr title="src/Libraries/Controller.php">Controller.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">163</span>
+    <span class="phpdocumentor-element-found-in__line">147</span>
 
     </aside>
 
@@ -840,7 +877,7 @@ This is because it is the array stored in $this-&gt;data that is being modified 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Controller.php"><a href="files/src-libraries-controller.html"><abbr title="src/Libraries/Controller.php">Controller.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">200</span>
+    <span class="phpdocumentor-element-found-in__line">184</span>
 
     </aside>
 
@@ -872,7 +909,7 @@ This is because it is the array stored in $this-&gt;data that is being modified 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Controller.php"><a href="files/src-libraries-controller.html"><abbr title="src/Libraries/Controller.php">Controller.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">207</span>
+    <span class="phpdocumentor-element-found-in__line">191</span>
 
     </aside>
 
@@ -904,7 +941,7 @@ This is because it is the array stored in $this-&gt;data that is being modified 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Controller.php"><a href="files/src-libraries-controller.html"><abbr title="src/Libraries/Controller.php">Controller.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">193</span>
+    <span class="phpdocumentor-element-found-in__line">177</span>
 
     </aside>
 
@@ -936,21 +973,21 @@ This is because it is the array stored in $this-&gt;data that is being modified 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Controller.php"><a href="files/src-libraries-controller.html"><abbr title="src/Libraries/Controller.php">Controller.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">179</span>
+    <span class="phpdocumentor-element-found-in__line">163</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__final">final</span>            <span class="phpdocumentor-signature__name">getTemplate</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Core\Theme">Theme</abbr></span></code>
+        <span class="phpdocumentor-signature__final">final</span>            <span class="phpdocumentor-signature__name">getTemplate</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Core-Template.html"><abbr title="\Core\Template">Template</abbr></a></span></code>
 
     
     
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><abbr title="\Core\Theme">Theme</abbr></span>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/Core-Template.html"><abbr title="\Core\Template">Template</abbr></a></span>
             &mdash;
         
     
@@ -1001,11 +1038,11 @@ This is because it is the array stored in $this-&gt;data that is being modified 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Controller.php"><a href="files/src-libraries-controller.html"><abbr title="src/Libraries/Controller.php">Controller.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">126</span>
+    <span class="phpdocumentor-element-found-in__line">122</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Extracts controller data property as variables and renders the view</p>
+        <p class="phpdocumentor-summary">Send output to client based on their preffered media type</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -1034,7 +1071,7 @@ This is because it is the array stored in $this-&gt;data that is being modified 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Controller.php"><a href="files/src-libraries-controller.html"><abbr title="src/Libraries/Controller.php">Controller.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">154</span>
+    <span class="phpdocumentor-element-found-in__line">138</span>
 
     </aside>
 
@@ -1062,74 +1099,6 @@ This is because it is the array stored in $this-&gt;data that is being modified 
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">mixed</span>
-            &mdash;
-        
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                -final        "
->
-    <h4 class="phpdocumentor-element__name" id="method_start">
-        start()
-        <a href="classes/Controller.html#method_start" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Controller.php"><a href="files/src-libraries-controller.html"><abbr title="src/Libraries/Controller.php">Controller.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">91</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Function that is called for all requests, before the default controller method.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__final">final</span>            <span class="phpdocumentor-signature__name">start</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
-
-        <section class="phpdocumentor-description"><p>Constructs the overall environment, setting up helpers and initial variables.</p>
-</section>
-
-    
-    
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                -final        "
->
-    <h4 class="phpdocumentor-element__name" id="method_stop">
-        stop()
-        <a href="classes/Controller.html#method_stop" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Controller.php"><a href="files/src-libraries-controller.html"><abbr title="src/Libraries/Controller.php">Controller.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">118</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Method that is called for all requests will be run before sending output</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__final">final</span>            <span class="phpdocumentor-signature__name">stop</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
-
-    
-    
-    
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
             &mdash;
         
     

@@ -196,19 +196,9 @@ Search.appendIndex(
             "summary": "Notify\u0020of\u0020backwards\u0020compatibility\u0020breakages\u0020when\u0020setting\u0020data\nWhen\u0020accessing\u0020an\u0020array\u0020using\u0020the\u0020\u0024this\u002D\u003Edata\u005B\u0022key\u005D\u0020\u003D\u0020\u0022value\u0022\u0020syntax,\nit\u0020actually\u0020goes\u0020through\u0020__get\u0028\u0029\u003B\u0020instead\u0020of\u0020__set\u0028\u0029\u003B\nThis\u0020is\u0020because\u0020it\u0020is\u0020the\u0020array\u0020stored\u0020in\u0020\u0024this\u002D\u003Edata\u0020that\u0020is\u0020being\u0020modified\u0020rather\u0020than\u0020the\u0020class\u0020memb",
             "url": "classes/Controller.html#method___get"
         },                {
-            "fqsen": "\\Controller\u003A\u003Astart\u0028\u0029",
-            "name": "start",
-            "summary": "Function\u0020that\u0020is\u0020called\u0020for\u0020all\u0020requests,\u0020before\u0020the\u0020default\u0020controller\u0020method.",
-            "url": "classes/Controller.html#method_start"
-        },                {
-            "fqsen": "\\Controller\u003A\u003Astop\u0028\u0029",
-            "name": "stop",
-            "summary": "Method\u0020that\u0020is\u0020called\u0020for\u0020all\u0020requests\u0020will\u0020be\u0020run\u0020before\u0020sending\u0020output",
-            "url": "classes/Controller.html#method_stop"
-        },                {
             "fqsen": "\\Controller\u003A\u003Aoutput\u0028\u0029",
             "name": "output",
-            "summary": "Extracts\u0020controller\u0020data\u0020property\u0020as\u0020variables\u0020and\u0020renders\u0020the\u0020view",
+            "summary": "Send\u0020output\u0020to\u0020client\u0020based\u0020on\u0020their\u0020preffered\u0020media\u0020type",
             "url": "classes/Controller.html#method_output"
         },                {
             "fqsen": "\\Controller\u003A\u003AsetParent\u0028\u0029",
@@ -285,6 +275,11 @@ Search.appendIndex(
             "name": "assets",
             "summary": "",
             "url": "classes/Controller.html#property_assets"
+        },                {
+            "fqsen": "\\Controller\u003A\u003A\u0024contentType",
+            "name": "contentType",
+            "summary": "",
+            "url": "classes/Controller.html#property_contentType"
         },                {
             "fqsen": "\\Controller\u003A\u003A\u0024renderer",
             "name": "renderer",
@@ -411,41 +406,6 @@ Search.appendIndex(
             "summary": "\\Core\\Exception\\Governance\u0020is\u0020raised\u0020when\u0020something\u0020should\u0020not\u0020be\u0020done\nYou\u0020should\u0020rarely\u0020have\u0020the\u0020need\u0020for\u0020catching\u0020this.",
             "url": "classes/Core-Exception-Governance.html"
         },                {
-            "fqsen": "\\Core\\HttpError\\Forbidden",
-            "name": "Forbidden",
-            "summary": "Throw\u0020this\u0020whenever\u0020you\u0020want\u0020to\u0020redirect\u0020the\u0020current\u0020controller\u0020to\u0020a\u0020\u0022forbidden\u0022\u0020controller",
-            "url": "classes/Core-HttpError-Forbidden.html"
-        },                {
-            "fqsen": "\\Core\\HttpError\\Forbidden\u003A\u003AgetHttpCode\u0028\u0029",
-            "name": "getHttpCode",
-            "summary": "Return\u0020an\u0020integer\u0020representing\u0020a\u0020HTTP\u0020code",
-            "url": "classes/Core-HttpError-Forbidden.html#method_getHttpCode"
-        },                {
-            "fqsen": "\\Core\\HttpError\\NotFound",
-            "name": "NotFound",
-            "summary": "Throw\u0020this\u0020whenever\u0020you\u0020want\u0020to\u0020redirect\u0020the\u0020current\u0020controller\u0020to\u0020a\u0020not\u0020found\u0020controller",
-            "url": "classes/Core-HttpError-NotFound.html"
-        },                {
-            "fqsen": "\\Core\\HttpError\\NotFound\u003A\u003AgetHttpCode\u0028\u0029",
-            "name": "getHttpCode",
-            "summary": "Return\u0020an\u0020integer\u0020representing\u0020a\u0020HTTP\u0020code",
-            "url": "classes/Core-HttpError-NotFound.html#method_getHttpCode"
-        },                {
-            "fqsen": "\\Core\\HttpError\\StatusCode",
-            "name": "StatusCode",
-            "summary": "The\u0020base\u0020class\u0020for\u0020all\u0020HTTP\u0020exceptions\u0020to\u0020extend\u0020upon\nThis\u0020class\u0020is\u0020intentionally\u0020abstract\nAs\u0020it\u0020should\u0020not\u0020be\u0020instantiated\u0020directly\nand\u0020only\u0020serves\u0020as\u0020a\u0020catch\u002Dall\u0020class\u0020for\nall\u0020http\u0020error\u0020exceptions\u0020extending\u0020this",
-            "url": "classes/Core-HttpError-StatusCode.html"
-        },                {
-            "fqsen": "\\Core\\HttpError\\StatusCode\u003A\u003AgetHttpCode\u0028\u0029",
-            "name": "getHttpCode",
-            "summary": "Return\u0020an\u0020integer\u0020representing\u0020a\u0020HTTP\u0020code",
-            "url": "classes/Core-HttpError-StatusCode.html#method_getHttpCode"
-        },                {
-            "fqsen": "\\Core\\HttpError\\StatusCode\u003A\u003AgetClassName\u0028\u0029",
-            "name": "getClassName",
-            "summary": "Returns\u0020a\u0020class\u0020shortname\u0020matching\u0020the\u0020name\nof\u0020the\u0020http\u0020error\u0020exception\u0020being\u0020thrown.",
-            "url": "classes/Core-HttpError-StatusCode.html#method_getClassName"
-        },                {
             "fqsen": "\\Core\\MethodName",
             "name": "MethodName",
             "summary": "Sanitizes\u0020a\u0020string\u0020to\u0020a\u0020valid\u0020callable\u0020method\u0020name",
@@ -483,13 +443,28 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Core\\Renderer",
             "name": "Renderer",
-            "summary": "Class\u0020Renderer",
+            "summary": "",
             "url": "classes/Core-Renderer.html"
+        },                {
+            "fqsen": "\\Core\\Renderer\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/Core-Renderer.html#method___construct"
         },                {
             "fqsen": "\\Core\\Renderer\u003A\u003Arender\u0028\u0029",
             "name": "render",
-            "summary": "Render\u0020a\u0020view\u0020with\u0020data.",
+            "summary": "",
             "url": "classes/Core-Renderer.html#method_render"
+        },                {
+            "fqsen": "\\Core\\Renderer\u003A\u003A\u0024iTemplate",
+            "name": "iTemplate",
+            "summary": "",
+            "url": "classes/Core-Renderer.html#property_iTemplate"
+        },                {
+            "fqsen": "\\Core\\Renderer\u003A\u003A\u0024iContentType",
+            "name": "iContentType",
+            "summary": "",
+            "url": "classes/Core-Renderer.html#property_iContentType"
         },                {
             "fqsen": "\\Core\\Request",
             "name": "Request",
@@ -515,6 +490,11 @@ Search.appendIndex(
             "name": "getArg",
             "summary": "Get\u0020arg\u0020by\u0020an\u0020index.",
             "url": "classes/Core-Request.html#method_getArg"
+        },                {
+            "fqsen": "\\Core\\Request\u003A\u003AgetContentType\u0028\u0029",
+            "name": "getContentType",
+            "summary": "Tell\u0020the\u0020mime\u0020content\u0020type\u0020that\u0020the\u0020client\u0020prefer\u0020to\u0020recieve",
+            "url": "classes/Core-Request.html#method_getContentType"
         },                {
             "fqsen": "\\Core\\Request\u003A\u003AreArrangeFilesArray\u0028\u0029",
             "name": "reArrangeFilesArray",
@@ -591,15 +571,20 @@ Search.appendIndex(
             "summary": "Set\u0020a\u0020dynamic\u0020value\u0020for\u0020the\u0020title\u0020tag.",
             "url": "classes/Core-Response.html#method_setTitle"
         },                {
-            "fqsen": "\\Core\\Response\u003A\u003AsendHttpHeaders\u0028\u0029",
-            "name": "sendHttpHeaders",
-            "summary": "Send\u0020default\u0020HTTP\u0020headers",
-            "url": "classes/Core-Response.html#method_sendHttpHeaders"
+            "fqsen": "\\Core\\Response\u003A\u003AaddHeader\u0028\u0029",
+            "name": "addHeader",
+            "summary": "Queue\u0020header\u0020to\u0020be\u0020sent",
+            "url": "classes/Core-Response.html#method_addHeader"
         },                {
             "fqsen": "\\Core\\Response\u003A\u003AsendHttpCode\u0028\u0029",
             "name": "sendHttpCode",
             "summary": "Send\u0020HTTP\u0020code",
             "url": "classes/Core-Response.html#method_sendHttpCode"
+        },                {
+            "fqsen": "\\Core\\Response\u003A\u003AsendHeaders\u0028\u0029",
+            "name": "sendHeaders",
+            "summary": "Send\u0020default\u0020HTTP\u0020headers",
+            "url": "classes/Core-Response.html#method_sendHeaders"
         },                {
             "fqsen": "\\Core\\Response\u003A\u003A\u0024view",
             "name": "view",
@@ -610,6 +595,11 @@ Search.appendIndex(
             "name": "data",
             "summary": "",
             "url": "classes/Core-Response.html#property_data"
+        },                {
+            "fqsen": "\\Core\\Response\u003A\u003A\u0024headers",
+            "name": "headers",
+            "summary": "",
+            "url": "classes/Core-Response.html#property_headers"
         },                {
             "fqsen": "\\Core\\Router",
             "name": "Router",
@@ -631,10 +621,25 @@ Search.appendIndex(
             "summary": "Get\u0020the\u0020\\Core\\Response\u0020object",
             "url": "classes/Core-Router.html#method_getResponse"
         },                {
-            "fqsen": "\\Core\\Router\u003A\u003AgetDefaultRoute\u0028\u0029",
-            "name": "getDefaultRoute",
+            "fqsen": "\\Core\\Router\u003A\u003AgetConfiguredDefaultRoute\u0028\u0029",
+            "name": "getConfiguredDefaultRoute",
             "summary": "Returns\u0020default\u0020route\u0020from\u0020configuration",
-            "url": "classes/Core-Router.html#method_getDefaultRoute"
+            "url": "classes/Core-Router.html#method_getConfiguredDefaultRoute"
+        },                {
+            "fqsen": "\\Core\\Router\u003A\u003AgetNotFoundClassName\u0028\u0029",
+            "name": "getNotFoundClassName",
+            "summary": "Get\u0020ClassName\u0020for\u0020requests\u0020that\u0020cannot\u0020be\u0020routed",
+            "url": "classes/Core-Router.html#method_getNotFoundClassName"
+        },                {
+            "fqsen": "\\Core\\Router\u003A\u003AgetDefaultMethodName\u0028\u0029",
+            "name": "getDefaultMethodName",
+            "summary": "Get\u0020default\u0020MethodName\u0020to\u0020be\u0020called\u0020on\u0020controlelrs",
+            "url": "classes/Core-Router.html#method_getDefaultMethodName"
+        },                {
+            "fqsen": "\\Core\\Router\u003A\u003AhandleUnroutableRequest\u0028\u0029",
+            "name": "handleUnroutableRequest",
+            "summary": "Handle\u0020requests\u0020that\u0020cannot\u0020be\u0020routed.",
+            "url": "classes/Core-Router.html#method_handleUnroutableRequest"
         },                {
             "fqsen": "\\Core\\Router\u003A\u003AgetRoute\u0028\u0029",
             "name": "getRoute",
@@ -1276,10 +1281,10 @@ Search.appendIndex(
             "summary": "Get\u0020instance\u0020of\u0020Database\\Connection",
             "url": "classes/Singleton.html#method_getDatabaseConnection"
         },                {
-            "fqsen": "\\Singleton\u003A\u003A\u0024data",
-            "name": "data",
+            "fqsen": "\\Singleton\u003A\u003A\u0024store",
+            "name": "store",
             "summary": "",
-            "url": "classes/Singleton.html#property_data"
+            "url": "classes/Singleton.html#property_store"
         },                {
             "fqsen": "\\Url",
             "name": "Url",
@@ -1330,6 +1335,26 @@ Search.appendIndex(
             "name": "parseQueryString",
             "summary": "Parses\u0020a\u0020query\u0020string\u0020and\u0020returns\u0020an\u0020associative\u0020array\u0020of\u0020its\u0020parameters.",
             "url": "classes/Url.html#method_parseQueryString"
+        },                {
+            "fqsen": "\\Escape",
+            "name": "Escape",
+            "summary": "This\u0020PHP\u0020class\u0020provides\u0020static\u0020methods\u0020for\u0020escaping\u0020HTML\u0020and\u0020string\u0020entities\nto\u0020prevent\u0020cross\u002Dsite\u0020scripting\u0020\u0028XSS\u0029\u0020attacks.",
+            "url": "classes/Escape.html"
+        },                {
+            "fqsen": "\\Escape\u003A\u003Astring\u0028\u0029",
+            "name": "string",
+            "summary": "Escapes\u0020special\u0020characters\u0020in\u0020a\u0020string\u0020for\u0020use\u0020in\u0020HTML.",
+            "url": "classes/Escape.html#method_string"
+        },                {
+            "fqsen": "\\Escape\u003A\u003Aarray\u0028\u0029",
+            "name": "array",
+            "summary": "Escapes\u0020an\u0020array\u0020of\u0020strings\u0020for\u0020use\u0020in\u0020HTML.",
+            "url": "classes/Escape.html#method_array"
+        },                {
+            "fqsen": "\\Escape\u003A\u003Aobject\u0028\u0029",
+            "name": "object",
+            "summary": "Escapes\u0020an\u0020object\u0027s\u0020properties\u0020for\u0020use\u0020in\u0020HTML.",
+            "url": "classes/Escape.html#method_object"
         },                {
             "fqsen": "\\CR",
             "name": "CR",
@@ -1391,25 +1416,155 @@ Search.appendIndex(
             "summary": "",
             "url": "namespaces/default.html#constant_ACCEPT_JSON"
         },                {
-            "fqsen": "\\Escape",
-            "name": "Escape",
-            "summary": "This\u0020PHP\u0020class\u0020provides\u0020static\u0020methods\u0020for\u0020escaping\u0020HTML\u0020and\u0020string\u0020entities\nto\u0020prevent\u0020cross\u002Dsite\u0020scripting\u0020\u0028XSS\u0029\u0020attacks.",
-            "url": "classes/Escape.html"
+            "fqsen": "\\Core\\ContentType\\ContentType",
+            "name": "ContentType",
+            "summary": "Interface\u0020ContentType",
+            "url": "classes/Core-ContentType-ContentType.html"
         },                {
-            "fqsen": "\\Escape\u003A\u003Astring\u0028\u0029",
-            "name": "string",
-            "summary": "Escapes\u0020special\u0020characters\u0020in\u0020a\u0020string\u0020for\u0020use\u0020in\u0020HTML.",
-            "url": "classes/Escape.html#method_string"
+            "fqsen": "\\Core\\ContentType\\ContentType\u003A\u003AgetType\u0028\u0029",
+            "name": "getType",
+            "summary": "Get\u0020the\u0020content\u0020type\u0020short\u0020name",
+            "url": "classes/Core-ContentType-ContentType.html#method_getType"
         },                {
-            "fqsen": "\\Escape\u003A\u003Aarray\u0028\u0029",
-            "name": "array",
-            "summary": "Escapes\u0020an\u0020array\u0020of\u0020strings\u0020for\u0020use\u0020in\u0020HTML.",
-            "url": "classes/Escape.html#method_array"
+            "fqsen": "\\Core\\ContentType\\ContentType\u003A\u003AgetMedia\u0028\u0029",
+            "name": "getMedia",
+            "summary": "Get\u0020the\u0020content\u0020type\u0020short\u0020name",
+            "url": "classes/Core-ContentType-ContentType.html#method_getMedia"
         },                {
-            "fqsen": "\\Escape\u003A\u003Aobject\u0028\u0029",
-            "name": "object",
-            "summary": "Escapes\u0020an\u0020object\u0027s\u0020properties\u0020for\u0020use\u0020in\u0020HTML.",
-            "url": "classes/Escape.html#method_object"
+            "fqsen": "\\Core\\ContentType\\ContentType\u003A\u003Astream\u0028\u0029",
+            "name": "stream",
+            "summary": "Send\u0020the\u0020resulting\u0020output\u0020of\u0020a\u0020rendered\u0020view\u0020with\u0020data",
+            "url": "classes/Core-ContentType-ContentType.html#method_stream"
+        },                {
+            "fqsen": "\\Core\\ContentType\\Html",
+            "name": "Html",
+            "summary": "Class\u0020Core\\Output\\Html",
+            "url": "classes/Core-ContentType-Html.html"
+        },                {
+            "fqsen": "\\Core\\ContentType\\Html\u003A\u003AgetType\u0028\u0029",
+            "name": "getType",
+            "summary": "Get\u0020the\u0020content\u0020type\u0020short\u0020name",
+            "url": "classes/Core-ContentType-Html.html#method_getType"
+        },                {
+            "fqsen": "\\Core\\ContentType\\Html\u003A\u003AgetMedia\u0028\u0029",
+            "name": "getMedia",
+            "summary": "Get\u0020the\u0020content\u0020type\u0020short\u0020name",
+            "url": "classes/Core-ContentType-Html.html#method_getMedia"
+        },                {
+            "fqsen": "\\Core\\ContentType\\Html\u003A\u003Astream\u0028\u0029",
+            "name": "stream",
+            "summary": "Render\u0020a\u0020view\u0020with\u0020data.",
+            "url": "classes/Core-ContentType-Html.html#method_stream"
+        },                {
+            "fqsen": "\\Core\\ContentType\\Json",
+            "name": "Json",
+            "summary": "Class\u0020Core\\ContentType\\Json",
+            "url": "classes/Core-ContentType-Json.html"
+        },                {
+            "fqsen": "\\Core\\ContentType\\Json\u003A\u003AgetType\u0028\u0029",
+            "name": "getType",
+            "summary": "Get\u0020the\u0020content\u0020type\u0020short\u0020name",
+            "url": "classes/Core-ContentType-Json.html#method_getType"
+        },                {
+            "fqsen": "\\Core\\ContentType\\Json\u003A\u003AgetMedia\u0028\u0029",
+            "name": "getMedia",
+            "summary": "Get\u0020the\u0020content\u0020type\u0020short\u0020name",
+            "url": "classes/Core-ContentType-Json.html#method_getMedia"
+        },                {
+            "fqsen": "\\Core\\ContentType\\Json\u003A\u003Astream\u0028\u0029",
+            "name": "stream",
+            "summary": "Render\u0020data\u0020as\u0020json",
+            "url": "classes/Core-ContentType-Json.html#method_stream"
+        },                {
+            "fqsen": "\\Core\\ContentType\\Xml",
+            "name": "Xml",
+            "summary": "Class\u0020Core\\ContentType\\Json",
+            "url": "classes/Core-ContentType-Xml.html"
+        },                {
+            "fqsen": "\\Core\\ContentType\\Xml\u003A\u003AgetType\u0028\u0029",
+            "name": "getType",
+            "summary": "Get\u0020the\u0020content\u0020type\u0020short\u0020name",
+            "url": "classes/Core-ContentType-Xml.html#method_getType"
+        },                {
+            "fqsen": "\\Core\\ContentType\\Xml\u003A\u003AgetMedia\u0028\u0029",
+            "name": "getMedia",
+            "summary": "Get\u0020the\u0020content\u0020type\u0020short\u0020name",
+            "url": "classes/Core-ContentType-Xml.html#method_getMedia"
+        },                {
+            "fqsen": "\\Core\\ContentType\\Xml\u003A\u003AarrayToXml\u0028\u0029",
+            "name": "arrayToXml",
+            "summary": "Converts\u0020an\u0020array\u0020to\u0020XML\u0020and\u0020returns\u0020a\u0020SimpleXMLElement.",
+            "url": "classes/Core-ContentType-Xml.html#method_arrayToXml"
+        },                {
+            "fqsen": "\\Core\\ContentType\\Xml\u003A\u003Astream\u0028\u0029",
+            "name": "stream",
+            "summary": "Render\u0020data\u0020as\u0020json",
+            "url": "classes/Core-ContentType-Xml.html#method_stream"
+        },                {
+            "fqsen": "\\Core\\Event",
+            "name": "Event",
+            "summary": "",
+            "url": "classes/Core-Event.html"
+        },                {
+            "fqsen": "\\Core\\Event\u003A\u003Aclear\u0028\u0029",
+            "name": "clear",
+            "summary": "Clear\u0020all\u0020event\u0020listeners",
+            "url": "classes/Core-Event.html#method_clear"
+        },                {
+            "fqsen": "\\Core\\Event\u003A\u003AaddListener\u0028\u0029",
+            "name": "addListener",
+            "summary": "Register\u0020an\u0020event\u0020listener\u0020for\u0020a\u0020specific\u0020event.",
+            "url": "classes/Core-Event.html#method_addListener"
+        },                {
+            "fqsen": "\\Core\\Event\u003A\u003AremoveListener\u0028\u0029",
+            "name": "removeListener",
+            "summary": "Remove\u0020a\u0020specific\u0020event\u0020listener\u0020for\u0020an\u0020event.",
+            "url": "classes/Core-Event.html#method_removeListener"
+        },                {
+            "fqsen": "\\Core\\Event\u003A\u003Atrigger\u0028\u0029",
+            "name": "trigger",
+            "summary": "Emit\u0020an\u0020event\u0020and\u0020invoke\u0020all\u0020registered\u0020listeners\u0020for\u0020the\u0020event.",
+            "url": "classes/Core-Event.html#method_trigger"
+        },                {
+            "fqsen": "\\Core\\Event\u003A\u003A\u0024listeners",
+            "name": "listeners",
+            "summary": "",
+            "url": "classes/Core-Event.html#property_listeners"
+        },                {
+            "fqsen": "\\Core\\StatusCode\\Forbidden",
+            "name": "Forbidden",
+            "summary": "Throw\u0020this\u0020whenever\u0020you\u0020want\u0020to\u0020redirect\u0020the\u0020current\u0020controller\u0020to\u0020a\u0020\u0022forbidden\u0022\u0020controller",
+            "url": "classes/Core-StatusCode-Forbidden.html"
+        },                {
+            "fqsen": "\\Core\\StatusCode\\Forbidden\u003A\u003AgetHttpCode\u0028\u0029",
+            "name": "getHttpCode",
+            "summary": "Return\u0020an\u0020integer\u0020representing\u0020a\u0020HTTP\u0020code",
+            "url": "classes/Core-StatusCode-Forbidden.html#method_getHttpCode"
+        },                {
+            "fqsen": "\\Core\\StatusCode\\NotFound",
+            "name": "NotFound",
+            "summary": "Throw\u0020this\u0020whenever\u0020you\u0020want\u0020to\u0020redirect\u0020the\u0020current\u0020controller\u0020to\u0020a\u0020not\u0020found\u0020controller",
+            "url": "classes/Core-StatusCode-NotFound.html"
+        },                {
+            "fqsen": "\\Core\\StatusCode\\NotFound\u003A\u003AgetHttpCode\u0028\u0029",
+            "name": "getHttpCode",
+            "summary": "Return\u0020an\u0020integer\u0020representing\u0020a\u0020HTTP\u0020code",
+            "url": "classes/Core-StatusCode-NotFound.html#method_getHttpCode"
+        },                {
+            "fqsen": "\\Core\\StatusCode\\StatusCode",
+            "name": "StatusCode",
+            "summary": "The\u0020base\u0020class\u0020for\u0020all\u0020HTTP\u0020exceptions\u0020to\u0020extend\u0020upon\nThis\u0020class\u0020is\u0020intentionally\u0020abstract\nAs\u0020it\u0020should\u0020not\u0020be\u0020instantiated\u0020directly\nand\u0020only\u0020serves\u0020as\u0020a\u0020catch\u002Dall\u0020class\u0020for\nall\u0020http\u0020error\u0020exceptions\u0020extending\u0020this",
+            "url": "classes/Core-StatusCode-StatusCode.html"
+        },                {
+            "fqsen": "\\Core\\StatusCode\\StatusCode\u003A\u003AgetHttpCode\u0028\u0029",
+            "name": "getHttpCode",
+            "summary": "Return\u0020an\u0020integer\u0020representing\u0020a\u0020HTTP\u0020code",
+            "url": "classes/Core-StatusCode-StatusCode.html#method_getHttpCode"
+        },                {
+            "fqsen": "\\Core\\StatusCode\\StatusCode\u003A\u003AgetClassName\u0028\u0029",
+            "name": "getClassName",
+            "summary": "Returns\u0020a\u0020class\u0020shortname\u0020matching\u0020the\u0020name\nof\u0020the\u0020http\u0020error\u0020exception\u0020being\u0020thrown.",
+            "url": "classes/Core-StatusCode-StatusCode.html#method_getClassName"
         },                {
             "fqsen": "\\",
             "name": "\\",
@@ -1421,15 +1576,20 @@ Search.appendIndex(
             "summary": "",
             "url": "namespaces/core.html"
         },                {
+            "fqsen": "\\Core\\ContentType",
+            "name": "ContentType",
+            "summary": "",
+            "url": "namespaces/core-contenttype.html"
+        },                {
             "fqsen": "\\Core\\Exception",
             "name": "Exception",
             "summary": "",
             "url": "namespaces/core-exception.html"
         },                {
-            "fqsen": "\\Core\\HttpError",
-            "name": "HttpError",
+            "fqsen": "\\Core\\StatusCode",
+            "name": "StatusCode",
             "summary": "",
-            "url": "namespaces/core-httperror.html"
+            "url": "namespaces/core-statuscode.html"
         },                {
             "fqsen": "\\Database",
             "name": "Database",

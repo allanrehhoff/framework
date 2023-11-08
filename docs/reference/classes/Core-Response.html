@@ -60,11 +60,15 @@
 </h4>
     <ul class="phpdocumentor-list">
                     <li>
+                <a href="namespaces/core-contenttype.html" class="">ContentType</a>
+                
+            </li>
+                    <li>
                 <a href="namespaces/core-exception.html" class="">Exception</a>
                 
             </li>
                     <li>
-                <a href="namespaces/core-httperror.html" class="">HttpError</a>
+                <a href="namespaces/core-statuscode.html" class="">StatusCode</a>
                 
             </li>
             </ul>
@@ -148,6 +152,13 @@
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -private">
+    <a href="classes/Core-Response.html#property_headers">$headers</a>
+    <span>
+                        &nbsp;: array&lt;string|int, mixed&gt;            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a href="classes/Core-Response.html#property_view">$view</a>
     <span>
                         &nbsp;: string            </span>
@@ -160,6 +171,13 @@
                                 &nbsp;: mixed    </span>
 </dt>
 <dd>Response constructor.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Core-Response.html#method_addHeader">addHeader()</a>
+    <span>
+                                &nbsp;: mixed    </span>
+</dt>
+<dd>Queue header to be sent</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Core-Response.html#method_getData">getData()</a>
@@ -183,18 +201,18 @@
 <dd>Get the name or path of the view template.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Core-Response.html#method_sendHeaders">sendHeaders()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd>Send default HTTP headers</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Core-Response.html#method_sendHttpCode">sendHttpCode()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
 <dd>Send HTTP code</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Core-Response.html#method_sendHttpHeaders">sendHttpHeaders()</a>
-    <span>
-                                &nbsp;: void    </span>
-</dt>
-<dd>Send default HTTP headers</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Core-Response.html#method_setData">setData()</a>
@@ -270,6 +288,41 @@
             -private
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="property_headers">
+        $headers
+        <a href="classes/Core-Response.html#property_headers" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Core/Response.php"><a href="files/src-libraries-core-response.html"><abbr title="src/Libraries/Core/Response.php">Response.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">23</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+        <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
+    <span class="phpdocumentor-signature__name">$headers</span>
+     = <span class="phpdocumentor-signature__default-value">[[&quot;Cache-Control: no-store, no-cache, must-revalidate, max-age=0&quot;], [&quot;Cache-Control: post-check=0, pre-check=0&quot;, false], [&quot;Pragma: no-cache&quot;]]</span></code>
+
+    
+        <section class="phpdocumentor-description"><p>Headers to be sent when sendHttpHeaders are called
+Default headers includes no-cache headers.</p>
+</section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -private
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="property_view">
         $view
         <a href="classes/Core-Response.html#property_view" class="headerlink"><i class="fas fa-link"></i></a>
@@ -317,7 +370,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Core/Response.php"><a href="files/src-libraries-core-response.html"><abbr title="src/Libraries/Core/Response.php">Response.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">22</span>
+    <span class="phpdocumentor-element-found-in__line">32</span>
 
     </aside>
 
@@ -343,6 +396,63 @@
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_addHeader">
+        addHeader()
+        <a href="classes/Core-Response.html#method_addHeader" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Core/Response.php"><a href="files/src-libraries-core-response.html"><abbr title="src/Libraries/Core/Response.php">Response.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">96</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Queue header to be sent</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">addHeader</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$header</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$replace</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">true</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$header</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>A fully constructed header to sent.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$replace</span>
+                : <span class="phpdocumentor-signature__argument__return-type">bool</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">true</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>[optional] The optional replace parameter indicates
+whether the header should replace a previous similar header,
+or add a second header of the same type. By default it will replace,
+but if you pass in false as the second argument you can force multiple headers of the same type.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">mixed</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_getData">
         getData()
         <a href="classes/Core-Response.html#method_getData" class="headerlink"><i class="fas fa-link"></i></a>
@@ -350,7 +460,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Core/Response.php"><a href="files/src-libraries-core-response.html"><abbr title="src/Libraries/Core/Response.php">Response.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">44</span>
+    <span class="phpdocumentor-element-found-in__line">54</span>
 
     </aside>
 
@@ -385,7 +495,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Core/Response.php"><a href="files/src-libraries-core-response.html"><abbr title="src/Libraries/Core/Response.php">Response.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">61</span>
+    <span class="phpdocumentor-element-found-in__line">71</span>
 
     </aside>
 
@@ -418,7 +528,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Core/Response.php"><a href="files/src-libraries-core-response.html"><abbr title="src/Libraries/Core/Response.php">Response.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">28</span>
+    <span class="phpdocumentor-element-found-in__line">38</span>
 
     </aside>
 
@@ -446,6 +556,39 @@
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_sendHeaders">
+        sendHeaders()
+        <a href="classes/Core-Response.html#method_sendHeaders" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Core/Response.php"><a href="files/src-libraries-core-response.html"><abbr title="src/Libraries/Core/Response.php">Response.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">113</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Send default HTTP headers</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">sendHeaders</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+    
+    
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">void</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_sendHttpCode">
         sendHttpCode()
         <a href="classes/Core-Response.html#method_sendHttpCode" class="headerlink"><i class="fas fa-link"></i></a>
@@ -453,7 +596,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Core/Response.php"><a href="files/src-libraries-core-response.html"><abbr title="src/Libraries/Core/Response.php">Response.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">94</span>
+    <span class="phpdocumentor-element-found-in__line">105</span>
 
     </aside>
 
@@ -491,39 +634,6 @@
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_sendHttpHeaders">
-        sendHttpHeaders()
-        <a href="classes/Core-Response.html#method_sendHttpHeaders" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Core/Response.php"><a href="files/src-libraries-core-response.html"><abbr title="src/Libraries/Core/Response.php">Response.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">82</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Send default HTTP headers</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">sendHttpHeaders</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
-
-    
-    
-    
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
     <h4 class="phpdocumentor-element__name" id="method_setData">
         setData()
         <a href="classes/Core-Response.html#method_setData" class="headerlink"><i class="fas fa-link"></i></a>
@@ -531,7 +641,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Core/Response.php"><a href="files/src-libraries-core-response.html"><abbr title="src/Libraries/Core/Response.php">Response.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">52</span>
+    <span class="phpdocumentor-element-found-in__line">62</span>
 
     </aside>
 
@@ -575,7 +685,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Core/Response.php"><a href="files/src-libraries-core-response.html"><abbr title="src/Libraries/Core/Response.php">Response.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">71</span>
+    <span class="phpdocumentor-element-found-in__line">81</span>
 
     </aside>
 
@@ -620,7 +730,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Core/Response.php"><a href="files/src-libraries-core-response.html"><abbr title="src/Libraries/Core/Response.php">Response.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">36</span>
+    <span class="phpdocumentor-element-found-in__line">46</span>
 
     </aside>
 
