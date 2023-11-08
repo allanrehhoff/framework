@@ -98,22 +98,22 @@ namespace Core {
 		}
 
 		/**
-		 * Send default HTTP headers
-		 * @return void
-		 */
-		public function sendHttpHeaders() : void {
-			foreach($this->headers as $header) {
-				header(...$header);
-			}
-		}
-
-		/**
 		 * Send HTTP code
 		 * @param int $httpCode A http code to send
 		 * @return void
 		 */
 		public function sendHttpCode(int $httpCode) : void {
 			http_response_code($httpCode);
+		}
+
+		/**
+		 * Send default HTTP headers
+		 * @return void
+		 */
+		public function sendHeaders() : void {
+			foreach($this->headers as $header) {
+				header(...$header);
+			}
 		}
 	}
 }

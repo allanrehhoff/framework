@@ -1,5 +1,8 @@
 <?php
-namespace Core\HttpError {
+namespace Core\StatusCode {
+
+	use \Core\StatusCode\StatusCode;
+
 	/**
 	 * Throw this whenever you want to redirect the current controller to a not found controller
 	 */
@@ -7,6 +10,6 @@ namespace Core\HttpError {
 		/**
 		 * @return int
 		 */
-		public function getHttpCode(): int { return 404; }
+		public static function getHttpCode(): int { return 404; }
 	}
 }

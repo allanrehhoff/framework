@@ -1,6 +1,10 @@
 <?php
 namespace Core {
-
+	use Core\ContentType\ContentType;
+	use Core\ContentType\Json;
+	use Core\ContentType\Xml;
+	use Core\ContentType\Html;
+	
 	/**
 	 * Encapsulates the details of a request and simplifies the process of working with incoming HTTP requests.
 	 * It provides functionality for retrieving request parameters, headers, and simplifying file uploads.
@@ -93,21 +97,41 @@ namespace Core {
 
 		/**
 		 * Tell the mime content type that the client prefer to recieve
-		 * @return string
+		 * @return ContentType
 		 */
-		public function getClientAcceptableMedia() : string {
-			$types = explode(',', $this->server["HTTP_ACCEPT"] ?? '');
+		public function getContentType() : ContentType {
+			$acceptHeader = $this->server["HTTP_ACCEPT"] ?? '';
+			$mediaTypes = explode(',', $acceptHeader);
+			$mediaTypesWithQuality = [];
 
-			foreach($types as $type) {
-				$mime = trim(explode(';q=', $type)[0]);
+			foreach ($mediaTypes as $mediaType) {
+				$parts = explode(';', $mediaType);
+				$type = trim($parts[0]);
+				$quality = 1.0; // Default quality value
 
-				if(str_starts_with($mime, "application")) {
-					list($namespace, $type) = explode('/', $mime);
-					return $type;
+				// Check for a quality parameter
+				foreach ($parts as $part) {
+					if (strpos($part, 'q=') === 0) {
+						$quality = (float) substr($part, 2);
+						break;
+					}
 				}
+
+				$mediaTypesWithQuality[$type] = $quality;
 			}
 
-			return "*";
+			// Sort the media types by quality in descending order
+			arsort($mediaTypesWithQuality);
+
+			$firstMediaType = array_key_first($mediaTypesWithQuality);
+			[$namespace, $contentType] = explode('/', $firstMediaType);
+
+			// Match the parts after the '/'
+			return match ($contentType) {
+				"json" => new Json(),
+				"xml" => new Xml(),
+				default => new Html(),
+			};
 		}
 
 		/**

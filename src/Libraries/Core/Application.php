@@ -83,22 +83,19 @@ namespace Core {
 				$this->calledMethodName = $iMethodName;
 			}
 
+			$iController = new $controllerName($this, $parentController);
+
+			if($parentController !== null) {
+				$iController->getResponse()->setData($parentController->getResponse()->getData());
+			}
+
 			try {
-				$iController = new $controllerName($this);
-
-				if($parentController !== null) {
-					$iController->setParent($parentController);
-					$iController->getResponse()->setData($parentController->getResponse()->getData());
-				}
-
 				\Core\Event::trigger("core.controller.method.before", $iController, $iMethodName);
-				
+
 				$iController->$methodName();
 
 				\Core\Event::trigger("core.controller.method.after", $iController, $iMethodName);
-
-			} catch(\Core\HttpError\StatusCode $iStatusCode) {
-				$iController->getResponse()->sendHttpCode($iStatusCode->getHttpCode());
+			} catch(\Core\StatusCode\StatusCode $iStatusCode) {
 				$iController = $this->executeController(new ClassName($iStatusCode->getClassName()));
 			}
 

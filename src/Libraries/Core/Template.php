@@ -66,11 +66,11 @@ namespace Core {
 
 			$path = APP_PATH . "/Templates/" . $this->getName();
 
-			if($shortname != '') {
+			if($shortname !== '') {
 				$path .= '/'.$shortname;
 			}
 
-			if(str_ends_with($path, ".tpl.php") !== true) {
+			if($shortname !== '' && str_ends_with($path, ".tpl.php") !== true) {
 				$path .= ".tpl.php";
 			}
 

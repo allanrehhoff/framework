@@ -42,9 +42,14 @@
 		protected \Core\Assets $assets;
 
 		/**
-		 * @var \Core\Output\ContentType
+		 * @var \Core\ContentType\ContentType
 		 */
-		protected \Core\Output\ContentType $renderer;
+		protected \Core\ContentType\ContentType $contentType;
+
+		/**
+		 * @var \Core\Renderer
+		 */
+		protected \Core\Renderer $renderer;
 
 		/**
 		 * @var array Child controllers classes to be executed when the main one finalizes.
@@ -60,26 +65,34 @@
 		 * Extending child controllers must not have a constructor.
 		 * @param \Core\Application $iApplication
 		 */
-		public function __construct(\Core\Application $iApplication) {
+		public function __construct(\Core\Application $iApplication, ?\Controller $iController = null) {
+			$this->parent = $iController;
 			$this->application = $iApplication;
 
 			$this->router = $this->application->getRouter();
 			$this->request = $this->router->getRequest();
 			$this->response = $this->router->getResponse();
-			
+
 			// While it's safe to load these children class in cli
 			// there's as of yet, no beneficial reason to.
 			// So we'll save the memory and CPU cycles
 			if(IS_CLI === false) {
-				$renderer = match($this->request->getClientAcceptableMedia()) {
-					"json"  => Core\Output\Json::class,
-					default => Core\Output\Html::class
-				};
+				$this->contentType = $this->request->getContentType();
 
 				$this->template = new \Core\Template(new \Core\Assets);
-				$this->renderer = new $renderer($this->template);
 
-				if($this->getParent() === null) {
+				$this->renderer = new \Core\Renderer(
+					$this->template,
+					$this->contentType
+				);
+
+				$this->response->addHeader(sprintf(
+					"Content-Type: %s/%s; charset=utf-8",
+					$this->contentType->getType(),
+					$this->contentType->getMedia()
+				));
+
+				if($iController === null && $this->contentType::class == \Core\ContentType\Html::class) {
 					$this->children[] = new \Core\ClassName("Header");
 					$this->children[] = new \Core\ClassName("Footer");
 
@@ -112,7 +125,7 @@
 			// This is fine as we don't need a view layer for CLI
 			if(IS_CLI) exit(0);
 
-			$this->response->sendHttpHeaders();
+			$this->response->sendHeaders();
 			
 			$this->renderer->render($this->response);
 		}

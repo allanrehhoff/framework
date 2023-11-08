@@ -1,5 +1,5 @@
 <?php
-namespace Core\HttpError {
+namespace Core\StatusCode {
 
 	/**
 	 * The base class for all HTTP exceptions to extend upon
@@ -13,7 +13,7 @@ namespace Core\HttpError {
 		 * Return an integer representing a HTTP code
 		 * @return int Any HTTP code
 		 */
-		abstract public function getHttpCode() : int;
+		abstract public static function getHttpCode() : int;
 
 		/**
 		 * Returns a class shortname matching the name
