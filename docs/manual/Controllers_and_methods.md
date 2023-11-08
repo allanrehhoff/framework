@@ -62,7 +62,7 @@ class AnimalController extends Controller {
 }
 ```
 
-Children controllers will be able to set or modify any data set by the parent controller.  
+Any response data set by a controller, may be accessed or altered by children through the rest of the heirachy.  
 
 In any controllers of the heirachy you may throw a `\Core\HttpError\NotFound` to reroute the entire stack to **NotFoundController**   
 You may also throw a `\Core\HttpError\Forbidden` to instead reroute to **ForbiddenController**

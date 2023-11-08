@@ -92,6 +92,25 @@ namespace Core {
 		}
 
 		/**
+		 * Tell the mime content type that the client prefer to recieve
+		 * @return string
+		 */
+		public function getClientAcceptableMedia() : string {
+			$types = explode(',', $this->server["HTTP_ACCEPT"] ?? '');
+
+			foreach($types as $type) {
+				$mime = trim(explode(';q=', $type)[0]);
+
+				if(str_starts_with($mime, "application")) {
+					list($namespace, $type) = explode('/', $mime);
+					return $type;
+				}
+			}
+
+			return "*";
+		}
+
+		/**
 		 * Re-arrange a $_FILES array to a more intuitive format
 		 * @param array $files the $_FILES array
 		 * @return array The re-arranged files array

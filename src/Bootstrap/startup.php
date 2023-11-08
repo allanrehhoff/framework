@@ -13,16 +13,9 @@
 	define("DS", DIRECTORY_SEPARATOR);
 	define("IS_SSL", !empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == 'on');
 	define("IS_CLI", PHP_SAPI === "cli");
-	define("APP_PATH", __DIR__);
+	define("APP_PATH", realpath(__DIR__ . "/../"));
 	define("STORAGE", realpath(APP_PATH."/../storage"));
 	define("ACCEPT_JSON", !IS_CLI && (str_contains(strtolower((getallheaders()["Accept"] ?? "*/*")), "application/json")));
-
-	// Thirdparty
-	if(file_exists(APP_PATH."/vendor/autoload.php")) {
-		require APP_PATH."/vendor/autoload.php";
-	} else if(file_exists(APP_PATH."/../vendor/autoload.php")) {
-		require APP_PATH."/../vendor/autoload.php";
-	}
 
 	// Autoloader
 	spl_autoload_register(function(string $className) {
@@ -123,3 +116,12 @@
 
 	// Default timezone
 	date_default_timezone_set("Europe/Copenhagen");
+
+	// Thirdparty
+	if(file_exists(APP_PATH."/vendor/autoload.php")) {
+		require APP_PATH."/vendor/autoload.php";
+	} else if(file_exists(APP_PATH."/../vendor/autoload.php")) {
+		require APP_PATH."/../vendor/autoload.php";
+	}
+
+	require "events.php";

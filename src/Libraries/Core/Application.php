@@ -91,9 +91,12 @@ namespace Core {
 					$iController->getResponse()->setData($parentController->getResponse()->getData());
 				}
 
-				$iController->start();
+				\Core\Event::trigger("core.controller.method.before", $iController, $iMethodName);
+				
 				$iController->$methodName();
-				$iController->stop();
+
+				\Core\Event::trigger("core.controller.method.after", $iController, $iMethodName);
+
 			} catch(\Core\HttpError\StatusCode $iStatusCode) {
 				$iController->getResponse()->sendHttpCode($iStatusCode->getHttpCode());
 				$iController = $this->executeController(new ClassName($iStatusCode->getClassName()));

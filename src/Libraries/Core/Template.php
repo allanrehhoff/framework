@@ -62,6 +62,8 @@ namespace Core {
 		 * @return string
 		 */
 		public function getPath(string $shortname = '') : string {
+			if($shortname == '') return '';
+
 			$path = APP_PATH . "/Templates/" . $this->getName();
 
 			if($shortname != '') {

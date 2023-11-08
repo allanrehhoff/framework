@@ -1,7 +1,7 @@
 <?php
 	ini_set("display_errors", 1);
 
-	require __DIR__."/../src/startup.php";
+	require __DIR__."/../src/Bootstrap/startup.php";
 
 	\Singleton::set(new \Configuration(STORAGE . "/config/application.jsonc"));
 
@@ -31,6 +31,20 @@
 			$this->response->data[self::$testkey] = "hello world";
 
 			$this->response->setView("mockchild");
+		}
+	}
+
+	class MockEventObject {
+		public string $property = "";
+	}
+
+	class MockEventListener {
+		public function handle(\MockEventObject $iMockEventObject) {
+			$iMockEventObject->property = __FUNCTION__;
+		}
+
+		public static function handleStatic(\MockEventObject $iMockEventObject) {
+			$iMockEventObject->property = __FUNCTION__;
 		}
 	}
 
@@ -79,3 +93,4 @@
 			return new \Environment;
 		}
 	}
+

@@ -14,7 +14,6 @@ v8.0.0
 - \Core\Theme renamed to \Core\Template to better reflect the new folder structure.  
 - \Core\Router::arg(); moved to \Core\Response::getArg(), which now supports default values.  
 - \Core\Router::getArgs(); moved to \Core\Response::getArguments()  
-- New class \Core\Renderer.  
 - New method \Core\Router::getDefaultRoute();  
 - New method \Core\Response::addHeader(); for setting custom headers to be sent by controllers.
 - New method \Core\Response::sendHttpHeaders(); Sends queued HTTP headers to browser.
@@ -22,6 +21,8 @@ v8.0.0
 - Declared top level \Core namespace classes as final (with the exception of \Core\MVCStructure)  
 - Added typehints to more controllers and properties.  
 - Added tests for better code coverage.  
+- New class \Core\Event();  
+- Can now respond with JSON if the clients `Accept` header prefers `application/json`
 
 v7.2.1
 - Fix private and protected methods on controllers being call.  

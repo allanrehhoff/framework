@@ -42,9 +42,9 @@
 		protected \Core\Assets $assets;
 
 		/**
-		 * @var \Core\Renderer
+		 * @var \Core\Output\ContentType
 		 */
-		protected \Core\Renderer $renderer;
+		protected \Core\Output\ContentType $renderer;
 
 		/**
 		 * @var array Child controllers classes to be executed when the main one finalizes.
@@ -66,6 +66,26 @@
 			$this->router = $this->application->getRouter();
 			$this->request = $this->router->getRequest();
 			$this->response = $this->router->getResponse();
+			
+			// While it's safe to load these children class in cli
+			// there's as of yet, no beneficial reason to.
+			// So we'll save the memory and CPU cycles
+			if(IS_CLI === false) {
+				$renderer = match($this->request->getClientAcceptableMedia()) {
+					"json"  => Core\Output\Json::class,
+					default => Core\Output\Html::class
+				};
+
+				$this->template = new \Core\Template(new \Core\Assets);
+				$this->renderer = new $renderer($this->template);
+
+				if($this->getParent() === null) {
+					$this->children[] = new \Core\ClassName("Header");
+					$this->children[] = new \Core\ClassName("Footer");
+
+					$this->response->setTitle(array_slice($this->request->getArguments(), -1)[0] ?? '');
+				}
+			}
 		}
 
 		/**
@@ -83,44 +103,7 @@
 		}
 
 		/**
-		 * Function that is called for all requests, before the default controller method.
-		 * Constructs the overall environment, setting up helpers and initial variables.
-		 * 
-		 * @return void
-		 */
-		final public function start() : void {
-			// assets and template properties are
-			// set here to enable compatibility with
-			// the test suite, placing them inside
-			// the below if block will yild errors
-			$this->renderer = new \Core\Renderer();
-			
-			// While it's safe to load these children class in cli
-			// there's as of yet, no beneficial reason to.
-			// So we'll save the memory and CPU cycles
-			if(IS_CLI === false) {
-				$this->template = new \Core\Template(new \Core\Assets);
-
-				if($this->getParent() === null) {
-					$this->children[] = new \Core\ClassName("Header");
-					$this->children[] = new \Core\ClassName("Footer");
-
-					$this->response->setTitle(array_slice($this->request->getArguments(), -1)[0] ?? '');
-				}
-			}
-		}
-		
-		/**
-		 * Method that is called for all requests will be run before sending output
-		 * 
-		 * @return void
-		 */
-		final public function stop() : void {
-
-		}
-
-		/**
-		 * Extracts controller data property as variables and renders the view
+		 * Send output to client based on their preffered media type
 		 * @return void
 		 */
 		final public function output() : void {
@@ -129,21 +112,9 @@
 			// This is fine as we don't need a view layer for CLI
 			if(IS_CLI) exit(0);
 
-			$view = $this->response->getView();
-
-			if(trim($view) === '') {
-				throw new \Core\Exception\Governance(sprintf(
-					"%s did not set a view for rendering, a view must be set with \$this->response->setView(); or exit(); should be called",
-					$this->application->getExecutedClassName()->toString()
-				));
-			}
-
 			$this->response->sendHttpHeaders();
-
-			$this->renderer->render(
-				$this->template->getPath($view), 
-				$this->response->getData()
-			);
+			
+			$this->renderer->render($this->response);
 		}
 
 		/**
@@ -174,10 +145,10 @@
 		}
 
 		/**
-		 * @return \Core\Theme
+		 * @return \Core\Template
 		 */
 		final public function getTemplate() : \Core\Template {
-			return $this->theme;
+			return $this->template;
 		}
 
 		/**

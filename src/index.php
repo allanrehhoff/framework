@@ -5,7 +5,7 @@
 	*
 	* Don't forget to read the documentation.
 	*/
-	require "startup.php";
+	require "Bootstrap/startup.php";
 
 	// Global state objects
 	\Singleton::set(new \Configuration(STORAGE . "/config/application.jsonc"));
@@ -18,6 +18,9 @@
 		\Singleton::getConfiguration()->get("database.password"),
 		\Singleton::getConfiguration()->get("database.name")
 	));
+
+	// Trigger init event
+	\Core\Event::trigger("application.init");
 
 	// Other objects
 	$iRouter = new \Core\Router(new \Core\Request, new \Core\Response);

@@ -21,7 +21,7 @@ Every view file must have the extension `.tpl.php` this is to distinguish them f
 You can add a new "partial" or "children" by adding it's path to the controllers data.
 ```php
 <?php
-$this->response->data["sidebar"] = $this->template->getPath("header");
+$this->response->data["sidebar"] = $this->template->getPath("sidebar");
 ```
 
 And then in your template files

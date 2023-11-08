@@ -13,20 +13,22 @@ In short, all this does is serve as a kickstart to get a readable and stable cod
 
 [2. Controller & Methods](docs/manual/Controllers_and_methods.md)
 
-[3. Templates & Theming](docs/manual/Templates_and_theming.md)
+[3. Events](docs/manual/Events.md)
 
-[4. Command line interface](docs/manual/Command_line_interface.md)
+[4. Templates & Theming](docs/manual/Templates_and_theming.md)
 
-[5. Handling application configuration files](docs/manual/Configuration_files.md)
+[5. Command line interface](docs/manual/Command_line_interface.md)
 
-[6. Utilizing environment variables](docs/manual/Environment_variables.md)
+[6. Handling application configuration files](docs/manual/Configuration_files.md)
 
-[6. Database queries and entities](docs/manual/Database_queries.md)
+[7. Utilizing environment variables](docs/manual/Environment_variables.md)
+
+[8. Database queries and entities](docs/manual/Database_queries.md)
   
-[7. Autoloding classes](docs/manual/Autoloading.md)
+[9. Autoloding classes](docs/manual/Autoloading.md)
 
-[8. Errors and exceptions](docs/manual/Errors_and_exceptions.md)
+[10. Errors and exceptions](docs/manual/Errors_and_exceptions.md)
 
-[9. The Assets class](docs/manual/Assets.md)
+[11. The Assets class](docs/manual/Assets.md)
 
-[10. The Singleton class](docs/manual/Singleton.md)
+[12. The Singleton class](docs/manual/Singleton.md)
