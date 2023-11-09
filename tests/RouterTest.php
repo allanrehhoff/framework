@@ -15,7 +15,7 @@
 			$this->assertInstanceOf(\Core\ClassName::class, $controller);
 			$this->assertInstanceOf(\Core\MethodName::class, $method);
 
-			$this->assertEquals(CliController::class, $controller->toString());
+			$this->assertEquals(\CliController::class, $controller->toString());
 			$this->assertEquals("myMethod", $method->toString());
 		}
 
@@ -28,7 +28,7 @@
 			$this->assertInstanceOf(\Core\ClassName::class, $controller);
 			$this->assertInstanceOf(\Core\MethodName::class, $method);
 
-			$this->assertEquals(NotFoundController::class, $controller->toString());
+			$this->assertEquals(\NotFoundController::class, $controller->toString());
 			$this->assertEquals("index", $method->toString());
 		}
 
@@ -43,5 +43,19 @@
 
 			$this->assertEquals(CliController::class, $controller->toString());
 			$this->assertEquals(\Core\MethodName::DEFAULT, $method->toString());
+		}
+
+		/**
+		 * Trying to access a private or protected controller method
+		 * must result in a not found page being served.
+		 */
+		public function testNonPublicMethodDoesNotRoute() {
+			[$controller, $method] = $this->getRouteFromArguments(["mock-controller", "private-method"]);
+
+			$this->assertInstanceOf(\Core\ClassName::class, $controller);
+			$this->assertInstanceOf(\Core\MethodName::class, $method);
+
+			$this->assertEquals(\NotFoundController::class, $controller->toString());
+			$this->assertEquals("index", $method->toString());
 		}
 	}
