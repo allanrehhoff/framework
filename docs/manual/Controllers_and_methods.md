@@ -30,7 +30,7 @@ The **$this->request->getrg();** method starts from index 0, whereas the first t
 		}
 
 		public function tiger() {
-			var_dump(\Singleton::getRouter()->arg(2)); // indo-chinese
+			\Singleton::getRouter()->getRequest()->arg(2); // indo-chinese
 		}
 	}
 ```
