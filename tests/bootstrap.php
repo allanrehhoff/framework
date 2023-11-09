@@ -62,6 +62,15 @@
 
 			return $iRequest;
 		}
+
+		public static function withServerVars(array $arguments) {
+			$arguments = array_change_key_case($arguments, CASE_UPPER);
+
+			$iRequest = self::new();
+			$iRequest->server = array_merge($iRequest->server, $arguments);
+
+			return $iRequest;
+		}
 	}
 
 	class ResponseFactory {

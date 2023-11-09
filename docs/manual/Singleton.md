@@ -39,4 +39,3 @@ Example:
 	// Will restrieve the instance of \Entities\User
 	print \Singleton::get("user");
 ```
-
