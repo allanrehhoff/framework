@@ -12,7 +12,7 @@ namespace Core {
 		/**
 		 * @var \Core\Assets The assets class
 		 */
-		public Assets $assets;
+		public \Core\Assets $assets;
 
 		/**
 		 * @var \Configuration Holds the theme configuration object.
