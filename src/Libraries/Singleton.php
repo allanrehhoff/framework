@@ -10,6 +10,16 @@
 		private static $store = [];
 
 		/**
+		 * Allow direct calling of aliases 
+		 * @param string $name The $name argument is the name of the method being called
+		 * @param array $arguments The $arguments argument is an enumerated array containing the parameters passed to the $name'ed method. 
+		 * @return mixed 
+		 */
+		public static function __callStatic(string $name, array $arguments) : mixed {
+			return self::get($name);
+		}
+
+		/**
 		 * Get an object by it's class name, namespaces included.
 		 * Instatiates the object if not already existing.
 		 * 
