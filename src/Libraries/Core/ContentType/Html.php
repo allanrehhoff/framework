@@ -22,10 +22,14 @@ namespace Core\ContentType {
 		/**
 		 * Render a view with data.
 		 *
-		 * @param string $file The path to the view file to be rendered.
 		 * @param array $data An associative array of data to be made available to the view.
+		 * @param string $view The path to the view file to be rendered.
 		 */
-		public function stream(string $file, array $data) : void {
+		public function stream(array $data, string $view) : void {
+			if($view == '') {
+				throw new \Core\Exception\Governance("Cannot render empty view, \$this->response->setView(); or exit should be called");
+			}
+		
 			extract($data, EXTR_SKIP);
 			require $file;
 		}

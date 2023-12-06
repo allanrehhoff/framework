@@ -37,11 +37,11 @@ namespace Core {
 				[$class, $method] = is_array($listener) ? $listener : [$listener, "handle"];
 
 				if(!class_exists($class)) {
-					throw new \InvalidArgumentException("Event listener class $class does not exist.");
+					throw new \InvalidArgumentException("Event listener class ".$class." does not exist.");
 				}
 		
 				if(!method_exists($class, $method)) {
-					throw new \InvalidArgumentException("Event listener class $class does not implement method '$method'.");
+					throw new \InvalidArgumentException("Event listener class ".$class." does not implement method '".$method."'.");
 				}
 		
 				self::$listeners[$event][] = $listener;
@@ -62,7 +62,7 @@ namespace Core {
 				if ($index !== false) {
 					unset(self::$listeners[$event][$index]);
 				} else {
-					throw new \InvalidArgumentException("Listener not found for event '$event'.");
+					throw new \InvalidArgumentException("Listener not found for event '".$event."'.");
 				}
 			}
 		}

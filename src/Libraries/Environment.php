@@ -1,24 +1,24 @@
 <?php
 
 class Environment {
-    /**
-     * Constructor for the Environment class.
-     *
-     * @param ?string $environmentFile The path to the environment file (e.g., '.env').
-     */
-    public function __construct(?string $environmentFile = null) {
-        if($environmentFile !== null && file_exists($environmentFile) === true) {
-            static::parse($environmentFile);
-        }
-    }
+	/**
+	 * Constructor for the Environment class.
+	 *
+	 * @param ?string $environmentFile The path to the environment file (e.g., '.env').
+	 */
+	public function __construct(?string $environmentFile = null) {
+		if($environmentFile !== null && file_exists($environmentFile) === true) {
+			static::parse($environmentFile);
+		}
+	}
 
-    /**
-     * Parse the environment file and populate the environment variables.
-     *
-     * @param string $environmentFile The path to the environment file (e.g., '.env').
-     */
-    private function parse(string $environmentFile) : void {
-        $contents = file_get_contents($environmentFile);
+	/**
+	 * Parse the environment file and populate the environment variables.
+	 *
+	 * @param string $environmentFile The path to the environment file (e.g., '.env').
+	 */
+	private function parse(string $environmentFile) : void {
+		$contents = file_get_contents($environmentFile);
 
 		/*
 			^:				Match the beginning of a line.
@@ -29,66 +29,66 @@ class Environment {
 				\R* 		Matches zero or more line breaks (handles different line ending styles on various platforms).
 			m: 				This flag makes ^ match the beginning of each line.
 		*/
-        $variables = preg_replace("/^(\h*#.*\R*)+/m", '', $contents);
-        $variables = parse_ini_string($contents, true);
+		$variables = preg_replace("/^(\h*#.*\R*)+/m", '', $contents);
+		$variables = parse_ini_string($contents, true);
 
-        foreach($variables as $var => $value) {
-            $this->put($var, $value);
-        }
-    }
+		foreach($variables as $var => $value) {
+			$this->put($var, $value);
+		}
+	}
 
-    /**
-     * Set an environment variable with a given name and value.
+	/**
+	 * Set an environment variable with a given name and value.
 	 * All names given will be converted to uppercase automatically.
-     *
-     * @param string $name The name of the environment variable.
-     * @param int|float|string|array $value The value of the environment variable.
-     */
-    public function put(string $name, int|float|string|array $value): void {
+	 *
+	 * @param string $name The name of the environment variable.
+	 * @param int|float|string|array $value The value of the environment variable.
+	 */
+	public function put(string $name, int|float|string|array $value): void {
 		$name = strtoupper($name);
 
-        if(is_array($value)) {
-            foreach($value as $key => $value2) {
-                $newName = $name.'.'.$key;
-                $this->put($newName, $value2);
-            }
-        } else {
-            $keys = explode('.', $name);
-            $env = &$_ENV;
+		if(is_array($value)) {
+			foreach($value as $key => $value2) {
+				$newName = $name.'.'.$key;
+				$this->put($newName, $value2);
+			}
+		} else {
+			$keys = explode('.', $name);
+			$env = &$_ENV;
 
-            while(count($keys) > 1) {
-                $key = array_shift($keys);
+			while(count($keys) > 1) {
+				$key = array_shift($keys);
 
-                if(!isset($env[$key]) || !is_array($env[$key])) {
-                    $env[$key] = [];
-                }
+				if(!isset($env[$key]) || !is_array($env[$key])) {
+					$env[$key] = [];
+				}
 
-                $env = &$env[$key];
-            }
+				$env = &$env[$key];
+			}
 
-            $env[array_shift($keys)] = $value;
+			$env[array_shift($keys)] = $value;
 
-            putenv($name . '=' . $value);
-        }
-    }
+			putenv($name . '=' . $value);
+		}
+	}
 
-    /**
-     * Get the value of an environment variable.
+	/**
+	 * Get the value of an environment variable.
 	 * Variables may be accessed using dot notations.
 	 * If no variable by the given name was found in
 	 * the local, set by the operating system or putenv, scope, 
 	 * fallback to the value in $_ENV, or false if not found.
-     *
-     * @param string $name The name of the environment variable to retrieve.
-     * @return mixed The value of the environment variable or false if not found.
-     */
-    public function get(string $name) : mixed {
-        $result = getenv($name, true);
+	 *
+	 * @param string $name The name of the environment variable to retrieve.
+	 * @return mixed The value of the environment variable or false if not found.
+	 */
+	public function get(string $name) : mixed {
+		$result = getenv($name, true);
 
-        // Maybe it was not found in the global vars
-        // Likely to happen if the value is an array
-        // e.g. the name of a section was passed in
-        if($result === false) {
+		// Maybe it was not found in the global vars
+		// Likely to happen if the value is an array
+		// e.g. the name of a section was passed in
+		if($result === false) {
 			$keys = explode('.', $name);
 			$result = $_ENV;
 
@@ -99,8 +99,8 @@ class Environment {
 
 				$result = $result[$key];
 			}
-        }
+		}
 
-        return $result;
-    }
+		return $result;
+	}
 }

@@ -20,9 +20,9 @@ namespace Core\ContentType {
 
 		/**
 		 * Send the resulting output of a rendered view with data
-		 * @param string $view
 		 * @param array $data
+		 * @param string $view
 		 */
-		public function stream(string $view, array $data) : void;
+		public function stream(array $data, string $view) : void;
 	}
 }

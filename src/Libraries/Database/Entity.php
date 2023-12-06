@@ -84,7 +84,7 @@ namespace Database {
 		 * @return bool
 		 */
 		public function __isset($name) : bool {
-		    return isset($this->data[$name]);
+			return isset($this->data[$name]);
 		}
 
 		/**

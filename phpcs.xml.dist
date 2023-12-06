@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<ruleset name="Framework">
+	<description>Framework coding standards config.</description>
+	<file>src/</file>
+
+	<arg name="extensions" value="php,inc" />
+	<arg name="colors" />
+
+	<exclude-pattern type="relative">*\.tpl\.php$</exclude-pattern>
+	<autoload>./src/Bootstrap/startup.php</autoload>
+
+    <rule ref="Generic.PHP.DisallowShortOpenTag" />
+    <rule ref="Generic.WhiteSpace.DisallowSpaceIndent" />
+    <rule ref="Generic.NamingConventions.UpperCaseConstantName" />
+	<rule ref="Generic.CodeAnalysis.UnusedFunctionParameter" />
+	<rule ref="Generic.Commenting.Todo" />
+	<rule ref="Squiz.Strings.DoubleQuoteUsage.ContainsVar" />
+
+	<rule ref="Generic.PHP.ForbiddenFunctions">
+		<properties>
+			<property name="forbiddenFunctions" type="array">
+				<element key="array" value="[]" />
+				<element key="echo" value="print" />
+				<element key="delete" value="unset" />
+				<element key="create_function" value="function" />
+			</property>
+		</properties>
+	</rule>
+
+	<rule ref="Squiz.Commenting.FunctionComment">
+        <properties>
+            <requireParamType>true</requireParamType>
+            <requireParamName>true</requireParamName>
+        </properties>
+
+        <exclude name="Squiz.Commenting.FunctionComment.ParamCommentNotCapital" />
+		<exclude name="Squiz.Commenting.FunctionComment.SpacingAfterParamType" />
+        <exclude name="Squiz.Commenting.FunctionComment.ParamCommentFullStop" />
+    </rule>
+</ruleset>

@@ -20,17 +20,13 @@ namespace Core {
 			$event = sprintf("core.output.%s", $this->iContentType->getMedia());
 			$file = $this->iTemplate->getPath($view);
 
-			if($this->iContentType::class == Html::class && $view == '') {
-				throw new \Core\Exception\Governance("Cannot render an empty view, controller must use \$this->response->setView(); or exit should be called");
-			}
-
 			\Core\Event::trigger(
 				$event,
 				$view,
 				$data
 			);
 
-			$this->iContentType->stream($file, $data);
+			$this->iContentType->stream($data, $file);
 		}
 	}
 }

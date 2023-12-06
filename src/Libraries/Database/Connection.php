@@ -523,7 +523,7 @@ namespace Database {
 					$operator = '=';
 				}
 				
-				$list[] = " `$column` $operator :".$variablePrefix.$column;
+				$list[] = " `".$column."` ".$operator." :".$variablePrefix.$column;
 			}
 
 			return implode(' '.$seperator, $list);

@@ -50,12 +50,14 @@ namespace Core\ContentType {
 		}
 
 		/**
-		 * Render data as json
+		 * Render data as XML
 		 *
-		 * @param string $view Purposely ignored by this media type
+		 * phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter
 		 * @param array $data An associative array of data to be encoded as json
+		 * @param string $view Purposely ignored by this media type
 		 */
-		public function stream(string $view, array $data) : void {
+		public function stream(array $data, ?string $view = '') : void {
+			// phpcs:enable Generic.CodeAnalysis.UnusedFunctionParameter
 			print $this->arrayToXml($data)->saveXML();
 		}
 	}

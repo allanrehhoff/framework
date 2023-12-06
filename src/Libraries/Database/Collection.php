@@ -9,7 +9,7 @@ namespace Database {
 		/**
 		 * Constructor
 		 * 
-		 * @param array $objects Array of objects to store as collection
+		 * @param array $objects Array of objects to store as collection.
 		 */
 		public function __construct(array $objects) {
 			$this->items = $objects;
