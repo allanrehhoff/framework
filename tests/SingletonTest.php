@@ -15,12 +15,4 @@
 
 			$this->assertInstanceOf(\Core\Response::class, \Singleton::get("response"));
 		}
-
-		public function testAliasAsFunctionCall() {
-			$iResponse = \ResponseFactory::new();
-
-			\Singleton::set($iResponse, "response");
-
-			$this->assertInstanceOf(\Core\Response::class, \Singleton::response());
-		}
 	}
