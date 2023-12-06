@@ -5,7 +5,12 @@
 	*
 	* Don't forget to read the documentation.
 	*/
+
+	// Startup and autoloder
 	require "Bootstrap/startup.php";
+
+	// Register events
+	require "events.php";
 
 	// Global state objects
 	\Singleton::set(new \Configuration(STORAGE . "/config/application.jsonc"));

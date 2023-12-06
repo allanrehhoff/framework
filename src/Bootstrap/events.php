@@ -2,7 +2,7 @@
 	/**
 	 * Define your event handlers here.
 	 *  Example event handler class:
-	 	namespace EventListners;
+		namespace EventListners;
 
 		class UserRegistration implements \Core\Events\ListenerInterface {
 			public function handle(User $iUser) {

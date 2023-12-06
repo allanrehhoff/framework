@@ -20,7 +20,7 @@
 	// Autoloader
 	spl_autoload_register(function(string $className) {
 		$controllerClass = "Controller";
-		$className = str_replace("\\", "/", $className);
+		$className	 = str_replace("\\", "/", $className);
 
 		if($className != $controllerClass && str_ends_with($className, $controllerClass)) {
 			$classFile = APP_PATH."/Controllers/".$className.".php";
@@ -123,5 +123,3 @@
 	} else if(file_exists(APP_PATH."/../vendor/autoload.php")) {
 		require APP_PATH."/../vendor/autoload.php";
 	}
-
-	require "events.php";
