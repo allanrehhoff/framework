@@ -10,10 +10,30 @@ Or include it in your docker project, however compatible, no builds or Dockerfil
 
 ## 2. Webserver configuration
 Because configuration files should not reside in the same directory as the application root, you must configure your server to set the `src/` as its document root.  
-The only exception to this will be dotenv `.env` files typically used for local development.  
 
-This framework has mainly been designed to work with apache webservers, but may be compatible with others such as nginx.  
-Make sure that every request is routed to `index.php` and let the application router dispatch the appropriate controller.  
+The exception being the dotenv `.env` file typically used for local development.  
+
+This framework has mainly been designed to work with apache webservers, but have confirmed compatibility with nginx in conjunction with php-fpm.  
+Make sure that every request is routed to `index.php`  
+
+For **Apache** webservers use the bundled `.htaccess` file.  
+
+For **nginx** webservers your `nginx.conf` file may include the following in the `http.server` block.  
+
+```
+http {
+	server {
+		...
+
+		location / {
+			index index.php;
+			try_files $uri $uri/ /index.php$args;
+		}
+
+		...
+	}
+}
+```
 
 ## 3. Your database
 The default bundled database library currently only supports MySQL/MariaDB.

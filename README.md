@@ -2,7 +2,8 @@
 A lightweight custom framework using well-known and intuitive patterns, without the need for manually defining routes.
 
 This framework will not be bundled with bloatware such as modules/components/addons/plugins or other third-party libraries.   
-The only exception to this rule is jQuery, while it is not strictly required, or mandatory to use, it simply is less verbose than native javascript, and often require fewer steps to achieve a certain task.  
+
+An exception to the above is jQuery, while it is not strictly required, or mandatory to use, it simply is less verbose than native javascript, and often require fewer steps to achieve a certain task.  
 It is completely safe to remove this from the default theme files if preffered.  
 
 In short, all this does is serve as a kickstart to get a readable and stable codebase when starting up a new custom web project.
