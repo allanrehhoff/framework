@@ -1251,6 +1251,11 @@ Search.appendIndex(
             "summary": "Class\u0020used\u0020to\u0020hold\u0020global\u0020state\u0020objects.",
             "url": "classes/Singleton.html"
         },                {
+            "fqsen": "\\Singleton\u003A\u003A__callStatic\u0028\u0029",
+            "name": "__callStatic",
+            "summary": "Allow\u0020direct\u0020calling\u0020of\u0020aliases",
+            "url": "classes/Singleton.html#method___callStatic"
+        },                {
             "fqsen": "\\Singleton\u003A\u003Aget\u0028\u0029",
             "name": "get",
             "summary": "Get\u0020an\u0020object\u0020by\u0020it\u0027s\u0020class\u0020name,\u0020namespaces\u0020included.",
