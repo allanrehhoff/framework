@@ -4,6 +4,7 @@
     "type": "project",
     "scripts": {
         "build-docs": "phpdoc",
+        "cs": "phpcs --standard=phpcs.xml.dist",
         "test": "phpunit"
     },
     "require-dev": {
