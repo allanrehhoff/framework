@@ -7,3 +7,9 @@ repos:
   rev: 1.4.0
   hooks:
   - id: php-lint
+#- repo: local
+#  hooks:
+#  - id: phpcs
+#    name: phpcs
+#    language: system
+#    entry: phpcs --standard=phpcs.xml.dist
