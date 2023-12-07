@@ -1,8 +1,8 @@
 <?php
 /**
-* Parses a JSONC file, and let's you access properties using a dot syntax
-* also supports .jsonc files
-*/
+ * Parses a JSONC file, and lets you access properties using a dot syntax
+ * also supports .jsonc files
+ */
 class Configuration {
 	/**
 	 * @var \stdClass The resulting configuration object after being successfully parsed.
@@ -15,40 +15,49 @@ class Configuration {
 	private string $configurationFile;
 
 	/**
-	* The constructor starts parsing of the configuration file.
-	* @param ?string $configurationFile Absolute filesystem path to a .jsonc file
-	*/
+	 * The constructor starts parsing of the configuration file.
+	 *
+	 * @param string|null $configurationFile Absolute filesystem path to a .jsonc file
+	 * @throws \Core\Exception\FileNotFound If file does not exist on filesystem.
+	 */
 	public function __construct(?string $configurationFile = null) {
-		if($configurationFile !== null) {
+		if ($configurationFile !== null) {
 			$this->parse($configurationFile);
 		}
 	}
 
 	/**
-	* The actual parsing.
-	* @throws \Core\Exception\FileNotFound
-	* @return void
-	*/
-	private function parse(string $configurationFile) : void {
-		if(!is_file($configurationFile)) {
-			throw new \Core\Exception\FileNotFound("The given configuration file '".$configurationFile."' could not be located.");
+	 * The actual parsing.
+	 *
+	 * @param string $configurationFile Absolute filesystem path to a .jsonc file
+	 * @throws \Core\Exception\FileNotFound If file does not exist on filesystem.
+	 * @return void
+	 */
+	private function parse(string $configurationFile): void {
+		if (!is_file($configurationFile)) {
+			throw new \Core\Exception\FileNotFound("The given configuration file '" . $configurationFile . "' could not be located.");
 		}
 
 		$this->configurationFile = $configurationFile;
 
 		$jsonConfig = file_get_contents($configurationFile);
-		$jsonConfig = preg_replace('~(" (?:\\\\. | [^"])*+ ") | \# [^\v]*+ | // [^\v]*+ | /\* .*? \*/~xs', '$1', $jsonConfig);
+		$jsonConfig = preg_replace(
+			'~(" (?:\\\\. | [^"])*+ ") | \# [^\v]*+ | // [^\v]*+ | /\* .*? \*/~xs',
+			'$1',
+			$jsonConfig
+		);
 
 		$this->parsedConfig = json_decode($jsonConfig, null, 512, JSON_THROW_ON_ERROR);
 	}
 
 	/**
 	 * Recursively replace {{variables}} in configuration values
-	 * @param $configValue The config value in which to replace variables.
+	 *
+	 * @param mixed $configValue The config value in which to replace variables.
 	 * @return mixed
 	 */
-	protected function replaceVariables($configValue) : mixed {
-		if(is_string($configValue) === true) {
+	protected function replaceVariables(mixed $configValue): mixed {
+		if (is_string($configValue) === true) {
 			/*
 				\{{2}      (match 2 literal {)
 				(          (start capture group)
@@ -60,21 +69,21 @@ class Configuration {
 
 			$allowedFunctions = ["getenv", "constant", "defined", "ini_get"];
 
-			for($i = 0; $i < count($variables[0]); $i++) {
+			for ($i = 0; $i < count($variables[0]); $i++) {
 				$token = strtok($variables[1][$i], "(");
 
-				if(in_array($token, $allowedFunctions) === true && $this->has($token) === false) {
-					$configValue = eval("return ".$variables[1][$i].';');
-				} else {	
+				if (in_array($token, $allowedFunctions) === true && $this->has($token) === false) {
+					$configValue = eval("return " . $variables[1][$i] . ';');
+				} else {
 					$configValue = str_replace($variables[0][$i], $this->get($token), $configValue);
 				}
 			}
-		} else if(is_object($configValue) === true) {
-			foreach($configValue as $key => $value) {
+		} elseif (is_object($configValue) === true) {
+			foreach ($configValue as $key => $value) {
 				$configValue->{$key} = $this->replaceVariables($value);
 			}
-		} else if(is_array($configValue) === true) {
-			foreach($configValue as $key => $value) {
+		} elseif (is_array($configValue) === true) {
+			foreach ($configValue as $key => $value) {
 				$configValue[$key] = $this->replaceVariables($value);
 			}
 		}
@@ -83,99 +92,106 @@ class Configuration {
 	}
 
 	/**
-	* Gets a single configuration value.
-	* If no configuration setting name is provided, the whole configuration object will be returned.
-	* Sub-values can be accessed using a dot syntax.
-	* @param ?string $key The name of the configuration to get value from.
-	* @return mixed null on failure.
-	* @throws \InvalidArgumentException 
-	*/
-	public function get(?string $key = null) : mixed {
-		if($key === null) {
+	 * Gets a single configuration value.
+	 *
+	 * If no configuration setting name is provided, the whole configuration object will be returned.
+	 * Sub-values can be accessed using a dot syntax.
+	 *
+	 * @param string|null $key The name of the configuration to get value from.
+	 * @return mixed|null null on failure.
+	 * @throws \InvalidArgumentException If key does not exist in parsed json.
+	 */
+	public function get(?string $key = null): mixed {
+		if ($key === null) {
 			return $this->parsedConfig;
 		}
-		
+
 		$paths = explode('.', $key);
 		$configValue = $this->parsedConfig;
 
-		foreach($paths as $path) {
-			if(!isset($configValue->$path)) {
-				throw new \InvalidArgumentException($key." is not a valid configuration");
+		foreach ($paths as $path) {
+			if (!isset($configValue->$path)) {
+				throw new \InvalidArgumentException($key . " is not a valid configuration");
 			}
 
 			$configValue = $configValue->$path;
 		}
 
 		$configValue = $this->replaceVariables($configValue);
-		
+
 		return $configValue;
 	}
 
 	/**
 	 * Test if current config holds a value for a given key
+	 *
 	 * @param string $key The config key to test
 	 * @return bool
 	 */
-	public function has(string $key) : bool {
+	public function has(string $key): bool {
 		try {
 			$this->get($key);
 			return true;
-		} catch(\InvalidArgumentException) {
+		} catch (\InvalidArgumentException) {
 			return false;
 		}
 	}
 
 	/**
-	* Remove a configuration value
-	* @param string $key Key of the setting to delete.
-	* @throws \InvalidArgumentException
-	* @return self
-	*/
-	public function delete(string $key) : Configuration {
+	 * Remove a configuration value
+	 *
+	 * @param string $key Key of the setting to delete.
+	 * @throws \InvalidArgumentException If key does not exist in parsed json.
+	 * @return self
+	 */
+	public function delete(string $key): Configuration {
 		$configValue = $this->parsedConfig;
 
 		$paths = explode('.', $key);
 		$unsetKey = array_slice($paths, -1)[0];
 
-		foreach($paths as $path) {
-			if(!isset($configValue->$path)) {
-				throw new \InvalidArgumentException($key." is not a valid configuration");
+		foreach ($paths as $path) {
+			if (!isset($configValue->$path)) {
+				throw new \InvalidArgumentException($key . " is not a valid configuration");
 				return false;
 			}
 
-			if(isset($configValue->$unsetKey)) {
+			if (isset($configValue->$unsetKey)) {
 				unset($configValue->$unsetKey);
 			} else {
 				$configValue = &$configValue->$path;
 			}
 		}
-		
+
 		return $this;
 	}
 
 	/**
-	* Alias for \Configuration::delete()
-	* @see \Configuration::delete()	For removing entries
-	* @return \Configuration value of onfigurationParser::delete()
-	*/
-	public function remove(string $key) : Configuration {
+	 * Alias for \Configuration::delete()
+	 *
+	 * @param string $key Key of the setting to delete.
+	 * @see \Configuration::delete() For removing entries
+	 * @return \Configuration value of ConfigurationParser::delete()
+	 */
+	public function remove(string $key): Configuration {
 		return $this->delete($key);
 	}
 
 	/**
-	* Dynamically set a configuration setting to a given value.
-	* @param string $setting Key of the setting.
-	* @param string $value Value of $setting
-	* @return \Configuration
-	*/
-	public function set(string $setting, mixed $value) : Configuration {
+	 * Dynamically set a configuration setting to a given value.
+	 *
+	 * @param string $setting Key of the setting.
+	 * @param mixed $value Value of $setting
+	 * @return \Configuration
+	 */
+	public function set(string $setting, mixed $value): Configuration {
 		$paths = explode('.', $setting);
 		$result = &$this->parsedConfig;
-		
+
 		$countedPaths = count($paths);
 
 		foreach ($paths as $i => $path) {
-			if ($i < $countedPaths-1) {
+			if ($i < $countedPaths - 1) {
 				if (!isset($result->$path)) {
 					$result->$path = new \stdClass();
 				}
@@ -190,26 +206,31 @@ class Configuration {
 	}
 
 	/**
-	* @return void
-	*/
-	public function __set($name, $value) {
+	 * @param string $name Name of the property being set
+	 * @param mixed $value Value of the property being set
+	 * @return void
+	 */
+	public function __set(string $name, mixed $value): void {
 		$this->set($name, $value);
 	}
 
 	/**
-	* Again please use the ->get() and ->set() methods
-	* @see \Configuration::set() For setting config values dynamically
-	* @return mixed
-	*/
-	public function __get($name) {
+	 * Again please use the ->get() and ->set() methods
+	 *
+	 * @see \Configuration::set() For setting config values dynamically
+	 * @param string $name Name of a property being retrieved
+	 * @return mixed
+	 */
+	public function __get(string $name): mixed {
 		return $this->get($name);
 	}
 
 	/**
-	* Get debug information by printing the configuration object.
-	* @return string
-	*/
-	public function __toString() {
-		return "<pre>".print_r($this->get(), true)."</pre>";
+	 * Get debug information by printing the configuration object.
+	 *
+	 * @return string
+	 */
+	public function __toString(): string {
+		return "<pre>" . print_r($this->get(), true) . "</pre>";
 	}
 }
