@@ -3,6 +3,10 @@
 	<description>Framework coding standards config.</description>
 	<file>src/</file>
 
+	<!-- Requires zebra-north/phpcs-short-types -->
+	<!-- See https://github.com/ZebraNorth/phpcs-short-types#installation -->
+    <arg name="bootstrap" value="vendor/zebra-north/phpcs-short-types/short-types.php"/>
+
 	<arg name="extensions" value="php,inc" />
 	<arg name="colors" />
 
