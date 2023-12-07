@@ -9,7 +9,7 @@
 	 * Controllers
 	 */
 	class MockController extends \Controller {
-		public function index() {
+		public function index(): void {
 			$this->children[] = new \Core\ClassName("MockChild");
 
 			$this->response->setView("mock");
