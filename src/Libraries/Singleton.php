@@ -23,8 +23,8 @@
 		/**
 		 * Stores a given object by it's class name, namespaces included
 		 * 
-		 * @param object $class The resource class to have a global state
-		 * @param ?string $alias An alias to save the resource by, if null class name of object will be used
+		 * @param object $object The instance to have a global state.
+		 * @param null|string $alias An alias to save the instance by, if null class name of object will be used
 		 * @return object The instance just stored. 
 		 */
 		public static function set(object $object, ?string $alias = null) {
@@ -39,7 +39,7 @@
 		 * Checks if the registry contains a given object.
 		 * 
 		 * @param string $key Check if this key/alias is available globally
-		 * @return bool
+		 * @return boolean
 		 */
 		public static function has(string $key) : bool {
 			return isset(self::$store[$key]);
