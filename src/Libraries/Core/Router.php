@@ -44,7 +44,7 @@ namespace Core {
 
 		/**
 		 * Returns default route from configuration
-		 * @throws \Core\Exception\Governance
+		 * @throws \Core\Exception\Governance If the default route configured is not of type array.
 		 * @return array
 		 */
 		public function getConfiguredDefaultRoute() : array {

@@ -68,9 +68,12 @@ namespace Core {
 
 		/**
 		 * Set arguments parsed from path
-		 * @param array $arguments
+		 * @param array $arguments Set application arguments parsed from the request.
+		 * 						   In a CLI context these are parsed from the arg vectir (argv)
+		 * 						   Otherwise should be parsed from the request uri.
+		 * @return void
 		 */
-		public function setArguments(array $arguments) {
+		public function setArguments(array $arguments): void {
 			$this->arguments = $arguments;
 		}
 
@@ -78,7 +81,7 @@ namespace Core {
 		 * Get path that should be used by the router
 		 * @return array
 		 */
-		public function getArguments() : array {
+		public function getArguments(): array {
 			return $this->arguments;
 		}
 
@@ -87,11 +90,11 @@ namespace Core {
 		 * Args are the global arg vector (argv), or the exploded (by /) request URI.
 		 * Default args may be optionally provided if given index is out of range.
 		 * Should the index not be present in $defaults either, null is returned.
-		 * @param int The numeric index of argument to get
+		 * @param int $index The numeric index of argument to get
 		 * @param array $defaults Fallback to this index value, default empty array
 		 * @return ?string
 		 */
-		public function getArg(int $index, array $defaults = []) : ?string {
+		public function getArg(int $index, array $defaults = []): ?string {
 			return $this->arguments[$index] ?? $defaults[$index] ?? null;
 		}
 

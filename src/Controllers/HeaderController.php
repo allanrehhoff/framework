@@ -1,6 +1,10 @@
 <?php
 	class HeaderController extends Controller {
-		public function index() {
+		/**
+		 * Default entry point for the header partial
+		 * @return void
+		 */
+		public function index(): void {
 			// Do not allow this controller to be access directly
 			if($this->getParent() == null) throw new \Core\StatusCode\NotFound;
 

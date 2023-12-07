@@ -1,9 +1,12 @@
 <?php
+
 namespace Core {
+
 	/**
 	 * The main class for this application.
 	 */
 	final class Application {
+
 		/**
 		 * @var ClassName Actual controller path routed by given args
 		 */
@@ -33,7 +36,7 @@ namespace Core {
 		 * 
 		 * @return ClassName Called controller name
 		 */
-		public function getExecutedClassName() : ClassName {
+		public function getExecutedClassName(): ClassName {
 			return $this->executedClassName;
 		}
 
@@ -42,50 +45,53 @@ namespace Core {
 		 * 
 		 * @return MethodName Called method name
 		 */
-		public function getCalledMethodName() : MethodName {
+		public function getCalledMethodName(): MethodName {
 			return $this->calledMethodName;
 		}
 
 		/**
-		 * Get path to the specified controller file. Ommit the .php extension
+		 * Get path to the specified controller file. Omit the .php extension
 		 * 
-		 * @param string $controller name of the controller file.
-		 * @return ?string or null on failure
+		 * @param string $controller Name of the controller file.
+		 * @return ?string|null On failure
 		 */
-		public function getControllerPath(string $controller) : ?string {
-			return APP_PATH."/Controllers/".basename($controller).".php";
+		public function getControllerPath(string $controller): ?string {
+			return APP_PATH . "/Controllers/" . basename($controller) . ".php";
 		}
 
 		/**
 		 * Get the router being used
+		 * 
 		 * @return \Core\Router
 		 */
-		public function getRouter() : Router {
+		public function getRouter(): Router {
 			return $this->router;
 		}
 
 		/**
 		 * Executes a given controller by name.
-		 * Reroutes to NotFouncController if a \Core\Exception\NotFound is thrown
-		 * within the controller or any of it's child controllers.
+		 * Reroutes to NotFoundController if a \Core\Exception\NotFound is thrown
+		 * within the controller or any of its child controllers.
 		 * 
-		 * @param  \Core\ClassName $iClassName Name of a class representing the controller that should be executed
-		 * @param ?\Core\MethodName $iMethodName Method name that should be executed on instantiated controller, default is index
-		 * @param ?\Controller $parentController, execute controller with this as its parent, default null
+		 * @param \Core\ClassName         $iClassName      Name of a class representing the controller that should be executed
+		 * @param null|\Core\MethodName   $iMethodName     Method name that should be executed on instantiated controller, default is index
+		 * @param null|\Controller        $parentController Execute controller with this as its parent, default null
+		 * 
 		 * @return \Controller The executed controller that has just been executed.
 		 */
-		public function executeController(ClassName $iClassName, ?MethodName $iMethodName = new MethodName(MethodName::DEFAULT), ?\Controller $parentController = null) : \Controller {			
-			$controllerName = $iClassName->toString();
-			$methodName = $iMethodName->toString();
+		public function executeController(ClassName $iClassName, ?MethodName $iMethodName = null, ?\Controller $parentController = null): \Controller {
 
-			if($parentController === null) {
+			$controllerName = $iClassName->toString();
+			$methodName = $iMethodName ? $iMethodName->toString() : MethodName::DEFAULT;
+
+			if ($parentController === null) {
 				$this->executedClassName = $iClassName;
-				$this->calledMethodName = $iMethodName;
+				$this->calledMethodName = $iMethodName ?? new MethodName(MethodName::DEFAULT);
 			}
 
 			$iController = new $controllerName($this, $parentController);
 
-			if($parentController !== null) {
+			if ($parentController !== null) {
 				$iController->getResponse()->setData($parentController->getResponse()->getData());
 			}
 
@@ -95,12 +101,12 @@ namespace Core {
 				$iController->$methodName();
 
 				\Core\Event::trigger("core.controller.method.after", $iController, $iMethodName);
-			} catch(\Core\StatusCode\StatusCode $iStatusCode) {
+			} catch (\Core\StatusCode\StatusCode $iStatusCode) {
 				$iController = $this->executeController(new ClassName($iStatusCode->getClassName()));
 			}
 
-			foreach($iController->getChildren() as $childControllerName) {
-				$childController = $this->executeController($childControllerName, parentController: $iController);
+			foreach ($iController->getChildren() as $childControllerName) {
+				$childController = $this->executeController($childControllerName, $iMethodName, parentController: $iController);
 				$iController->getResponse()->setData($childController->getResponse()->getData());
 			}
 
@@ -108,12 +114,12 @@ namespace Core {
 		}
 
 		/**
-		 * Dispatches a controller, based upon the requeted path.
-		 * Serves a NotfoundController if it doesn't exists
+		 * Dispatches a controller, based upon the requested path.
+		 * Serves a NotFoundController if it doesn't exist
 		 * 
 		 * @return \Controller Instance of extended Controller
 		 */
-		public function run() : \Controller {
+		public function run(): \Controller {
 			return $this->executeController(...$this->router->getRoute());
 		}
 	}

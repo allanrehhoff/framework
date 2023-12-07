@@ -12,7 +12,7 @@ namespace Core {
 
 		/**
 		 * @param string $string Takes a single argument as a string, this will be the method name to use.
-		 * @throws \RuntimeException
+		 * @throws \RuntimeException If $string cannot be matched by preg.
 		 * @return void
 		 */
 		public function __construct(string $string) {

@@ -79,7 +79,8 @@ namespace Core {
 
 		/**
 		 * Get URI path to this theme
-		 * @param string $url Path to element of which to create a URI.
+		 * 
+		 * @param string $file Path to element of which to create a URI.
 		 * @return string
 		 */
 		public function getDirectoryUri(string $file = '/') : string {
@@ -129,6 +130,7 @@ namespace Core {
 		 * If theme assets appears to be an url, they'll be used as-is,
 		 * otherwise files are linked absolutely to the theme.
 		 * @uses \Assets
+		 * @param \stdClass $files Assets to register for use in the Template
 		 * @return void
 		 */
 		private function registerAssets(\stdClass $files) : void {

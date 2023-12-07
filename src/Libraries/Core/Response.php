@@ -92,8 +92,9 @@ namespace Core {
 		 * 						whether the header should replace a previous similar header,
 		 * 						or add a second header of the same type. By default it will replace,
 		 * 						but if you pass in false as the second argument you can force multiple headers of the same type.
+		 * @return void
 		 */
-		public function addHeader(string $header, bool $replace = true) {
+		public function addHeader(string $header, bool $replace = true): void {
 			$this->headers[] = [$header, $replace];
 		}
 

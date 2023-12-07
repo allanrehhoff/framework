@@ -1,14 +1,26 @@
 <?php
 	class CliController extends Controller {
-		public function index() {
+		/**
+		 * /cli/index
+		 * @return void
+		 */
+		public function index(): void {
 			print "hello from cli".CRLF;
 		}
 
-		public function interface() {
+		/**
+		 * /cli/interface
+		 * @return void
+		 */
+		public function interface(): void {
 			print "Hello from interface".CRLF;
 		}
 
-		public function myMethod() {
+		/**
+		 * /cli/my-method
+		 * @return void
+		 */
+		public function myMethod(): void {
 			print "myMethod was called..";
 		} 
 	}

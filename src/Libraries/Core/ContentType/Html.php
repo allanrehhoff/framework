@@ -24,8 +24,9 @@ namespace Core\ContentType {
 		 *
 		 * @param array $data An associative array of data to be made available to the view.
 		 * @param string $view The path to the view file to be rendered.
+		 * @return void
 		 */
-		public function stream(array $data, string $view) : void {
+		public function stream(array $data, string $view): void {
 			if($view == '') {
 				throw new \Core\Exception\Governance("Cannot render empty view, \$this->response->setView(); or exit should be called");
 			}

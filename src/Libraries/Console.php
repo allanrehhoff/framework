@@ -12,7 +12,7 @@
 		 * @return void
 		 *
 		 */
-		public static function showStatus(int $done, int $total, int $size = 30) {
+		public static function showStatus(int $done, int $total, int $size = 30): void {
 			static $startTime;
 
 			// if we go over our bound, just ignore it
@@ -38,12 +38,6 @@
 			$disp = number_format($percent * 100, 0);
 			$statusBar .= "] ".$disp."%  ".$done."/".$total;
 
-			/*
-			$rate = ($now - $startTime) / $done;
-			$left = $total - $done;
-			$eta = round($rate * $left, 2);
-			*/
-
 			$remaining = $total - $done;
 			$elapsed = $now - $startTime;
 
@@ -59,8 +53,9 @@
 		 * @param array|callable $callback 	A callback to apply to each item in the array
 		 * 									Array key will be sent as first argument
 		 * 									Value as second argument
+		 * @return void
 		 */
-		public static function progress(array $iterable, array|callable $callback) {
+		public static function progress(array $iterable, array|callable $callback): void {
 			set_time_limit(0);
 
 			$i = 0;
@@ -87,8 +82,9 @@
 		 * Prints a confirmation prompt to the console
 		 * This will exit the program if confirm is not positive
 		 * @param string $message The message to preset to the user
+		 * @return void
 		 */
-		public static function confirm(string $message) {
+		public static function confirm(string $message): void {
 			$message .= " [y/n] ";
 
 			print $message;
@@ -109,7 +105,7 @@
 		 * @return stdClass containing array of parsed options and flags
 		 * @see https://www.php.net/manual/en/features.commandline.php#83843
 		 */
-		public static function arguments(array $args) : object {
+		public static function arguments(array $args): \stdClass {
 			array_shift($args);
 			$endofoptions = false;
 			
@@ -187,9 +183,9 @@
 		 * Get value from the command line args 'options' array
 		 * @param string $option Name of the option to get, typically the part after '--'
 		 * 						 fx. --only-missing would be 'only-missing'
-		 * @return ?mixed
+		 * @return mixed
 		 */
-		public static function getOption(string $option) {
+		public static function getOption(string $option): mixed {
 			return self::arguments($GLOBALS["argv"])->options[$option] ?? null;
 		}
 	}

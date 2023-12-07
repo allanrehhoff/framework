@@ -5,9 +5,11 @@
 	class ForbiddenController extends Controller {
 
 		/**
-		 * Constructs an indicates the path was not allowed
+		 * Constructs an indicates the path was not allowed.
+		 * Paths are routed here when \Core\StatusCode\Forbidden is thrown
+		 * @return void
 		 */
-		public function index() {
+		public function index(): void {
 			$this->response->setTitle("Forbidden");
 			$this->response->setView("forbidden");
 		}

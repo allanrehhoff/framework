@@ -20,7 +20,7 @@
 		* @param boolean $exit whether to exit the PHP process after printing debug information.
 		* @return void
 		*/
-		public static function pre($stuff, $exit = false) : void {
+		public static function pre(mixed $stuff, bool $exit = false) : void {
 			print "<pre style='background:#FFD; clear:both;'>";
 			if(count($stuff) > 0 && $stuff !== false) {
 				print_r($stuff);

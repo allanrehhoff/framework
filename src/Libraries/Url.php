@@ -15,7 +15,7 @@
 		 *
 		 * @return string The base URL of the application.
 		 */
-		public static function getBaseurl() : string {
+		public static function getBaseurl(): string {
 			$baseurl = "";
 			$protocol = IS_SSL ? "https://" : "http://";
 			$domainName = $_SERVER["HTTP_HOST"];
@@ -40,7 +40,7 @@
 		 * @param string $uri Path to element of which to create a URI.
 		 * @return string
 		 */
-		public static function fromUri(string $uri = "") : string {
+		public static function fromUri(string $uri = ""): string {
 			$baseurl = self::getBaseurl();
 
 			return $baseurl.ltrim($uri, "/");
@@ -52,7 +52,7 @@
 		 * @param string $xRedirectBy Human readable indidcator of who performed this redirect
 		 * @return void
 		 */
-		public static function redirect(string $location, string $xRedirectBy) : void {
+		public static function redirect(string $location, string $xRedirectBy): void {
 			header("HTTP/1.1 302 Found");
 			header("Cache-Control: no-cache, must-revalidate");
 			header("X-Redirect-By: " . $xRedirectBy);
@@ -66,7 +66,7 @@
 		* @link https://www.php.net/parse_url
 		* @return array|string|int|null|false Same as parse_url
 		*/
-		public static function parse($url) : array|string|int|null|false {
+		public static function parse(string $url): array|string|int|null|false {
 			return parse_url($url);
 		}
 
@@ -75,7 +75,7 @@
 		 * @param array $urlParts An associative array of URL components.
 		 * @return string|false The assembled URL string, or false on failure.
 		 */
-		public static function build($urlParts) : mixed {
+		public static function build(array $urlParts): mixed {
 			if (!isset($urlParts["scheme"]) || !isset($urlParts["host"])) {
 				return false;
 			}
@@ -116,7 +116,7 @@
 		 * @param string $string The string to encode.
 		 * @return string The encoded string.
 		 */
-		public static function encode(string $string) : string {
+		public static function encode(string $string): string {
 			return urlencode($string);
 		}
 
@@ -125,7 +125,7 @@
 		 * @param string $string The string to decode.
 		 * @return string The decoded string.
 		 */
-		public static function decode(string $string) : string {
+		public static function decode(string $string): string {
 			return urldecode($string);
 		}
 
@@ -134,7 +134,7 @@
 		 * @param array $params An associative array of URL parameters.
 		 * @return string The built query string.
 		 */
-		public static function buildQueryString(array $params) : string {
+		public static function buildQueryString(array $params): string {
 			return http_build_query($params);
 		}
 
@@ -143,7 +143,7 @@
 		 * @param string $queryString The query string to parse.
 		 * @return array|false An associative array of query parameters, or false on failure.
 		 */
-		public static function parseQueryString(string $queryString) : mixed {
+		public static function parseQueryString(string $queryString): mixed {
 			parse_str($queryString, $params);
 			return $params;
 		}

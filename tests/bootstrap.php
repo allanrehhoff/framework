@@ -15,19 +15,19 @@
 			$this->response->setView("mock");
 		}
 
-		public function withoutChildren() {
+		public function withoutChildren(): void {
 			$this->response->setView("without-children");
 		}
 
-		private function privateFunction() {}
+		private function privateFunction(): void {}
 
-		protected function protectedFunction() {}
+		protected function protectedFunction(): void {}
 	}
 
 	class MockChildController extends \Controller {
 		public static string $testkey = "test";
 
-		public function index() {
+		public function index(): void {
 			$this->response->data[self::$testkey] = "hello world";
 
 			$this->response->setView("mockchild");
@@ -39,11 +39,11 @@
 	}
 
 	class MockEventListener {
-		public function handle(\MockEventObject $iMockEventObject) {
+		public function handle(\MockEventObject $iMockEventObject): void {
 			$iMockEventObject->property = __FUNCTION__;
 		}
 
-		public static function handleStatic(\MockEventObject $iMockEventObject) {
+		public static function handleStatic(\MockEventObject $iMockEventObject): void {
 			$iMockEventObject->property = __FUNCTION__;
 		}
 	}
@@ -56,14 +56,14 @@
 			return new \Core\Request();
 		}
 
-		public static function withArguments(array $arguments) {
+		public static function withArguments(array $arguments): \Core\Request {
 			$iRequest = self::new();
 			$iRequest->setArguments($arguments);
 
 			return $iRequest;
 		}
 
-		public static function withServerVars(array $arguments) {
+		public static function withServerVars(array $arguments): \Core\Request {
 			$arguments = array_change_key_case($arguments, CASE_UPPER);
 
 			$iRequest = self::new();
@@ -98,7 +98,7 @@
 			return new \Environment($tmpfile);
 		}
 
-		public static function fromCleanState() {
+		public static function fromCleanState(): \Environment {
 			return new \Environment;
 		}
 	}

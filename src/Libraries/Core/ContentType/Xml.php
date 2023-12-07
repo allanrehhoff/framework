@@ -26,7 +26,7 @@ namespace Core\ContentType {
 		 * Converts an array to XML and returns a SimpleXMLElement.
 		 *
 		 * @param array $data The array to convert to XML.
-		 * @param ?SimpleXMLElement $iSimpleXMLElement The XML element to append to (use null for the root element).
+		 * @param null|SimpleXMLElement $iSimpleXMLElement The XML element to append to (use null for the root element).
 		 *
 		 * @return SimpleXMLElement The XML representation of the array.
 		 */
@@ -55,8 +55,9 @@ namespace Core\ContentType {
 		 * phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter
 		 * @param array $data An associative array of data to be encoded as json
 		 * @param string $view Purposely ignored by this media type
+		 * @return void
 		 */
-		public function stream(array $data, ?string $view = '') : void {
+		public function stream(array $data, ?string $view = ''): void {
 			// phpcs:enable Generic.CodeAnalysis.UnusedFunctionParameter
 			print $this->arrayToXml($data)->saveXML();
 		}

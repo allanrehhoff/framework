@@ -4,7 +4,7 @@ class Environment {
 	/**
 	 * Constructor for the Environment class.
 	 *
-	 * @param ?string $environmentFile The path to the environment file (e.g., '.env').
+	 * @param null|string $environmentFile The path to the environment file (e.g., '.env').
 	 */
 	public function __construct(?string $environmentFile = null) {
 		if($environmentFile !== null && file_exists($environmentFile) === true) {
@@ -16,8 +16,9 @@ class Environment {
 	 * Parse the environment file and populate the environment variables.
 	 *
 	 * @param string $environmentFile The path to the environment file (e.g., '.env').
+	 * @return void
 	 */
-	private function parse(string $environmentFile) : void {
+	private function parse(string $environmentFile): void {
 		$contents = file_get_contents($environmentFile);
 
 		/*
@@ -43,6 +44,7 @@ class Environment {
 	 *
 	 * @param string $name The name of the environment variable.
 	 * @param int|float|string|array $value The value of the environment variable.
+	 * @return void
 	 */
 	public function put(string $name, int|float|string|array $value): void {
 		$name = strtoupper($name);
@@ -82,7 +84,7 @@ class Environment {
 	 * @param string $name The name of the environment variable to retrieve.
 	 * @return mixed The value of the environment variable or false if not found.
 	 */
-	public function get(string $name) : mixed {
+	public function get(string $name): mixed {
 		$result = getenv($name, true);
 
 		// Maybe it was not found in the global vars

@@ -7,8 +7,9 @@
 
 		/**
 		 * Constructs an indicates the path wasn't found
+		 * @return void
 		 */
-		public function index() {
+		public function index(): void {
 			$this->response->data["httpHost"] = \Escape::string($this->request->server["HTTP_HOST"] ?? '');
 			$this->response->data["requestUri"] = \Escape::string($this->request->server["REQUEST_URI"] ?? '');
 			$this->response->data["httpReferer"] = \Escape::string($this->request->server["HTTP_REFERER"] ?? '');
