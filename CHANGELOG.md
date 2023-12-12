@@ -24,6 +24,7 @@ v8.0.0
 - Added tests for better code coverage.  
 - New class \Core\Event();  
 - Support for responding with JSON or XML if the clients `Accept` signals a preference.  
+- New utility class \Str for string manipulation.  
 
 v7.2.1
 - Fix private and protected methods on controllers being call.  

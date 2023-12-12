@@ -90,11 +90,11 @@ class Str {
 	/**
 	 * Check if a string matches a given pattern (case-sensitive).
 	 *
-	 * @param string|null $subject The string to search in.
 	 * @param string|null $pattern The pattern to match.
+	 * @param string|null $subject The string to search in.
 	 * @return bool
 	 */
-	public static function is(?string $pattern, ?string $subject): bool {
+	public static function test(?string $pattern, ?string $subject): bool {
 		if ($subject === null || $pattern === null) return false;
 		return preg_match($pattern, $subject) === 1;
 	}
@@ -102,14 +102,17 @@ class Str {
 	/**
 	 * Check if a string matches a given pattern (case-sensitive).
 	 *
-	 * @param string|null $pattern The pattern to match.
+	 * @param string|null  $pattern The pattern to match.
 	 * @param string|null $subject The string to search in.
-	 * @return string[]|false Return matches or false on failure
+	 * @param int         $flags   (optional) A bitmask of flags (default is 0).
+	 * @param int         $offset  (optional) The offset to start searching from (default is 0).
+	 *
+	 * @return string[] Return an array of matches, empty on failures or if any of $pattern or $subject is null.
 	 */
-	public static function match(string $pattern, ?string $subject, int $flags = 0, int $offset = 0): array {
-		if ($subject === null || $pattern === null) return false;
+	public static function match(?string $pattern, ?string $subject, int $flags = 0, int $offset = 0): array {
+		if ($subject === null || $pattern === null) return [];
 		$result = preg_match($pattern, $subject, $matches, $flags, $offset);
-		return $result !== false ? $matches : false;
+		return $result !== false ? $matches : [];
 	}
 
 	/**
@@ -117,13 +120,15 @@ class Str {
 	 *
 	 * @param string|null $pattern The pattern to match.
 	 * @param string|null $subject The string to search in.
-	 * @param array|null $matches An array to store the matches.
-	 * @return string[]|false Array of strings that matches
+	 * @param int         $flags   (optional) A bitmask of flags (default is 0).
+	 * @param int         $offset  (optional) The offset to start searching from (default is 0).
+	 *
+	 * @return string[] Array of strings that match the pattern.
 	 */
 	public static function matchAll(?string $pattern, ?string $subject, int $flags = 0, int $offset = 0): array {
-		if ($subject === null || $pattern === null) return false;
+		if ($subject === null || $pattern === null) return [];
 		$result = preg_match_all($pattern, $subject, $matches, $flags, $offset);
-		return $result !== false ? $matches : false;
+		return $result !== false ? ($matches[1] ?? $matches[0]) : [];
 	}
 
 	/**

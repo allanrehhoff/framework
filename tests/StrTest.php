@@ -70,38 +70,36 @@ class StrTest extends TestCase
 	/**
 	 * Test case for match method (regular expression match).
 	 */
-	public function testIs(): void {
-		$this->assertTrue(\Str::is('/^Hello/', 'Hello, World!'));
-		$this->assertFalse(\Str::is('/foo/', 'Hello, World!'));
-		$this->assertFalse(\Str::is('/World/', null));
-
-		
+	public function testTest(): void {
+		$this->assertTrue(\Str::test('/^Hello/', 'Hello, World!'));
+		$this->assertFalse(\Str::test('/foo/', 'Hello, World!'));
+		$this->assertFalse(\Str::test('/World/', null));
 	}
 
 	/**
 	 * Test the matchAll method for matching all occurrences of a pattern.
 	 */
 	public function testMatch(): void {
-		$matches = \Str::match('/(\d+)-(\d+)-(\d+)/', '123-456-789');
-		$this->assertEquals(['123-456-789', '123', '456', '789'], $matches);
+		$this->assertSame(['123-456-789', '123', '456', '789'], \Str::match('/(\d+)-(\d+)-(\d+)/', '123-456-789'));
 	}
-	
+
 	/**
-	 * Test the match method for case-sensitive pattern matching.
+	 * Test matchAll method with a valid pattern and subject.
 	 */
-	//public function testMatchAll(): void {
-	//  $this->assertTrue(\Str::match('/W\w{4}/', 'Hello, World!', PREG_OFFSET_CAPTURE, 7));
-	//	$this->assertEquals(['123'], Str::match('/[0-9]+/', 'abc123xyz456'));
-	//	$this->assertFalse(Str::match('/[a-z]+/', '123'));
-	//}
+	public function testMatchAll(): void {
+		$this->assertSame(['20', '5', '100'], \Str::matchAll('/\d+/', 'The price is $20 and the quantity is 5. The total is $100.'));
+		$this->assertEmpty(\Str::matchAll('/[a-z]+/', "1234567890"));
+		$this->assertEmpty(\Str::matchAll(null, null));
+		$this->assertEmpty(\Str::matchAll('/\w+/', null));
+	}
 
 	/**
 	 * Test the ascii method for replacing Unicode characters with their ASCII counterparts.
 	 */
-	//public function testAscii(): void {
-	//	$input = 'héllø wörld';
-	//	$expectedOutput = 'hello world';
-//
-	//	$this->assertEquals($expectedOutput, Str::ascii($input));
-	//}
+	public function testAscii(): void {
+		$input = 'héllø wörld';
+		$expectedOutput = 'hello world';
+
+		$this->assertEquals($expectedOutput, \Str::ascii($input));
+	}
 }
