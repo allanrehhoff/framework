@@ -1,8 +1,6 @@
 <?php
 	/**
 	* Main entry point for your application.
-	* Consult the README.md file for documentation and usage examples.
-	*
 	* Don't forget to read the documentation.
 	*/
 
@@ -10,7 +8,7 @@
 	require "Bootstrap/startup.php";
 
 	// Register events
-	require "events.php";
+	require "Bootstrap/events.php";
 
 	// Global state objects
 	\Singleton::set(new \Configuration(STORAGE . "/config/application.jsonc"));

@@ -32,7 +32,7 @@ namespace Core\ContentType {
 			}
 		
 			extract($data, EXTR_SKIP);
-			require $file;
+			require $view;
 		}
 	}
 }
