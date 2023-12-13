@@ -13,6 +13,7 @@ namespace Database {
 	 * Class EntityType
 	 */
 	class EntityType extends \Database\Entity {
+		// phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace
 		/**
 		 * The primary key of the table this entity interacts with
 		 * @return string
@@ -24,5 +25,6 @@ namespace Database {
 		 * @return string
 		 */
 		protected static function getTableName() : string { return "test_table"; }
+		// phpcs:enable Squiz.WhiteSpace.ScopeClosingBrace
 	}
 }
