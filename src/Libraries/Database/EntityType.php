@@ -7,9 +7,22 @@
 * getKeyField(); Must return the name of the column with the primary key index.
 * getTableName(); Must return the name of the table this Entity operates with.
 */
-namespace Database {	
+namespace Database {
+
+	/**
+	 * Class EntityType
+	 */
 	class EntityType extends \Database\Entity {
+		/**
+		 * The primary key of the table this entity interacts with
+		 * @return string
+		 */
 		protected static function getKeyField() : string { return "test_id"; }
+
+		/**
+		 * The table name this entity interacts with
+		 * @return string
+		 */
 		protected static function getTableName() : string { return "test_table"; }
 	}
 }

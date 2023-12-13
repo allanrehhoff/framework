@@ -35,6 +35,7 @@
         <properties>
             <requireParamType>true</requireParamType>
             <requireParamName>true</requireParamName>
+			<property name="skipIfInheritdoc" value="true" />
         </properties>
 
         <exclude name="Squiz.Commenting.FunctionComment.ParamCommentNotCapital" />

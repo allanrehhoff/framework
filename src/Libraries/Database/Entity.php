@@ -14,7 +14,7 @@ namespace Database {
 		private mixed $key = null;
 
 		/**
-		 * @var array $data General data for this entity, usually this is simply all  database columns for a row
+		 * @var array $data General data for this entity, usually this is simply all database columns for a row
 		 */
 		protected array $data = [];
 
@@ -24,7 +24,7 @@ namespace Database {
 		 * entities, and identify primary key + table.
 		 * @return string
 		 */
-		abstract protected static function getKeyField() : string;
+		abstract protected static function getKeyField(): string;
 
 		/**
 		 * Subclasses must define getTableName
@@ -32,20 +32,20 @@ namespace Database {
 		 * entities, and identify primary key + table.
 		 * @return string
 		 */
-		abstract protected static function getTableName() : string;
+		abstract protected static function getTableName(): string;
 
 		/**
-		* Loads a given entity, usually by an ID. Instantiates a new if none given.
-		*
-		* @param mixed $data Can be either an array of existing data or an entity ID to load.
-		* @param ?array $allowedFields Fields allowed to be set as data
-		* @return void
-		*/
+		 * Loads a given entity, usually by an ID. Instantiates a new if none given.
+		 *
+		 * @param mixed $data Can be either an array of existing data or an entity ID to load.
+		 * @param null|array $allowedFields Fields allowed to be set as data
+		 * @return void
+		 */
 		public function __construct(mixed $data = null, ?array $allowedFields = null) {
-			if(gettype($data) === "string" || gettype($data) === "integer") {
+			if (gettype($data) === "string" || gettype($data) === "integer") {
 				$keyField = static::getKeyField();
-				$exists = Connection::getInstance()->fetchRow($this->getTableName(), [$keyField => $data]);
-				$data = (array)$exists;
+				$exists = Connection::getInstance()->fetchRow(static::getTableName(), [$keyField => $data]);
+				$data = (array) $exists;
 			}
 
 			$this->set($data, $allowedFields);
@@ -56,7 +56,7 @@ namespace Database {
 		*
 		* @return string
 		*/
-		public function __toString() : string {
+		public function __toString(): string {
 			$result = get_class($this)."(".$this->key."):\n";
 			foreach ($this->data as $key => $value) {
 				$result .= " [".$key."] ".$value."\n";
@@ -71,7 +71,7 @@ namespace Database {
 		* @param mixed $value A value to set
 		* @return void
 		*/
-		public function __set(string $name, $value) {
+		public function __set(string $name, mixed $value) {
 			$this->data[$name] = $value;
 		}
 
@@ -80,10 +80,11 @@ namespace Database {
 		 * This is required together with __get for
 		 * to support 'array_column' in \Database\Collection::getColumn
 		 *
+		 * @param string $name Name of the data index to check.
 		 * @since 3.3.0
 		 * @return bool
 		 */
-		public function __isset($name) : bool {
+		public function __isset(string $name): bool {
 			return isset($this->data[$name]);
 		}
 
@@ -102,11 +103,11 @@ namespace Database {
 		* Saves the entity to a long term storage.
 		* Empty strings are converted to null values
 		*
-		* @throws \Throwable
+		* @throws \BadMethodCallException If attempting to do an insert and data array is empty.
 		* @return mixed if a new entity was just inserted, returns the primary key for that entity, otherwise the current data is returned
 		*/
 		#[\ReturnTypeWillChange]
-		public function save() : mixed {
+		public function save(): mixed {
 			if($this->exists() === true) {
 				Connection::getInstance()->update($this->getTableName(), $this->data, $this->getKeyFilter());
 				return $this->data;
@@ -122,7 +123,7 @@ namespace Database {
 		 * 
 		 * @return Statement
 		 */
-		public function upsert() : Statement {
+		public function upsert(): Statement {
 			return Connection::getInstance()->upsert($this->getTableName(), $this->data);
 		}
 
@@ -131,7 +132,7 @@ namespace Database {
 		*
 		* @return int Number of rows affected
 		*/
-		public function delete() : int {
+		public function delete(): int {
 			return Connection::getInstance()->delete($this->getTableName(), $this->getKeyFilter());
 		}
 
@@ -141,7 +142,7 @@ namespace Database {
 		* @param string $key Key of the data value to retrieve
 		* @return ?string A html friendly string
 		*/
-		public function safe(string $key) : ?string {
+		public function safe(string $key): ?string {
 			$data = $this->get($key);
 
 			if($data === null) return null;
@@ -150,20 +151,19 @@ namespace Database {
 		}
 
 		/**
-		* Load one or more ID's into entities
-		*
-		* @param mixed $rows an array of ID's or a single ID to load
-		* @param bool $indexByIDs If loading multiple ID's set this to true, to index the resulting array by entity IDs
-		* @return Collection|Entity The loaded entities or a single if no array was provided
-		* @throws \TypeError
-		*/
-		public static function load(mixed $rows, bool $indexByIDs = true) : Collection|Entity {
+		 * Load one or more ID's into entities
+		 *
+		 * @param mixed $rows an array of ID's or a single ID to load
+		 * @param bool $indexByIDs If loading multiple ID's set this to true, to index the resulting array by entity IDs
+		 * @return Collection|Entity The loaded entities or a single if no array was provided
+		 */
+		public static function load(mixed $rows, bool $indexByIDs = true): Collection|Entity {
 			$class = static::class;
 
-			if(is_iterable($rows)) {
+			if (is_iterable($rows)) {
 				$objects = [];
 
-				foreach($rows as $i => $row) {
+				foreach ($rows as $i => $row) {
 					$instance = new $class($row);
 					$index = $indexByIDs ? $instance->id() : $i;
 					$objects[$index] = $instance;
@@ -179,11 +179,11 @@ namespace Database {
 		 * Performs a search of the given criteria
 		 *
 		 * @param array $searches Sets of expressions to match. e.g. 'filepath LIKE :filepath'
-		 * @param ?array $criteria Criteria variables for the search sets
+		 * @param null|array $criteria Criteria variables for the search sets
 		 * @return Collection|Entity
 		 * @since 3.3.0
 		 */
-		public static function search(array $searches = [], ?array $criteria = null) : Collection|Entity {
+		public static function search(array $searches = [], ?array $criteria = null): Collection|Entity {
 			$rows = Connection::getInstance()->search(static::getTableName(), $searches, $criteria);
 			return self::load($rows);
 		}
@@ -191,10 +191,10 @@ namespace Database {
 		/**
 		 * Loads an entity from a given field and value
 		 * @param string $field The database column/field to match
-		 * @param string $value The value that $field is to be matched against
+		 * @param mixed $value The value that $field is to be matched against
 		 * @return Entity
 		 */
-		public static function from(string $field, mixed $value) : Entity {
+		public static function from(string $field, mixed $value): Entity {
 			$row = Connection::getInstance()->fetchRow(static::getTableName(), [$field => $value]);
 			return new static($row);
 		}
@@ -203,7 +203,7 @@ namespace Database {
 		 * Creates a new instance of any given entity
 		 * @return Entity
 		 */
-		public static function new() : Entity {
+		public static function new(): Entity {
 			return new static;
 		}
 
@@ -211,10 +211,10 @@ namespace Database {
 		* Sets ones or more properties to a given value.
 		*
 		* @param null|array|object $data key => value pairs of values to set
-		* @param ?array $allowedFields keys of fields allowed to be altered
+		* @param null|array $allowedFields keys of fields allowed to be altered
 		* @return Entity The current entity instance
 		*/
-		public function set(null|array|object $data = null, ?array $allowedFields = null) : Entity {
+		public function set(null|array|object $data = null, ?array $allowedFields = null): Entity {
 			if($data !== null) {
 				// Convert object to array
 				// So we can merge it later
@@ -251,7 +251,7 @@ namespace Database {
 		*
 		* @return array
 		*/
-		public function getData() : array {
+		public function getData(): array {
 			return $this->data;
 		}
 
@@ -261,7 +261,7 @@ namespace Database {
 		* @param string $key key name of the value to retrieve.
 		* @return mixed
 		*/
-		public function get(string $key) {
+		public function get(string $key): mixed {
 			return $this->data[$key] ?? null;
 		}
 
@@ -271,7 +271,7 @@ namespace Database {
 		 * @param string $key key name of the value to retrieve
 		 * @return mixed
 		 */
-		public function shift(string $key) {
+		public function shift(string $key): mixed {
 			$data = $this->get($key);
 
 			if(array_key_exists($key, $data) === true) {
@@ -284,9 +284,9 @@ namespace Database {
 		/**
 		* Get the current value of key index
 		*
-		* @return mixed the key value
+		* @return int|string the key value
 		*/
-		public function getKey() {
+		public function getKey(): int|string {
 			return is_numeric($this->key) ? (int)$this->key : htmlspecialchars($this->key, ENT_QUOTES, "UTF-8");;
 		}
 
@@ -295,7 +295,7 @@ namespace Database {
 		*
 		* @return array A filter array
 		*/
-		public function getKeyFilter() : array {
+		public function getKeyFilter(): array {
 			return [static::getKeyField() => $this->key];
 		}
 
@@ -304,7 +304,7 @@ namespace Database {
 		*
 		* @return mixed A key value
 		*/
-		public function id() : mixed {
+		public function id(): mixed {
 			return $this->getKey();
 		}
 
@@ -313,7 +313,7 @@ namespace Database {
 		*
 		* @return bool
 		*/
-		public function exists() : bool {
+		public function exists(): bool {
 			return $this->key !== null;
 		}
 
@@ -322,7 +322,7 @@ namespace Database {
 		*
 		* @return bool
 		*/
-		public function isNew() : bool {
+		public function isNew(): bool {
 			return $this->getKey() === null;
 		}
 	}

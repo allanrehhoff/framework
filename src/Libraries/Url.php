@@ -21,11 +21,11 @@
 			$domainName = $_SERVER["HTTP_HOST"];
 			
 			// Add protocol and domain name to base URL
-			$baseurl .= $protocol . $domainName;
+			$baseurl .= $protocol.$domainName;
 			
 			// Add port number to base URL if it"s not the default
 			if($_SERVER["SERVER_PORT"] != ($protocol === "https://" ? 443 : 80)) {
-				$baseurl .= ":" . $_SERVER["SERVER_PORT"];
+				$baseurl .= ":".$_SERVER["SERVER_PORT"];
 			}
 			
 			// Add path to base URL
@@ -55,8 +55,8 @@
 		public static function redirect(string $location, string $xRedirectBy): void {
 			header("HTTP/1.1 302 Found");
 			header("Cache-Control: no-cache, must-revalidate");
-			header("X-Redirect-By: " . $xRedirectBy);
-			header("Location: " . $location);
+			header("X-Redirect-By: ".$xRedirectBy);
+			header("Location: ".$location);
 			exit;
 		}
 
@@ -85,7 +85,7 @@
 			if (isset($urlParts["user"])) {
 				$url .= $urlParts["user"];
 				if (isset($urlParts["pass"])) {
-					$url .= ":" . $urlParts["pass"];
+					$url .= ":".$urlParts["pass"];
 				}
 				$url .= "@";
 			}
@@ -93,7 +93,7 @@
 			$url .= $urlParts["host"];
 		
 			if (isset($urlParts["port"])) {
-				$url .= ":" . $urlParts["port"];
+				$url .= ":".$urlParts["port"];
 			}
 		
 			if (isset($urlParts["path"])) {
@@ -101,11 +101,11 @@
 			}
 		
 			if (isset($urlParts["query"])) {
-				$url .= "?" . $urlParts["query"];
+				$url .= "?".$urlParts["query"];
 			}
 		
 			if (isset($urlParts["fragment"])) {
-				$url .= "#" . $urlParts["fragment"];
+				$url .= "#".$urlParts["fragment"];
 			}
 		
 			return $url;

@@ -17,10 +17,10 @@ namespace Database {
 		/** @var object  The singleton instance of the this class. */
 		protected static $singletonInstance;
 
-		/** @var ?\PDO PDO Database handle */
+		/** @var null|\PDO PDO Database handle */
 		protected ?\PDO $dbh;
 
-		/** @var ?array Filters to prepare before querying */
+		/** @var null|array Filters to prepare before querying */
 		protected ?array $filters = [];
 
 		/** @var ?Statement Holds the last prepared statement after execution. */
@@ -77,32 +77,35 @@ namespace Database {
 		/**
 		 * Allow methods not implemented by this class to be called on the connection
 		 *
-		 * @throws \Exception
+		 * @param string $method Name of method being called.
+		 * @param string array $params Parameters being passed to method, default empty array.
+		 * @throws \BadMethodCallException If the method called does not exist on the client (PDO) object.
 		 * @since 1.3
 		 * @return mixed
 		 */
-		public function __call(string $method, array $params = []) : mixed {
+		public function __call(string $method, array $params = []): mixed {
 			if(method_exists($this, $method)) {
 				return call_user_func_array([$this, $method], $params);
 			} else {
-				throw new \Exception("PDO::".$method." no such method.");
+				throw new \BadMethodCallException("PDO::".$method." no such method.");
 			}
 		} 
 
 		/**
 		 * Does the actual connection
 		 *
-		 * @param string $hostname Hostname to connect to
-		 * @param string $username Username to use for authentication
-		 * @param string $password Password to use for authentication
-		 * @param string $database Name of the database to use
+		 * @param string $hostname Hostname to connect to.
+		 * @param string $username Username to use for authentication.
+		 * @param string $password Password to use for authentication.
+		 * @param string $database Name of the database to use.
 		 * @return Connection
 		 * @since 3.0
 		 */
-		public function connect(string $hostname, string $username, string $password, string $database) : Connection {
+		public function connect(string $hostname, string $username, string $password, string $database): Connection {
 			$this->dbh = new \PDO("mysql:host=".$hostname, $username, $password);
 			$this->dbh->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 			$this->dbh->setAttribute(\PDO::ATTR_STATEMENT_CLASS, ["Database\Statement", [$this]]);
+			$this->dbh->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
 
 			$this->use($database);
 
@@ -115,7 +118,7 @@ namespace Database {
 		 * @return void
 		 * @since 3.0
 		 */
-		public function close() {
+		public function close(): void {
 			$this->statement = null;
 			$this->dbh = null;
 		}
@@ -126,7 +129,7 @@ namespace Database {
 		 * @return Connection
 		 * @since 1.0
 		 */
-		public static function getInstance() : Connection {
+		public static function getInstance(): Connection {
 			return self::$singletonInstance;
 		}
 
@@ -137,16 +140,16 @@ namespace Database {
 		 * @since 1.0
 		 * @return Connection
 		 */
-		public function getConnection() : Connection {
+		public function getConnection(): Connection {
 			return $this;
 		}
 
 		/**
 		 * Switch database to use
-		 * @param string $database
+		 * @param string $database Name of the database to use
 		 * @return void
 		 */
-		public function use(string $database) : void {
+		public function use(string $database): void {
 			$this->query("USE ".$database);
 			$this->query("SET NAMES utf8mb4");
 
@@ -162,7 +165,7 @@ namespace Database {
 		 * @return boolean
 		 * @since 2.4
 		 */
-		public function beginTransaction() : bool {
+		public function beginTransaction(): bool {
 			return $this->transactionStarted = $this->dbh->beginTransaction();
 		}
 
@@ -173,18 +176,18 @@ namespace Database {
 		 * @return boolean
 		 * @since 1.3
 		 */
-		public function transaction() : bool {
+		public function transaction(): bool {
 			return $this->beginTransaction();
 		}
 
 		/**
 		 * Commits a transaction, returning the database connection to autocommit mode.
 		 *
-		 * @throws \PDOException
+		 * @throws \PDOException On failure to commit the query.
 		 * @return boolean
 		 * @since 1.3
 		 */
-		public function commit() : bool {
+		public function commit(): bool {
 			if($this->transactionStarted === true) {
 				return $this->dbh->commit();
 			} else {
@@ -195,11 +198,11 @@ namespace Database {
 		/**
 		 * Rolls back the current transaction
 		 *
-		 * @throws \PDOException
+		 * @throws \PDOException When attempting a rollback while not in a transaction.
 		 * @return boolean
 		 * @since 1.3
 		 */
-		public function rollback() : bool {
+		public function rollback(): bool {
 			if($this->transactionStarted === true) {
 				return $this->dbh->rollBack();
 			} else {
@@ -212,11 +215,11 @@ namespace Database {
 		 *
 		 * @param string $sql The parameterized SQL string to query against the database
 		 * @param array $driverOptions Arguments to pass along with the query
-		 * @throws \PDOException
+		 * @throws \PDOException On failure to prepare statement.
 		 * @return Statement|false Returns a prepared SQL statement, instance of Database\Statement, false on failure
 		 * @since 2.3
 		 */
-		public function prepare(string $sql, array $driverOptions = []) : Statement|false {
+		public function prepare(string $sql, array $driverOptions = []): Statement|false {
 			// if a filter value is an array we'll create an IN syntax
 			if(!empty($this->filters)) {
 				foreach($this->filters as $column => $filter) {
@@ -273,10 +276,10 @@ namespace Database {
 		 * @param array $filters Arguments to pass along with the query.
 		 * @param int $fetchMode Set fetch mode for the query performed. Must be one of PDO::FETCH_* default is PDO::FETCH_OBJECT
 		 * @since 1.0 
-		 * @throws \PDOException
+		 * @throws \PDOException On error if PDO::ERRMODE_EXCEPTION option is true.
 		 * @return Statement
 		 */
-		public function query(string $sql, ?array $filters = null, int $fetchMode = \PDO::FETCH_OBJ) : Statement {
+		public function query(string $sql, ?array $filters = null, int $fetchMode = \PDO::FETCH_OBJ): Statement {
 			try {
 				$this->filters 	 = $filters;
 
@@ -297,9 +300,11 @@ namespace Database {
 		/**
 		 * Count total number rows in a column
 		 *
-		 * @return int
+		 * @param string $table Name of the table containing the rows to be counted
+		 * @param array $criteria Criteria used to filter the rows.
+		 * @return int Number of row count
 		 */
-		public function count(string $table, ?array $criteria = null) : int {
+		public function count(string $table, ?array $criteria = null): int {
 			$sql = "SELECT * FROM `".$this->safeTable($table)."`";
 
 			if($criteria != null) {
@@ -318,7 +323,7 @@ namespace Database {
 		 * @return ?\stdClass Returns the first row in the result set, false upon failure.
 		 * @since 1.0
 		 */
-		public function fetchRow(string $table, ?array $criteria = null) : ?\stdClass {
+		public function fetchRow(string $table, ?array $criteria = null): ?\stdClass {
 			return $this->select($table, $criteria)->getFirst();
 		}
 
@@ -331,16 +336,19 @@ namespace Database {
 		 * @return mixed Returns a single column from the next row of a result set or FALSE if there are no rows.
 		 * @since 1.0
 		 */
-		public function fetchCell(string $table, string $column, ?array $criteria = null) {
+		public function fetchCell(string $table, string $column, ?array $criteria = null): mixed {
 			return $this->select($table, $criteria)->getColumn($column)[0] ?? null;
 		}
 
 		/**
 		* Alias of \Database\Connection::fetchCell implemented for the drupal developers sake.
 		*
-		* @see \Database\Connection::fetchCell() to fetch a single cell
+		* @deprecated Use fetchCell instead.  
+		* @param mixed ...$args See fetchCell.
+		* @return mixed Returns a single column from the next row of a result set or FALSE if there are no rows.
+		* @since 1.0
 		*/
-		public function fetchField(...$args) {
+		public function fetchField(mixed ...$args): mixed {
 			return $this->fetchCell(...$args);
 		}
 
@@ -352,7 +360,7 @@ namespace Database {
 		 * @return Collection
 		 * @since 1.0
 		 */
-		public function select(string $table, ?array $criteria = null) : Collection {
+		public function select(string $table, ?array $criteria = null): Collection {
 			$sql = "SELECT * FROM ".$this->safeTable($table)." WHERE ".$this->keysToSql($criteria, "AND");
 			return new Collection($this->query($sql, $criteria)->fetchAll());
 		}
@@ -362,11 +370,11 @@ namespace Database {
 		 * 
 		 * @param string $table Name of the table to search
 		 * @param array $searches Sets of expressions to match. e.g. 'filepath LIKE :filepath'
-		 * @param ?array $criteria Criteria variables for the search sets
+		 * @param null|array $criteria Criteria variables for the search sets
 		 * @return Collection
 		 * @since 3.1.3
 		 */
-		public function search(string $table, array $searches = [], ?array $criteria = null) : Collection {
+		public function search(string $table, array $searches = [], ?array $criteria = null): Collection {
 			$sql = "SELECT * FROM ".$this->safeTable($table)." WHERE ".implode(" AND ", $searches);
 			return new Collection($this->query($sql, $criteria)->fetchAll());
 		}
@@ -375,10 +383,10 @@ namespace Database {
 		 * Inserts multiple rows in a single query
 		 * 
 		 * @param string $table Table to insert into
-		 * @param ?array $variables Multidimensional with associative sub-arrays to insert
+		 * @param null|array $variables Multidimensional with associative sub-arrays to insert
 		 * @return Statement
 		 */
-		public function insertMultiple(string $table, ?array $variables = null) : Statement {
+		public function insertMultiple(string $table, ?array $variables = null): Statement {
 			$binds = [];
 			$values = [];
 
@@ -404,11 +412,11 @@ namespace Database {
 		 * Inserts a row in the given table.
 		 *
 		 * @param string $table Name of the table to insert the row in
-		 * @param array $variables Column => Value pairs to be inserted
+		 * @param null|array $variables Column => Value pairs to be inserted
 		 * @return int The last inserted ID
 		 * @since 1.0
 		 */
-		public function insert(string $table, ?array $variables = null) : int {
+		public function insert(string $table, ?array $variables = null): int {
 			$sql = $this->createRowSql("INSERT", $table, $variables);
 			$this->query($sql, $variables);
 			return (int) $this->dbh->lastInsertId();
@@ -419,11 +427,11 @@ namespace Database {
 		 * Already existing rows with matching PRIMARY key or UNIQUE index are deleted and then re-inserted.
 		 *
 		 * @param string $table Name of the table to replace into
-		 * @param array $variables Column => Value pairs to be inserted
+		 * @param null|array $variables Column => Value pairs to be inserted
 		 * @return int The last inserted ID
 		 * @since 1.0
 		 */
-		public function replace(string $table, ?array $variables = null) : int {
+		public function replace(string $table, ?array $variables = null): int {
 			$sql = $this->createRowSql("REPLACE", $table, $variables);
 			$this->query($sql, $variables);
 			return (int) $this->dbh->lastInsertId();
@@ -433,11 +441,11 @@ namespace Database {
 		 * Update or insert row, uses ON DUPLICATE KEY syntax
 		 * 
 		 * @param string $table Table to update or insert again
-		 * @param ?array $variables column => value pairs to insert/update
+		 * @param null|array $variables column => value pairs to insert/update
 		 * @return Statement
 		 * @since 3.2.0
 		 */
-		public function upsert(string $table, ?array $variables = null) : Statement {
+		public function upsert(string $table, ?array $variables = null): Statement {
 			$updates = [];
 			foreach($variables as $column => $value) $updates[] = '`' . $column . '` = VALUES(' . $column . ')';
 			$sql = $this->createRowSql("INSERT", $table, $variables) . " ON DUPLICATE KEY UPDATE " . implode(',', $updates);
@@ -450,11 +458,11 @@ namespace Database {
 		 *
 		 * @param string $table Name of the table to update rows in
 		 * @param array $variables Column => Value pairs containg the new values for the row
-		 * @param array $criteria Array of criterie for updating a row
+		 * @param null|array $criteria Array of criterie for updating a row
 		 * @return int Number of affected rows
 		 * @since 1.0
 		 */
-		public function update(string $table, ?array $variables, ?array $criteria = null) : int {
+		public function update(string $table, ?array $variables, ?array $criteria = null): int {
 			$args = [];
 
 			foreach($variables as $key => $value) $args["new_".$key] = $value;
@@ -468,11 +476,11 @@ namespace Database {
 		 * Delete rows from the given table by criteria.
 		 *
 		 * @param string $table Table to delete rows from
-		 * @param array $criteria Criteria for deletion
+		 * @param null|array $criteria Criteria for deletion
 		 * @return int Number of rows affected.
 		 * @since 1.0
 		 */
-		public function delete(string $table, ?array $criteria = null) : int {
+		public function delete(string $table, ?array $criteria = null): int {
 			$sql = "DELETE FROM `".$this->safeTable($table)."` WHERE ".$this->keysToSql($criteria, " AND");
 			return $this->query($sql, $criteria)->rowCount();
 		}
@@ -482,11 +490,11 @@ namespace Database {
 		 *
 		 * @param string $type SQL operator to with the INTO can be either INSERT or REPLACE
 		 * @param string $table Table to insert/replace the row in.
-		 * @param array $variables Column => Value pairs to insert.
+		 * @param null|array $variables Column => Value pairs to insert.
 		 * @return string The last inserted ID
 		 * @since 1.0
 		 */
-		private function createRowSql(string $type, string $table, ?array $variables = null) : string {
+		private function createRowSql(string $type, string $table, ?array $variables = null): string {
 			$binds = [];
 			$variables = $variables ?? [];
 
@@ -503,13 +511,13 @@ namespace Database {
 		 * Internal function to convert column=>value pairs into SQL.
 		 * If a parameter value is an array, it will be treated as such, using the IN operator.
 		 *
-		 * @param array $array Array of arguments to parse (You sure yet that it's an array?)
+		 * @param null|array $array Array of arguments to parse (You sure yet that it's an array?)
 		 * @param string $seperator String seperator to seperate the pairs with
 		 * @param string $variablePrefix string to use for prefixing values in the SQL
 		 * @return string
 		 * @since 1.0
 		 */
-		private function keysToSql(?array $array, string $seperator, string $variablePrefix = "") : string {
+		private function keysToSql(?array $array, string $seperator, string $variablePrefix = ""): string {
 			if ($array == null) return "1";
 
 			$list = [];
@@ -530,16 +538,25 @@ namespace Database {
 		}
 
 		/**
-		 * Debugging prepared statements can be severely painful, use this as you would with \Database\Connection::query(); to output the resulting SQL
+		 * Debugging prepared statements can be severely painful,
+		 * use this in place of, or in conjunction with, \Database\Connection::query(); to output the resulting SQL.
 		 * Replaces any parameter placeholders in a query with the corrosponding value that parameter.
 		 * Assumes anonymous parameters from $params are are in the same order as specified in $query
+		 * 
+		 * IMPORTANT :
+		 * 	This function must not be used in a production environment for constructing queries to be executed
+		 * 	Doing so opens up your application to SQL injection vulnerabilities.
 		 *
 		 * @param string $query A parameterized SQL query
 		 * @param array $filters Parameters for $query
 		 * @return string The interpolated query.
 		 * @since 2.4
 		 */
-		public function debugQuery(string $query, array $filters) : string {
+		public function debugQuery(string $query, array $filters): string {
+			$emulatePepares = $this->dbh->getAttribute(\PDO::ATTR_EMULATE_PREPARES);
+
+			$this->dbh->setAttribute(\PDO::ATTR_EMULATE_PREPARES, true);
+
 			$this->filters 	 = $filters;
 			$statement = $this->prepare($query);
 
@@ -564,6 +581,8 @@ namespace Database {
 				$tmpFilters[$arg] = $value;
 			}
 
+			$this->dbh->setAttribute(\PDO::ATTR_EMULATE_PREPARES, $emulatePepares);
+
 			return strtr($statement->queryString, $tmpFilters);
 		}
 
@@ -576,24 +595,27 @@ namespace Database {
 		 * @return string
 		 * @since 1.1
 		 */
-		public function interpolateQuery(string $query, array $filters) : string {
+		public function interpolateQuery(string $query, array $filters): string {
 			return $this->debugQuery($query, $filters);
 		}
 
 		/**
 		 * Get the last inserted ID
 		 *
+		 * @param mixed $seqname (optional) Name of the sequence object from which the ID should be returned.
 		 * @return string|false Returns the ID of the last inserted row or sequence value 
+		 * @throws \PDOException On error if PDO::ERRMODE_EXCEPTION option is true.
 		 * @since 1.0
 		 */
-		public function lastInsertId($seqname = null) : string|false {
+		public function lastInsertId(mixed $seqname = null): string|false {
 			return $this->dbh->lastInsertId($seqname);
 		}
 
 		/**
 		 * Checks if table name is safe and returns it.
+		 * @param string $table Table name to assert exists
 		 * @return string $table The table name to check
-		 * @throws \InvalidArgumentException
+		 * @throws \InvalidArgumentException If table name provided does not exists.
 		 */
 		public function safeTable(string $table) {
 			if(($this->tables[$table] ?? null) === null) {
