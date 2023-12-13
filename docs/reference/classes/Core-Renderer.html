@@ -84,6 +84,10 @@
     <a href="packages/Application.html" class="">Application</a>
 </h4>
 
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/Database.html" class="">Database</a>
+</h4>
+
                         </section>
             
     <section class="phpdocumentor-sidebar__category">
@@ -122,12 +126,14 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Core/Renderer.php"><a href="files/src-libraries-core-renderer.html"><abbr title="src/Libraries/Core/Renderer.php">Renderer.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">7</span>
+    <span class="phpdocumentor-element-found-in__line">13</span>
 
     </aside>
 
-        
-    <section class="phpdocumentor-description"></section>
+            <p class="phpdocumentor-summary">Class Renderer</p>
+
+    <section class="phpdocumentor-description"><p>The Renderer class is responsible for rendering views based on the given Template, in other words: Theme, and ContentType.</p>
+</section>
 
 
 
@@ -161,14 +167,14 @@
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
-<dd></dd>
+<dd>Renderer constructor.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Core-Renderer.html#method_render">render()</a>
     <span>
-                                &nbsp;: mixed    </span>
+                                &nbsp;: void    </span>
 </dt>
-<dd></dd>
+<dd>Renders the given response.</dd>
 
         </dl>
 
@@ -198,7 +204,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Core/Renderer.php"><a href="files/src-libraries-core-renderer.html"><abbr title="src/Libraries/Core/Renderer.php">Renderer.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">9</span>
+    <span class="phpdocumentor-element-found-in__line">22</span>
 
     </aside>
 
@@ -209,9 +215,9 @@
     <span class="phpdocumentor-signature__name">$iContentType</span>
     </code>
 
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
+    
+        <section class="phpdocumentor-description"><p>The content type used for rendering output.</p>
+</section>
 
     
 
@@ -232,7 +238,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Core/Renderer.php"><a href="files/src-libraries-core-renderer.html"><abbr title="src/Libraries/Core/Renderer.php">Renderer.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">8</span>
+    <span class="phpdocumentor-element-found-in__line">17</span>
 
     </aside>
 
@@ -243,9 +249,9 @@
     <span class="phpdocumentor-signature__name">$iTemplate</span>
     </code>
 
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
+    
+        <section class="phpdocumentor-description"><p>The template engine used for rendering views.</p>
+</section>
 
     
 
@@ -270,17 +276,17 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Core/Renderer.php"><a href="files/src-libraries-core-renderer.html"><abbr title="src/Libraries/Core/Renderer.php">Renderer.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">11</span>
+    <span class="phpdocumentor-element-found-in__line">30</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Renderer constructor.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Core-Template.html"><abbr title="\Core\Template">Template</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$iTemplate</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Core-ContentType-ContentType.html"><abbr title="\Core\ContentType\ContentType">ContentType</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$iContentType</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -288,7 +294,8 @@
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Core-Template.html"><abbr title="\Core\Template">Template</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
+                    <section class="phpdocumentor-description"><p>The template engine used for rendering views.</p>
+</section>
 
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
@@ -296,7 +303,8 @@
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Core-ContentType-ContentType.html"><abbr title="\Core\ContentType\ContentType">ContentType</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
+                    <section class="phpdocumentor-description"><p>The content type used for rendering output.</p>
+</section>
 
             </dd>
             </dl>
@@ -322,17 +330,17 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Core/Renderer.php"><a href="files/src-libraries-core-renderer.html"><abbr title="src/Libraries/Core/Renderer.php">Renderer.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">16</span>
+    <span class="phpdocumentor-element-found-in__line">41</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Renders the given response.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">render</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Core-Response.html"><abbr title="\Core\Response">Response</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$iResponse</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">render</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Core-Response.html"><abbr title="\Core\Response">Response</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$iResponse</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -340,7 +348,8 @@
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Core-Response.html"><abbr title="\Core\Response">Response</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
+                    <section class="phpdocumentor-description"><p>The response to be rendered.</p>
+</section>
 
             </dd>
             </dl>
@@ -348,7 +357,7 @@
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">mixed</span>
+    <span class="phpdocumentor-signature__response_type">void</span>
             &mdash;
         
     

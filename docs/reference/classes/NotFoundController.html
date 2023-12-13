@@ -84,6 +84,10 @@
     <a href="packages/Application.html" class="">Application</a>
 </h4>
 
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/Database.html" class="">Database</a>
+</h4>
+
                         </section>
             
     <section class="phpdocumentor-sidebar__category">
@@ -229,9 +233,9 @@
                                 &nbsp;: mixed    </span>
 </dt>
 <dd>Notify of backwards compatibility breakages when setting data
-When accessing an array using the $this-&gt;data[&quot;key] = &quot;value&quot; syntax,
+When accessing an array using the $this-&gt;data[&quot;key&quot;] = &quot;value&quot; syntax,
 it actually goes through __get(); instead of __set();
-This is because it is the array stored in $this-&gt;data that is being modified rather than the class memb</dd>
+This is because it is the array stored in $this-&gt;data that is being modified rather than the class member</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Controller.html#method_getApplication">getApplication()</a>
@@ -250,7 +254,7 @@ This is because it is the array stored in $this-&gt;data that is being modified 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Controller.html#method_getParent">getParent()</a>
     <span>
-                                &nbsp;: <a href="classes/Controller.html"><abbr title="\Controller">Controller</abbr></a>    </span>
+                                &nbsp;: null|<a href="classes/Controller.html"><abbr title="\Controller">Controller</abbr></a>    </span>
 </dt>
 <dd>Get current parent controller instance</dd>
 
@@ -285,7 +289,7 @@ This is because it is the array stored in $this-&gt;data that is being modified 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/NotFoundController.html#method_index">index()</a>
     <span>
-                                &nbsp;: mixed    </span>
+                                &nbsp;: void    </span>
 </dt>
 <dd>Constructs an indicates the path wasn&#039;t found</dd>
 
@@ -299,7 +303,7 @@ This is because it is the array stored in $this-&gt;data that is being modified 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Controller.html#method_setParent">setParent()</a>
     <span>
-                                &nbsp;: mixed    </span>
+                                &nbsp;: void    </span>
 </dt>
 <dd>Set current controllers parent.</dd>
 
@@ -669,7 +673,7 @@ This is because it is the array stored in $this-&gt;data that is being modified 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Controller.php"><a href="files/src-libraries-controller.html"><abbr title="src/Libraries/Controller.php">Controller.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">68</span>
+    <span class="phpdocumentor-element-found-in__line">70</span>
 
     </aside>
 
@@ -677,7 +681,7 @@ This is because it is the array stored in $this-&gt;data that is being modified 
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Core-Application.html"><abbr title="\Core\Application">Application</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$iApplication</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Controller.html"><abbr title="\Controller">Controller</abbr></a>|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$iController</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Core-Application.html"><abbr title="\Core\Application">Application</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$iApplication</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">null|<a href="classes/Controller.html"><abbr title="\Controller">Controller</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$iController</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -687,14 +691,17 @@ This is because it is the array stored in $this-&gt;data that is being modified 
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Core-Application.html"><abbr title="\Core\Application">Application</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>The application class invoking this controller.</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$iController</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Controller.html"><abbr title="\Controller">Controller</abbr></a>|null</span>
+                : <span class="phpdocumentor-signature__argument__return-type">null|<a href="classes/Controller.html"><abbr title="\Controller">Controller</abbr></a></span>
                  = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
+                    <section class="phpdocumentor-description"><p>The parent controller, if this controller is a child, null if it's the top-level controller</p>
+</section>
 
             </dd>
             </dl>
@@ -720,14 +727,14 @@ This is because it is the array stored in $this-&gt;data that is being modified 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Controller.php"><a href="files/src-libraries-controller.html"><abbr title="src/Libraries/Controller.php">Controller.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">110</span>
+    <span class="phpdocumentor-element-found-in__line">114</span>
 
     </aside>
 
         <p class="phpdocumentor-summary">Notify of backwards compatibility breakages when setting data
-When accessing an array using the $this-&gt;data[&quot;key] = &quot;value&quot; syntax,
+When accessing an array using the $this-&gt;data[&quot;key&quot;] = &quot;value&quot; syntax,
 it actually goes through __get(); instead of __set();
-This is because it is the array stored in $this-&gt;data that is being modified rather than the class memb</p>
+This is because it is the array stored in $this-&gt;data that is being modified rather than the class member</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -741,7 +748,8 @@ This is because it is the array stored in $this-&gt;data that is being modified 
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
+                    <section class="phpdocumentor-description"><p>Property being accessed</p>
+</section>
 
             </dd>
             </dl>
@@ -767,7 +775,7 @@ This is because it is the array stored in $this-&gt;data that is being modified 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Controller.php"><a href="files/src-libraries-controller.html"><abbr title="src/Libraries/Controller.php">Controller.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">170</span>
+    <span class="phpdocumentor-element-found-in__line">175</span>
 
     </aside>
 
@@ -799,7 +807,7 @@ This is because it is the array stored in $this-&gt;data that is being modified 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Controller.php"><a href="files/src-libraries-controller.html"><abbr title="src/Libraries/Controller.php">Controller.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">156</span>
+    <span class="phpdocumentor-element-found-in__line">161</span>
 
     </aside>
 
@@ -832,7 +840,7 @@ This is because it is the array stored in $this-&gt;data that is being modified 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Controller.php"><a href="files/src-libraries-controller.html"><abbr title="src/Libraries/Controller.php">Controller.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">147</span>
+    <span class="phpdocumentor-element-found-in__line">152</span>
 
     </aside>
 
@@ -840,14 +848,14 @@ This is because it is the array stored in $this-&gt;data that is being modified 
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__final">final</span>            <span class="phpdocumentor-signature__name">getParent</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Controller.html"><abbr title="\Controller">Controller</abbr></a></span></code>
+        <span class="phpdocumentor-signature__final">final</span>            <span class="phpdocumentor-signature__name">getParent</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">null|<a href="classes/Controller.html"><abbr title="\Controller">Controller</abbr></a></span></code>
 
     
     
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Controller.html"><abbr title="\Controller">Controller</abbr></a></span>
+    <span class="phpdocumentor-signature__response_type">null|<a href="classes/Controller.html"><abbr title="\Controller">Controller</abbr></a></span>
             &mdash;
             <section class="phpdocumentor-description"><p>The current parent controller instance, will be null for the root controller.</p>
 </section>
@@ -867,7 +875,7 @@ This is because it is the array stored in $this-&gt;data that is being modified 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Controller.php"><a href="files/src-libraries-controller.html"><abbr title="src/Libraries/Controller.php">Controller.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">184</span>
+    <span class="phpdocumentor-element-found-in__line">189</span>
 
     </aside>
 
@@ -899,7 +907,7 @@ This is because it is the array stored in $this-&gt;data that is being modified 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Controller.php"><a href="files/src-libraries-controller.html"><abbr title="src/Libraries/Controller.php">Controller.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">191</span>
+    <span class="phpdocumentor-element-found-in__line">196</span>
 
     </aside>
 
@@ -931,7 +939,7 @@ This is because it is the array stored in $this-&gt;data that is being modified 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Controller.php"><a href="files/src-libraries-controller.html"><abbr title="src/Libraries/Controller.php">Controller.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">177</span>
+    <span class="phpdocumentor-element-found-in__line">182</span>
 
     </aside>
 
@@ -963,7 +971,7 @@ This is because it is the array stored in $this-&gt;data that is being modified 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Controller.php"><a href="files/src-libraries-controller.html"><abbr title="src/Libraries/Controller.php">Controller.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">163</span>
+    <span class="phpdocumentor-element-found-in__line">168</span>
 
     </aside>
 
@@ -995,7 +1003,7 @@ This is because it is the array stored in $this-&gt;data that is being modified 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Controllers/NotFoundController.php"><a href="files/src-controllers-notfoundcontroller.html"><abbr title="src/Controllers/NotFoundController.php">NotFoundController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">11</span>
+    <span class="phpdocumentor-element-found-in__line">12</span>
 
     </aside>
 
@@ -1003,14 +1011,14 @@ This is because it is the array stored in $this-&gt;data that is being modified 
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">index</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">index</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
     
     
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">mixed</span>
+    <span class="phpdocumentor-signature__response_type">void</span>
             &mdash;
         
     
@@ -1028,7 +1036,7 @@ This is because it is the array stored in $this-&gt;data that is being modified 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Controller.php"><a href="files/src-libraries-controller.html"><abbr title="src/Libraries/Controller.php">Controller.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">122</span>
+    <span class="phpdocumentor-element-found-in__line">126</span>
 
     </aside>
 
@@ -1061,7 +1069,7 @@ This is because it is the array stored in $this-&gt;data that is being modified 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Controller.php"><a href="files/src-libraries-controller.html"><abbr title="src/Libraries/Controller.php">Controller.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">138</span>
+    <span class="phpdocumentor-element-found-in__line">143</span>
 
     </aside>
 
@@ -1069,7 +1077,7 @@ This is because it is the array stored in $this-&gt;data that is being modified 
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__final">final</span>            <span class="phpdocumentor-signature__name">setParent</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Controller.html"><abbr title="\Controller">Controller</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$iController</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+        <span class="phpdocumentor-signature__final">final</span>            <span class="phpdocumentor-signature__name">setParent</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Controller.html"><abbr title="\Controller">Controller</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$iController</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -1088,7 +1096,7 @@ This is because it is the array stored in $this-&gt;data that is being modified 
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">mixed</span>
+    <span class="phpdocumentor-signature__response_type">void</span>
             &mdash;
         
     

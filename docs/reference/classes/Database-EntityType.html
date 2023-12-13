@@ -84,6 +84,10 @@
     <a href="packages/Application.html" class="">Application</a>
 </h4>
 
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/Database.html" class="">Database</a>
+</h4>
+
                         </section>
             
     <section class="phpdocumentor-sidebar__category">
@@ -125,11 +129,11 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Database/EntityType.php"><a href="files/src-libraries-database-entitytype.html"><abbr title="src/Libraries/Database/EntityType.php">EntityType.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">11</span>
+    <span class="phpdocumentor-element-found-in__line">15</span>
 
     </aside>
 
-            <p class="phpdocumentor-summary">Represents a CRUD&#039;able entity.</p>
+            <p class="phpdocumentor-summary">Class EntityType</p>
 
 
 
@@ -153,6 +157,13 @@
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -private">
+    <a href="classes/Database-Entity.html#property_instanceCache">$instanceCache</a>
+    <span>
+                        &nbsp;: array&lt;string|int, mixed&gt;            </span>
+</dt>
+<dd>All loaded entities will br stored for the remainder of the request</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a href="classes/Database-Entity.html#property_key">$key</a>
     <span>
                         &nbsp;: mixed            </span>
@@ -164,7 +175,7 @@
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd>Loads a given entity, usually by an ID. Instantiates a new if none given.</dd>
+<dd>Loads a given entity and populates it with the given data.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Database-Entity.html#method___get">__get()</a>
@@ -213,9 +224,9 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</dd>
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Database-Entity.html#method_from">from()</a>
     <span>
-                                &nbsp;: <a href="classes/Database-Entity.html"><abbr title="\Database\Entity">Entity</abbr></a>    </span>
+                                &nbsp;: static    </span>
 </dt>
-<dd>Loads an entity from a given field and value</dd>
+<dd>Queries database for a given entity by the value of its primary key.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Database-Entity.html#method_get">get()</a>
@@ -234,7 +245,7 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</dd>
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Database-Entity.html#method_getKey">getKey()</a>
     <span>
-                                &nbsp;: mixed    </span>
+                                &nbsp;: int|string    </span>
 </dt>
 <dd>Get the current value of key index</dd>
 
@@ -262,9 +273,9 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</dd>
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Database-Entity.html#method_load">load()</a>
     <span>
-                                &nbsp;: <a href="classes/Database-Collection.html"><abbr title="\Database\Collection">Collection</abbr></a>|<a href="classes/Database-Entity.html"><abbr title="\Database\Entity">Entity</abbr></a>    </span>
+                                &nbsp;: <a href="classes/Database-Collection.html"><abbr title="\Database\Collection">Collection</abbr></a>|static    </span>
 </dt>
-<dd>Load one or more ID&#039;s into entities</dd>
+<dd>Loads up one or more entities with given data.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Database-Entity.html#method_new">new()</a>
@@ -276,28 +287,28 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</dd>
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Database-Entity.html#method_safe">safe()</a>
     <span>
-                                &nbsp;: string|null    </span>
+                                &nbsp;: null|string    </span>
 </dt>
 <dd>Make a given value safe for insertion, could prevent future XSS injections</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Database-Entity.html#method_save">save()</a>
     <span>
-                                &nbsp;: mixed    </span>
+                                &nbsp;: int|string|static    </span>
 </dt>
 <dd>Saves the entity to a long term storage.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Database-Entity.html#method_search">search()</a>
     <span>
-                                &nbsp;: <a href="classes/Database-Collection.html"><abbr title="\Database\Collection">Collection</abbr></a>|<a href="classes/Database-Entity.html"><abbr title="\Database\Entity">Entity</abbr></a>    </span>
+                                &nbsp;: <a href="classes/Database-Collection.html"><abbr title="\Database\Collection">Collection</abbr></a>|static    </span>
 </dt>
 <dd>Performs a search of the given criteria</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Database-Entity.html#method_set">set()</a>
     <span>
-                                &nbsp;: <a href="classes/Database-Entity.html"><abbr title="\Database\Entity">Entity</abbr></a>    </span>
+                                &nbsp;: static    </span>
 </dt>
 <dd>Sets ones or more properties to a given value.</dd>
 
@@ -320,18 +331,14 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</dd>
     <span>
                                 &nbsp;: string    </span>
 </dt>
-<dd>Subclasses must define getKeyField
-&#039;late static binding&#039; will be used to load
-entities, and identify primary key + table.</dd>
+<dd>The primary key of the table this entity interacts with</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a href="classes/Database-EntityType.html#method_getTableName">getTableName()</a>
     <span>
                                 &nbsp;: string    </span>
 </dt>
-<dd>Subclasses must define getTableName
-&#039;late static binding&#039; will be used to load
-entities, and identify primary key + table.</dd>
+<dd>The table name this entity interacts with</dd>
 
         </dl>
 
@@ -361,7 +368,7 @@ entities, and identify primary key + table.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Database/Entity.php"><a href="files/src-libraries-database-entity.html"><abbr title="src/Libraries/Database/Entity.php">Entity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">19</span>
+    <span class="phpdocumentor-element-found-in__line">26</span>
 
     </aside>
 
@@ -373,10 +380,58 @@ entities, and identify primary key + table.</dd>
      = <span class="phpdocumentor-signature__default-value">[]</span></code>
 
     
-        <section class="phpdocumentor-description"><p>General data for this entity, usually this is simply all  database columns for a row</p>
+        <section class="phpdocumentor-description"><p>General data for this entity, usually this is simply all database columns for a row</p>
 </section>
 
     
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -private
+            -static                                            "
+>
+    <h4 class="phpdocumentor-element__name" id="property_instanceCache">
+        $instanceCache
+        <a href="classes/Database-Entity.html#property_instanceCache" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Database/Entity.php"><a href="files/src-libraries-database-entity.html"><abbr title="src/Libraries/Database/Entity.php">Entity.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">16</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">All loaded entities will br stored for the remainder of the request</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+    <span class="phpdocumentor-signature__static">static</span>    <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
+    <span class="phpdocumentor-signature__name">$instanceCache</span>
+     = <span class="phpdocumentor-signature__default-value">[]</span></code>
+
+    
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>v5.0.0</p>
+</section>
+
+                                    </dd>
+                        </dl>
 
 </article>
                     <article
@@ -395,7 +450,7 @@ entities, and identify primary key + table.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Database/Entity.php"><a href="files/src-libraries-database-entity.html"><abbr title="src/Libraries/Database/Entity.php">Entity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">14</span>
+    <span class="phpdocumentor-element-found-in__line">21</span>
 
     </aside>
 
@@ -433,17 +488,19 @@ entities, and identify primary key + table.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Database/Entity.php"><a href="files/src-libraries-database-entity.html"><abbr title="src/Libraries/Database/Entity.php">Entity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">44</span>
+    <span class="phpdocumentor-element-found-in__line">52</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Loads a given entity, usually by an ID. Instantiates a new if none given.</p>
+        <p class="phpdocumentor-summary">Loads a given entity and populates it with the given data.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$allowedFields</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">null|array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$allowedFields</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-    
+        <section class="phpdocumentor-description"><p>Use static::from(); to load a new entity by its primary key.</p>
+</section>
+
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -457,10 +514,10 @@ entities, and identify primary key + table.</dd>
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$allowedFields</span>
-                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;|null</span>
+                : <span class="phpdocumentor-signature__argument__return-type">null|array&lt;string|int, mixed&gt;</span>
                  = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>Fields allowed to be set as data</p>
+                    <section class="phpdocumentor-description"><p>Fields allowed to be set as data.</p>
 </section>
 
             </dd>
@@ -487,7 +544,7 @@ entities, and identify primary key + table.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Database/Entity.php"><a href="files/src-libraries-database-entity.html"><abbr title="src/Libraries/Database/Entity.php">Entity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">96</span>
+    <span class="phpdocumentor-element-found-in__line">99</span>
 
     </aside>
 
@@ -534,7 +591,7 @@ entities, and identify primary key + table.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Database/Entity.php"><a href="files/src-libraries-database-entity.html"><abbr title="src/Libraries/Database/Entity.php">Entity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">86</span>
+    <span class="phpdocumentor-element-found-in__line">89</span>
 
     </aside>
 
@@ -544,17 +601,18 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">__isset</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$name</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+                    <span class="phpdocumentor-signature__name">__isset</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$name</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$name</span>
-                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
+                    <section class="phpdocumentor-description"><p>Name of the data index to check.</p>
+</section>
 
             </dd>
             </dl>
@@ -594,7 +652,7 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Database/Entity.php"><a href="files/src-libraries-database-entity.html"><abbr title="src/Libraries/Database/Entity.php">Entity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">74</span>
+    <span class="phpdocumentor-element-found-in__line">76</span>
 
     </aside>
 
@@ -648,7 +706,7 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Database/Entity.php"><a href="files/src-libraries-database-entity.html"><abbr title="src/Libraries/Database/Entity.php">Entity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">59</span>
+    <span class="phpdocumentor-element-found-in__line">61</span>
 
     </aside>
 
@@ -681,7 +739,7 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Database/Entity.php"><a href="files/src-libraries-database-entity.html"><abbr title="src/Libraries/Database/Entity.php">Entity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">134</span>
+    <span class="phpdocumentor-element-found-in__line">141</span>
 
     </aside>
 
@@ -716,7 +774,7 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Database/Entity.php"><a href="files/src-libraries-database-entity.html"><abbr title="src/Libraries/Database/Entity.php">Entity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">316</span>
+    <span class="phpdocumentor-element-found-in__line">336</span>
 
     </aside>
 
@@ -749,34 +807,25 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Database/Entity.php"><a href="files/src-libraries-database-entity.html"><abbr title="src/Libraries/Database/Entity.php">Entity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">197</span>
+    <span class="phpdocumentor-element-found-in__line">165</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Loads an entity from a given field and value</p>
+        <p class="phpdocumentor-summary">Queries database for a given entity by the value of its primary key.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">from</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$field</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$value</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Database-Entity.html"><abbr title="\Database\Entity">Entity</abbr></a></span></code>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">from</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$identifier</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">static</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$field</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                <span class="phpdocumentor-signature__argument__name">$identifier</span>
+                : <span class="phpdocumentor-signature__argument__return-type">int|string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The database column/field to match</p>
-</section>
-
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$value</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The value that $field is to be matched against</p>
+                    <section class="phpdocumentor-description"><p>The value of the entity's primary key.</p>
 </section>
 
             </dd>
@@ -785,9 +834,11 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</p>
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Database-Entity.html"><abbr title="\Database\Entity">Entity</abbr></a></span>
+    <span class="phpdocumentor-signature__response_type">static</span>
             &mdash;
-        
+            <section class="phpdocumentor-description"><p>The loaded entity, empty entity if not exists</p>
+</section>
+
     
 </article>
                     <article
@@ -803,7 +854,7 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Database/Entity.php"><a href="files/src-libraries-database-entity.html"><abbr title="src/Libraries/Database/Entity.php">Entity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">264</span>
+    <span class="phpdocumentor-element-found-in__line">284</span>
 
     </aside>
 
@@ -848,7 +899,7 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Database/Entity.php"><a href="files/src-libraries-database-entity.html"><abbr title="src/Libraries/Database/Entity.php">Entity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">254</span>
+    <span class="phpdocumentor-element-found-in__line">274</span>
 
     </aside>
 
@@ -881,7 +932,7 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Database/Entity.php"><a href="files/src-libraries-database-entity.html"><abbr title="src/Libraries/Database/Entity.php">Entity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">289</span>
+    <span class="phpdocumentor-element-found-in__line">309</span>
 
     </aside>
 
@@ -889,14 +940,14 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getKey</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">getKey</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int|string</span></code>
 
     
     
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">mixed</span>
+    <span class="phpdocumentor-signature__response_type">int|string</span>
             &mdash;
             <section class="phpdocumentor-description"><p>the key value</p>
 </section>
@@ -916,7 +967,7 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Database/Entity.php"><a href="files/src-libraries-database-entity.html"><abbr title="src/Libraries/Database/Entity.php">Entity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">298</span>
+    <span class="phpdocumentor-element-found-in__line">318</span>
 
     </aside>
 
@@ -951,7 +1002,7 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Database/Entity.php"><a href="files/src-libraries-database-entity.html"><abbr title="src/Libraries/Database/Entity.php">Entity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">307</span>
+    <span class="phpdocumentor-element-found-in__line">327</span>
 
     </aside>
 
@@ -986,7 +1037,7 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Database/Entity.php"><a href="files/src-libraries-database-entity.html"><abbr title="src/Libraries/Database/Entity.php">Entity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">325</span>
+    <span class="phpdocumentor-element-found-in__line">345</span>
 
     </aside>
 
@@ -1019,17 +1070,20 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Database/Entity.php"><a href="files/src-libraries-database-entity.html"><abbr title="src/Libraries/Database/Entity.php">Entity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">160</span>
+    <span class="phpdocumentor-element-found-in__line">191</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Load one or more ID&#039;s into entities</p>
+        <p class="phpdocumentor-summary">Loads up one or more entities with given data.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">load</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$rows</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$indexByIDs</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">true</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Database-Collection.html"><abbr title="\Database\Collection">Collection</abbr></a>|<a href="classes/Database-Entity.html"><abbr title="\Database\Entity">Entity</abbr></a></span></code>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">load</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$rows</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$indexByIDs</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">true</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Database-Collection.html"><abbr title="\Database\Collection">Collection</abbr></a>|static</span></code>
 
-    
+        <section class="phpdocumentor-description"><p>It is assumed the data to populate with is already fetched elsewhere.
+e.g. by the use of static::search();</p>
+</section>
+
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -1053,23 +1107,9 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</p>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                <span class="phpdocumentor-tag-link"><abbr title="\TypeError">TypeError</abbr></span>
-                                                            
-                                             
-                                    </dd>
-                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Database-Collection.html"><abbr title="\Database\Collection">Collection</abbr></a>|<a href="classes/Database-Entity.html"><abbr title="\Database\Entity">Entity</abbr></a></span>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/Database-Collection.html"><abbr title="\Database\Collection">Collection</abbr></a>|static</span>
             &mdash;
             <section class="phpdocumentor-description"><p>The loaded entities or a single if no array was provided</p>
 </section>
@@ -1089,7 +1129,7 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Database/Entity.php"><a href="files/src-libraries-database-entity.html"><abbr title="src/Libraries/Database/Entity.php">Entity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">206</span>
+    <span class="phpdocumentor-element-found-in__line">226</span>
 
     </aside>
 
@@ -1122,7 +1162,7 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Database/Entity.php"><a href="files/src-libraries-database-entity.html"><abbr title="src/Libraries/Database/Entity.php">Entity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">144</span>
+    <span class="phpdocumentor-element-found-in__line">151</span>
 
     </aside>
 
@@ -1130,7 +1170,7 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">safe</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
+                    <span class="phpdocumentor-signature__name">safe</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">null|string</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -1149,7 +1189,7 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</p>
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string|null</span>
+    <span class="phpdocumentor-signature__response_type">null|string</span>
             &mdash;
             <section class="phpdocumentor-description"><p>A html friendly string</p>
 </section>
@@ -1169,7 +1209,7 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Database/Entity.php"><a href="files/src-libraries-database-entity.html"><abbr title="src/Libraries/Database/Entity.php">Entity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">108</span>
+    <span class="phpdocumentor-element-found-in__line">111</span>
 
     </aside>
 
@@ -1177,7 +1217,7 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">save</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">save</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int|string|static</span></code>
 
         <section class="phpdocumentor-description"><p>Empty strings are converted to null values</p>
 </section>
@@ -1193,14 +1233,16 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</p>
                     <span class="phpdocumentor-tag__name">throws</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                                                <span class="phpdocumentor-tag-link"><abbr title="\Throwable">Throwable</abbr></span>
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\BadMethodCallException">BadMethodCallException</abbr></span>
                                                             
-                                             
+                                                 <section class="phpdocumentor-description"><p>If attempting to do an insert and data array is empty.</p>
+</section>
+
                                     </dd>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">mixed</span>
+    <span class="phpdocumentor-signature__response_type">int|string|static</span>
             &mdash;
             <section class="phpdocumentor-description"><p>if a new entity was just inserted, returns the primary key for that entity, otherwise the current data is returned</p>
 </section>
@@ -1220,7 +1262,7 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Database/Entity.php"><a href="files/src-libraries-database-entity.html"><abbr title="src/Libraries/Database/Entity.php">Entity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">186</span>
+    <span class="phpdocumentor-element-found-in__line">217</span>
 
     </aside>
 
@@ -1228,7 +1270,7 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">search</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$searches</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$criteria</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Database-Collection.html"><abbr title="\Database\Collection">Collection</abbr></a>|<a href="classes/Database-Entity.html"><abbr title="\Database\Entity">Entity</abbr></a></span></code>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">search</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$searches</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">null|array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$criteria</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Database-Collection.html"><abbr title="\Database\Collection">Collection</abbr></a>|static</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -1244,7 +1286,7 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</p>
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$criteria</span>
-                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;|null</span>
+                : <span class="phpdocumentor-signature__argument__return-type">null|array&lt;string|int, mixed&gt;</span>
                  = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>Criteria variables for the search sets</p>
@@ -1270,7 +1312,7 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</p>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Database-Collection.html"><abbr title="\Database\Collection">Collection</abbr></a>|<a href="classes/Database-Entity.html"><abbr title="\Database\Entity">Entity</abbr></a></span>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/Database-Collection.html"><abbr title="\Database\Collection">Collection</abbr></a>|static</span>
             &mdash;
         
     
@@ -1288,7 +1330,7 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Database/Entity.php"><a href="files/src-libraries-database-entity.html"><abbr title="src/Libraries/Database/Entity.php">Entity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">217</span>
+    <span class="phpdocumentor-element-found-in__line">237</span>
 
     </aside>
 
@@ -1296,7 +1338,7 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">set</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">null|array&lt;string|int, mixed&gt;|object&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$allowedFields</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Database-Entity.html"><abbr title="\Database\Entity">Entity</abbr></a></span></code>
+                    <span class="phpdocumentor-signature__name">set</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">null|array&lt;string|int, mixed&gt;|object&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">null|array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$allowedFields</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">static</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -1312,7 +1354,7 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</p>
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$allowedFields</span>
-                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;|null</span>
+                : <span class="phpdocumentor-signature__argument__return-type">null|array&lt;string|int, mixed&gt;</span>
                  = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>keys of fields allowed to be altered</p>
@@ -1324,7 +1366,7 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</p>
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Database-Entity.html"><abbr title="\Database\Entity">Entity</abbr></a></span>
+    <span class="phpdocumentor-signature__response_type">static</span>
             &mdash;
             <section class="phpdocumentor-description"><p>The current entity instance</p>
 </section>
@@ -1344,7 +1386,7 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Database/Entity.php"><a href="files/src-libraries-database-entity.html"><abbr title="src/Libraries/Database/Entity.php">Entity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">274</span>
+    <span class="phpdocumentor-element-found-in__line">294</span>
 
     </aside>
 
@@ -1389,7 +1431,7 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Database/Entity.php"><a href="files/src-libraries-database-entity.html"><abbr title="src/Libraries/Database/Entity.php">Entity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">125</span>
+    <span class="phpdocumentor-element-found-in__line">132</span>
 
     </aside>
 
@@ -1422,13 +1464,11 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Database/EntityType.php"><a href="files/src-libraries-database-entitytype.html"><abbr title="src/Libraries/Database/EntityType.php">EntityType.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">12</span>
+    <span class="phpdocumentor-element-found-in__line">20</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Subclasses must define getKeyField
-&#039;late static binding&#039; will be used to load
-entities, and identify primary key + table.</p>
+        <p class="phpdocumentor-summary">The primary key of the table this entity interacts with</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
@@ -1457,13 +1497,11 @@ entities, and identify primary key + table.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Database/EntityType.php"><a href="files/src-libraries-database-entitytype.html"><abbr title="src/Libraries/Database/EntityType.php">EntityType.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">13</span>
+    <span class="phpdocumentor-element-found-in__line">26</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Subclasses must define getTableName
-&#039;late static binding&#039; will be used to load
-entities, and identify primary key + table.</p>
+        <p class="phpdocumentor-summary">The table name this entity interacts with</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>

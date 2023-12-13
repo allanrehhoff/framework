@@ -8,17 +8,17 @@ Search.appendIndex(
         },                {
             "fqsen": "\\CliController\u003A\u003Aindex\u0028\u0029",
             "name": "index",
-            "summary": "Controllers\u0020should\u0020declare\u0020this\u0020function\u0020instead\u0020of\u0020a\u0020constructor.",
+            "summary": "\/cli\/index",
             "url": "classes/CliController.html#method_index"
         },                {
             "fqsen": "\\CliController\u003A\u003Ainterface\u0028\u0029",
             "name": "interface",
-            "summary": "",
+            "summary": "\/cli\/interface",
             "url": "classes/CliController.html#method_interface"
         },                {
             "fqsen": "\\CliController\u003A\u003AmyMethod\u0028\u0029",
             "name": "myMethod",
-            "summary": "",
+            "summary": "\/cli\/my\u002Dmethod",
             "url": "classes/CliController.html#method_myMethod"
         },                {
             "fqsen": "\\FooterController",
@@ -28,7 +28,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\FooterController\u003A\u003Aindex\u0028\u0029",
             "name": "index",
-            "summary": "Controllers\u0020should\u0020declare\u0020this\u0020function\u0020instead\u0020of\u0020a\u0020constructor.",
+            "summary": "Default\u0020entry\u0020point\u0020for\u0020footer\u0020partial",
             "url": "classes/FooterController.html#method_index"
         },                {
             "fqsen": "\\ForbiddenController",
@@ -38,7 +38,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\ForbiddenController\u003A\u003Aindex\u0028\u0029",
             "name": "index",
-            "summary": "Constructs\u0020an\u0020indicates\u0020the\u0020path\u0020was\u0020not\u0020allowed",
+            "summary": "Constructs\u0020an\u0020indicates\u0020the\u0020path\u0020was\u0020not\u0020allowed.",
             "url": "classes/ForbiddenController.html#method_index"
         },                {
             "fqsen": "\\HeaderController",
@@ -48,7 +48,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\HeaderController\u003A\u003Aindex\u0028\u0029",
             "name": "index",
-            "summary": "Controllers\u0020should\u0020declare\u0020this\u0020function\u0020instead\u0020of\u0020a\u0020constructor.",
+            "summary": "Default\u0020entry\u0020point\u0020for\u0020the\u0020header\u0020partial",
             "url": "classes/HeaderController.html#method_index"
         },                {
             "fqsen": "\\HeaderController\u003A\u003AgetBodyTagClasses\u0028\u0029",
@@ -63,7 +63,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\IndexController\u003A\u003Aindex\u0028\u0029",
             "name": "index",
-            "summary": "Controllers\u0020should\u0020declare\u0020this\u0020function\u0020instead\u0020of\u0020a\u0020constructor.",
+            "summary": "Default\u0020configured\u0020entry\u0020point\u0020for\u0020application",
             "url": "classes/IndexController.html#method_index"
         },                {
             "fqsen": "\\NotFoundController",
@@ -78,7 +78,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Configuration",
             "name": "Configuration",
-            "summary": "Parses\u0020a\u0020JSONC\u0020file,\u0020and\u0020let\u0027s\u0020you\u0020access\u0020properties\u0020using\u0020a\u0020dot\u0020syntax\nalso\u0020supports\u0020.jsonc\u0020files",
+            "summary": "Parses\u0020a\u0020JSONC\u0020file,\u0020and\u0020lets\u0020you\u0020access\u0020properties\u0020using\u0020a\u0020dot\u0020syntax\nalso\u0020supports\u0020.jsonc\u0020files",
             "url": "classes/Configuration.html"
         },                {
             "fqsen": "\\Configuration\u003A\u003A__construct\u0028\u0029",
@@ -193,7 +193,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Controller\u003A\u003A__get\u0028\u0029",
             "name": "__get",
-            "summary": "Notify\u0020of\u0020backwards\u0020compatibility\u0020breakages\u0020when\u0020setting\u0020data\nWhen\u0020accessing\u0020an\u0020array\u0020using\u0020the\u0020\u0024this\u002D\u003Edata\u005B\u0022key\u005D\u0020\u003D\u0020\u0022value\u0022\u0020syntax,\nit\u0020actually\u0020goes\u0020through\u0020__get\u0028\u0029\u003B\u0020instead\u0020of\u0020__set\u0028\u0029\u003B\nThis\u0020is\u0020because\u0020it\u0020is\u0020the\u0020array\u0020stored\u0020in\u0020\u0024this\u002D\u003Edata\u0020that\u0020is\u0020being\u0020modified\u0020rather\u0020than\u0020the\u0020class\u0020memb",
+            "summary": "Notify\u0020of\u0020backwards\u0020compatibility\u0020breakages\u0020when\u0020setting\u0020data\nWhen\u0020accessing\u0020an\u0020array\u0020using\u0020the\u0020\u0024this\u002D\u003Edata\u005B\u0022key\u0022\u005D\u0020\u003D\u0020\u0022value\u0022\u0020syntax,\nit\u0020actually\u0020goes\u0020through\u0020__get\u0028\u0029\u003B\u0020instead\u0020of\u0020__set\u0028\u0029\u003B\nThis\u0020is\u0020because\u0020it\u0020is\u0020the\u0020array\u0020stored\u0020in\u0020\u0024this\u002D\u003Edata\u0020that\u0020is\u0020being\u0020modified\u0020rather\u0020than\u0020the\u0020class\u0020member",
             "url": "classes/Controller.html#method___get"
         },                {
             "fqsen": "\\Controller\u003A\u003Aoutput\u0028\u0029",
@@ -313,7 +313,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Core\\Application\u003A\u003AgetControllerPath\u0028\u0029",
             "name": "getControllerPath",
-            "summary": "Get\u0020path\u0020to\u0020the\u0020specified\u0020controller\u0020file.\u0020Ommit\u0020the\u0020.php\u0020extension",
+            "summary": "Get\u0020path\u0020to\u0020the\u0020specified\u0020controller\u0020file.\u0020Omit\u0020the\u0020.php\u0020extension",
             "url": "classes/Core-Application.html#method_getControllerPath"
         },                {
             "fqsen": "\\Core\\Application\u003A\u003AgetRouter\u0028\u0029",
@@ -328,7 +328,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Core\\Application\u003A\u003Arun\u0028\u0029",
             "name": "run",
-            "summary": "Dispatches\u0020a\u0020controller,\u0020based\u0020upon\u0020the\u0020requeted\u0020path.",
+            "summary": "Dispatches\u0020a\u0020controller,\u0020based\u0020upon\u0020the\u0020requested\u0020path.",
             "url": "classes/Core-Application.html#method_run"
         },                {
             "fqsen": "\\Core\\Application\u003A\u003A\u0024executedClassName",
@@ -443,17 +443,17 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Core\\Renderer",
             "name": "Renderer",
-            "summary": "",
+            "summary": "Class\u0020Renderer",
             "url": "classes/Core-Renderer.html"
         },                {
             "fqsen": "\\Core\\Renderer\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "",
+            "summary": "Renderer\u0020constructor.",
             "url": "classes/Core-Renderer.html#method___construct"
         },                {
             "fqsen": "\\Core\\Renderer\u003A\u003Arender\u0028\u0029",
             "name": "render",
-            "summary": "",
+            "summary": "Renders\u0020the\u0020given\u0020response.",
             "url": "classes/Core-Renderer.html#method_render"
         },                {
             "fqsen": "\\Core\\Renderer\u003A\u003A\u0024iTemplate",
@@ -718,62 +718,62 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Database\\Collection",
             "name": "Collection",
-            "summary": "",
+            "summary": "Class\u0020Collection",
             "url": "classes/Database-Collection.html"
         },                {
             "fqsen": "\\Database\\Collection\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "Constructor",
+            "summary": "Collection\u0020constructor.",
             "url": "classes/Database-Collection.html#method___construct"
         },                {
             "fqsen": "\\Database\\Collection\u003A\u003AgetFirst\u0028\u0029",
             "name": "getFirst",
-            "summary": "Get\u0020first\u0020element\u0020of\u0020collection\nReturns\u0020null\u0020if\u0020collection\u0020is\u0020empty",
+            "summary": "Get\u0020the\u0020first\u0020element\u0020of\u0020the\u0020collection.",
             "url": "classes/Database-Collection.html#method_getFirst"
         },                {
             "fqsen": "\\Database\\Collection\u003A\u003AgetLast\u0028\u0029",
             "name": "getLast",
-            "summary": "Get\u0020first\u0020element\u0020of\u0020collection\nReturns\u0020null\u0020if\u0020collection\u0020is\u0020empty",
+            "summary": "Get\u0020the\u0020last\u0020element\u0020of\u0020the\u0020collection.",
             "url": "classes/Database-Collection.html#method_getLast"
         },                {
             "fqsen": "\\Database\\Collection\u003A\u003Acount\u0028\u0029",
             "name": "count",
-            "summary": "Coutn\u0020the\u0020number\u0020of\u0020elements\u0020in\u0020this\u0020collection",
+            "summary": "Count\u0020the\u0020number\u0020of\u0020elements\u0020in\u0020this\u0020collection.",
             "url": "classes/Database-Collection.html#method_count"
         },                {
             "fqsen": "\\Database\\Collection\u003A\u003AgetColumn\u0028\u0029",
             "name": "getColumn",
-            "summary": "Get\u0020the\u0020values\u0020of\u0020a\u0020given\u0020key\u0020as\u0020a\u0020collection",
+            "summary": "Get\u0020the\u0020values\u0020of\u0020a\u0020given\u0020key\u0020as\u0020a\u0020collection.",
             "url": "classes/Database-Collection.html#method_getColumn"
         },                {
             "fqsen": "\\Database\\Collection\u003A\u003AisEmpty\u0028\u0029",
             "name": "isEmpty",
-            "summary": "Tell\u0020whether\u0020the\u0020collection\u0020is\u0020empty\u0020or\u0020not",
+            "summary": "Check\u0020whether\u0020the\u0020collection\u0020is\u0020empty\u0020or\u0020not.",
             "url": "classes/Database-Collection.html#method_isEmpty"
         },                {
             "fqsen": "\\Database\\Collection\u003A\u003Arewind\u0028\u0029",
             "name": "rewind",
-            "summary": "Rewind\u0020the\u0020collection\u0020array\u0020back\u0020to\u0020the\u0020start",
+            "summary": "Rewind\u0020the\u0020collection\u0020array\u0020back\u0020to\u0020the\u0020start.",
             "url": "classes/Database-Collection.html#method_rewind"
         },                {
             "fqsen": "\\Database\\Collection\u003A\u003Acurrent\u0028\u0029",
             "name": "current",
-            "summary": "Get\u0020object\u0020object\u0020at\u0020current\u0020position",
+            "summary": "Get\u0020the\u0020object\u0020at\u0020the\u0020current\u0020position.",
             "url": "classes/Database-Collection.html#method_current"
         },                {
             "fqsen": "\\Database\\Collection\u003A\u003Akey\u0028\u0029",
             "name": "key",
-            "summary": "Get\u0020current\u0020position",
+            "summary": "Get\u0020the\u0020current\u0020position.",
             "url": "classes/Database-Collection.html#method_key"
         },                {
             "fqsen": "\\Database\\Collection\u003A\u003Anext\u0028\u0029",
             "name": "next",
-            "summary": "Advance\u0020the\u0020internal\u0020cursor\u0020of\u0020an\u0020array",
+            "summary": "Advance\u0020the\u0020internal\u0020cursor\u0020of\u0020an\u0020array.",
             "url": "classes/Database-Collection.html#method_next"
         },                {
             "fqsen": "\\Database\\Collection\u003A\u003Avalid\u0028\u0029",
             "name": "valid",
-            "summary": "Check\u0020whether\u0020the\u0020collection\u0020contains\u0020more\u0020entries",
+            "summary": "Check\u0020whether\u0020the\u0020collection\u0020contains\u0020more\u0020entries.",
             "url": "classes/Database-Collection.html#method_valid"
         },                {
             "fqsen": "\\Database\\Collection\u003A\u003AoffsetExists\u0028\u0029",
@@ -953,7 +953,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Database\\Connection\u003A\u003AdebugQuery\u0028\u0029",
             "name": "debugQuery",
-            "summary": "Debugging\u0020prepared\u0020statements\u0020can\u0020be\u0020severely\u0020painful,\u0020use\u0020this\u0020as\u0020you\u0020would\u0020with\u0020\\Database\\Connection\u003A\u003Aquery\u0028\u0029\u003B\u0020to\u0020output\u0020the\u0020resulting\u0020SQL\nReplaces\u0020any\u0020parameter\u0020placeholders\u0020in\u0020a\u0020query\u0020with\u0020the\u0020corrosponding\u0020value\u0020that\u0020parameter.",
+            "summary": "Debugging\u0020prepared\u0020statements\u0020can\u0020be\u0020severely\u0020painful,\nuse\u0020this\u0020in\u0020place\u0020of,\u0020or\u0020in\u0020conjunction\u0020with,\u0020\\Database\\Connection\u003A\u003Aquery\u0028\u0029\u003B\u0020to\u0020output\u0020the\u0020resulting\u0020SQL.",
             "url": "classes/Database-Connection.html#method_debugQuery"
         },                {
             "fqsen": "\\Database\\Connection\u003A\u003AinterpolateQuery\u0028\u0029",
@@ -1043,7 +1043,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Database\\Entity\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "Loads\u0020a\u0020given\u0020entity,\u0020usually\u0020by\u0020an\u0020ID.\u0020Instantiates\u0020a\u0020new\u0020if\u0020none\u0020given.",
+            "summary": "Loads\u0020a\u0020given\u0020entity\u0020and\u0020populates\u0020it\u0020with\u0020the\u0020given\u0020data.",
             "url": "classes/Database-Entity.html#method___construct"
         },                {
             "fqsen": "\\Database\\Entity\u003A\u003A__toString\u0028\u0029",
@@ -1086,20 +1086,20 @@ Search.appendIndex(
             "summary": "Make\u0020a\u0020given\u0020value\u0020safe\u0020for\u0020insertion,\u0020could\u0020prevent\u0020future\u0020XSS\u0020injections",
             "url": "classes/Database-Entity.html#method_safe"
         },                {
+            "fqsen": "\\Database\\Entity\u003A\u003Afrom\u0028\u0029",
+            "name": "from",
+            "summary": "Queries\u0020database\u0020for\u0020a\u0020given\u0020entity\u0020by\u0020the\u0020value\u0020of\u0020its\u0020primary\u0020key.",
+            "url": "classes/Database-Entity.html#method_from"
+        },                {
             "fqsen": "\\Database\\Entity\u003A\u003Aload\u0028\u0029",
             "name": "load",
-            "summary": "Load\u0020one\u0020or\u0020more\u0020ID\u0027s\u0020into\u0020entities",
+            "summary": "Loads\u0020up\u0020one\u0020or\u0020more\u0020entities\u0020with\u0020given\u0020data.",
             "url": "classes/Database-Entity.html#method_load"
         },                {
             "fqsen": "\\Database\\Entity\u003A\u003Asearch\u0028\u0029",
             "name": "search",
             "summary": "Performs\u0020a\u0020search\u0020of\u0020the\u0020given\u0020criteria",
             "url": "classes/Database-Entity.html#method_search"
-        },                {
-            "fqsen": "\\Database\\Entity\u003A\u003Afrom\u0028\u0029",
-            "name": "from",
-            "summary": "Loads\u0020an\u0020entity\u0020from\u0020a\u0020given\u0020field\u0020and\u0020value",
-            "url": "classes/Database-Entity.html#method_from"
         },                {
             "fqsen": "\\Database\\Entity\u003A\u003Anew\u0028\u0029",
             "name": "new",
@@ -1151,6 +1151,11 @@ Search.appendIndex(
             "summary": "Determine\u0020if\u0020the\u0020loaded\u0020entity\u0020is\u0020new",
             "url": "classes/Database-Entity.html#method_isNew"
         },                {
+            "fqsen": "\\Database\\Entity\u003A\u003A\u0024instanceCache",
+            "name": "instanceCache",
+            "summary": "All\u0020loaded\u0020entities\u0020will\u0020br\u0020stored\u0020for\u0020the\u0020remainder\u0020of\u0020the\u0020request",
+            "url": "classes/Database-Entity.html#property_instanceCache"
+        },                {
             "fqsen": "\\Database\\Entity\u003A\u003A\u0024key",
             "name": "key",
             "summary": "",
@@ -1163,17 +1168,17 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Database\\EntityType",
             "name": "EntityType",
-            "summary": "Represents\u0020a\u0020CRUD\u0027able\u0020entity.",
+            "summary": "Class\u0020EntityType",
             "url": "classes/Database-EntityType.html"
         },                {
             "fqsen": "\\Database\\EntityType\u003A\u003AgetKeyField\u0028\u0029",
             "name": "getKeyField",
-            "summary": "Subclasses\u0020must\u0020define\u0020getKeyField\n\u0027late\u0020static\u0020binding\u0027\u0020will\u0020be\u0020used\u0020to\u0020load\nentities,\u0020and\u0020identify\u0020primary\u0020key\u0020\u002B\u0020table.",
+            "summary": "The\u0020primary\u0020key\u0020of\u0020the\u0020table\u0020this\u0020entity\u0020interacts\u0020with",
             "url": "classes/Database-EntityType.html#method_getKeyField"
         },                {
             "fqsen": "\\Database\\EntityType\u003A\u003AgetTableName\u0028\u0029",
             "name": "getTableName",
-            "summary": "Subclasses\u0020must\u0020define\u0020getTableName\n\u0027late\u0020static\u0020binding\u0027\u0020will\u0020be\u0020used\u0020to\u0020load\nentities,\u0020and\u0020identify\u0020primary\u0020key\u0020\u002B\u0020table.",
+            "summary": "The\u0020table\u0020name\u0020this\u0020entity\u0020interacts\u0020with",
             "url": "classes/Database-EntityType.html#method_getTableName"
         },                {
             "fqsen": "\\Database\\Statement",
@@ -1193,12 +1198,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Database\\Statement\u003A\u003Afetch\u0028\u0029",
             "name": "fetch",
-            "summary": "Fetches\u0020the\u0020next\u0020row\u0020from\u0020a\u0020result\u0020set\n\\PDOStatement\u003A\u003AfetchColumn\u0028\u0029\u003B\u0020will\u0020return\u0020false\nThis\u0020method\u0020will\u0020make\u0020sure\u0020NULL\u0020may\u0020be\u0020return\u0020instead",
+            "summary": "Fetches\u0020the\u0020next\u0020row\u0020from\u0020a\u0020result\u0020set.",
             "url": "classes/Database-Statement.html#method_fetch"
         },                {
             "fqsen": "\\Database\\Statement\u003A\u003AfetchColumn\u0028\u0029",
             "name": "fetchColumn",
-            "summary": "Fetch\u0020a\u0020column\u0020by\u0020numeric\u0020index\u0020from\u0020the\u0020resultset\n\\PDOStatement\u003A\u003AfetchColumn\u0028\u0029\u003B\u0020will\u0020return\u0020false\nThis\u0020method\u0020will\u0020make\u0020sure\u0020NULL\u0020may\u0020be\u0020return\u0020instead",
+            "summary": "Fetch\u0020a\u0020column\u0020by\u0020numeric\u0020index\u0020from\u0020the\u0020resultset.",
             "url": "classes/Database-Statement.html#method_fetchColumn"
         },                {
             "fqsen": "\\Debug",
@@ -1250,11 +1255,6 @@ Search.appendIndex(
             "name": "Singleton",
             "summary": "Class\u0020used\u0020to\u0020hold\u0020global\u0020state\u0020objects.",
             "url": "classes/Singleton.html"
-        },                {
-            "fqsen": "\\Singleton\u003A\u003A__callStatic\u0028\u0029",
-            "name": "__callStatic",
-            "summary": "Allow\u0020direct\u0020calling\u0020of\u0020aliases",
-            "url": "classes/Singleton.html#method___callStatic"
         },                {
             "fqsen": "\\Singleton\u003A\u003Aget\u0028\u0029",
             "name": "get",
@@ -1503,7 +1503,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Core\\ContentType\\Xml\u003A\u003Astream\u0028\u0029",
             "name": "stream",
-            "summary": "Render\u0020data\u0020as\u0020json",
+            "summary": "Render\u0020data\u0020as\u0020XML",
             "url": "classes/Core-ContentType-Xml.html#method_stream"
         },                {
             "fqsen": "\\Core\\Event",
@@ -1570,6 +1570,61 @@ Search.appendIndex(
             "name": "getClassName",
             "summary": "Returns\u0020a\u0020class\u0020shortname\u0020matching\u0020the\u0020name\nof\u0020the\u0020http\u0020error\u0020exception\u0020being\u0020thrown.",
             "url": "classes/Core-StatusCode-StatusCode.html#method_getClassName"
+        },                {
+            "fqsen": "\\Str",
+            "name": "Str",
+            "summary": "The\u0020Str\u0020class\u0020provides\u0020string\u0020manipulation\u0020methods.",
+            "url": "classes/Str.html"
+        },                {
+            "fqsen": "\\Str\u003A\u003Acontains\u0028\u0029",
+            "name": "contains",
+            "summary": "Check\u0020if\u0020a\u0020string\u0020contains\u0020another\u0020string\u0020\u0028case\u002Dsensitive\u0029.",
+            "url": "classes/Str.html#method_contains"
+        },                {
+            "fqsen": "\\Str\u003A\u003AcontainsIgnoreCase\u0028\u0029",
+            "name": "containsIgnoreCase",
+            "summary": "Check\u0020if\u0020a\u0020string\u0020contains\u0020another\u0020string\u0020\u0028case\u002Dinsensitive\u0029.",
+            "url": "classes/Str.html#method_containsIgnoreCase"
+        },                {
+            "fqsen": "\\Str\u003A\u003AstartsWith\u0028\u0029",
+            "name": "startsWith",
+            "summary": "Check\u0020if\u0020a\u0020string\u0020starts\u0020with\u0020another\u0020string\u0020\u0028case\u002Dsensitive\u0029.",
+            "url": "classes/Str.html#method_startsWith"
+        },                {
+            "fqsen": "\\Str\u003A\u003AstartsWithIgnoreCase\u0028\u0029",
+            "name": "startsWithIgnoreCase",
+            "summary": "Check\u0020if\u0020a\u0020string\u0020starts\u0020with\u0020another\u0020string\u0020\u0028case\u002Dinsensitive\u0029.",
+            "url": "classes/Str.html#method_startsWithIgnoreCase"
+        },                {
+            "fqsen": "\\Str\u003A\u003AendsWith\u0028\u0029",
+            "name": "endsWith",
+            "summary": "Check\u0020if\u0020a\u0020string\u0020ends\u0020with\u0020another\u0020string\u0020\u0028case\u002Dsensitive\u0029.",
+            "url": "classes/Str.html#method_endsWith"
+        },                {
+            "fqsen": "\\Str\u003A\u003AendsWithIgnoreCase\u0028\u0029",
+            "name": "endsWithIgnoreCase",
+            "summary": "Check\u0020if\u0020a\u0020string\u0020ends\u0020with\u0020another\u0020string\u0020\u0028case\u002Dinsensitive\u0029.",
+            "url": "classes/Str.html#method_endsWithIgnoreCase"
+        },                {
+            "fqsen": "\\Str\u003A\u003Atest\u0028\u0029",
+            "name": "test",
+            "summary": "Check\u0020if\u0020a\u0020string\u0020matches\u0020a\u0020given\u0020pattern\u0020\u0028case\u002Dsensitive\u0029.",
+            "url": "classes/Str.html#method_test"
+        },                {
+            "fqsen": "\\Str\u003A\u003Amatch\u0028\u0029",
+            "name": "match",
+            "summary": "Check\u0020if\u0020a\u0020string\u0020matches\u0020a\u0020given\u0020pattern\u0020\u0028case\u002Dsensitive\u0029.",
+            "url": "classes/Str.html#method_match"
+        },                {
+            "fqsen": "\\Str\u003A\u003AmatchAll\u0028\u0029",
+            "name": "matchAll",
+            "summary": "Match\u0020all\u0020occurrences\u0020of\u0020a\u0020pattern\u0020in\u0020a\u0020string.",
+            "url": "classes/Str.html#method_matchAll"
+        },                {
+            "fqsen": "\\Str\u003A\u003Aascii\u0028\u0029",
+            "name": "ascii",
+            "summary": "Attempt\u0020to\u0020replace\u0020Unicode\u0020characters\u0020with\u0020their\u0020ASCII\u0020counterparts\u0020using\u0020dynamic\u0020character\u0020encoding\u0020detection.",
+            "url": "classes/Str.html#method_ascii"
         },                {
             "fqsen": "\\",
             "name": "\\",
