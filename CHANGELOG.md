@@ -25,6 +25,7 @@ v8.0.0
 - New class \Core\Event();  
 - Support for responding with JSON or XML if the clients `Accept` signals a preference.  
 - New utility class \Str for string manipulation.  
+- Database library updated to latest version.  
 
 v7.2.1
 - Fix private and protected methods on controllers being call.  
