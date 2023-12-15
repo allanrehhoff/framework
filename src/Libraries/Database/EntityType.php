@@ -17,12 +17,12 @@ namespace Database {
 		 * The primary key of the table this entity interacts with
 		 * @return string
 		 */
-		protected static function getKeyField() : string { return "test_id"; }
+		public static function getPrimaryKey(): string { return "test_id"; }
 
 		/**
 		 * The table name this entity interacts with
 		 * @return string
 		 */
-		protected static function getTableName() : string { return "test_table"; }
+		public static function getTableName(): string { return "test_table"; }
 	}
 }

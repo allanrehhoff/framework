@@ -13,8 +13,8 @@
 			}
 		}
 	 *
-	 * Add this line to this file:
-	 * \Core\Event::triggeraddListener("controller.execute.before", UserRegistration::class);
+	 * Or use the class name
+	 * \Core\Event::addListener("controller.execute.before", UserRegistration::class);
 	 * 
 	 * Closures may also be passes
 	 * \Core\Event::triggeraddListener("controller.execute.before", fn(\User $iUser) => \EmailService::sendWelcomeEmail($iUser));

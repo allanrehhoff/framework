@@ -26,12 +26,12 @@ namespace Database {
 		protected array $data = [];
 
 		/**
-		 * Subclasses must define getKeyField
+		 * Subclasses must define getPrimaryKey
 		 * 'late static binding' will be used to load
 		 * entities, and identify primary key + table.
 		 * @return string
 		 */
-		abstract protected static function getKeyField(): string;
+		abstract public static function getPrimaryKey(): string;
 
 		/**
 		 * Subclasses must define getTableName
@@ -39,7 +39,7 @@ namespace Database {
 		 * entities, and identify primary key + table.
 		 * @return string
 		 */
-		abstract protected static function getTableName(): string;
+		abstract public static function getTableName(): string;
 
 		/**
 		 * Loads a given entity and populates it with the given data.
@@ -166,7 +166,7 @@ namespace Database {
 			$entityType = static::class;
 		
 			if (!isset(self::$instanceCache[$entityType][$identifier])) {
-				$keyField = static::getKeyField();
+				$keyField = static::getPrimaryKey();
 				$data = Connection::getInstance()->fetchRow(static::getTableName(), [$keyField => $identifier]);
 		
 				$instance = new static($data);
@@ -177,6 +177,18 @@ namespace Database {
 			}
 		
 			return self::$instanceCache[$entityType][$identifier] ?? new static();
+		}
+
+		/**
+		 * Attempts to find an entity from a given field and value
+		 * 
+		 * @param string $field The database column/field to match
+		 * @param int|string $value The value that $field is to be matched against
+		 * @return static
+		 */
+		public static function find(string $field, int|string $value) : static {
+			$row = Connection::getInstance()->fetchRow(static::getTableName(), [$field => $value]);
+			return new static($row);
 		}
 
 		/**
@@ -247,7 +259,7 @@ namespace Database {
 					$data[$key] = $value === '' ? null : $value;
 				}
 
-				$keyField = static::getKeyField();
+				$keyField = static::getPrimaryKey();
 
 				if(isset($data[$keyField])) {
 					$this->key = $data[$keyField];
@@ -302,30 +314,21 @@ namespace Database {
 		}
 
 		/**
-		* Get the current value of key index
-		*
-		* @return int|string the key value
-		*/
-		public function getKey(): int|string {
-			return is_numeric($this->key) ? (int)$this->key : htmlspecialchars($this->key, ENT_QUOTES, "UTF-8");;
-		}
-
-		/**
 		* Gets an array suitable for WHERE clauses in SQL statements
 		*
 		* @return array A filter array
 		*/
 		public function getKeyFilter(): array {
-			return [static::getKeyField() => $this->key];
+			return [static::getPrimaryKey() => $this->key];
 		}
 
 		/**
-		* Wrapper method for getKey();
+		* Get the current value of primary key index.
 		*
-		* @return mixed A key value
+		* @return int|string the key value
 		*/
-		public function id(): mixed {
-			return $this->getKey();
+		public function id(): int|string {
+			return is_numeric($this->key) ? (int)$this->key : htmlspecialchars($this->key, ENT_QUOTES, "UTF-8");;
 		}
 
 		/**
@@ -343,7 +346,7 @@ namespace Database {
 		* @return bool
 		*/
 		public function isNew(): bool {
-			return $this->getKey() === null;
+			return !$this->exists();
 		}
 	}
 }
