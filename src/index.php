@@ -11,15 +11,15 @@
 	require "Bootstrap/events.php";
 
 	// Global state objects
-	\Singleton::set(new \Configuration(STORAGE . "/config/application.jsonc"));
+	\Registry::set(new \Configuration(STORAGE . "/config/application.jsonc"));
 
-	\Singleton::set(new \Environment(APP_PATH . "/.env"));
+	\Registry::set(new \Environment(APP_PATH . "/.env"));
 
-	\Singleton::set(new \Database\Connection(
-		\Singleton::getConfiguration()->get("database.host"),
-		\Singleton::getConfiguration()->get("database.username"),
-		\Singleton::getConfiguration()->get("database.password"),
-		\Singleton::getConfiguration()->get("database.name")
+	\Registry::set(new \Database\Connection(
+		\Registry::getConfiguration()->get("database.host"),
+		\Registry::getConfiguration()->get("database.username"),
+		\Registry::getConfiguration()->get("database.password"),
+		\Registry::getConfiguration()->get("database.name")
 	));
 
 	// Trigger init event

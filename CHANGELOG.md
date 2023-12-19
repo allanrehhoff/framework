@@ -10,7 +10,7 @@ v8.0.0
 - Removing unused and unreachable code.  
 - HeaderController & FooterController now correctly handles default assets.  
 - Test suite no longer depends on HeaderController for it's tests, replaced with mock controllers.  
-- \Resource renamed to \Singleton for better describing its purpose.  
+- \Resource renamed to \Registry for better describing its purpose.  
 - \Core\Theme renamed to \Core\Template to better reflect the new folder structure.  
 - \Core\Router::arg(); moved to \Core\Response::getArg(), which now supports default values.  
 - \Core\Router::getArgs(); moved to \Core\Response::getArguments()  
@@ -18,7 +18,7 @@ v8.0.0
 - New method \Core\Router::getDefaultRoute();  
 - New method \Core\Response::addHeader(); for setting custom headers to be sent by controllers.
 - New method \Core\Response::sendHttpHeaders(); Sends queued HTTP headers to browser.
-- New method \Singleton::getEnvironment(); for deeper integrations with environment variables.  
+- New method \Registry::getEnvironment(); for deeper integrations with environment variables.  
 - Declared top level \Core namespace classes as final (with the exception of \Core\MVCStructure)  
 - Added typehints to more controllers and properties.  
 - Added tests for better code coverage.  
@@ -49,7 +49,7 @@ v7.0.0
 - Updating Database\Conection library to latest version.  
 - Bundled app binary file for exeucting controllers in cli.  
 - Bundling generated documentation of classes.  
-- Added helper methods to \Singleton.  
+- Added helper methods to \Registry.  
 - Added new \Core\Router class.  
 - Added new \Core\Request class.  
 - Added new \Core\Response class.  
@@ -82,7 +82,7 @@ v6.0.0
 - Core\ControllerName now validates constrollers using reflection.  
 - Support for regions (header/footer) when adding theme assets in config.  
 - Database\Connection::debugQuery(); no longer represents booleans as strings.  
-- Fixed regression wtih the \Singleton class from v5.0.1  
+- Fixed regression wtih the \Registry class from v5.0.1  
 - Moved \Core exceptions to their own namespace.  
 - Updated some doc blocks.  
 

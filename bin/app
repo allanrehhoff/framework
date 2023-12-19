@@ -8,13 +8,13 @@
 		die("Neither current working directory or its parent is a valid application directory\n");
 	}
 
-	\Singleton::set(new \Configuration(STORAGE . "/config/application.jsonc"));
+	\Registry::set(new \Configuration(STORAGE . "/config/application.jsonc"));
 
-	\Singleton::set(new \Database\Connection(
-		\Singleton::getConfiguration()->get("database.host"),
-		\Singleton::getConfiguration()->get("database.username"),
-		\Singleton::getConfiguration()->get("database.password"),
-		\Singleton::getConfiguration()->get("database.name")
+	\Registry::set(new \Database\Connection(
+		\Registry::getConfiguration()->get("database.host"),
+		\Registry::getConfiguration()->get("database.username"),
+		\Registry::getConfiguration()->get("database.password"),
+		\Registry::getConfiguration()->get("database.name")
 	));
 
 	$iRouter = new \Core\Router(new \Core\Request(), new \Core\Response());

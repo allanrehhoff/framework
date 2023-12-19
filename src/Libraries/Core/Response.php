@@ -80,7 +80,7 @@ namespace Core {
 		 */
 		public function setTitle(string $title) : void {
 			$this->data["title"] = sprintf(
-				\Singleton::getConfiguration()->get("titleFormat"),
+				\Registry::getConfiguration()->get("titleFormat"),
 				\Escape::string($title)
 			);
 		}

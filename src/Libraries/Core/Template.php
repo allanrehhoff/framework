@@ -25,14 +25,14 @@ namespace Core {
 		 * @return void
 		 */
 		public function __construct(\Core\Assets $iAssets) {
-			$this->name = \Singleton::getConfiguration()->get("theme");
+			$this->name = \Registry::getConfiguration()->get("theme");
 			$this->assets = $iAssets;
 
 			$configurationFile = STORAGE . "/config/" . $this->name . ".theme.jsonc";
 			$this->iConfiguration = (new \Configuration($configurationFile));
 
 			if($this->iConfiguration->get("version.version") == "@version") {
-				$this->iConfiguration->set("version.version", \Singleton::getConfiguration()->get("version"));
+				$this->iConfiguration->set("version.version", \Registry::getConfiguration()->get("version"));
 			}
 
 			$this->registerAssets(

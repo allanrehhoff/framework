@@ -1251,42 +1251,42 @@ Search.appendIndex(
             "summary": "Get\u0020the\u0020value\u0020of\u0020an\u0020environment\u0020variable.",
             "url": "classes/Environment.html#method_get"
         },                {
-            "fqsen": "\\Singleton",
+            "fqsen": "\\Registry",
             "name": "Singleton",
             "summary": "Class\u0020used\u0020to\u0020hold\u0020global\u0020state\u0020objects.",
             "url": "classes/Singleton.html"
         },                {
-            "fqsen": "\\Singleton\u003A\u003Aget\u0028\u0029",
+            "fqsen": "\\Registry\u003A\u003Aget\u0028\u0029",
             "name": "get",
             "summary": "Get\u0020an\u0020object\u0020by\u0020it\u0027s\u0020class\u0020name,\u0020namespaces\u0020included.",
             "url": "classes/Singleton.html#method_get"
         },                {
-            "fqsen": "\\Singleton\u003A\u003Aset\u0028\u0029",
+            "fqsen": "\\Registry\u003A\u003Aset\u0028\u0029",
             "name": "set",
             "summary": "Stores\u0020a\u0020given\u0020object\u0020by\u0020it\u0027s\u0020class\u0020name,\u0020namespaces\u0020included",
             "url": "classes/Singleton.html#method_set"
         },                {
-            "fqsen": "\\Singleton\u003A\u003Ahas\u0028\u0029",
+            "fqsen": "\\Registry\u003A\u003Ahas\u0028\u0029",
             "name": "has",
             "summary": "Checks\u0020if\u0020the\u0020registry\u0020contains\u0020a\u0020given\u0020object.",
             "url": "classes/Singleton.html#method_has"
         },                {
-            "fqsen": "\\Singleton\u003A\u003AgetConfiguration\u0028\u0029",
+            "fqsen": "\\Registry\u003A\u003AgetConfiguration\u0028\u0029",
             "name": "getConfiguration",
             "summary": "Get\u0020core\u0020application\u0020configuration\u0020object",
             "url": "classes/Singleton.html#method_getConfiguration"
         },                {
-            "fqsen": "\\Singleton\u003A\u003AgetEnvironment\u0028\u0029",
+            "fqsen": "\\Registry\u003A\u003AgetEnvironment\u0028\u0029",
             "name": "getEnvironment",
             "summary": "",
             "url": "classes/Singleton.html#method_getEnvironment"
         },                {
-            "fqsen": "\\Singleton\u003A\u003AgetDatabaseConnection\u0028\u0029",
+            "fqsen": "\\Registry\u003A\u003AgetDatabaseConnection\u0028\u0029",
             "name": "getDatabaseConnection",
             "summary": "Get\u0020instance\u0020of\u0020Database\\Connection",
             "url": "classes/Singleton.html#method_getDatabaseConnection"
         },                {
-            "fqsen": "\\Singleton\u003A\u003A\u0024store",
+            "fqsen": "\\Registry\u003A\u003A\u0024store",
             "name": "store",
             "summary": "",
             "url": "classes/Singleton.html#property_store"

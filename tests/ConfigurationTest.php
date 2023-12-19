@@ -4,7 +4,7 @@
 		 * Assert that the default route has been set
 		 */
 		public function testGet() {
-			$iConfiguration = \Singleton::getConfiguration();
+			$iConfiguration = \Registry::getConfiguration();
 
 			$this->assertEquals("default", $iConfiguration->get("theme"));
 		}
@@ -13,7 +13,7 @@
 		 * Assert that the default route has been set
 		 */
 		public function testDefaultRoute() {
-			$iConfiguration = \Singleton::getConfiguration();
+			$iConfiguration = \Registry::getConfiguration();
 
 			$this->assertEquals(["index"], $iConfiguration->get("defaultRoute"));
 		}
@@ -22,7 +22,7 @@
 		 * Test dot syntax for getting config settings
 		 */
 		public function testDotSyntax() {
-			$iConfiguration = \Singleton::getConfiguration();
+			$iConfiguration = \Registry::getConfiguration();
 
 			$this->assertEquals("localhost", $iConfiguration->get("database.host"));
 		}
@@ -31,7 +31,7 @@
 		 * Test config variables/tags
 		 */
 		 public function testConfigVariables() {
-			$iConfiguration = \Singleton::getConfiguration();
+			$iConfiguration = \Registry::getConfiguration();
 
 			$iConfiguration->set("testkey", "{{theme}}");
 
@@ -42,7 +42,7 @@
 		 * Test nested config variables/tags
 		 */
 		public function testNestedConfigVariables() {
-			$iConfiguration = \Singleton::getConfiguration();
+			$iConfiguration = \Registry::getConfiguration();
 
 			$iConfiguration->set("testkey", "{{database.host}}");
 
@@ -54,14 +54,14 @@
 		 */
 		public function testInvalidConfigKey() {
 			$this->expectException(\InvalidArgumentException::class);
-			\Singleton::getConfiguration()->get("invalidkey");
+			\Registry::getConfiguration()->get("invalidkey");
 		}
 
 		/**
 		 * Test delete config key
 		 */
 		public function testDeleteConfigKey() {
-			$iConfiguration = \Singleton::getConfiguration();
+			$iConfiguration = \Registry::getConfiguration();
 			$iConfiguration->set("testkey", "{{theme}}");
 
 			$this->assertEquals($iConfiguration->get("testkey"), $iConfiguration->get("theme"));
@@ -69,14 +69,14 @@
 			$iConfiguration->delete("testkey");
 
 			$this->expectException(\InvalidArgumentException::class);
-			$var = \Singleton::getConfiguration()->get("testkey");
+			$var = \Registry::getConfiguration()->get("testkey");
 		}
 
 		/**
 		 * Test deleting nested config key
 		 */
 		public function testDeleteNestedConfigKey() {
-			$iConfiguration = \Singleton::getConfiguration();
+			$iConfiguration = \Registry::getConfiguration();
 			$iConfiguration->set("test.key", "{{theme}}");
 			$iConfiguration->set("test.key2", "{{theme}}");
 
@@ -85,7 +85,7 @@
 			$iConfiguration->delete("test.key");
 
 			$this->expectException(\InvalidArgumentException::class);
-			\Singleton::getConfiguration()->get("test.key");
+			\Registry::getConfiguration()->get("test.key");
 
 			$this->assertEquals($iConfiguration->get("test.key2"), $iConfiguration->get("theme"));
 		}
@@ -96,7 +96,7 @@
 		public function testEnvironmentFunction() {
 			putenv("FRAMEWORK_TEST=TEST1");
 
-			$iConfiguration = \Singleton::getConfiguration();
+			$iConfiguration = \Registry::getConfiguration();
 			$iConfiguration->set("envkey", "{{getenv('FRAMEWORK_TEST')}}");
 
 			$this->assertEquals("TEST1", $iConfiguration->get("envkey"));
@@ -108,7 +108,7 @@
 		public function testConstantFunction() {
 			$expect = PHP_VERSION;
 
-			$iConfiguration = \Singleton::getConfiguration();
+			$iConfiguration = \Registry::getConfiguration();
 			$iConfiguration->set("constkey", "{{constant('PHP_VERSION')}}");
 
 			$this->assertEquals($expect, $iConfiguration->get("constkey"));
@@ -120,7 +120,7 @@
 		public function testInigetFunction() {
 			$expect = ini_get("display_errors");
 
-			$iConfiguration = \Singleton::getConfiguration();
+			$iConfiguration = \Registry::getConfiguration();
 			$iConfiguration->set("inikey", "{{ini_get('display_errors')}}");
 
 			$this->assertEquals($expect, $iConfiguration->get("inikey"));
@@ -132,7 +132,7 @@
 		public function testDisallowedFunction() {
 			$expect = ini_get("display_errors");
 
-			$iConfiguration = \Singleton::getConfiguration();
+			$iConfiguration = \Registry::getConfiguration();
 			$iConfiguration->set("setkey", "{{ini_set('display_errors', 1)}}");
 
 			$this->expectException(\InvalidArgumentException::class);
@@ -146,7 +146,7 @@
 		public function testFunctionsDoesNotCollide() {
 			$expect = PHP_VERSION;
 
-			$iConfiguration = \Singleton::getConfiguration();
+			$iConfiguration = \Registry::getConfiguration();
 			$iConfiguration->set("constant", "myownvalue");
 			$iConfiguration->set("constkey", "{{constant('PHP_VERSION')}}");
 

@@ -3,16 +3,16 @@ This section assumes you have basic knowledge of PDO, and will be using the bund
 The \Database\Connection(); class wraps around PHP's PDO, so you are able to call all of the built-in PDO functions on the instantiated object as you normally would.  
 With the exception of the \Database\Connection::query(); method, this has been overloaded to a more convenient way and usage, such that it supports all the below methods.  
 
-1. `\Singleton::getDatabaseConnection()->query()`  
+1. `\Registry::getDatabaseConnection()->query()`  
 
 If all you want to do, is a simple parameterized query, this line is the one you're looking for.  
 This will return a custom statement class of \Database\Statement, which also extends the default PDOStatement class.  
 
 ```php
-<?php \Singleton::getDatabaseConnection()->query("UPDATE animals SET `extinct` = :value WHERE name = :name", ["value" => true, "name" => "Asian Rhino"]); ?>
+<?php \Registry::getDatabaseConnection()->query("UPDATE animals SET `extinct` = :value WHERE name = :name", ["value" => true, "name" => "Asian Rhino"]); ?>
 ```   
 
-2. `\Singleton::getDatabaseConnection()->select()`  
+2. `\Registry::getDatabaseConnection()->select()`  
 
 Simple queries with a return value will be fetched as objects, The second argument should be an array of key-value pairs.
 Second argument for methods, insert(), update() and delete() is always the WHERE clause.  
@@ -20,9 +20,9 @@ Second argument for methods, insert(), update() and delete() is always the WHERE
 The following queries:  
 
 ```php
-<?php \Singleton::getDatabaseConnection()->select("animals"); ?>
+<?php \Registry::getDatabaseConnection()->select("animals"); ?>
 
-<?php \Singleton::getDatabaseConnection()->select("animals", ["name" => "Asian Rhino"]]); ?>
+<?php \Registry::getDatabaseConnection()->select("animals", ["name" => "Asian Rhino"]]); ?>
 ```
 
 Will both return a `Database\Collection` of objects, if the given criterias matched any rows, otherwise the resultset is empty.
@@ -30,28 +30,28 @@ Will both return a `Database\Collection` of objects, if the given criterias matc
 This method also supports IN-like requests.
 
 ```php
-<?php \Singleton::getDatabaseConnection()->select("animals", ["name" => ["Asian Rhino", "Platypus"]]); ?>
+<?php \Registry::getDatabaseConnection()->select("animals", ["name" => ["Asian Rhino", "Platypus"]]); ?>
 ```
 
-3. `\Singleton::getDatabaseConnection()->update()`  
+3. `\Registry::getDatabaseConnection()->update()`  
 ```php
-<?php \Singleton::getDatabaseConnection()->update("animals", ["extinct" => false], ["name" => "Asian Rhino"]]); ?>
+<?php \Registry::getDatabaseConnection()->update("animals", ["extinct" => false], ["name" => "Asian Rhino"]]); ?>
 ```
 
-4. `\Singleton::getDatabaseConnection()->delete()`  
+4. `\Registry::getDatabaseConnection()->delete()`  
 ```php
-<?php \Singleton::getDatabaseConnection()->delete("animals", ["extinct" => true]); ?>
+<?php \Registry::getDatabaseConnection()->delete("animals", ["extinct" => true]); ?>
 ```
 
-5. `\Singleton::getDatabaseConnection()->insert()`  
+5. `\Registry::getDatabaseConnection()->insert()`  
 ```php
-<?php \Singleton::getDatabaseConnection()->insert("animals", ["name" => "Asian Rhino", "extinct" => false]]); ?>
+<?php \Registry::getDatabaseConnection()->insert("animals", ["name" => "Asian Rhino", "extinct" => false]]); ?>
 ```
 
-6. `\Singleton::getDatabaseConnection()->insertMultiple()`  
+6. `\Registry::getDatabaseConnection()->insertMultiple()`  
 ```php
 <?php
-	\Singleton::getDatabaseConnection()->update("animals",
+	\Registry::getDatabaseConnection()->update("animals",
 		["name" => "Asian Rhino", "extinct" => true],
 		["name" => "Platypus", "extinct" => false]
 	]);
@@ -118,26 +118,26 @@ This will likely trigger a duplicate key error.
 The `Database\Collection` class is heavily inspired by Laravel collections.  
 
 ```php
-<?php \Singleton::getDatabaseConnection()->select("animals")->getColumn("name"); ?>
+<?php \Registry::getDatabaseConnection()->select("animals")->getColumn("name"); ?>
 ```
 
 Get row (assuming your criteria matches only one row) 
 ```php
-<?php \Singleton::getDatabaseConnection()->select("animals", ["name" => "Asian Rhino"])->getFirst(); ?>
+<?php \Registry::getDatabaseConnection()->select("animals", ["name" => "Asian Rhino"])->getFirst(); ?>
 ```
 or
 ```php
-<?php \Singleton::getDatabaseConnection()->select("animals", ["name" => "Asian Rhino"])->getLast(); ?>
+<?php \Registry::getDatabaseConnection()->select("animals", ["name" => "Asian Rhino"])->getLast(); ?>
 ```
 
 other methods include:
 ```php
 <?php
-	\Singleton::getDatabaseConnection()->select("animals")->all();
+	\Registry::getDatabaseConnection()->select("animals")->all();
 
-	\Singleton::getDatabaseConnection()->select("animals")->count();
+	\Registry::getDatabaseConnection()->select("animals")->count();
 
-	\Singleton::getDatabaseConnection()->select("animals")->isEmpty();
+	\Registry::getDatabaseConnection()->select("animals")->isEmpty();
 ?>
 ```
 

@@ -12,9 +12,9 @@ Values can be accessed, changed, removed and saved using a dot syntax.
 <?php
 	class RestaurantController extends \Controller {
 		public function __construct() {
-			\Singleton::getConfigiration()->get("menu.pizzas"); // ["Hawaii", "MeatLover", "Vegan", ...]
-			\Singleton::getConfigiration()->set("menu.pizzas.Hawaii", "Ananas"); // ["Ananas", "MeatLover", "Vegan", ...]
-			\Singleton::getConfigiration()->remove("menu.pizzass.Vegan"); // ["Ananas", "MeatLover", ...]
+			\Registry::getConfigiration()->get("menu.pizzas"); // ["Hawaii", "MeatLover", "Vegan", ...]
+			\Registry::getConfigiration()->set("menu.pizzas.Hawaii", "Ananas"); // ["Ananas", "MeatLover", "Vegan", ...]
+			\Registry::getConfigiration()->remove("menu.pizzass.Vegan"); // ["Ananas", "MeatLover", ...]
 		}
 	}
 ```
@@ -33,7 +33,7 @@ Examples:
 
 ```php
 // The following would return Framework/1.0.0
-\Singleton::getConfiguration()->get("http.useragent");
+\Registry::getConfiguration()->get("http.useragent");
 ```
 
 Variables are parsed recursively, and therefore values from nested objects can also be used, using a dot syntax.

@@ -48,7 +48,7 @@ namespace Core {
 		 * @return array
 		 */
 		public function getConfiguredDefaultRoute() : array {
-			$defaultRoute = \Singleton::getConfiguration()->get("defaultRoute");
+			$defaultRoute = \Registry::getConfiguration()->get("defaultRoute");
 
 			if(is_array($defaultRoute) !== true) {
 				throw new \Core\Exception\Governance("Setting 'defaultRoute' is not an array");

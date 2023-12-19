@@ -3,7 +3,7 @@
 
 	require __DIR__."/../src/Bootstrap/startup.php";
 
-	\Singleton::set(new \Configuration(STORAGE . "/config/application.jsonc"));
+	\Registry::set(new \Configuration(STORAGE . "/config/application.jsonc"));
 
 	/**
 	 * Controllers

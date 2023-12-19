@@ -3,16 +3,16 @@
 		public function testSimpleObjectStorage() {
 			$iResponse = \ResponseFactory::new();
 
-			\Singleton::set($iResponse);
+			\Registry::set($iResponse);
 
-			$this->assertInstanceOf(\Core\Response::class, \Singleton::get("Core\Response"));
+			$this->assertInstanceOf(\Core\Response::class, \Registry::get("Core\Response"));
 		}
 
 		public function testObjectAlias() {
 			$iResponse = \ResponseFactory::new();
 
-			\Singleton::set($iResponse, "response");
+			\Registry::set($iResponse, "response");
 
-			$this->assertInstanceOf(\Core\Response::class, \Singleton::get("response"));
+			$this->assertInstanceOf(\Core\Response::class, \Registry::get("response"));
 		}
 	}

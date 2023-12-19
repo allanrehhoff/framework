@@ -19,7 +19,7 @@
 
 	// Autoloader
 	spl_autoload_register(function(string $className) {
-		$controllerClass = "Controller";
+		$controllerClass = \Controller::class;
 		$className	 = str_replace("\\", "/", $className);
 
 		if($className != $controllerClass && str_ends_with($className, $controllerClass)) {
@@ -51,13 +51,14 @@
 		}
 
 		if(IS_CLI) {
-			print "Uncaught ".get_class($iException) . ':'.LF;
-			print "Message: ".$iException->getMessage().LF;
-			print "Code: ".$iException->getCode().LF;
-			print "File: ".$iException->getFile().LF;
-			print "Line: ".$iException->getLine().LF;
-			print "Stacktrace: ".LF;
-			print TAB.implode(LF, $stacktrace);
+			print "Uncaught " . $iException::class . ':' . LF .
+				  "Message: " . $iException->getMessage() . LF .
+				  "Code: " . $iException->getCode() . LF .
+				  "File: " . $iException->getFile() . LF .
+				  "Line: " . $iException->getLine() . LF .
+				  "Stacktrace: " . LF .
+				TAB . implode(LF, $stacktrace);
+
 		} else {
 			while(ob_get_length()) ob_end_clean();
 
@@ -71,7 +72,7 @@
 				print json_encode([
 					"status" => "error",
 					"data" => [
-						"class" => get_class($iException),
+						"class" => $iException::class,
 						"message" => $iException->getMessage(),
 						"code" => $iException->getCode(),
 						"file" => $iException->getFile(),
@@ -81,7 +82,7 @@
 				]);
 			} else {
 				print "<div style=\"font-family: monospace; background-color: #f44336; border-color: #f32c1e; color:#FFF; padding: 15px 15px 15px 15px;\">
-							<h1 style=\"margin:0px;\">Uncaught \\".get_class($iException)."</h1>".BR."
+							<h1 style=\"margin:0px;\">Uncaught \\".$iException::class."</h1>".BR."
 							<strong>Message: </strong>".$iException->getMessage().BR."
 							<strong>Code: </strong>".$iException->getCode().BR."
 							<strong>File: </strong>".$iException->getFile().BR."

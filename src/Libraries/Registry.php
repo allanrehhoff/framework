@@ -3,7 +3,7 @@
 	 * Class used to hold global state objects.
 	 * Such as database connections, configurations and environments.
 	 */
-	final class Singleton {
+	final class Registry {
 		/**
 		 * @var array Stores the data objects.
 		 */
