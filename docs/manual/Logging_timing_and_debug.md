@@ -16,9 +16,6 @@ Log entries can be added with any of the following methods:
 
 The `$name` argument is optional; if present, it will be prepended to the message: "$name => $message".  
 
-
-
-
 # Examples
 
 > [!WARNING]
