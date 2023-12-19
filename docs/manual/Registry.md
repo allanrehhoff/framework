@@ -1,6 +1,4 @@
-# The Singleton Class
-Otherwise often reffered to as a registry pattern.  
-
+# The Registry Class
 Is where all instances that should be globally accessible, and only instantiated once, is stored.  
 
 Once an instance has been set in the Singleton, it is immediately accesible by using `\Registry::get()` instances are keyed by their class name definitions.  
