@@ -17,12 +17,14 @@ Log entries can be added with any of the following methods:
 The `$name` argument is optional; if present, it will be prepended to the message: "$name => $message".  
 
 
+
+
+# Examples
+
 > [!WARNING]
 > The class uses static methods and internal flags (e.g. `$loggerReady`) to keep its state.  
 > This is done to make the class work straight away, without any previous configuration or the need to instantiate it.  
 > But can potentially create race conditions if you are running processes in parallel.  
-
-# Examples
 
 The following code:
 
