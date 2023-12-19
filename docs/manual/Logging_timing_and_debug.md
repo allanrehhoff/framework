@@ -153,7 +153,7 @@ To overwrite the log file at every run of the script:
 \Logger::$logFileAppend = false;
 ```
 
-> [!NOTE] Parallel code caveat
-> The class uses the static methods and internal flags (e.g. `$loggerReady`) to keep its state. This is done to make the class work straight away, without any previous configuration or the need to instantiate it.  
-> This however can create race conditions if you are executing parallel code. 
-
+> [!WARNING]
+> The class uses static methods and internal flags (e.g. `$loggerReady`) to keep its state.
+> This is done to make the class work straight away, without any previous configuration or the need to instantiate it.  
+> This however can create race conditions if you are running processes in parallel.  
