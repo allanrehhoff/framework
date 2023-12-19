@@ -32,6 +32,10 @@ In short, all this does is serve as a kickstart to get a readable and stable cod
 
 11. [Errors and exceptions](docs/manual/Errors_and_exceptions.md)
 
-12. [The Assets class](docs/manual/Assets.md)
+12. [Logging, Timing and debug](docs/manual/Logging_timing_and_debug.md)
 
-13. [The Singleton class](docs/manual/Singleton.md)
+13. [The Assets class](docs/manual/Assets.md)
+
+14. [The Registry class](docs/manual/Registry.md)
+
+14. [The Str utility class](docs/manual/Str.md)
