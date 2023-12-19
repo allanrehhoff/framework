@@ -1,11 +1,64 @@
 <?php
 /**
  * The Str class provides string manipulation methods.
- * This class handles null values gracefully, ensuring that methods return false
- * when one or both of the input strings are null, preventing potential errors
+ * This class handles null values gracefully, ensuring that methods return a value of a predictable type
+ * when one or one or more of the input strings are null, preventing potential errors
  * and allowing for more robust string manipulation operations.
  */
 class Str {
+	/**
+	 * Null aware base64 encoding
+	 * 
+	 * @param null|string $string The string to encode to base64.
+	 * @return string The encoded version of $string, empty if $string was null
+	 */
+	public static function encode(null|string $string): string {
+		if($string === null) return '';
+		return base64_encode($string);
+	}
+
+	/**
+	 * Null aware base64 decoding.
+	 * 
+	 * @param null|string $string The string to decode from base64.
+	 * @return string The decoded version of $string, empty if $string was null
+	 */
+	public static function decode(null|string $string): string {
+		if($string === null) return '';
+		return base64_decode($string);
+	}
+
+	/**
+	 * Null aware multibyte string length count
+	 * 
+	 * @param null|string $string The string to measure.
+	 * @return int The length of $string, 0 if $string was null
+	 */
+	public static function len(null|string $string): int {
+		if($string === null) return 0;
+		return mb_strlen($string);
+	}
+
+	/**
+	 * Null aware multibyte lowercase convertion.
+	 * 
+	 * @param null|string $string The string to uppercase.
+	 * @return string The lowercased string, empty if $string was null
+	 */
+	public static function lower(null|string $string): string {
+		if($string === null) return '';
+		return mb_strtolower($string);
+	}
+
+	/**
+	 * Null aware multibyte uppercase convertion.
+	 * @param null|string $string The string to uppercase.
+	 * @return string The uppercased string, empty if $string was null
+	 */
+	public static function upper(null|string $string): string {
+		if($string === null) return '';
+		return mb_strtoupper($string);
+	}
 
 	/**
 	 * Check if a string contains another string (case-sensitive).
