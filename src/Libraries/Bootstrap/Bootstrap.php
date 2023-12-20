@@ -17,6 +17,8 @@ namespace Bootstrap {
 		 * @return void
 		 */
 		public function startup(): void {
+			!defined("APP_PATH") or throw new \RuntimeException("Attempt to bootstrap, when application is already running.");
+
 			$this->registerConstants();
 			$this->registerAutoloaders();
 			$this->registerErrorHandlers();
@@ -27,7 +29,7 @@ namespace Bootstrap {
 		 * Registers application constants.
 		 * @return void
 		 */
-		public function registerConstants(): void {
+		private function registerConstants(): void {
 			define("CR", "\r");
 			define("LF", "\n");
 			define("TAB", "\t");
@@ -46,7 +48,7 @@ namespace Bootstrap {
 		 * Registers autoloader functions.
 		 * @return void
 		 */
-		public function registerAutoloaders(): void {
+		private function registerAutoloaders(): void {
 			spl_autoload_register(
 				function(string $className): void {
 					$controllerClass = \Controller::class;
@@ -87,7 +89,7 @@ namespace Bootstrap {
 		 * 
 		 * @return void
 		 */
-		public function registerErrorHandlers(): void {
+		private function registerErrorHandlers(): void {
 			set_error_handler(
 				function(int $errno, string $errstr, string $errfile, int $errline): bool {
 					// Support suppressing errors with '@'
@@ -168,7 +170,7 @@ namespace Bootstrap {
 		 * Registers event listeners.
 		 * @return void
 		 */
-		public function registerEventListeners(): void {
+		private function registerEventListeners(): void {
 			(new EventService)->registerDefaultListeners();
 		}
 	}
