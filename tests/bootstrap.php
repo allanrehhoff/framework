@@ -1,7 +1,9 @@
 <?php
 	ini_set("display_errors", 1);
 
-	require __DIR__."/../src/Bootstrap/startup.php";
+	require __DIR__."/../src/Libraries/Bootstrap/Bootstrap.php";
+
+	(new \Bootstrap\Bootstrap)->startup();
 
 	\Registry::set(new \Configuration(STORAGE . "/config/application.jsonc"));
 

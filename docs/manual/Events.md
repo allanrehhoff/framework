@@ -2,7 +2,7 @@
 
 The Core\Event class provides methods to register, clear, and trigger events.
 
-Events are represented by names (strings), and event listeners (callbacks or methods) can be associated with these events.
+Events are represented by names (strings), and event listeners (callbacks or methods) and can be associated with these events.
 When an event is triggered, all registered listeners for that event are invoked in the order they were added with optional arguments.
 
 ## Registering events:
@@ -19,6 +19,7 @@ To have your event listener called in a static context provide a callable
 	\Core\Event::addListener("user.registered", "EmailNotifier::sendWelcomeEmail");
 ```
 ... or a closure
+
 ```php
 <?php
 	\Core\Event::addListener("order_created", function(\User $iUser) {
@@ -55,6 +56,31 @@ You may fallback to the default `handle` method in object context, providing onl
 
 	// Register an event listener for the 'user.registered' event
 	\Core\Event::addListener("user.registered", \EmailNotifier::class);
+```
+
+## Default event listeners
+The `\Bootstrap\EventService` provides a `registerDefaultListeners` utility method, any listener that is needed across all processes
+may be registered in here.
+
+The contents of the file may be:
+```php
+<?php
+	namespace Bootstrap;
+
+	class EventService {
+		public function registerDefaultListeners(): void {
+			\Core\Event::addListener(
+				"controller.execute.before",
+				\AuthenticationService::class
+			);
+
+			\Core\Event::addListener(
+				"user.registered",
+				fn(\User $iUser) => \EmailService::sendWelcomeEmail($iUser)
+			);
+		}
+	}
+
 ```
 
 ## Triggering events

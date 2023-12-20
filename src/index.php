@@ -4,11 +4,10 @@
 	* Don't forget to read the documentation.
 	*/
 
-	// Startup and autoloder
-	require "Bootstrap/startup.php";
+	// Bootstrap
+	require "Libraries/Bootstrap/Bootstrap.php";
 
-	// Register events
-	require "Bootstrap/events.php";
+	(new \Bootstrap\Bootstrap)->startup();
 
 	// Global state objects
 	\Registry::set(new \Configuration(STORAGE . "/config/application.jsonc"));

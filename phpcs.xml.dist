@@ -11,7 +11,7 @@
 	<arg name="colors" />
 
 	<exclude-pattern type="relative">*\.tpl\.php$</exclude-pattern>
-	<autoload>./src/Bootstrap/startup.php</autoload>
+	<autoload>./tests/bootstrap.php</autoload>
 
     <rule ref="Generic.PHP.DisallowShortOpenTag" />
     <rule ref="Generic.WhiteSpace.DisallowSpaceIndent" />
