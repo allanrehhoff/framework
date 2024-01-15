@@ -25,11 +25,11 @@ The **$this->request->getrg();** method starts from index 0, whereas the first t
 <?php
 	// Assume this url: yourdomain.tld/animals/tiger/indo-chinese
 	class AnimalController extends Controller {
-		public function index() {
+		public function index(): void {
 			// Will only trigger at yourdomain.tld/animal
 		}
 
-		public function tiger() {
+		public function tiger(): void {
 			\Registry::getRouter()->getRequest()->arg(2); // indo-chinese
 		}
 	}
@@ -46,7 +46,7 @@ Controllers may also set child controllers to be executed once the parent contro
 ```php
 <?php
 	class AnimalController extends Controller {
-		public function index() {
+		public function index(): void {
 			$this->children[] = "TigerController";
 		}
 	}
@@ -56,7 +56,7 @@ Will result in **TigerController** being invoked as if it was a normal controlle
 A view must be by each controller, throught the **setView();** method.
 ```php
 class AnimalController extends Controller {
-	public function index() {
+	public function index(): void {
 		$this->response->setView("animal-index");
 	}
 }

@@ -49,7 +49,7 @@ You may fallback to the default `handle` method in object context, providing onl
 ```php
 <?php
 	class EmailNotifier {
-		public function handle(\User $iUser) {
+		public function handle(\User $iUser): mixed {
 			// Your e-mail logic
 		}
 	}

@@ -8,7 +8,7 @@ Controllers can set any amount of data to be passed on as variables to view file
 <?php
 	// Assume this url: yourdomain.tld/animals/tiger/indo-chinese
 	class AnimalController extends Controller {
-		public function index() {
+		public function index(): void {
 			$this->response->data["pageTitle"] = "Welcome to Umbrella Corp!";
 			$this->response->setView("welcome-page");
 		}
