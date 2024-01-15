@@ -56,7 +56,7 @@ namespace Database {
 		 */
 		public function __construct(string $hostname, string $username, string $password, string $database) {
 			if (extension_loaded("pdo") === false) {
-				throw new \Exception("PDO does not appear to be enabled for this server.");
+				throw new \RuntimeException("PDO does not appear to be enabled for this server.");
 			}
 
 			$this->connect($hostname, $username, $password, $database);
@@ -183,7 +183,7 @@ namespace Database {
 		/**
 		 * Commits a transaction, returning the database connection to autocommit mode.
 		 *
-		 * @throws \PDOException On failure to commit the query.
+		 * @throws \RuntimeException On failure to commit the query.
 		 * @return boolean
 		 * @since 1.3
 		 */
@@ -191,14 +191,14 @@ namespace Database {
 			if($this->transactionStarted === true) {
 				return $this->dbh->commit();
 			} else {
-				throw new \PDOException("Attempted to commit when not in transaction, or transaction failed to start.");
+				throw new \RuntimeException("Attempted to commit when not in transaction, or transaction failed to start.");
 			}
 		}
 
 		/**
 		 * Rolls back the current transaction
 		 *
-		 * @throws \PDOException When attempting a rollback while not in a transaction.
+		 * @throws \RuntimeException When attempting a rollback while not in a transaction.
 		 * @return boolean
 		 * @since 1.3
 		 */
@@ -206,7 +206,7 @@ namespace Database {
 			if($this->transactionStarted === true) {
 				return $this->dbh->rollBack();
 			} else {
-				throw new \PDOException("Attempted rollback when not in transaction.");
+				throw new \RuntimeException("Attempted rollback when not in transaction.");
 			}
 		}
 
@@ -221,23 +221,27 @@ namespace Database {
 		 */
 		public function prepare(string $sql, array $driverOptions = []): Statement|false {
 			// if a filter value is an array we'll create an IN syntax
-			if(!empty($this->filters)) {
-				foreach($this->filters as $column => $filter) {
-					if(is_array($filter) === true) {
-						$tmparr = [];
+			foreach($this->filters ?? [] as $column => $filter) {
+				if(gettype($filter) === "array") {
+					$tmparr = [];
 
-						foreach($filter as $item) {
-							$key = "val".$this->arrayINCounter;
-							$tmparr[$key]  = $item;
-							$this->filters[$key] = $item;
-							$this->arrayINCounter++;
-						}
-
-						// (:val0, :val1, :val2)
-						$in = "(:".implode(", :", array_keys($tmparr)).')';
-						$sql = str_replace(":".$column, $in, $sql);
-						unset($this->filters[$column]);
+					foreach($filter as $item) {
+						$key = "val" . $this->arrayINCounter++;
+						$tmparr[$key]  = $item;
+						$this->filters[$key] = $item;
 					}
+
+					// (:val0, :val1, :val2)
+					$in = "(:".implode(", :", array_keys($tmparr)).')';
+
+					// Catches and replace only the whole part of a named parameter,
+					// determined by a whitespace or end of line.
+					// This prevents parameters from being wrongfully replaced,
+					// where one parameter overlaps with the string of another
+					// e.g. ':pizza¨' would replace part of ':pizzaria'
+					$sql = preg_replace("/:" . preg_quote($column, '/') . "(\s|$)/", $in . '$1', $sql);
+
+					unset($this->filters[$column]);
 				}
 			}
 
@@ -246,24 +250,19 @@ namespace Database {
 			// Simply passing $this->filters to PDO::execute();
 			// will treat all parameter values as PDO::PARAM_STR
 			// resulting in errors when passing int or NULL as values
-			if(!empty($this->filters)) {
-				foreach($this->filters as $param => $value) {
-					$type = gettype($value);
+			foreach($this->filters ?? [] as $param => $value) {
+				$type = gettype($value);
 
-					if($type == "NULL") {
-						$statement->bindValue($param, $value, \PDO::PARAM_NULL);
-					} else if($type == "boolean") {
-						$statement->bindValue($param, $value, \PDO::PARAM_STR);
-					} else if($type == "integer") {
-						$statement->bindValue($param, $value, \PDO::PARAM_INT);
-					} else if($type == "double") {
-						$statement->bindValue($param, $value, \PDO::PARAM_STR);
-					} else if($type == "string") {
-						$statement->bindValue($param, $value, \PDO::PARAM_STR);
-					} else {
-						$statement->bindValue($param, $value);
-					}
-				}
+				$paramType = match ($type) {
+					"NULL" => \PDO::PARAM_NULL,
+					"boolean" => \PDO::PARAM_BOOL,
+					"integer" => \PDO::PARAM_INT,
+					"double" => \PDO::PARAM_STR,
+					"string" => \PDO::PARAM_STR,
+					default => \PDO::PARAM_STR,
+				};
+
+				$statement->bindValue($param, $value, $paramType);
 			}
 
 			return $statement;
@@ -288,9 +287,8 @@ namespace Database {
 				$this->statement->execute();
 				$this->statement->setFetchMode($fetchMode);
 				$this->queryCount++;
-			} catch(\PDOException $exception) {
-				throw new \PDOException($exception->getCode().": ".$exception->getMessage(), (int) $exception->getCode());
 			} finally {
+				$this->filters = [];
 				$this->lastQuery = $sql;
 			}
 
