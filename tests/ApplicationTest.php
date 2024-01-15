@@ -11,6 +11,7 @@
 			$this->assertEquals(MockController::class, $iApplication->getExecutedClassName()->toString());
 			$this->assertEquals(\Core\MethodName::DEFAULT, $iApplication->getCalledMethodName()->toString());
 		}
+
 		/**
 		 * Test that Header and Footer controllers cannot be called directly
 		 */

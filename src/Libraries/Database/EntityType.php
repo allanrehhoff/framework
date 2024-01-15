@@ -17,12 +17,14 @@ namespace Database {
 		 * The primary key of the table this entity interacts with
 		 * @return string
 		 */
+		#[\Override]
 		public static function getPrimaryKey(): string { return "test_id"; }
 
 		/**
 		 * The table name this entity interacts with
 		 * @return string
 		 */
+		#[\Override]
 		public static function getTableName(): string { return "test_table"; }
 	}
 }

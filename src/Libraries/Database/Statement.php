@@ -33,6 +33,7 @@ namespace Database {
 		 * @return mixed The return value of this function on success depends on the fetch type. In all cases, NULL is returned on failure.
 		 * @link https://php.net/manual/en/pdostatement.fetch.php
 		 */
+		#[\Override]
 		public function fetch(int $mode = \PDO::FETCH_DEFAULT, int $cursorOrientation = \PDO::FETCH_ORI_NEXT, int $cursorOffset = 0): mixed {
 			$result = parent::fetch($mode, $cursorOrientation, $cursorOffset);
 			
@@ -49,6 +50,7 @@ namespace Database {
 		 * @param int $column (optional) 0-indexed number of the column you wish to retrieve from the row. If no value is supplied, fetches the first column.
 		 * @return mixed The return value of this function on success depends on the fetch type. In all cases, NULL is returned on failure.
 		 */
+		#[\Override]
 		public function fetchColumn(int $column = 0): mixed {
 			$result = parent::fetchColumn($column);
 			return $result !== false ? $result : null;
