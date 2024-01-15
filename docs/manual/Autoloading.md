@@ -6,3 +6,5 @@ Additionally instances residing within a namespace must be located within a fold
 Controller files are autoloaded from the `src/Controllers` directory.  
 
 Other classes are autoloaded from the `src/Libraries` directory.  
+
+The `composer` generated autoloader will be registered, when the `vendor` directory is present in either document root, or its parent.
