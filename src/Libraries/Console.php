@@ -5,12 +5,16 @@
 	class Console {
 		/**
 		 * Show a status bar in the console
+		 * 
+		 * ```php
+		 * // Example: Show a status bar
+		 * \Console::showStatus($done, $total);
+		 * ```
 		 *
 		 * @param int $done   How many items are completed
 		 * @param int $total  How many items are to be done total
 		 * @param int $size   Optional size of the status bar
 		 * @return void
-		 *
 		 */
 		public static function showStatus(int $done, int $total, int $size = 30): void {
 			static $startTime;
@@ -49,6 +53,14 @@
 
 		/**
 		 * Iterates over an array calling $callback on each item while maintaining a nice progressbar
+		 * 
+		 * ```php
+		 * // Example: Process an array with a progress bar
+		 * \Console::progress($iterable, function(mixed $key, mixed $value): void {
+		 *     // Do whatever with $key and $value
+		 * });
+		 * ```
+		 * 
 		 * @param array $iterable The array to process
 		 * @param array|callable $callback 	A callback to apply to each item in the array
 		 * 									Array key will be sent as first argument
@@ -80,7 +92,12 @@
 
 		/**
 		 * Prints a confirmation prompt to the console
-		 * This will exit the program if confirm is not positive
+		 * This will exit the program if confirm is not positive.
+		 * 
+		 * ```php
+		 * // Example: Prompt for confirmation
+		 * \Console::confirm('Are you sure?');
+		 * ```
 		 * @param string $message The message to preset to the user
 		 * @return void
 		 */
@@ -181,6 +198,12 @@
 
 		/**
 		 * Get value from the command line args 'options' array
+		 * 
+		 * ```php
+		 * // Example: Get a value from command line options
+		 * $value = \Console::getOption('dry-run');
+		 * ```
+		 * 
 		 * @param string $option Name of the option to get, typically the part after '--'
 		 * 						 fx. --only-missing would be 'only-missing'
 		 * @return mixed

@@ -17,8 +17,15 @@ class Configuration {
 	/**
 	 * The constructor starts parsing of the configuration file.
 	 *
+	 * ```
+	 * <?php
+	 * // Example: Initialize Configuration object with a file path
+     * $iConfgiration = new \Configuration(STORAGE . '/config/config.jsonc');
+     * ```
+	 * 
 	 * @param string|null $configurationFile Absolute filesystem path to a .jsonc file
 	 * @throws \Core\Exception\FileNotFound If file does not exist on filesystem.
+     * 
 	 */
 	public function __construct(?string $configurationFile = null) {
 		if ($configurationFile !== null) {
@@ -96,6 +103,16 @@ class Configuration {
 	 *
 	 * If no configuration setting name is provided, the whole configuration object will be returned.
 	 * Sub-values can be accessed using a dot syntax.
+	 * 
+	 * ```php
+     * // Example: Get a single configuration value
+     * $value = $iConfiguration->get('some.key');
+     * echo $value;
+     *
+	 * ```php
+     * // Example: Get the whole configuration object
+	 * $config = $iConfiguration->get();
+	 * ```
 	 *
 	 * @param string|null $key The name of the configuration to get value from.
 	 * @return mixed|null null on failure.
@@ -124,6 +141,12 @@ class Configuration {
 
 	/**
 	 * Test if current config holds a value for a given key
+	 * 
+	 * ```
+     * // Example: Check if a key exists in the configuration
+     * $exists = $iConfgiration->has('some.key');
+     * var_dump($exists); // bool(true) or bool(false)
+     * ```
 	 *
 	 * @param string $key The config key to test
 	 * @return bool
@@ -138,7 +161,12 @@ class Configuration {
 	}
 
 	/**
-	 * Remove a configuration value
+	 * Remove a configuration value.
+	 * 
+	 * ```php
+     * // Example: Delete a configuration value
+     * $iConfiguration->delete('some.key');
+     * ```
 	 *
 	 * @param string $key Key of the setting to delete.
 	 * @throws \InvalidArgumentException If key does not exist in parsed json.
@@ -168,6 +196,11 @@ class Configuration {
 
 	/**
 	 * Alias for \Configuration::delete()
+	 * 
+     * Example: Delete a configuration value using the remove method
+	 * ```php
+     * $iConfgiration->remove('some.key');
+     * ```
 	 *
 	 * @param string $key Key of the setting to delete.
 	 * @see \Configuration::delete() For removing entries
@@ -179,6 +212,11 @@ class Configuration {
 
 	/**
 	 * Dynamically set a configuration setting to a given value.
+	 * 
+	 * ```php
+     * // Example: Set a configuration value dynamically
+     * $iConfgiration->set('new.setting', 'new value');
+     * ```
 	 *
 	 * @param string $setting Key of the setting.
 	 * @param mixed $value Value of $setting

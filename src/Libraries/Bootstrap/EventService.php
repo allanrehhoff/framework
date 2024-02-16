@@ -6,25 +6,28 @@ namespace Bootstrap {
 		 * These listeners will be added upon every request
 		 * 
 		 * Example event listener class defined elsewhere:
-			namespace EventListners;
-
-			class UserRegistration {
-				public function handle(User $iUser) {
-					// Assuming you have the following classes loaded
-					\EmailService::sendWelcomeEmail($iUser);
-
-					\Logger::debug("User registered: " . $iUser->getUsername());
-				}
-			}
-		*
-		* Use the fully qualified class name
-		* \Core\Event::addListener("controller.execute.before", \UserRegistration::class);
-		* 
-		* Closures may also be passes
-		* \Core\Event::addListener("controller.execute.before", fn(\User $iUser) => \EmailService::sendWelcomeEmail($iUser));
-		*
-		* @return void
-		*/
+		 * 
+		 * ```php
+		 * <?php
+		 * namespace EventListners;
+		 *
+		 * class UserRegistration {
+		 *		public function handle(User $iUser) {
+		 *			// Assuming you have the following classes loaded
+		 *			\EmailService::sendWelcomeEmail($iUser);
+ 		 *
+		 *			\Logger::debug("User registered: " . $iUser->getUsername());
+		 *		}
+		 * }
+		 * ```
+		 * Use the fully qualified class name
+		 * \Core\Event::addListener("controller.execute.before", \UserRegistration::class);
+		 * 
+		 * Closures may also be passes
+		 * \Core\Event::addListener("controller.execute.before", fn(\User $iUser) => \EmailService::sendWelcomeEmail($iUser));
+		 *
+		 * @return void
+		 */
 		public function registerDefaultListeners(): void {
 			// Force HTTPS redirect
 			\Core\Event::addListener("application.init", \EventListeners\HttpsRedirect::class);

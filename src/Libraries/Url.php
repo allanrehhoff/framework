@@ -72,12 +72,8 @@
 
 		/**
 		 * Builds a URL from its components and returns the assembled string.
-		 * @param array $urlParts An associative array of URL components.
-		 *	                      Possible keys: scheme, host, user, pass, port, path, query, fragment.
-		 * @return string|false The assembled URL string, or false on failure.
 		 * 
-		 *  * @example
-		 * ```
+		 * ```php
 		 * <?php
 		 * $urlParts = [
 		 *     "scheme" => "https",
@@ -90,6 +86,11 @@
 		 * $url = \Url::build($urlParts);
 		 * echo $url; // Outputs: "https://example.com/page?param=value#section"
 		 * ```
+		 * 
+		 * @param array $urlParts An associative array of URL components.
+		 *	                      Possible keys: scheme, host, user, pass, port, path, query, fragment.
+		 * @return string|false The assembled URL string, or false on failure.
+		 * 
 		 */
 		public static function build(array $urlParts): mixed {
 			if (!isset($urlParts["scheme"]) || !isset($urlParts["host"])) {
