@@ -1,13 +1,16 @@
 #!/usr/bin/env php
 <?php
-	if($startupFile = "Bootstrap/startup.php" && file_exists($startupFile)) {
+	if($startupFile = "Lbraries/Bootstrap/Bootstrap.php" && file_exists($startupFile)) {
 		require $startupFile;
-	} elseif($startupFile = "../startup.php" && file_exists($startupFile)) {
+	} elseif($startupFile = "../Lbraries/Bootstrap/Bootstrap.php" && file_exists($startupFile)) {
 		require $startupFile;
 	} else {
 		die("Neither current working directory or its parent is a valid application directory\n");
 	}
 
+	(new \Bootstrap\Bootstrap)->startup();
+
+	// Global state objects
 	\Registry::set(new \Configuration(STORAGE . "/config/application.jsonc"));
 
 	\Registry::set(new \Database\Connection(
@@ -16,7 +19,11 @@
 		\Registry::getConfiguration()->get("database.password"),
 		\Registry::getConfiguration()->get("database.name")
 	));
+	
+	// Trigger init event
+	\Core\Event::trigger("application.init");
 
+	// Other objects
 	$iRouter = new \Core\Router(new \Core\Request(), new \Core\Response());
 
 	$iApplication = new \Core\Application($iRouter);
