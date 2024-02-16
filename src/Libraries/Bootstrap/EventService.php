@@ -8,7 +8,7 @@ namespace Bootstrap {
 		 * Example event listener class defined elsewhere:
 			namespace EventListners;
 
-			class UserRegistration implements \Core\Events\ListenerInterface {
+			class UserRegistration {
 				public function handle(User $iUser) {
 					// Assuming you have the following classes loaded
 					\EmailService::sendWelcomeEmail($iUser);
@@ -17,7 +17,7 @@ namespace Bootstrap {
 				}
 			}
 		*
-		* Or use the fully qualified class name
+		* Use the fully qualified class name
 		* \Core\Event::addListener("controller.execute.before", \UserRegistration::class);
 		* 
 		* Closures may also be passes
@@ -26,7 +26,8 @@ namespace Bootstrap {
 		* @return void
 		*/
 		public function registerDefaultListeners(): void {
-			
+			// Force HTTPS redirect
+			\Core\Event::addListener("application.init", \EventListeners\HttpsRedirect::class);
 		}
 	}
 }
