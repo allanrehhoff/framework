@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-            <title>Documentation</title>
+            <title>Framework</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <base href="../">
@@ -24,7 +24,7 @@
     </head>
 <body id="top">
     <header class="phpdocumentor-header phpdocumentor-section">
-    <h1 class="phpdocumentor-title"><a href="" class="phpdocumentor-title__link">Documentation</a></h1>
+    <h1 class="phpdocumentor-title"><a href="" class="phpdocumentor-title__link">Framework</a></h1>
     <input class="phpdocumentor-header__menu-button" type="checkbox" id="menu-button" name="menu-button" />
     <label class="phpdocumentor-header__menu-icon" for="menu-button">
         <i class="fas fa-bars"></i>
@@ -155,6 +155,10 @@
         <dd>This is the frontpage (index) specific controller, use it as your boilerplate for other controllers.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/NotFoundController.html"><abbr title="\NotFoundController">NotFoundController</abbr></a></dt>
         <dd>Controller for paths that either cannot be routed.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Bootstrap-Bootstrap.html"><abbr title="\Bootstrap\Bootstrap">Bootstrap</abbr></a></dt>
+        <dd>Class Bootstrap</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Bootstrap-EventService.html"><abbr title="\Bootstrap\EventService">EventService</abbr></a></dt>
+        <dd></dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Configuration.html"><abbr title="\Configuration">Configuration</abbr></a></dt>
         <dd>Parses a JSONC file, and lets you access properties using a dot syntax
 also supports .jsonc files</dd>
@@ -168,6 +172,14 @@ also supports .jsonc files</dd>
         <dd>Central class for handling javascripts and stylesheets to be rendered.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Core-ClassName.html"><abbr title="\Core\ClassName">ClassName</abbr></a></dt>
         <dd>Sanitizes and validates a controller class name is valid for use.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Core-ContentType-Html.html"><abbr title="\Core\ContentType\Html">Html</abbr></a></dt>
+        <dd>Class Core\Output\Html</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Core-ContentType-Json.html"><abbr title="\Core\ContentType\Json">Json</abbr></a></dt>
+        <dd>Class Core\ContentType\Json</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Core-ContentType-Xml.html"><abbr title="\Core\ContentType\Xml">Xml</abbr></a></dt>
+        <dd>Class Core\ContentType\Json</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Core-Event.html"><abbr title="\Core\Event">Event</abbr></a></dt>
+        <dd></dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Core-Exception-FileNotFound.html"><abbr title="\Core\Exception\FileNotFound">FileNotFound</abbr></a></dt>
         <dd>FileNotFound is thrown when core is missing a required file.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Core-Exception-Governance.html"><abbr title="\Core\Exception\Governance">Governance</abbr></a></dt>
@@ -186,6 +198,16 @@ You should rarely have the need for catching this.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Core-Router.html"><abbr title="\Core\Router">Router</abbr></a></dt>
         <dd>Basic router for handling HTTP requests and routing them to appropriate controllers
 Follows a simple routing mechanism to match URLs and execute the corresponding controller for each route.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Core-StatusCode-Forbidden.html"><abbr title="\Core\StatusCode\Forbidden">Forbidden</abbr></a></dt>
+        <dd>Throw this whenever you want to redirect the current controller to a &quot;forbidden&quot; controller</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Core-StatusCode-NotFound.html"><abbr title="\Core\StatusCode\NotFound">NotFound</abbr></a></dt>
+        <dd>Throw this whenever you want to redirect the current controller to a not found controller</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Core-StatusCode-StatusCode.html"><abbr title="\Core\StatusCode\StatusCode">StatusCode</abbr></a></dt>
+        <dd>The base class for all HTTP exceptions to extend upon
+This class is intentionally abstract
+As it should not be instantiated directly
+and only serves as a catch-all class for
+all http error exceptions extending this</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Core-Template.html"><abbr title="\Core\Template">Template</abbr></a></dt>
         <dd>Loads and setups the current configured theme in use.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Database-Connection.html"><abbr title="\Database\Connection">Connection</abbr></a></dt>
@@ -200,494 +222,27 @@ Follows a simple routing mechanism to match URLs and execute the corresponding c
         <dd>Put whatever helper functions you may need in this class.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Environment.html"><abbr title="\Environment">Environment</abbr></a></dt>
         <dd></dd>
-            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Url.html"><abbr title="\Url">Url</abbr></a></dt>
-        <dd>This class provides utility methods for working with URLs,
-such as parsing and manipulating URL components.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Escape.html"><abbr title="\Escape">Escape</abbr></a></dt>
         <dd>This PHP class provides static methods for escaping HTML and string entities
 to prevent cross-site scripting (XSS) attacks.</dd>
-            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Core-ContentType-Html.html"><abbr title="\Core\ContentType\Html">Html</abbr></a></dt>
-        <dd>Class Core\Output\Html</dd>
-            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Core-ContentType-Json.html"><abbr title="\Core\ContentType\Json">Json</abbr></a></dt>
-        <dd>Class Core\ContentType\Json</dd>
-            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Core-ContentType-Xml.html"><abbr title="\Core\ContentType\Xml">Xml</abbr></a></dt>
-        <dd>Class Core\ContentType\Json</dd>
-            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Core-Event.html"><abbr title="\Core\Event">Event</abbr></a></dt>
-        <dd></dd>
-            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Core-StatusCode-Forbidden.html"><abbr title="\Core\StatusCode\Forbidden">Forbidden</abbr></a></dt>
-        <dd>Throw this whenever you want to redirect the current controller to a &quot;forbidden&quot; controller</dd>
-            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Core-StatusCode-NotFound.html"><abbr title="\Core\StatusCode\NotFound">NotFound</abbr></a></dt>
-        <dd>Throw this whenever you want to redirect the current controller to a not found controller</dd>
-            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Core-StatusCode-StatusCode.html"><abbr title="\Core\StatusCode\StatusCode">StatusCode</abbr></a></dt>
-        <dd>The base class for all HTTP exceptions to extend upon
-This class is intentionally abstract
-As it should not be instantiated directly
-and only serves as a catch-all class for
-all http error exceptions extending this</dd>
-            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Str.html"><abbr title="\Str">Str</abbr></a></dt>
-        <dd>The Str class provides string manipulation methods.</dd>
-            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Bootstrap-Bootstrap.html"><abbr title="\Bootstrap\Bootstrap">Bootstrap</abbr></a></dt>
-        <dd>Class Bootstrap</dd>
-            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Bootstrap-EventService.html"><abbr title="\Bootstrap\EventService">EventService</abbr></a></dt>
-        <dd></dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/EventListeners-HttpsRedirect.html"><abbr title="\EventListeners\HttpsRedirect">HttpsRedirect</abbr></a></dt>
         <dd></dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Logger.html"><abbr title="\Logger">Logger</abbr></a></dt>
         <dd>Simple logger class.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Registry.html"><abbr title="\Registry">Registry</abbr></a></dt>
         <dd>Class used to hold global state objects.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Str.html"><abbr title="\Str">Str</abbr></a></dt>
+        <dd>The Str class provides string manipulation methods.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Url.html"><abbr title="\Url">Url</abbr></a></dt>
+        <dd>This class provides utility methods for working with URLs,
+such as parsing and manipulating URL components.</dd>
     
     
     </dl>
 
 
-<h3 id="toc">
-    Table of Contents
-    <a href="#toc" class="headerlink"><i class="fas fa-link"></i></a>
-</h3>
-
-<dl class="phpdocumentor-table-of-contents">
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a href="namespaces/default.html#constant_ACCEPT_JSON">ACCEPT_JSON</a>
-    <span>
-        &nbsp;= !IS_CLI &amp;&amp; str_contains(strtolower(getallheaders()[&quot;Accept&quot;] ?? &quot;*/*&quot;), &quot;application/json&quot;)                            </span>
-</dt>
-<dd></dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a href="namespaces/default.html#constant_APP_PATH">APP_PATH</a>
-    <span>
-        &nbsp;= realpath(__DIR__ . &quot;/../../&quot;)                            </span>
-</dt>
-<dd></dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a href="namespaces/default.html#constant_BR">BR</a>
-    <span>
-        &nbsp;= &quot;&lt;br /&gt;&quot;                            </span>
-</dt>
-<dd></dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a href="namespaces/default.html#constant_CR">CR</a>
-    <span>
-        &nbsp;= &quot;\r&quot;                            </span>
-</dt>
-<dd></dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a href="namespaces/default.html#constant_CRLF">CRLF</a>
-    <span>
-        &nbsp;= CR . LF                            </span>
-</dt>
-<dd></dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a href="namespaces/default.html#constant_DS">DS</a>
-    <span>
-        &nbsp;= DIRECTORY_SEPARATOR                            </span>
-</dt>
-<dd></dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a href="namespaces/default.html#constant_IS_CLI">IS_CLI</a>
-    <span>
-        &nbsp;= PHP_SAPI === &quot;cli&quot;                            </span>
-</dt>
-<dd></dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a href="namespaces/default.html#constant_IS_SSL">IS_SSL</a>
-    <span>
-        &nbsp;= !empty($_SERVER[&quot;HTTPS&quot;]) &amp;&amp; $_SERVER[&quot;HTTPS&quot;] == &#039;on&#039;                            </span>
-</dt>
-<dd></dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a href="namespaces/default.html#constant_LF">LF</a>
-    <span>
-        &nbsp;= &quot;\n&quot;                            </span>
-</dt>
-<dd></dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a href="namespaces/default.html#constant_SPACE">SPACE</a>
-    <span>
-        &nbsp;= &quot; &quot;                            </span>
-</dt>
-<dd></dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a href="namespaces/default.html#constant_STORAGE">STORAGE</a>
-    <span>
-        &nbsp;= realpath(APP_PATH . &quot;/../storage&quot;)                            </span>
-</dt>
-<dd></dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a href="namespaces/default.html#constant_TAB">TAB</a>
-    <span>
-        &nbsp;= &quot;\t&quot;                            </span>
-</dt>
-<dd></dd>
-
-                    </dl>
 
         
-    <section class="phpdocumentor-constants">
-        <h3 class="phpdocumentor-elements__header" id="constants">
-            Constants
-            <a href="packages/Application.html#constants" class="headerlink"><i class="fas fa-link"></i></a>
-        </h3>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_ACCEPT_JSON">
-        ACCEPT_JSON
-        <a href="namespaces/default.html#constant_ACCEPT_JSON" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Bootstrap/Bootstrap.php"><a href="files/src-libraries-bootstrap-bootstrap.html"><abbr title="src/Libraries/Bootstrap/Bootstrap.php">Bootstrap.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">44</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">ACCEPT_JSON</span>
-    = <span class="phpdocumentor-signature__default-value">!IS_CLI &amp;&amp; str_contains(strtolower(getallheaders()[&quot;Accept&quot;] ?? &quot;*/*&quot;), &quot;application/json&quot;)</span>
-</code>
-
-
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_APP_PATH">
-        APP_PATH
-        <a href="namespaces/default.html#constant_APP_PATH" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Bootstrap/Bootstrap.php"><a href="files/src-libraries-bootstrap-bootstrap.html"><abbr title="src/Libraries/Bootstrap/Bootstrap.php">Bootstrap.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">42</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">APP_PATH</span>
-    = <span class="phpdocumentor-signature__default-value">realpath(__DIR__ . &quot;/../../&quot;)</span>
-</code>
-
-
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_BR">
-        BR
-        <a href="namespaces/default.html#constant_BR" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Bootstrap/Bootstrap.php"><a href="files/src-libraries-bootstrap-bootstrap.html"><abbr title="src/Libraries/Bootstrap/Bootstrap.php">Bootstrap.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">38</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">BR</span>
-    = <span class="phpdocumentor-signature__default-value">&quot;&lt;br /&gt;&quot;</span>
-</code>
-
-
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_CR">
-        CR
-        <a href="namespaces/default.html#constant_CR" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Bootstrap/Bootstrap.php"><a href="files/src-libraries-bootstrap-bootstrap.html"><abbr title="src/Libraries/Bootstrap/Bootstrap.php">Bootstrap.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">33</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">CR</span>
-    = <span class="phpdocumentor-signature__default-value">&quot;\r&quot;</span>
-</code>
-
-
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_CRLF">
-        CRLF
-        <a href="namespaces/default.html#constant_CRLF" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Bootstrap/Bootstrap.php"><a href="files/src-libraries-bootstrap-bootstrap.html"><abbr title="src/Libraries/Bootstrap/Bootstrap.php">Bootstrap.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">36</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">CRLF</span>
-    = <span class="phpdocumentor-signature__default-value">CR . LF</span>
-</code>
-
-
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_DS">
-        DS
-        <a href="namespaces/default.html#constant_DS" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Bootstrap/Bootstrap.php"><a href="files/src-libraries-bootstrap-bootstrap.html"><abbr title="src/Libraries/Bootstrap/Bootstrap.php">Bootstrap.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">39</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">DS</span>
-    = <span class="phpdocumentor-signature__default-value">DIRECTORY_SEPARATOR</span>
-</code>
-
-
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_IS_CLI">
-        IS_CLI
-        <a href="namespaces/default.html#constant_IS_CLI" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Bootstrap/Bootstrap.php"><a href="files/src-libraries-bootstrap-bootstrap.html"><abbr title="src/Libraries/Bootstrap/Bootstrap.php">Bootstrap.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">41</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">IS_CLI</span>
-    = <span class="phpdocumentor-signature__default-value">PHP_SAPI === &quot;cli&quot;</span>
-</code>
-
-
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_IS_SSL">
-        IS_SSL
-        <a href="namespaces/default.html#constant_IS_SSL" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Bootstrap/Bootstrap.php"><a href="files/src-libraries-bootstrap-bootstrap.html"><abbr title="src/Libraries/Bootstrap/Bootstrap.php">Bootstrap.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">40</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">IS_SSL</span>
-    = <span class="phpdocumentor-signature__default-value">!empty($_SERVER[&quot;HTTPS&quot;]) &amp;&amp; $_SERVER[&quot;HTTPS&quot;] == &#039;on&#039;</span>
-</code>
-
-
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_LF">
-        LF
-        <a href="namespaces/default.html#constant_LF" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Bootstrap/Bootstrap.php"><a href="files/src-libraries-bootstrap-bootstrap.html"><abbr title="src/Libraries/Bootstrap/Bootstrap.php">Bootstrap.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">34</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">LF</span>
-    = <span class="phpdocumentor-signature__default-value">&quot;\n&quot;</span>
-</code>
-
-
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_SPACE">
-        SPACE
-        <a href="namespaces/default.html#constant_SPACE" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Bootstrap/Bootstrap.php"><a href="files/src-libraries-bootstrap-bootstrap.html"><abbr title="src/Libraries/Bootstrap/Bootstrap.php">Bootstrap.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">37</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">SPACE</span>
-    = <span class="phpdocumentor-signature__default-value">&quot; &quot;</span>
-</code>
-
-
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_STORAGE">
-        STORAGE
-        <a href="namespaces/default.html#constant_STORAGE" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Bootstrap/Bootstrap.php"><a href="files/src-libraries-bootstrap-bootstrap.html"><abbr title="src/Libraries/Bootstrap/Bootstrap.php">Bootstrap.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">43</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">STORAGE</span>
-    = <span class="phpdocumentor-signature__default-value">realpath(APP_PATH . &quot;/../storage&quot;)</span>
-</code>
-
-
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_TAB">
-        TAB
-        <a href="namespaces/default.html#constant_TAB" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Bootstrap/Bootstrap.php"><a href="files/src-libraries-bootstrap-bootstrap.html"><abbr title="src/Libraries/Bootstrap/Bootstrap.php">Bootstrap.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">35</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">TAB</span>
-    = <span class="phpdocumentor-signature__default-value">&quot;\t&quot;</span>
-</code>
-
-
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-            </section>
 
         
     </article>

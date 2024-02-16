@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-            <title>Documentation</title>
+            <title>Framework</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <base href="../">
@@ -24,7 +24,7 @@
     </head>
 <body id="top">
     <header class="phpdocumentor-header phpdocumentor-section">
-    <h1 class="phpdocumentor-title"><a href="" class="phpdocumentor-title__link">Documentation</a></h1>
+    <h1 class="phpdocumentor-title"><a href="" class="phpdocumentor-title__link">Framework</a></h1>
     <input class="phpdocumentor-header__menu-button" type="checkbox" id="menu-button" name="menu-button" />
     <label class="phpdocumentor-header__menu-icon" for="menu-button">
         <i class="fas fa-bars"></i>
@@ -162,20 +162,6 @@
 
 
 
-<h3 id="toc">
-    Table of Contents
-    <a href="#toc" class="headerlink"><i class="fas fa-link"></i></a>
-</h3>
-
-<dl class="phpdocumentor-table-of-contents">
-                        <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Bootstrap-EventService.html#method_registerDefaultListeners">registerDefaultListeners()</a>
-    <span>
-                                &nbsp;: void    </span>
-</dt>
-<dd>Define your default event listeners in this function.</dd>
-
-        </dl>
 
 
 
@@ -183,65 +169,7 @@
 
         
 
-            <section class="phpdocumentor-methods">
-        <h3 class="phpdocumentor-elements__header" id="methods">
-            Methods
-            <a href="classes/Bootstrap-EventService.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
-        </h3>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_registerDefaultListeners">
-        registerDefaultListeners()
-        <a href="classes/Bootstrap-EventService.html#method_registerDefaultListeners" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Bootstrap/EventService.php"><a href="files/src-libraries-bootstrap-eventservice.html"><abbr title="src/Libraries/Bootstrap/EventService.php">EventService.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">31</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Define your default event listeners in this function.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">registerDefaultListeners</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
-
-        <section class="phpdocumentor-description"><p>These listeners will be added upon every request</p>
-<p>Example event listener class defined elsewhere:</p>
-<pre class="prettyprint"><code class="language-php">&lt;?php
-namespace EventListners;
-
-class UserRegistration {
-	public function handle(User $iUser) {
-		// Assuming you have the following classes loaded
-		\EmailService::sendWelcomeEmail($iUser);
-
-		\Logger::debug(&quot;User registered: &quot; . $iUser-&gt;getUsername());
-	}
-}
-</code></pre>
-<p>Use the fully qualified class name
-\Core\Event::addListener(&quot;controller.execute.before&quot;, \UserRegistration::class);</p>
-<p>Closures may also be passes
-\Core\Event::addListener(&quot;controller.execute.before&quot;, fn(\User $iUser) =&gt; \EmailService::sendWelcomeEmail($iUser));</p>
-</section>
-
-    
-    
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
         
-    
-</article>
-            </section>
-
         
     <script type="text/javascript">
         function loadExternalCodeSnippets(line) {
