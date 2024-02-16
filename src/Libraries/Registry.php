@@ -16,7 +16,7 @@
 		 * @param string $key alias/classname to retrieve from global state
 		 * @return mixed A class object
 		 */
-		public static function get(string $key) {
+		public static function get(string $key): mixed {
 			return self::$store[$key] ?? null;
 		}
 
@@ -27,7 +27,7 @@
 		 * @param null|string $alias An alias to save the instance by, if null class name of object will be used
 		 * @return object The instance just stored. 
 		 */
-		public static function set(object $object, ?string $alias = null) {
+		public static function set(object $object, ?string $alias = null): object {
 			$key = $alias ?? $object::class;
 
 			self::$store[$key] = $object;
@@ -41,7 +41,7 @@
 		 * @param string $key Check if this key/alias is available globally
 		 * @return boolean
 		 */
-		public static function has(string $key) : bool {
+		public static function has(string $key): bool {
 			return isset(self::$store[$key]);
 		}
 
@@ -50,14 +50,14 @@
 		 * 
 		 * @return \Configuration
 		 */
-		public static function getConfiguration() : \Configuration {
+		public static function getConfiguration(): \Configuration {
 			return self::get("Configuration");
 		}
 
 		/**
 		 * @return \Environment
 		 */
-		public static function getEnvironment() : \Environment {
+		public static function getEnvironment(): \Environment {
 			return self::get("Environment");
 		}
 
@@ -66,7 +66,7 @@
 		 * 
 		 * @return \Database\Connection
 		 */
-		public static function getDatabaseConnection() : \Database\Connection {
+		public static function getDatabaseConnection(): \Database\Connection {
 			return self::get("Database\Connection");
 		}
 	}

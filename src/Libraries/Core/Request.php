@@ -102,33 +102,32 @@ namespace Core {
 		 * Tell the mime content type that the client prefer to recieve
 		 * @return ContentType
 		 */
-		public function getContentType() : ContentType {
+		public function getContentType(): ContentType {
 			$acceptHeader = $this->server["HTTP_ACCEPT"] ?? '';
 			$mediaTypes = explode(',', $acceptHeader);
-			$mediaTypesWithQuality = [];
-
+			$bestQuality = -1.0;
+			$bestMediaType = '';
+		
 			foreach ($mediaTypes as $mediaType) {
 				$parts = explode(';', $mediaType);
 				$type = trim($parts[0]);
 				$quality = 1.0; // Default quality value
-
-				// Check for a quality parameter
+		
 				foreach ($parts as $part) {
 					if (strpos($part, 'q=') === 0) {
 						$quality = (float) substr($part, 2);
 						break;
 					}
 				}
-
-				$mediaTypesWithQuality[$type] = $quality;
+		
+				if ($quality > $bestQuality) {
+					$bestQuality = $quality;
+					$bestMediaType = $type;
+				}
 			}
-
-			// Sort the media types by quality in descending order
-			arsort($mediaTypesWithQuality);
-
-			$firstMediaType = array_key_first($mediaTypesWithQuality);
-			[$namespace, $contentType] = explode('/', $firstMediaType);
-
+		
+			[$namespace, $contentType] = explode('/', $bestMediaType);
+		
 			// Match the parts after the '/'
 			return match ($contentType) {
 				"json" => new Json(),
@@ -142,7 +141,7 @@ namespace Core {
 		 * @param array $files the $_FILES array
 		 * @return array The re-arranged files array
 		 */
-		private function reArrangeFilesArray(array $files) : array {
+		private function reArrangeFilesArray(array $files): array {
 			$result = [];
 			$count  = count($files["name"]);
 			$keys   = array_keys($files);

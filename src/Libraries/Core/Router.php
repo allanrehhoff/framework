@@ -30,7 +30,7 @@ namespace Core {
 		 * Get the \Core\Request object
 		 * @return Request
 		 */
-		public function getRequest() : Request {
+		public function getRequest(): Request {
 			return $this->request;
 		}
 
@@ -38,7 +38,7 @@ namespace Core {
 		 * Get the \Core\Response object
 		 * @return Response
 		 */
-		public function getResponse() : Response {
+		public function getResponse(): Response {
 			return $this->response;
 		}
 
@@ -47,7 +47,7 @@ namespace Core {
 		 * @throws \Core\Exception\Governance If the default route configured is not of type array.
 		 * @return array
 		 */
-		public function getConfiguredDefaultRoute() : array {
+		public function getConfiguredDefaultRoute(): array {
 			$defaultRoute = \Registry::getConfiguration()->get("defaultRoute");
 
 			if(is_array($defaultRoute) !== true) {
@@ -61,7 +61,7 @@ namespace Core {
 		 * Get ClassName for requests that cannot be routed
 		 * @return \Core\ClassName
 		 */
-		private function getNotFoundClassName() : ClassName {
+		private function getNotFoundClassName(): ClassName {
 			return new ClassName("NotFound");
 		}
 
@@ -69,7 +69,7 @@ namespace Core {
 		 * Get default MethodName to be called on controlelrs
 		 * @return \Core\MethodName
 		 */
-		private function getDefaultMethodName() : MethodName {
+		private function getDefaultMethodName(): MethodName {
 			return new MethodName(MethodName::DEFAULT);
 		}
 
@@ -77,7 +77,7 @@ namespace Core {
 		 * Handle requests that cannot be routed.
 		 * @return array An array with two elements: [0] ClassName An instance of ClassName. [1] MethodName An instance of MethodName.
 		 */
-		private function handleUnroutableRequest() : array {
+		private function handleUnroutableRequest(): array {
 			\Core\Event::trigger("core.router.notfound", $this->request);
 			return [$this->getNotFoundClassName() , $this->getDefaultMethodName()];
 		}
@@ -88,7 +88,7 @@ namespace Core {
 		 * second index, if present, will be the method name
 		 * @return array
 		 */
-		public function getRoute() : array {
+		public function getRoute(): array {
 			$defaults = $this->getConfiguredDefaultRoute();
 
 			$controllerBase = $this->request->getArg(0, $defaults);

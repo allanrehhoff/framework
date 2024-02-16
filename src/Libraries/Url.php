@@ -47,12 +47,12 @@
 		}
 
 		/**
-		 * Perform a redirect with a X-Redirect-By header
+		 * Perform a redirect with a X-Redirect-By header, the application will be shutdown after the redirect.
 		 * @param string $location Location of the redirect
 		 * @param string $xRedirectBy Human readable indidcator of who performed this redirect
 		 * @return void
 		 */
-		public static function redirect(string $location, string $xRedirectBy): void {
+		public static function redirect(string $location, string $xRedirectBy): never {
 			header("HTTP/1.1 302 Found");
 			header("Cache-Control: no-cache, must-revalidate");
 			header("X-Redirect-By: ".$xRedirectBy);
@@ -73,7 +73,23 @@
 		/**
 		 * Builds a URL from its components and returns the assembled string.
 		 * @param array $urlParts An associative array of URL components.
+		 *	                      Possible keys: scheme, host, user, pass, port, path, query, fragment.
 		 * @return string|false The assembled URL string, or false on failure.
+		 * 
+		 *  * @example
+		 * ```
+		 * <?php
+		 * $urlParts = [
+		 *     "scheme" => "https",
+		 *     "host" => "example.com",
+		 *     "path" => "/page",
+		 *     "query" => "param=value",
+		 *     "fragment" => "section",
+		 * ];
+		 *
+		 * $url = \Url::build($urlParts);
+		 * echo $url; // Outputs: "https://example.com/page?param=value#section"
+		 * ```
 		 */
 		public static function build(array $urlParts): mixed {
 			if (!isset($urlParts["scheme"]) || !isset($urlParts["host"])) {
@@ -84,9 +100,11 @@
 		
 			if (isset($urlParts["user"])) {
 				$url .= $urlParts["user"];
+
 				if (isset($urlParts["pass"])) {
 					$url .= ":".$urlParts["pass"];
 				}
+
 				$url .= "@";
 			}
 		

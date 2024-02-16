@@ -43,7 +43,7 @@ namespace Core {
 		 * @param string $view template name of the view
 		 * @return void
 		 */
-		public function setView(string $view) : void {
+		public function setView(string $view): void {
 			$this->view = $view;
 		}
 
@@ -59,7 +59,7 @@ namespace Core {
 		 * @param array $data template name of the view
 		 * @return void
 		 */
-		public function setData(array $data) : void {
+		public function setData(array $data): void {
 			$this->data = $data;
 		}
 
@@ -68,7 +68,7 @@ namespace Core {
 		 * 
 		 * @return string
 		 */
-		public function getTitle() : string {
+		public function getTitle(): string {
 			return $this->data["title"];
 		}
 
@@ -78,7 +78,7 @@ namespace Core {
 		 * @param string $title a title to display in a template file.
 		 * @return void
 		 */
-		public function setTitle(string $title) : void {
+		public function setTitle(string $title): void {
 			$this->data["title"] = sprintf(
 				\Registry::getConfiguration()->get("titleFormat"),
 				\Escape::string($title)
@@ -103,7 +103,7 @@ namespace Core {
 		 * @param int $httpCode A http code to send
 		 * @return void
 		 */
-		public function sendHttpCode(int $httpCode) : void {
+		public function sendHttpCode(int $httpCode): void {
 			http_response_code($httpCode);
 		}
 
@@ -111,7 +111,7 @@ namespace Core {
 		 * Send default HTTP headers
 		 * @return void
 		 */
-		public function sendHeaders() : void {
+		public function sendHeaders(): void {
 			foreach($this->headers as $header) {
 				header(...$header);
 			}

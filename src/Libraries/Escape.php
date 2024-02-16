@@ -13,7 +13,7 @@ class Escape {
 	 * @param string $string The string to escape.
 	 * @return string The escaped string.
 	 */
-	public static function string(string $string) : string {
+	public static function string(string $string): string {
 		return htmlspecialchars($string, ENT_QUOTES | ENT_SUBSTITUTE, "UTF-8");
 	}
 	
@@ -23,7 +23,7 @@ class Escape {
 	 * @param array $array The array to escape.
 	 * @return array The escaped array.
 	 */
-	public static function array(array $array) : array {
+	public static function array(array $array): array {
 		$escapedArray = [];
 	
 		foreach($array as $key => $value) {
@@ -45,7 +45,7 @@ class Escape {
 	 * @param object $iStdClass The object to escape.
 	 * @return object The escaped object.
 	 */
-	public static function object(object $iStdClass) : object {
+	public static function object(object $iStdClass): object {
 		$escapedObject = new \stdClass();
 	
 		foreach($iStdClass as $key => $value) {

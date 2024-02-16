@@ -44,7 +44,7 @@ namespace Core {
 		 * Get the \Core\Assets instance
 		 * @return \Core\Assets
 		 */
-		public function getAssets() : \Core\Assets {
+		public function getAssets(): \Core\Assets {
 			return $this->assets;
 		}
 
@@ -52,7 +52,7 @@ namespace Core {
 		 * Returns the configuration object associated with the theme
 		 * @return \Configuration - application-wide theme configuration
 		 */
-		public function getConfiguration() : \Configuration {
+		public function getConfiguration(): \Configuration {
 			return $this->iConfiguration;
 		}
 
@@ -61,7 +61,7 @@ namespace Core {
 		 * @param string $shortname The shortened template name e.g partials/sidebar 
 		 * @return string
 		 */
-		public function getPath(string $shortname = '') : string {
+		public function getPath(string $shortname = ''): string {
 			if($shortname == '') return '';
 
 			$path = APP_PATH . "/Templates/" . $this->getName();
@@ -83,7 +83,7 @@ namespace Core {
 		 * @param string $file Path to element of which to create a URI.
 		 * @return string
 		 */
-		public function getDirectoryUri(string $file = '/') : string {
+		public function getDirectoryUri(string $file = '/'): string {
 			if(filter_var($file, FILTER_VALIDATE_URL) == $file) return $file;
 
 			$result = sprintf(
@@ -102,7 +102,7 @@ namespace Core {
 		 * Get the current theme name loaded.
 		 * @return string
 		 */
-		public function getName() : string {
+		public function getName(): string {
 			return $this->name;
 		}
 
@@ -113,7 +113,7 @@ namespace Core {
 		 * @param string $url Url to return with version number
 		 * @return string
 		 */
-		private function maybeAddVersionNumber(string $url) : string {
+		private function maybeAddVersionNumber(string $url): string {
 			if($this->iConfiguration->get("version.expose") === true) {
 				$baseurl = \Url::getBaseurl();
 
@@ -133,7 +133,7 @@ namespace Core {
 		 * @param \stdClass $files Assets to register for use in the Template
 		 * @return void
 		 */
-		private function registerAssets(\stdClass $files) : void {
+		private function registerAssets(\stdClass $files): void {
 			foreach($files->js as $region => $javascripts) {
 				foreach($javascripts as $javascript) {
 					$src = $this->getDirectoryUri($javascript);
