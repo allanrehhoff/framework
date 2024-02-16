@@ -23,6 +23,14 @@
 			$this->assertEquals("development", $iEnvironment->get("PHP_ENV"));
 		}
 
+		public function testQuotedString() {
+			$iEnvironment = \EnvironmentFactory::createFromString('
+				OAUTH_SCOPE="offline_access user.read"
+			');
+
+			$this->assertEquals("offline_access user.read", $iEnvironment->get("OAUTH_SCOPE"));
+		}
+
 		public function testEnvironmentVariableInSection() {
 			$iEnvironment = \EnvironmentFactory::createFromString("
 				[PHP]
