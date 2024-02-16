@@ -263,7 +263,7 @@ enhance the handling of URLs within the PHP applications.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Url.php"><a href="files/src-libraries-url.html"><abbr title="src/Libraries/Url.php">Url.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">94</span>
+    <span class="phpdocumentor-element-found-in__line">95</span>
 
     </aside>
 
@@ -273,7 +273,20 @@ enhance the handling of URLs within the PHP applications.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">build</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$urlParts</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|false</span></code>
 
-    
+        <section class="phpdocumentor-description"><pre class="prettyprint"><code class="language-php">&lt;?php
+$urlParts = [
+    &quot;scheme&quot; =&gt; &quot;https&quot;,
+    &quot;host&quot; =&gt; &quot;example.com&quot;,
+    &quot;path&quot; =&gt; &quot;/page&quot;,
+    &quot;query&quot; =&gt; &quot;param=value&quot;,
+    &quot;fragment&quot; =&gt; &quot;section&quot;,
+];
+
+$url = \Url::build($urlParts);
+echo $url; // Outputs: &quot;https://example.com/page?param=value#section&quot;
+</code></pre>
+</section>
+
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -294,21 +307,6 @@ Possible keys: scheme, host, user, pass, port, path, query, fragment.</p>
     <span class="phpdocumentor-signature__response_type">string|false</span>
             &mdash;
             <section class="phpdocumentor-description"><p>The assembled URL string, or false on failure.</p>
-<ul>
-<li>@example</li>
-</ul>
-<pre class="prettyprint"><code class="prettyprint">&lt;?php
-$urlParts = [
-    &quot;scheme&quot; =&gt; &quot;https&quot;,
-    &quot;host&quot; =&gt; &quot;example.com&quot;,
-    &quot;path&quot; =&gt; &quot;/page&quot;,
-    &quot;query&quot; =&gt; &quot;param=value&quot;,
-    &quot;fragment&quot; =&gt; &quot;section&quot;,
-];
-
-$url = \Url::build($urlParts);
-echo $url; // Outputs: &quot;https://example.com/page?param=value#section&quot;
-</code></pre>
 </section>
 
     
@@ -326,7 +324,7 @@ echo $url; // Outputs: &quot;https://example.com/page?param=value#section&quot;
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Url.php"><a href="files/src-libraries-url.html"><abbr title="src/Libraries/Url.php">Url.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">155</span>
+    <span class="phpdocumentor-element-found-in__line">156</span>
 
     </aside>
 
@@ -373,7 +371,7 @@ echo $url; // Outputs: &quot;https://example.com/page?param=value#section&quot;
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Url.php"><a href="files/src-libraries-url.html"><abbr title="src/Libraries/Url.php">Url.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">146</span>
+    <span class="phpdocumentor-element-found-in__line">147</span>
 
     </aside>
 
@@ -420,7 +418,7 @@ echo $url; // Outputs: &quot;https://example.com/page?param=value#section&quot;
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Url.php"><a href="files/src-libraries-url.html"><abbr title="src/Libraries/Url.php">Url.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">137</span>
+    <span class="phpdocumentor-element-found-in__line">138</span>
 
     </aside>
 
@@ -608,7 +606,7 @@ echo $url; // Outputs: &quot;https://example.com/page?param=value#section&quot;
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Url.php"><a href="files/src-libraries-url.html"><abbr title="src/Libraries/Url.php">Url.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">164</span>
+    <span class="phpdocumentor-element-found-in__line">165</span>
 
     </aside>
 

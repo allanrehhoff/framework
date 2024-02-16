@@ -201,7 +201,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Bootstrap/EventService.php"><a href="files/src-libraries-bootstrap-eventservice.html"><abbr title="src/Libraries/Bootstrap/EventService.php">EventService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">28</span>
+    <span class="phpdocumentor-element-found-in__line">31</span>
 
     </aside>
 
@@ -212,15 +212,19 @@
                     <span class="phpdocumentor-signature__name">registerDefaultListeners</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
         <section class="phpdocumentor-description"><p>These listeners will be added upon every request</p>
-<p>Example event listener class defined elsewhere:
-namespace EventListners;</p>
-<p>class UserRegistration {
-public function handle(User $iUser) {
-// Assuming you have the following classes loaded
-\EmailService::sendWelcomeEmail($iUser);</p>
-<p>\Logger::debug(&quot;User registered: &quot; . $iUser-&gt;getUsername());
+<p>Example event listener class defined elsewhere:</p>
+<pre class="prettyprint"><code class="language-php">&lt;?php
+namespace EventListners;
+
+class UserRegistration {
+	public function handle(User $iUser) {
+		// Assuming you have the following classes loaded
+		\EmailService::sendWelcomeEmail($iUser);
+
+		\Logger::debug(&quot;User registered: &quot; . $iUser-&gt;getUsername());
+	}
 }
-}</p>
+</code></pre>
 <p>Use the fully qualified class name
 \Core\Event::addListener(&quot;controller.execute.before&quot;, \UserRegistration::class);</p>
 <p>Closures may also be passes

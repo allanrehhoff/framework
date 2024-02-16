@@ -108,7 +108,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Configuration\u003A\u003Adelete\u0028\u0029",
             "name": "delete",
-            "summary": "Remove\u0020a\u0020configuration\u0020value",
+            "summary": "Remove\u0020a\u0020configuration\u0020value.",
             "url": "classes/Configuration.html#method_delete"
         },                {
             "fqsen": "\\Configuration\u003A\u003Aremove\u0028\u0029",
@@ -163,7 +163,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Console\u003A\u003Aconfirm\u0028\u0029",
             "name": "confirm",
-            "summary": "Prints\u0020a\u0020confirmation\u0020prompt\u0020to\u0020the\u0020console\nThis\u0020will\u0020exit\u0020the\u0020program\u0020if\u0020confirm\u0020is\u0020not\u0020positive",
+            "summary": "Prints\u0020a\u0020confirmation\u0020prompt\u0020to\u0020the\u0020console\nThis\u0020will\u0020exit\u0020the\u0020program\u0020if\u0020confirm\u0020is\u0020not\u0020positive.",
             "url": "classes/Console.html#method_confirm"
         },                {
             "fqsen": "\\Console\u003A\u003Aarguments\u0028\u0029",
