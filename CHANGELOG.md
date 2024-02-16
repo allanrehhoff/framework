@@ -27,6 +27,7 @@ v8.0.0
 - Support for responding with JSON or XML if the clients `Accept` signals a preference.  
 - New utility class \Str for string manipulation.  
 - Database library updated to latest version.  
+- Attempt HTTPS redirect for non-apache webservers.  
 
 v7.2.1
 - Fix private and protected methods on controllers being call.  
