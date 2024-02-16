@@ -102,7 +102,7 @@ namespace Database {
 		 * @since 3.0
 		 */
 		public function connect(string $hostname, string $username, string $password, string $database): Connection {
-			$this->dbh = new \PDO("mysql:host=".$hostname, $username, $password);
+			$this->dbh = new \PDO("mysql:host=".$hostname.";charset=utf8mb4", $username, $password);
 			$this->dbh->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 			$this->dbh->setAttribute(\PDO::ATTR_STATEMENT_CLASS, ["Database\Statement", [$this]]);
 			$this->dbh->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
@@ -151,7 +151,6 @@ namespace Database {
 		 */
 		public function use(string $database): void {
 			$this->query("USE ".$database);
-			$this->query("SET NAMES utf8mb4");
 
 			$this->database = $database;
 

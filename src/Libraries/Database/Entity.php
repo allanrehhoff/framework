@@ -54,25 +54,27 @@ namespace Database {
 		}
 
 		/**
-		* Print the Entity object only for debugging purposes
-		*
-		* @return string
-		*/
+		 * Print the Entity object only for debugging purposes
+		 *
+		 * @return string
+		 */
 		public function __toString(): string {
 			$result = get_class($this)."(".$this->key."):\n";
+
 			foreach ($this->data as $key => $value) {
 				$result .= " [".$key."] ".$value."\n";
 			}
+
 			return $result;
 		}
 
 		/**
-		* Sets a property to a given value
-		*
-		* @param string $name Name of the property to set to $value
-		* @param mixed $value A value to set
-		* @return void
-		*/
+		 * Sets a property to a given value
+		 *
+		 * @param string $name Name of the property to set to $value
+		 * @param mixed $value A value to set
+		 * @return void
+		 */
 		public function __set(string $name, mixed $value) {
 			$this->data[$name] = $value;
 		}
@@ -91,23 +93,23 @@ namespace Database {
 		}
 
 		/**
-		* Gets the value for a given property name
-		*
-		* @param string $name name of the property from whom to retrieve a value
-		* @return mixed A property value
-		*/
+		 * Gets the value for a given property name
+		 *
+		 * @param string $name name of the property from whom to retrieve a value
+		 * @return mixed A property value
+		 */
 		#[\ReturnTypeWillChange]
 		public function __get(string $name) {
 			return $this->data[$name];
 		}
 
 		/**
-		* Saves the entity to a long term storage.
-		* Empty strings are converted to null values
-		*
-		* @throws \BadMethodCallException If attempting to do an insert and data array is empty.
-		* @return int|string|static if a new entity was just inserted, returns the primary key for that entity, otherwise the current data is returned
-		*/
+		 * Saves the entity to a long term storage.
+		 * Empty strings are converted to null values
+		 *
+		 * @throws \BadMethodCallException If attempting to do an insert and data array is empty.
+		 * @return int|string|static if a new entity was just inserted, returns the primary key for that entity, otherwise the current data is returned
+		 */
 		public function save(): int|string|static {
 			if($this->exists() === true) {
 				Connection::getInstance()->update($this->getTableName(), $this->data, $this->getKeyFilter());
@@ -134,20 +136,20 @@ namespace Database {
 		}
 
 		/**
-		* Permanently delete a given entity row
-		*
-		* @return int Number of rows affected
-		*/
+		 * Permanently delete a given entity row
+		 *
+		 * @return int Number of rows affected
+		 */
 		public function delete(): int {
 			return Connection::getInstance()->delete($this->getTableName(), $this->getKeyFilter());
 		}
 
 		/**
-		* Make a given value safe for insertion, could prevent future XSS injections
-		*
-		* @param string $key Key of the data value to retrieve
-		* @return null|string A html friendly string
-		*/
+		 * Make a given value safe for insertion, could prevent future XSS injections
+		 *
+		 * @param string $key Key of the data value to retrieve
+		 * @return null|string A html friendly string
+		 */
 		public function safe(string $key): ?string {
 			$data = $this->get($key);
 
@@ -158,6 +160,8 @@ namespace Database {
 
 		/**
 		 * Queries database for a given entity by the value of its primary key.
+		 * Loaded antities are cached statically for the remainder of the request.
+		 * When saved, the cache will be refreshed with the updated instance.
 		 * 
 		 * @param int|string $identifier The value of the entity's primary key. 
 		 * @return static The loaded entity, empty entity if not exists
@@ -240,12 +244,12 @@ namespace Database {
 		}
 
 		/**
-		* Sets ones or more properties to a given value.
-		*
-		* @param null|array|object $data key => value pairs of values to set
-		* @param null|array $allowedFields keys of fields allowed to be altered
-		* @return static The current entity instance
-		*/
+		 * Sets ones or more properties to a given value.
+		 *
+		 * @param null|array|object $data key => value pairs of values to set
+		 * @param null|array $allowedFields keys of fields allowed to be altered
+		 * @return static The current entity instance
+		 */
 		public function set(null|array|object $data = null, ?array $allowedFields = null): static {
 			if($data !== null) {
 				// Convert object to array
@@ -279,20 +283,20 @@ namespace Database {
 		}
 
 		/**
-		* Gets the current entity data
-		*
-		* @return array
-		*/
+		 * Gets the current entity data
+		 *
+		 * @return array
+		 */
 		public function getData(): array {
 			return $this->data;
 		}
 
 		/**
-		* Get the value corrosponding to a given key
-		*
-		* @param string $key key name of the value to retrieve.
-		* @return mixed
-		*/
+		 * Get the value corrosponding to a given key
+		 *
+		 * @param string $key key name of the value to retrieve.
+		 * @return mixed
+		 */
 		public function get(string $key): mixed {
 			return $this->data[$key] ?? null;
 		}
@@ -314,37 +318,37 @@ namespace Database {
 		}
 
 		/**
-		* Gets an array suitable for WHERE clauses in SQL statements
-		*
-		* @return array A filter array
-		*/
+		 * Gets an array suitable for WHERE clauses in SQL statements
+		 *
+		 * @return array A filter array
+		 */
 		public function getKeyFilter(): array {
 			return [static::getPrimaryKey() => $this->key];
 		}
 
 		/**
-		* Get the current value of primary key index.
-		*
-		* @return int|string the key value
-		*/
+		 * Get the current value of primary key index.
+		 *
+		 * @return int|string the key value
+		 */
 		public function id(): int|string {
 			return is_numeric($this->key) ? (int)$this->key : htmlspecialchars($this->key, ENT_QUOTES, "UTF-8");;
 		}
 
 		/**
-		* Determine if the loaded entity exists in db
-		*
-		* @return bool
-		*/
+		 * Determine if the loaded entity exists in db
+		 *
+		 * @return bool
+		 */
 		public function exists(): bool {
 			return $this->key !== null;
 		}
 
 		/**
-		* Determine if the loaded entity is new
-		*
-		* @return bool
-		*/
+		 * Determine if the loaded entity is new
+		 *
+		 * @return bool
+		 */
 		public function isNew(): bool {
 			return !$this->exists();
 		}
