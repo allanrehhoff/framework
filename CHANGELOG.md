@@ -20,6 +20,7 @@ v8.0.0
 - New method \Core\Response::sendHttpHeaders(); Sends queued HTTP headers to browser.
 - New method \Registry::getEnvironment(); for deeper integrations with environment variables.  
 - Declared top level \Core namespace classes as final (with the exception of \Core\MVCStructure)  
+- New bundled library \Http\Request for interacting with external API's.  
 - Added typehints to more controllers and properties.  
 - Added tests for better code coverage.  
 - New class \Core\Event();  
