@@ -56,6 +56,10 @@
                     <section class="phpdocumentor-sidebar__category">
             <h2 class="phpdocumentor-sidebar__category-header">Namespaces</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/bootstrap.html" class="">Bootstrap</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="namespaces/core.html" class="">Core</a>
 </h4>
     <ul class="phpdocumentor-list">
@@ -77,6 +81,14 @@
     <a href="namespaces/database.html" class="">Database</a>
 </h4>
 
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/eventlisteners.html" class="">EventListeners</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/http.html" class="">Http</a>
+</h4>
+
                         </section>
                 <section class="phpdocumentor-sidebar__category">
             <h2 class="phpdocumentor-sidebar__category-header">Packages</h2>
@@ -87,6 +99,16 @@
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="packages/Database.html" class="">Database</a>
 </h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/Http.html" class="">Http</a>
+</h4>
+    <ul class="phpdocumentor-list">
+                    <li>
+                <a href="packages/Http-Request.html" class="">Request</a>
+                
+            </li>
+            </ul>
 
                         </section>
             
@@ -222,6 +244,13 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</dd>
 <dd>Determine if the loaded entity exists in db</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Database-Entity.html#method_find">find()</a>
+    <span>
+                                &nbsp;: static    </span>
+</dt>
+<dd>Attempts to find an entity from a given field and value</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Database-Entity.html#method_from">from()</a>
     <span>
                                 &nbsp;: static    </span>
@@ -243,13 +272,6 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</dd>
 <dd>Gets the current entity data</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Database-Entity.html#method_getKey">getKey()</a>
-    <span>
-                                &nbsp;: int|string    </span>
-</dt>
-<dd>Get the current value of key index</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Database-Entity.html#method_getKeyFilter">getKeyFilter()</a>
     <span>
                                 &nbsp;: array&lt;string|int, mixed&gt;    </span>
@@ -257,11 +279,25 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</dd>
 <dd>Gets an array suitable for WHERE clauses in SQL statements</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Database-EntityType.html#method_getPrimaryKey">getPrimaryKey()</a>
+    <span>
+                                &nbsp;: string    </span>
+</dt>
+<dd>The primary key of the table this entity interacts with</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Database-EntityType.html#method_getTableName">getTableName()</a>
+    <span>
+                                &nbsp;: string    </span>
+</dt>
+<dd>The table name this entity interacts with</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Database-Entity.html#method_id">id()</a>
     <span>
-                                &nbsp;: mixed    </span>
+                                &nbsp;: int|string    </span>
 </dt>
-<dd>Wrapper method for getKey();</dd>
+<dd>Get the current value of primary key index.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Database-Entity.html#method_isNew">isNew()</a>
@@ -325,20 +361,6 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</dd>
                                 &nbsp;: <a href="classes/Database-Statement.html"><abbr title="\Database\Statement">Statement</abbr></a>    </span>
 </dt>
 <dd>Update or insert row</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a href="classes/Database-EntityType.html#method_getKeyField">getKeyField()</a>
-    <span>
-                                &nbsp;: string    </span>
-</dt>
-<dd>The primary key of the table this entity interacts with</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a href="classes/Database-EntityType.html#method_getTableName">getTableName()</a>
-    <span>
-                                &nbsp;: string    </span>
-</dt>
-<dd>The table name this entity interacts with</dd>
 
         </dl>
 
@@ -544,7 +566,7 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Database/Entity.php"><a href="files/src-libraries-database-entity.html"><abbr title="src/Libraries/Database/Entity.php">Entity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">99</span>
+    <span class="phpdocumentor-element-found-in__line">101</span>
 
     </aside>
 
@@ -591,7 +613,7 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Database/Entity.php"><a href="files/src-libraries-database-entity.html"><abbr title="src/Libraries/Database/Entity.php">Entity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">89</span>
+    <span class="phpdocumentor-element-found-in__line">91</span>
 
     </aside>
 
@@ -652,7 +674,7 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Database/Entity.php"><a href="files/src-libraries-database-entity.html"><abbr title="src/Libraries/Database/Entity.php">Entity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">76</span>
+    <span class="phpdocumentor-element-found-in__line">78</span>
 
     </aside>
 
@@ -739,7 +761,7 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Database/Entity.php"><a href="files/src-libraries-database-entity.html"><abbr title="src/Libraries/Database/Entity.php">Entity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">141</span>
+    <span class="phpdocumentor-element-found-in__line">143</span>
 
     </aside>
 
@@ -774,7 +796,7 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Database/Entity.php"><a href="files/src-libraries-database-entity.html"><abbr title="src/Libraries/Database/Entity.php">Entity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">336</span>
+    <span class="phpdocumentor-element-found-in__line">343</span>
 
     </aside>
 
@@ -800,6 +822,60 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</p>
             -public
                                     -static                    "
 >
+    <h4 class="phpdocumentor-element__name" id="method_find">
+        find()
+        <a href="classes/Database-Entity.html#method_find" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Database/Entity.php"><a href="files/src-libraries-database-entity.html"><abbr title="src/Libraries/Database/Entity.php">Entity.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">193</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Attempts to find an entity from a given field and value</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">find</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$field</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">int|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$value</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">static</span></code>
+
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$field</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The database column/field to match</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$value</span>
+                : <span class="phpdocumentor-signature__argument__return-type">int|string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The value that $field is to be matched against</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">static</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                    -static                    "
+>
     <h4 class="phpdocumentor-element__name" id="method_from">
         from()
         <a href="classes/Database-Entity.html#method_from" class="headerlink"><i class="fas fa-link"></i></a>
@@ -807,7 +883,7 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Database/Entity.php"><a href="files/src-libraries-database-entity.html"><abbr title="src/Libraries/Database/Entity.php">Entity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">165</span>
+    <span class="phpdocumentor-element-found-in__line">169</span>
 
     </aside>
 
@@ -817,7 +893,10 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</p>
     <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">from</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$identifier</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">static</span></code>
 
-    
+        <section class="phpdocumentor-description"><p>Loaded antities are cached statically for the remainder of the request.
+When saved, the cache will be refreshed with the updated instance.</p>
+</section>
+
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -854,7 +933,7 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Database/Entity.php"><a href="files/src-libraries-database-entity.html"><abbr title="src/Libraries/Database/Entity.php">Entity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">284</span>
+    <span class="phpdocumentor-element-found-in__line">300</span>
 
     </aside>
 
@@ -899,7 +978,7 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Database/Entity.php"><a href="files/src-libraries-database-entity.html"><abbr title="src/Libraries/Database/Entity.php">Entity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">274</span>
+    <span class="phpdocumentor-element-found-in__line">290</span>
 
     </aside>
 
@@ -925,41 +1004,6 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</p>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_getKey">
-        getKey()
-        <a href="classes/Database-Entity.html#method_getKey" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Database/Entity.php"><a href="files/src-libraries-database-entity.html"><abbr title="src/Libraries/Database/Entity.php">Entity.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">309</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Get the current value of key index</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getKey</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int|string</span></code>
-
-    
-    
-    
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">int|string</span>
-            &mdash;
-            <section class="phpdocumentor-description"><p>the key value</p>
-</section>
-
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
     <h4 class="phpdocumentor-element__name" id="method_getKeyFilter">
         getKeyFilter()
         <a href="classes/Database-Entity.html#method_getKeyFilter" class="headerlink"><i class="fas fa-link"></i></a>
@@ -967,7 +1011,7 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Database/Entity.php"><a href="files/src-libraries-database-entity.html"><abbr title="src/Libraries/Database/Entity.php">Entity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">318</span>
+    <span class="phpdocumentor-element-found-in__line">325</span>
 
     </aside>
 
@@ -993,6 +1037,72 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</p>
         class="phpdocumentor-element
             -method
             -public
+                                    -static                    "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getPrimaryKey">
+        getPrimaryKey()
+        <a href="classes/Database-EntityType.html#method_getPrimaryKey" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Database/EntityType.php"><a href="files/src-libraries-database-entitytype.html"><abbr title="src/Libraries/Database/EntityType.php">EntityType.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">20</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">The primary key of the table this entity interacts with</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">getPrimaryKey</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+
+    
+    
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">string</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                    -static                    "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getTableName">
+        getTableName()
+        <a href="classes/Database-EntityType.html#method_getTableName" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Database/EntityType.php"><a href="files/src-libraries-database-entitytype.html"><abbr title="src/Libraries/Database/EntityType.php">EntityType.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">27</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">The table name this entity interacts with</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">getTableName</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+
+    
+    
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">string</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
                                                         "
 >
     <h4 class="phpdocumentor-element__name" id="method_id">
@@ -1002,24 +1112,24 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Database/Entity.php"><a href="files/src-libraries-database-entity.html"><abbr title="src/Libraries/Database/Entity.php">Entity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">327</span>
+    <span class="phpdocumentor-element-found-in__line">334</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Wrapper method for getKey();</p>
+        <p class="phpdocumentor-summary">Get the current value of primary key index.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">id</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">id</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int|string</span></code>
 
     
     
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">mixed</span>
+    <span class="phpdocumentor-signature__response_type">int|string</span>
             &mdash;
-            <section class="phpdocumentor-description"><p>A key value</p>
+            <section class="phpdocumentor-description"><p>the key value</p>
 </section>
 
     
@@ -1037,7 +1147,7 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Database/Entity.php"><a href="files/src-libraries-database-entity.html"><abbr title="src/Libraries/Database/Entity.php">Entity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">345</span>
+    <span class="phpdocumentor-element-found-in__line">352</span>
 
     </aside>
 
@@ -1070,7 +1180,7 @@ to support &#039;array_column&#039; in \Database\Collection::getColumn</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Database/Entity.php"><a href="files/src-libraries-database-entity.html"><abbr title="src/Libraries/Database/Entity.php">Entity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">191</span>
+    <span class="phpdocumentor-element-found-in__line">207</span>
 
     </aside>
 
@@ -1129,7 +1239,7 @@ e.g. by the use of static::search();</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Database/Entity.php"><a href="files/src-libraries-database-entity.html"><abbr title="src/Libraries/Database/Entity.php">Entity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">226</span>
+    <span class="phpdocumentor-element-found-in__line">242</span>
 
     </aside>
 
@@ -1162,7 +1272,7 @@ e.g. by the use of static::search();</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Database/Entity.php"><a href="files/src-libraries-database-entity.html"><abbr title="src/Libraries/Database/Entity.php">Entity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">151</span>
+    <span class="phpdocumentor-element-found-in__line">153</span>
 
     </aside>
 
@@ -1209,7 +1319,7 @@ e.g. by the use of static::search();</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Database/Entity.php"><a href="files/src-libraries-database-entity.html"><abbr title="src/Libraries/Database/Entity.php">Entity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">111</span>
+    <span class="phpdocumentor-element-found-in__line">113</span>
 
     </aside>
 
@@ -1262,7 +1372,7 @@ e.g. by the use of static::search();</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Database/Entity.php"><a href="files/src-libraries-database-entity.html"><abbr title="src/Libraries/Database/Entity.php">Entity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">217</span>
+    <span class="phpdocumentor-element-found-in__line">233</span>
 
     </aside>
 
@@ -1330,7 +1440,7 @@ e.g. by the use of static::search();</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Database/Entity.php"><a href="files/src-libraries-database-entity.html"><abbr title="src/Libraries/Database/Entity.php">Entity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">237</span>
+    <span class="phpdocumentor-element-found-in__line">253</span>
 
     </aside>
 
@@ -1386,7 +1496,7 @@ e.g. by the use of static::search();</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Database/Entity.php"><a href="files/src-libraries-database-entity.html"><abbr title="src/Libraries/Database/Entity.php">Entity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">294</span>
+    <span class="phpdocumentor-element-found-in__line">310</span>
 
     </aside>
 
@@ -1431,7 +1541,7 @@ e.g. by the use of static::search();</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Database/Entity.php"><a href="files/src-libraries-database-entity.html"><abbr title="src/Libraries/Database/Entity.php">Entity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">132</span>
+    <span class="phpdocumentor-element-found-in__line">134</span>
 
     </aside>
 
@@ -1447,72 +1557,6 @@ e.g. by the use of static::search();</p>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type"><a href="classes/Database-Statement.html"><abbr title="\Database\Statement">Statement</abbr></a></span>
-            &mdash;
-        
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -protected
-                                    -static                    "
->
-    <h4 class="phpdocumentor-element__name" id="method_getKeyField">
-        getKeyField()
-        <a href="classes/Database-EntityType.html#method_getKeyField" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Database/EntityType.php"><a href="files/src-libraries-database-entitytype.html"><abbr title="src/Libraries/Database/EntityType.php">EntityType.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">20</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">The primary key of the table this entity interacts with</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">getKeyField</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
-
-    
-    
-    
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string</span>
-            &mdash;
-        
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -protected
-                                    -static                    "
->
-    <h4 class="phpdocumentor-element__name" id="method_getTableName">
-        getTableName()
-        <a href="classes/Database-EntityType.html#method_getTableName" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Database/EntityType.php"><a href="files/src-libraries-database-entitytype.html"><abbr title="src/Libraries/Database/EntityType.php">EntityType.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">26</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">The table name this entity interacts with</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">getTableName</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
-
-    
-    
-    
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string</span>
             &mdash;
         
     

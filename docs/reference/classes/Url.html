@@ -56,6 +56,10 @@
                     <section class="phpdocumentor-sidebar__category">
             <h2 class="phpdocumentor-sidebar__category-header">Namespaces</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/bootstrap.html" class="">Bootstrap</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="namespaces/core.html" class="">Core</a>
 </h4>
     <ul class="phpdocumentor-list">
@@ -77,6 +81,14 @@
     <a href="namespaces/database.html" class="">Database</a>
 </h4>
 
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/eventlisteners.html" class="">EventListeners</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/http.html" class="">Http</a>
+</h4>
+
                         </section>
                 <section class="phpdocumentor-sidebar__category">
             <h2 class="phpdocumentor-sidebar__category-header">Packages</h2>
@@ -87,6 +99,16 @@
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="packages/Database.html" class="">Database</a>
 </h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/Http.html" class="">Http</a>
+</h4>
+    <ul class="phpdocumentor-list">
+                    <li>
+                <a href="packages/Http-Request.html" class="">Request</a>
+                
+            </li>
+            </ul>
 
                         </section>
             
@@ -213,7 +235,7 @@ enhance the handling of URLs within the PHP applications.</p>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd>Perform a redirect with a X-Redirect-By header</dd>
+<dd>Perform a redirect with a X-Redirect-By header, the application will be shutdown after the redirect.</dd>
 
         </dl>
 
@@ -241,7 +263,7 @@ enhance the handling of URLs within the PHP applications.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Url.php"><a href="files/src-libraries-url.html"><abbr title="src/Libraries/Url.php">Url.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">78</span>
+    <span class="phpdocumentor-element-found-in__line">94</span>
 
     </aside>
 
@@ -259,7 +281,8 @@ enhance the handling of URLs within the PHP applications.</p>
                 : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>An associative array of URL components.</p>
+                    <section class="phpdocumentor-description"><p>An associative array of URL components.
+Possible keys: scheme, host, user, pass, port, path, query, fragment.</p>
 </section>
 
             </dd>
@@ -271,6 +294,21 @@ enhance the handling of URLs within the PHP applications.</p>
     <span class="phpdocumentor-signature__response_type">string|false</span>
             &mdash;
             <section class="phpdocumentor-description"><p>The assembled URL string, or false on failure.</p>
+<ul>
+<li>@example</li>
+</ul>
+<pre class="prettyprint"><code class="prettyprint">&lt;?php
+$urlParts = [
+    &quot;scheme&quot; =&gt; &quot;https&quot;,
+    &quot;host&quot; =&gt; &quot;example.com&quot;,
+    &quot;path&quot; =&gt; &quot;/page&quot;,
+    &quot;query&quot; =&gt; &quot;param=value&quot;,
+    &quot;fragment&quot; =&gt; &quot;section&quot;,
+];
+
+$url = \Url::build($urlParts);
+echo $url; // Outputs: &quot;https://example.com/page?param=value#section&quot;
+</code></pre>
 </section>
 
     
@@ -288,7 +326,7 @@ enhance the handling of URLs within the PHP applications.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Url.php"><a href="files/src-libraries-url.html"><abbr title="src/Libraries/Url.php">Url.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">137</span>
+    <span class="phpdocumentor-element-found-in__line">155</span>
 
     </aside>
 
@@ -335,7 +373,7 @@ enhance the handling of URLs within the PHP applications.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Url.php"><a href="files/src-libraries-url.html"><abbr title="src/Libraries/Url.php">Url.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">128</span>
+    <span class="phpdocumentor-element-found-in__line">146</span>
 
     </aside>
 
@@ -382,7 +420,7 @@ enhance the handling of URLs within the PHP applications.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Url.php"><a href="files/src-libraries-url.html"><abbr title="src/Libraries/Url.php">Url.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">119</span>
+    <span class="phpdocumentor-element-found-in__line">137</span>
 
     </aside>
 
@@ -570,7 +608,7 @@ enhance the handling of URLs within the PHP applications.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Url.php"><a href="files/src-libraries-url.html"><abbr title="src/Libraries/Url.php">Url.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">146</span>
+    <span class="phpdocumentor-element-found-in__line">164</span>
 
     </aside>
 
@@ -621,7 +659,7 @@ enhance the handling of URLs within the PHP applications.</p>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Perform a redirect with a X-Redirect-By header</p>
+        <p class="phpdocumentor-summary">Perform a redirect with a X-Redirect-By header, the application will be shutdown after the redirect.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>

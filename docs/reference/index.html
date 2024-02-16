@@ -56,6 +56,10 @@
                     <section class="phpdocumentor-sidebar__category">
             <h2 class="phpdocumentor-sidebar__category-header">Namespaces</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/bootstrap.html" class="">Bootstrap</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="namespaces/core.html" class="">Core</a>
 </h4>
     <ul class="phpdocumentor-list">
@@ -77,6 +81,14 @@
     <a href="namespaces/database.html" class="">Database</a>
 </h4>
 
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/eventlisteners.html" class="">EventListeners</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/http.html" class="">Http</a>
+</h4>
+
                         </section>
                 <section class="phpdocumentor-sidebar__category">
             <h2 class="phpdocumentor-sidebar__category-header">Packages</h2>
@@ -87,6 +99,16 @@
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="packages/Database.html" class="">Database</a>
 </h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/Http.html" class="">Http</a>
+</h4>
+    <ul class="phpdocumentor-list">
+                    <li>
+                <a href="packages/Http-Request.html" class="">Request</a>
+                
+            </li>
+            </ul>
 
                         </section>
             
@@ -115,6 +137,7 @@
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -package"><a href="packages/Application.html"><abbr title="\Application">Application</abbr></a></dt>
             <dt class="phpdocumentor-table-of-contents__entry -package"><a href="packages/Database.html"><abbr title="\Database">Database</abbr></a></dt>
+            <dt class="phpdocumentor-table-of-contents__entry -package"><a href="packages/Http.html"><abbr title="\Http">Http</abbr></a></dt>
     </dl>
 
 <h3 id="namespaces">
@@ -123,8 +146,11 @@
 </h3>
 
 <dl class="phpdocumentor-table-of-contents">
+            <dt class="phpdocumentor-table-of-contents__entry -namespace"><a href="namespaces/bootstrap.html"><abbr title="\Bootstrap">Bootstrap</abbr></a></dt>
             <dt class="phpdocumentor-table-of-contents__entry -namespace"><a href="namespaces/core.html"><abbr title="\Core">Core</abbr></a></dt>
             <dt class="phpdocumentor-table-of-contents__entry -namespace"><a href="namespaces/database.html"><abbr title="\Database">Database</abbr></a></dt>
+            <dt class="phpdocumentor-table-of-contents__entry -namespace"><a href="namespaces/eventlisteners.html"><abbr title="\EventListeners">EventListeners</abbr></a></dt>
+            <dt class="phpdocumentor-table-of-contents__entry -namespace"><a href="namespaces/http.html"><abbr title="\Http">Http</abbr></a></dt>
     </dl>
 
 <h3 id="interfaces_class_traits">
@@ -157,8 +183,6 @@ also supports .jsonc files</dd>
         <dd>Put whatever helper functions you may need in this class.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Environment.html"><abbr title="\Environment">Environment</abbr></a></dt>
         <dd></dd>
-            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Singleton.html"><abbr title="\Registry">Singleton</abbr></a></dt>
-        <dd>Class used to hold global state objects.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Url.html"><abbr title="\Url">Url</abbr></a></dt>
         <dd>This class provides utility methods for working with URLs,
 such as parsing and manipulating URL components.</dd>
@@ -167,6 +191,10 @@ such as parsing and manipulating URL components.</dd>
 to prevent cross-site scripting (XSS) attacks.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Str.html"><abbr title="\Str">Str</abbr></a></dt>
         <dd>The Str class provides string manipulation methods.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Logger.html"><abbr title="\Logger">Logger</abbr></a></dt>
+        <dd>Simple logger class.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Registry.html"><abbr title="\Registry">Registry</abbr></a></dt>
+        <dd>Class used to hold global state objects.</dd>
     
     
     </dl>
@@ -181,14 +209,14 @@ to prevent cross-site scripting (XSS) attacks.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a href="namespaces/default.html#constant_ACCEPT_JSON">ACCEPT_JSON</a>
     <span>
-        &nbsp;= !\IS_CLI &amp;&amp; \str_contains(\strtolower(\getallheaders()[&quot;Accept&quot;] ?? &quot;*/*&quot;), &quot;application/json&quot;)                            </span>
+        &nbsp;= !IS_CLI &amp;&amp; str_contains(strtolower(getallheaders()[&quot;Accept&quot;] ?? &quot;*/*&quot;), &quot;application/json&quot;)                            </span>
 </dt>
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a href="namespaces/default.html#constant_APP_PATH">APP_PATH</a>
     <span>
-        &nbsp;= \realpath(__DIR__ . &quot;/../&quot;)                            </span>
+        &nbsp;= realpath(__DIR__ . &quot;/../../&quot;)                            </span>
 </dt>
 <dd></dd>
 
@@ -204,26 +232,26 @@ to prevent cross-site scripting (XSS) attacks.</dd>
     <span>
         &nbsp;= &quot;\r&quot;                            </span>
 </dt>
-<dd>Sets error handling and other useful PHP configurations, to help you write proper code.</dd>
+<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a href="namespaces/default.html#constant_CRLF">CRLF</a>
     <span>
-        &nbsp;= \CR . \LF                            </span>
+        &nbsp;= CR . LF                            </span>
 </dt>
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a href="namespaces/default.html#constant_DS">DS</a>
     <span>
-        &nbsp;= \DIRECTORY_SEPARATOR                            </span>
+        &nbsp;= DIRECTORY_SEPARATOR                            </span>
 </dt>
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a href="namespaces/default.html#constant_IS_CLI">IS_CLI</a>
     <span>
-        &nbsp;= \PHP_SAPI === &quot;cli&quot;                            </span>
+        &nbsp;= PHP_SAPI === &quot;cli&quot;                            </span>
 </dt>
 <dd></dd>
 
@@ -251,7 +279,7 @@ to prevent cross-site scripting (XSS) attacks.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a href="namespaces/default.html#constant_STORAGE">STORAGE</a>
     <span>
-        &nbsp;= \realpath(\APP_PATH . &quot;/../storage&quot;)                            </span>
+        &nbsp;= realpath(APP_PATH . &quot;/../storage&quot;)                            </span>
 </dt>
 <dd></dd>
 
@@ -277,9 +305,9 @@ to prevent cross-site scripting (XSS) attacks.</dd>
     </h4>
 
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Bootstrap/startup.php"><a href="files/src-bootstrap-startup.html"><abbr title="src/Bootstrap/startup.php">startup.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Bootstrap/Bootstrap.php"><a href="files/src-libraries-bootstrap-bootstrap.html"><abbr title="src/Libraries/Bootstrap/Bootstrap.php">Bootstrap.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">18</span>
+    <span class="phpdocumentor-element-found-in__line">44</span>
 
     </aside>
 
@@ -288,7 +316,7 @@ to prevent cross-site scripting (XSS) attacks.</dd>
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
     <span class="phpdocumentor-signature__name">ACCEPT_JSON</span>
-    = <span class="phpdocumentor-signature__default-value">!\IS_CLI &amp;&amp; \str_contains(\strtolower(\getallheaders()[&quot;Accept&quot;] ?? &quot;*/*&quot;), &quot;application/json&quot;)</span>
+    = <span class="phpdocumentor-signature__default-value">!IS_CLI &amp;&amp; str_contains(strtolower(getallheaders()[&quot;Accept&quot;] ?? &quot;*/*&quot;), &quot;application/json&quot;)</span>
 </code>
 
 
@@ -306,9 +334,9 @@ to prevent cross-site scripting (XSS) attacks.</dd>
     </h4>
 
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Bootstrap/startup.php"><a href="files/src-bootstrap-startup.html"><abbr title="src/Bootstrap/startup.php">startup.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Bootstrap/Bootstrap.php"><a href="files/src-libraries-bootstrap-bootstrap.html"><abbr title="src/Libraries/Bootstrap/Bootstrap.php">Bootstrap.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">16</span>
+    <span class="phpdocumentor-element-found-in__line">42</span>
 
     </aside>
 
@@ -317,7 +345,7 @@ to prevent cross-site scripting (XSS) attacks.</dd>
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
     <span class="phpdocumentor-signature__name">APP_PATH</span>
-    = <span class="phpdocumentor-signature__default-value">\realpath(__DIR__ . &quot;/../&quot;)</span>
+    = <span class="phpdocumentor-signature__default-value">realpath(__DIR__ . &quot;/../../&quot;)</span>
 </code>
 
 
@@ -335,9 +363,9 @@ to prevent cross-site scripting (XSS) attacks.</dd>
     </h4>
 
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Bootstrap/startup.php"><a href="files/src-bootstrap-startup.html"><abbr title="src/Bootstrap/startup.php">startup.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Bootstrap/Bootstrap.php"><a href="files/src-libraries-bootstrap-bootstrap.html"><abbr title="src/Libraries/Bootstrap/Bootstrap.php">Bootstrap.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">12</span>
+    <span class="phpdocumentor-element-found-in__line">38</span>
 
     </aside>
 
@@ -364,14 +392,13 @@ to prevent cross-site scripting (XSS) attacks.</dd>
     </h4>
 
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Bootstrap/startup.php"><a href="files/src-bootstrap-startup.html"><abbr title="src/Bootstrap/startup.php">startup.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Bootstrap/Bootstrap.php"><a href="files/src-libraries-bootstrap-bootstrap.html"><abbr title="src/Libraries/Bootstrap/Bootstrap.php">Bootstrap.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">7</span>
+    <span class="phpdocumentor-element-found-in__line">33</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Sets error handling and other useful PHP configurations, to help you write proper code.</p>
-
+    
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
@@ -380,7 +407,8 @@ to prevent cross-site scripting (XSS) attacks.</dd>
 </code>
 
 
-    
+        <section class="phpdocumentor-description"></section>
+
         <section class="phpdocumentor-description"></section>
 
     
@@ -393,9 +421,9 @@ to prevent cross-site scripting (XSS) attacks.</dd>
     </h4>
 
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Bootstrap/startup.php"><a href="files/src-bootstrap-startup.html"><abbr title="src/Bootstrap/startup.php">startup.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Bootstrap/Bootstrap.php"><a href="files/src-libraries-bootstrap-bootstrap.html"><abbr title="src/Libraries/Bootstrap/Bootstrap.php">Bootstrap.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">11</span>
+    <span class="phpdocumentor-element-found-in__line">36</span>
 
     </aside>
 
@@ -404,7 +432,7 @@ to prevent cross-site scripting (XSS) attacks.</dd>
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
     <span class="phpdocumentor-signature__name">CRLF</span>
-    = <span class="phpdocumentor-signature__default-value">\CR . \LF</span>
+    = <span class="phpdocumentor-signature__default-value">CR . LF</span>
 </code>
 
 
@@ -422,9 +450,9 @@ to prevent cross-site scripting (XSS) attacks.</dd>
     </h4>
 
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Bootstrap/startup.php"><a href="files/src-bootstrap-startup.html"><abbr title="src/Bootstrap/startup.php">startup.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Bootstrap/Bootstrap.php"><a href="files/src-libraries-bootstrap-bootstrap.html"><abbr title="src/Libraries/Bootstrap/Bootstrap.php">Bootstrap.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">13</span>
+    <span class="phpdocumentor-element-found-in__line">39</span>
 
     </aside>
 
@@ -433,7 +461,7 @@ to prevent cross-site scripting (XSS) attacks.</dd>
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
     <span class="phpdocumentor-signature__name">DS</span>
-    = <span class="phpdocumentor-signature__default-value">\DIRECTORY_SEPARATOR</span>
+    = <span class="phpdocumentor-signature__default-value">DIRECTORY_SEPARATOR</span>
 </code>
 
 
@@ -451,9 +479,9 @@ to prevent cross-site scripting (XSS) attacks.</dd>
     </h4>
 
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Bootstrap/startup.php"><a href="files/src-bootstrap-startup.html"><abbr title="src/Bootstrap/startup.php">startup.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Bootstrap/Bootstrap.php"><a href="files/src-libraries-bootstrap-bootstrap.html"><abbr title="src/Libraries/Bootstrap/Bootstrap.php">Bootstrap.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">15</span>
+    <span class="phpdocumentor-element-found-in__line">41</span>
 
     </aside>
 
@@ -462,7 +490,7 @@ to prevent cross-site scripting (XSS) attacks.</dd>
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
     <span class="phpdocumentor-signature__name">IS_CLI</span>
-    = <span class="phpdocumentor-signature__default-value">\PHP_SAPI === &quot;cli&quot;</span>
+    = <span class="phpdocumentor-signature__default-value">PHP_SAPI === &quot;cli&quot;</span>
 </code>
 
 
@@ -480,9 +508,9 @@ to prevent cross-site scripting (XSS) attacks.</dd>
     </h4>
 
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Bootstrap/startup.php"><a href="files/src-bootstrap-startup.html"><abbr title="src/Bootstrap/startup.php">startup.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Bootstrap/Bootstrap.php"><a href="files/src-libraries-bootstrap-bootstrap.html"><abbr title="src/Libraries/Bootstrap/Bootstrap.php">Bootstrap.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">14</span>
+    <span class="phpdocumentor-element-found-in__line">40</span>
 
     </aside>
 
@@ -509,9 +537,9 @@ to prevent cross-site scripting (XSS) attacks.</dd>
     </h4>
 
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Bootstrap/startup.php"><a href="files/src-bootstrap-startup.html"><abbr title="src/Bootstrap/startup.php">startup.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Bootstrap/Bootstrap.php"><a href="files/src-libraries-bootstrap-bootstrap.html"><abbr title="src/Libraries/Bootstrap/Bootstrap.php">Bootstrap.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">8</span>
+    <span class="phpdocumentor-element-found-in__line">34</span>
 
     </aside>
 
@@ -538,9 +566,9 @@ to prevent cross-site scripting (XSS) attacks.</dd>
     </h4>
 
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Bootstrap/startup.php"><a href="files/src-bootstrap-startup.html"><abbr title="src/Bootstrap/startup.php">startup.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Bootstrap/Bootstrap.php"><a href="files/src-libraries-bootstrap-bootstrap.html"><abbr title="src/Libraries/Bootstrap/Bootstrap.php">Bootstrap.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">10</span>
+    <span class="phpdocumentor-element-found-in__line">37</span>
 
     </aside>
 
@@ -567,9 +595,9 @@ to prevent cross-site scripting (XSS) attacks.</dd>
     </h4>
 
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Bootstrap/startup.php"><a href="files/src-bootstrap-startup.html"><abbr title="src/Bootstrap/startup.php">startup.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Bootstrap/Bootstrap.php"><a href="files/src-libraries-bootstrap-bootstrap.html"><abbr title="src/Libraries/Bootstrap/Bootstrap.php">Bootstrap.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">17</span>
+    <span class="phpdocumentor-element-found-in__line">43</span>
 
     </aside>
 
@@ -578,7 +606,7 @@ to prevent cross-site scripting (XSS) attacks.</dd>
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
     <span class="phpdocumentor-signature__name">STORAGE</span>
-    = <span class="phpdocumentor-signature__default-value">\realpath(\APP_PATH . &quot;/../storage&quot;)</span>
+    = <span class="phpdocumentor-signature__default-value">realpath(APP_PATH . &quot;/../storage&quot;)</span>
 </code>
 
 
@@ -596,9 +624,9 @@ to prevent cross-site scripting (XSS) attacks.</dd>
     </h4>
 
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Bootstrap/startup.php"><a href="files/src-bootstrap-startup.html"><abbr title="src/Bootstrap/startup.php">startup.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Libraries/Bootstrap/Bootstrap.php"><a href="files/src-libraries-bootstrap-bootstrap.html"><abbr title="src/Libraries/Bootstrap/Bootstrap.php">Bootstrap.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">9</span>
+    <span class="phpdocumentor-element-found-in__line">35</span>
 
     </aside>
 
