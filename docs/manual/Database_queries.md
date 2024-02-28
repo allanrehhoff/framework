@@ -98,7 +98,7 @@ For easier data manipulation, data objects should extend the **\Database\Entity*
 Every class that extends **\Database\Entity** must implement the following methods.  
 
 - getTableName(); // Table in which this data object should store data.  
-- getKeyField(); // The primary key of the table in which this object stores data.  
+- getPrimaryKey(); // The primary key of the table in which this object stores data.  
 
 Every data object take an optional parameter [(int) primary_key] upon instantiating,  
 identifying whether a new data object should be instantiated or an already existing row should be loaded from the table.  
