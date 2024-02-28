@@ -11,7 +11,7 @@ namespace Database {
 		/**
 		 * All loaded entities will br stored for the remainder of the request
 		 * @var array $instanceCache
-		 * @since 5.0.0
+		 * @since v5.0.0
 		 */
 		private static array $instanceCache = [];
 
@@ -112,50 +112,15 @@ namespace Database {
 		 */
 		public function save(): int|string|static {
 			if($this->exists() === true) {
-				Connection::getInstance()->update($this->getTableName(), $this->data, $this->getKeyFilter());
-				$result = $this->data;
+				Connection::getInstance()->upsert($this->getTableName(), $this->data, $this->getKeyFilter());
 			} else {
-				if(empty($this->data)) throw new \BadMethodCallException("Data variable is empty");
-				$this->key = Connection::getInstance()->insert($this->getTableName(), $this->data);
-				$result = $this->key;
+				$this->data[static::getPrimaryKey()] = Connection::getInstance()->insert($this->getTableName(), $this->data);
 			}
 
 			$entityType = static::class;
-			self::$instanceCache[$entityType][$this->key] = $this;
+			self::$instanceCache[$entityType][$this->id()] = $this;
 
-			return $result;
-		}
-
-		/**
-		 * Update or insert row
-		 * 
-		 * @return Statement
-		 */
-		public function upsert(): Statement {
-			return Connection::getInstance()->upsert($this->getTableName(), $this->data);
-		}
-
-		/**
-		 * Permanently delete a given entity row
-		 *
-		 * @return int Number of rows affected
-		 */
-		public function delete(): int {
-			return Connection::getInstance()->delete($this->getTableName(), $this->getKeyFilter());
-		}
-
-		/**
-		 * Make a given value safe for insertion, could prevent future XSS injections
-		 *
-		 * @param string $key Key of the data value to retrieve
-		 * @return null|string A html friendly string
-		 */
-		public function safe(string $key): ?string {
-			$data = $this->get($key);
-
-			if($data === null) return null;
-
-			return htmlspecialchars($data, ENT_QUOTES, "UTF-8");
+			return $this;
 		}
 
 		/**
@@ -236,6 +201,25 @@ namespace Database {
 		}
 
 		/**
+		 * Helper method to quickly register a new entity
+		 * @param null|array|object $data Data to insert
+		 * @return static
+		 */
+		public static function insert(null|array|object $data, null|array $allowedFields = null): static {
+			$iEntity = new static($data, $allowedFields);
+			return $iEntity->save();
+		}
+
+		/**
+		 * Permanently delete a given entity row
+		 *
+		 * @return int Number of rows affected
+		 */
+		public function delete(): int {
+			return Connection::getInstance()->delete($this->getTableName(), $this->getKeyFilter());
+		}
+
+		/**
 		 * Creates a new instance of any given entity
 		 * @return Entity
 		 */
@@ -257,20 +241,13 @@ namespace Database {
 				$data = (array) $data;
 
 				// Find empty strings in dataset and convert to null instead.
-				// JSON fields doesn't allow empty strings to be stored.
+				// fx. JSON fields doesn't allow empty strings to be stored.
 				// This also helps against empty strings telling exists(); to return true
 				foreach($data as $key => $value) {
-					$data[$key] = $value === '' ? null : $value;
+					if($value === '') $data[$key] = null;
 				}
 
-				$keyField = static::getPrimaryKey();
-
-				if(isset($data[$keyField])) {
-					$this->key = $data[$keyField];
-					unset($data[$keyField]);
-				}
-
-				if($allowedFields != null) {
+				if($allowedFields !== null) {
 					$data = array_intersect_key($data, array_flip($allowedFields));
 				}
 
@@ -318,12 +295,27 @@ namespace Database {
 		}
 
 		/**
-		 * Gets an array suitable for WHERE clauses in SQL statements
-		 *
-		 * @return array A filter array
+		 * Escape data for output
+		 * 
+		 * @param $data The data string to escape
+		 * @return string The Escaped string
 		 */
-		public function getKeyFilter(): array {
-			return [static::getPrimaryKey() => $this->key];
+		public function escape(string $data): string {
+			return htmlspecialchars($data, ENT_QUOTES, "UTF-8");
+		}
+
+		/**
+		 * Make a given value safe for insertion, could prevent future XSS injections
+		 *
+		 * @param string $key Key of the data value to retrieve
+		 * @return null|string A html friendly string
+		 */
+		public function safe(string $key): ?string {
+			$data = $this->get($key);
+
+			if($data === null) return null;
+
+			return $this->escape($data);
 		}
 
 		/**
@@ -332,7 +324,17 @@ namespace Database {
 		 * @return int|string the key value
 		 */
 		public function id(): int|string {
-			return is_numeric($this->key) ? (int)$this->key : htmlspecialchars($this->key, ENT_QUOTES, "UTF-8");;
+			$identifier = $this->data[static::getPrimaryKey()];
+			return is_numeric($identifier) ? (int)$identifier : $this->escape($identifier);
+		}
+
+		/**
+		 * Gets an array suitable for WHERE clauses in SQL statements
+		 *
+		 * @return array A filter array
+		 */
+		public function getKeyFilter(): array {
+			return [static::getPrimaryKey() => $this->data[static::getPrimaryKey()]];
 		}
 
 		/**
@@ -341,7 +343,7 @@ namespace Database {
 		 * @return bool
 		 */
 		public function exists(): bool {
-			return $this->key !== null;
+			return $this->data[static::getPrimaryKey()] ?? null !== null;
 		}
 
 		/**
