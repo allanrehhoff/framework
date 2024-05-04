@@ -133,24 +133,28 @@ To attach a listener to any of these, you must add your event listeners in the `
 \Core\Event::addListener("core.controller.method.before", "\User::requireLogin");
 ```
 
-`core.application.init`  
+### core.application.init
 The very first event emitted before the application has initialized.  
 Arguments passed: None
 
-`core.controller.method.before`  
+### core.controller.method.before
 Event emitted right before a controller method is invoked.  
 This event is emitted seperately for any child controllers.  
 Arguments passed: `\Core\ClassName $iClassName, \Core\MethodName $iMethodName`
 
-`core.controller.method.after`  
+### core.controller.method.after
 Event emitted right after a controller method is invoked.  
 This event is emitted seperately for any child controllers.  
 Arguments passed: `\Core\ClassName $iClassName, \Core\MethodName $iMethodName`
 
-`core.output.json`  
+### core.output.json
 Event emitted right before JSON output is rendered.  
 Arguments passed: `array $data`
 
-`core.output.html`
+### core.output.xml
+Event emitted right before XML output is rendered.  
+Arguments passed: `string $data`
+
+### core.output.html
 Event emitted right before HTML output is rendered.  
 Arguments passed: `string $view, array $data`
