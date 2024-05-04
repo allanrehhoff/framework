@@ -30,7 +30,7 @@ namespace Bootstrap {
 		 */
 		public function registerDefaultListeners(): void {
 			// Force HTTPS redirect
-			\Core\Event::addListener("application.init", \EventListeners\HttpsRedirect::class);
+			\Core\Event::addListener("core.application.init", \EventListeners\HttpsRedirect::class);
 		}
 	}
 }

@@ -97,7 +97,7 @@ If an unsupported or invalid listener type is provided, the \Core\Event class wi
 ```php
 <?php
 	try {
-		\Core\Event::addListener("application.init", "NonExistentClass::nonExistentMethod");
+		\Core\Event::addListener("core.application.init", "NonExistentClass::nonExistentMethod");
 	} catch (\InvalidArgumentException $e) {
 		// Your exception handling logic
 	}
@@ -133,7 +133,7 @@ To attach a listener to any of these, you must add your event listeners in the `
 \Core\Event::addListener("core.controller.method.before", "\User::requireLogin");
 ```
 
-`application.init`  
+`core.application.init`  
 The very first event emitted before the application has initialized.  
 Arguments passed: None
 

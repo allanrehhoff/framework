@@ -21,7 +21,7 @@
 	));
 	
 	// Trigger init event
-	\Core\Event::trigger("application.init");
+	\Core\Event::trigger("core.application.init");
 
 	// Other objects
 	$iRouter = new \Core\Router(new \Core\Request(), new \Core\Response());
