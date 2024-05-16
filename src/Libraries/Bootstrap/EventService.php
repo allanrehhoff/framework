@@ -32,6 +32,6 @@ class EventService {
 	 */
 	public function registerDefaultListeners(): void {
 		// Force HTTPS redirect
-		\Core\Event::addListener("core.application.init", \EventListeners\HttpsRedirect::class);
+		\Core\Event::addListener("core.global.init", \EventListeners\HttpsRedirect::class);
 	}
 }

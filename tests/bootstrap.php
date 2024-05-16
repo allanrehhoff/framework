@@ -1,11 +1,12 @@
 <?php
 	ini_set("display_errors", 1);
+	error_reporting(E_ALL);
 
 	require __DIR__."/../src/Libraries/Bootstrap/Bootstrap.php";
 
 	(new \Bootstrap\Bootstrap)->startup();
 
-	\Registry::set(new \Configuration(STORAGE . "/config/application.jsonc"));
+	\Registry::set(new \Configuration(STORAGE . "/config/global.jsonc"));
 
 	/**
 	 * Controllers

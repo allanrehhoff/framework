@@ -11,7 +11,7 @@ require "Libraries/Bootstrap/Bootstrap.php";
 (new \Bootstrap\Bootstrap)->startup();
 
 // Global state objects
-\Registry::set(new \Configuration(STORAGE . "/config/application.jsonc"));
+\Registry::set(new \Configuration(STORAGE . "/config/global.jsonc"));
 
 \Registry::set(new \Environment(APP_PATH . "/.env"));
 
@@ -23,7 +23,7 @@ require "Libraries/Bootstrap/Bootstrap.php";
 ));
 
 // Trigger init event
-\Core\Event::trigger("core.application.init");
+\Core\Event::trigger("core.global.init");
 
 // Other objects
 $iRouter = new \Core\Router(new \Core\Request, new \Core\Response);

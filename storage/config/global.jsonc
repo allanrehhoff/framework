@@ -3,7 +3,6 @@
     "theme": "default",
     // titleFormat supports only one wildcard
     "titleFormat": "%s | default-title",
-    "defaultRoute": ["index"],
     "database": {
         "host": "localhost",
         "username": "root",
