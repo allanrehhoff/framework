@@ -1,33 +1,34 @@
 <?php
-	/**
-	* Main entry point for your application.
-	* Don't forget to read the documentation.
-	*/
 
-	// Bootstrap
-	require "Libraries/Bootstrap/Bootstrap.php";
+/**
+ * Main entry point for your application.
+ * Don't forget to read the documentation.
+ */
 
-	(new \Bootstrap\Bootstrap)->startup();
+// Bootstrap
+require "Libraries/Bootstrap/Bootstrap.php";
 
-	// Global state objects
-	\Registry::set(new \Configuration(STORAGE . "/config/application.jsonc"));
+(new \Bootstrap\Bootstrap)->startup();
 
-	\Registry::set(new \Environment(APP_PATH . "/.env"));
+// Global state objects
+\Registry::set(new \Configuration(STORAGE . "/config/application.jsonc"));
 
-	\Registry::set(new \Database\Connection(
-		\Registry::getConfiguration()->get("database.host"),
-		\Registry::getConfiguration()->get("database.username"),
-		\Registry::getConfiguration()->get("database.password"),
-		\Registry::getConfiguration()->get("database.name")
-	));
+\Registry::set(new \Environment(APP_PATH . "/.env"));
 
-	// Trigger init event
-	\Core\Event::trigger("core.application.init");
+\Registry::set(new \Database\Connection(
+	\Registry::getConfiguration()->get("database.host"),
+	\Registry::getConfiguration()->get("database.username"),
+	\Registry::getConfiguration()->get("database.password"),
+	\Registry::getConfiguration()->get("database.name")
+));
 
-	// Other objects
-	$iRouter = new \Core\Router(new \Core\Request, new \Core\Response);
+// Trigger init event
+\Core\Event::trigger("core.application.init");
 
-	$iApplication = new \Core\Application($iRouter);
+// Other objects
+$iRouter = new \Core\Router(new \Core\Request, new \Core\Response);
 
-	// Render the entire thing
-	$iApplication->run()->output();
+$iApplication = new \Core\Application($iRouter);
+
+// Render the entire thing
+$iApplication->run()->output();

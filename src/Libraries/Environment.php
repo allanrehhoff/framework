@@ -7,7 +7,7 @@ class Environment {
 	 * @param null|string $environmentFile The path to the environment file (e.g., '.env').
 	 */
 	public function __construct(?string $environmentFile = null) {
-		if($environmentFile !== null && file_exists($environmentFile) === true) {
+		if ($environmentFile !== null && file_exists($environmentFile) === true) {
 			static::parse($environmentFile);
 		}
 	}
@@ -33,7 +33,7 @@ class Environment {
 		$variables = preg_replace("/^(\h*#.*\R*)+/m", '', $contents);
 		$variables = parse_ini_string($contents, true);
 
-		foreach($variables as $var => $value) {
+		foreach ($variables as $var => $value) {
 			$this->put($var, $value);
 		}
 	}
@@ -49,19 +49,19 @@ class Environment {
 	public function put(string $name, int|float|string|array $value): void {
 		$name = strtoupper($name);
 
-		if(is_array($value)) {
-			foreach($value as $key => $value2) {
-				$newName = $name.'.'.$key;
+		if (is_array($value)) {
+			foreach ($value as $key => $value2) {
+				$newName = $name . '.' . $key;
 				$this->put($newName, $value2);
 			}
 		} else {
 			$keys = explode('.', $name);
 			$env = &$_ENV;
 
-			while(count($keys) > 1) {
+			while (count($keys) > 1) {
 				$key = array_shift($keys);
 
-				if(!isset($env[$key]) || !is_array($env[$key])) {
+				if (!isset($env[$key]) || !is_array($env[$key])) {
 					$env[$key] = [];
 				}
 
@@ -90,12 +90,12 @@ class Environment {
 		// Maybe it was not found in the global vars
 		// Likely to happen if the value is an array
 		// e.g. the name of a section was passed in
-		if($result === false) {
+		if ($result === false) {
 			$keys = explode('.', $name);
 			$result = $_ENV;
 
-			foreach($keys as $key) {
-				if(!isset($result[$key])) {
+			foreach ($keys as $key) {
+				if (!isset($result[$key])) {
 					throw new \InvalidArgumentException($name . " is not a valid environment variable");
 				}
 

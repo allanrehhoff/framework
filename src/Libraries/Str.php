@@ -1,4 +1,5 @@
 <?php
+
 /**
  * The Str class provides string manipulation methods.
  * This class handles null values gracefully, ensuring that methods return a value of a predictable type
@@ -13,7 +14,7 @@ class Str {
 	 * @return string The encoded version of $string, empty if $string was null
 	 */
 	public static function encode(null|string $string): string {
-		if($string === null) return '';
+		if ($string === null) return '';
 		return base64_encode($string);
 	}
 
@@ -24,7 +25,7 @@ class Str {
 	 * @return string The decoded version of $string, empty if $string was null
 	 */
 	public static function decode(null|string $string): string {
-		if($string === null) return '';
+		if ($string === null) return '';
 		return base64_decode($string);
 	}
 
@@ -35,7 +36,7 @@ class Str {
 	 * @return int The length of $string, 0 if $string was null
 	 */
 	public static function len(null|string $string): int {
-		if($string === null) return 0;
+		if ($string === null) return 0;
 		return mb_strlen($string);
 	}
 
@@ -46,7 +47,7 @@ class Str {
 	 * @return string The lowercased string, empty if $string was null
 	 */
 	public static function lower(null|string $string): string {
-		if($string === null) return '';
+		if ($string === null) return '';
 		return mb_strtolower($string);
 	}
 
@@ -56,7 +57,7 @@ class Str {
 	 * @return string The uppercased string, empty if $string was null
 	 */
 	public static function upper(null|string $string): string {
-		if($string === null) return '';
+		if ($string === null) return '';
 		return mb_strtoupper($string);
 	}
 

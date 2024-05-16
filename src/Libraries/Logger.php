@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Simple logger class.
  *
@@ -40,7 +41,7 @@ class Logger {
 	 * @var string
 	 */
 	public static string $logDir = __DIR__;
-	
+
 	/**
 	 * File name for the log saved in the log dir
 	 * @var string
@@ -52,7 +53,7 @@ class Logger {
 	 * @var string
 	 */
 	public static string $logFileExtension = "log";
-	
+
 	/**
 	 * Whether to append to the log file (true) or to overwrite it (false)
 	 * @var bool
@@ -99,7 +100,7 @@ class Logger {
 	 * @var bool
 	 */
 	private static bool $loggerReady = false;
-	
+
 	/**
 	 * Associative array used as a buffer to keep track of timed logs
 	 * @var array
@@ -192,13 +193,13 @@ class Logger {
 			$name = static::$defaultTimer;
 		}
 
-		if (isset(static::$timeTracking[ $name ] )) {
-			$start = static::$timeTracking[ $name ];
+		if (isset(static::$timeTracking[$name])) {
+			$start = static::$timeTracking[$name];
 			$end = microtime(true);
-			$elapsedTime = number_format( ($end - $start), $decimals);
+			$elapsedTime = number_format(($end - $start), $decimals);
 
-			unset(static::$timeTracking[ $name ]);
-		
+			unset(static::$timeTracking[$name]);
+
 			if (!$isDefaultTimer) {
 				static::add($elapsedTime . " seconds", "Elapsed time for '" . $name . "'", $level);
 			} else {
@@ -223,7 +224,7 @@ class Logger {
 	 */
 	private static function add(string $message, string $name = '', string $level = 'debug'): bool|object {
 		/* Check if the logging level severity warrants writing this log */
-		if (static::$logLevelIntegers[$level] > static::$logLevelIntegers[static::$logLevel] ){
+		if (static::$logLevelIntegers[$level] > static::$logLevelIntegers[static::$logLevel]) {
 			return false;
 		}
 
@@ -264,7 +265,7 @@ class Logger {
 
 		if (!empty($logEntry)) {
 			/* Make sure the log entry is stringified */
-			foreach($logEntry as $key => $value) {
+			foreach ($logEntry as $key => $value) {
 				$logEntry->$key = print_r($value, true);
 			}
 
@@ -277,7 +278,6 @@ class Logger {
 			}
 
 			$logLine .= $logEntry->message;
-
 		}
 
 		return $logLine;
@@ -296,14 +296,14 @@ class Logger {
 			if (file_exists(static::$logDir)) {
 				static::$logFilePath = implode(DIRECTORY_SEPARATOR, [static::$logDir, static::$logFileName]);
 
-				if (!empty(static::$logFileExtension )) {
-				   static::$logFilePath .= "." . static::$logFileExtension;
+				if (!empty(static::$logFileExtension)) {
+					static::$logFilePath .= "." . static::$logFileExtension;
 				}
 			}
 
 			/* Print to screen */
 			if (static::$printLog === true) {
-			   static::$outputStreams["stdout"] = STDOUT;
+				static::$outputStreams["stdout"] = STDOUT;
 			}
 
 			/* Print to log file */
@@ -338,16 +338,16 @@ class Logger {
 		if (!$filePath) {
 			$filePath = static::$logFilePath;
 		}
-		
+
 		if (file_exists(dirname($filePath))) {
 			$mode = static::$logFileAppend ? "a" : "w";
 			$outputFile = fopen($filePath, $mode);
 
-			foreach(static::$log as $logEntry) {
+			foreach (static::$log as $logEntry) {
 				$logLine = static::formatLogEntry($logEntry);
 				fwrite($outputFile, $logLine . PHP_EOL);
 			}
-			
+
 			fclose($outputFile);
 		}
 	}
@@ -361,12 +361,12 @@ class Logger {
 	 */
 	public static function dumpToString(): string {
 		$output = '';
-		
+
 		foreach (static::$log as $logEntry) {
 			$logLine = static::formatLogEntry($logEntry);
 			$output .= $logLine . PHP_EOL;
 		}
-		
+
 		return $output;
 	}
 
@@ -375,6 +375,6 @@ class Logger {
 	 * @return void
 	 */
 	public static function clearLog(): void {
-	   static::$log = [];
+		static::$log = [];
 	}
 }

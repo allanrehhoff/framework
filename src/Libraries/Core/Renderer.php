@@ -1,64 +1,64 @@
 <?php
-namespace Core {
 
-	use \Core\ContentType\ContentType;
-	use \Core\Response;
-	use \Core\Template;
+namespace Core;
+
+use \Core\ContentType\ContentType;
+use \Core\Response;
+use \Core\Template;
+
+/**
+ * Class Renderer
+ *
+ * The Renderer class is responsible for rendering views based on the given Template, in other words: Theme, and ContentType.
+ */
+class Renderer {
+	/**
+	 * @var Template $iTemplate The template engine used for rendering views.
+	 */
+	private Template $iTemplate;
 
 	/**
-	 * Class Renderer
-	 *
-	 * The Renderer class is responsible for rendering views based on the given Template, in other words: Theme, and ContentType.
+	 * @var ContentType $iContentType The content type used for rendering output.
 	 */
-	class Renderer {
-		/**
-		 * @var Template $iTemplate The template engine used for rendering views.
-		 */
-		private Template $iTemplate;
+	private ContentType $iContentType;
+
+	/**
+	 * Renderer constructor.
+	 *
+	 * @param Template $iTemplate The template engine used for rendering views.
+	 * @param ContentType $iContentType The content type used for rendering output.
+	 */
+	public function __construct(Template $iTemplate, ContentType $iContentType) {
+		$this->iTemplate = $iTemplate;
+		$this->iContentType = $iContentType;
+	}
+
+	/**
+	 * Renders the given response.
+	 *
+	 * @param Response $iResponse The response to be rendered.
+	 * @return void
+	 */
+	public function render(Response $iResponse): void {
+		$view = $iResponse->getView();
+		$data = $iResponse->getData();
+
+		$event = sprintf("core.output.%s", $this->iContentType->getMedia());
+		$file = $this->iTemplate->getPath($view);
 
 		/**
-		 * @var ContentType $iContentType The content type used for rendering output.
-		 */
-		private ContentType $iContentType;
-
-		/**
-		 * Renderer constructor.
+		 * Trigger an event before rendering the view.
 		 *
-		 * @param Template $iTemplate The template engine used for rendering views.
-		 * @param ContentType $iContentType The content type used for rendering output.
+		 * @param string $event The event name.
+		 * @param string $view The view to be rendered.
+		 * @param array $data The data to be passed to the view.
 		 */
-		public function __construct(Template $iTemplate, ContentType $iContentType) {
-			$this->iTemplate = $iTemplate;
-			$this->iContentType = $iContentType;
-		}
+		\Core\Event::trigger(
+			$event,
+			$view,
+			$data
+		);
 
-		/**
-		 * Renders the given response.
-		 *
-		 * @param Response $iResponse The response to be rendered.
-		 * @return void
-		 */
-		public function render(Response $iResponse): void {
-			$view = $iResponse->getView();
-			$data = $iResponse->getData();
-
-			$event = sprintf("core.output.%s", $this->iContentType->getMedia());
-			$file = $this->iTemplate->getPath($view);
-
-			/**
-			 * Trigger an event before rendering the view.
-			 *
-			 * @param string $event The event name.
-			 * @param string $view The view to be rendered.
-			 * @param array $data The data to be passed to the view.
-			 */
-			\Core\Event::trigger(
-				$event,
-				$view,
-				$data
-			);
-
-			$this->iContentType->stream($data, $file);
-		}
+		$this->iContentType->stream($data, $file);
 	}
 }
