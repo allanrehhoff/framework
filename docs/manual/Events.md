@@ -97,7 +97,7 @@ If an unsupported or invalid listener type is provided, the \Core\Event class wi
 ```php
 <?php
 	try {
-		\Core\Event::addListener("core.application.init", "NonExistentClass::nonExistentMethod");
+		\Core\Event::addListener("core.global.init", "NonExistentClass::nonExistentMethod");
 	} catch (\InvalidArgumentException $e) {
 		// Your exception handling logic
 	}
@@ -119,9 +119,9 @@ Call `\Core\Event::clear($event)` to clear event listeners, if given an empty st
 \Core\Event::clear();
 ```
 
-## Default events emitted by core
+## Default events emitted
 
-To attach a listener to any of these, you must add your event listeners in the `src/Bootstrap/events.php`
+To attach a listener to any of these, you should add your event listeners in the file `src/Bootstrap/Bootstrap.php` inside the `registerEventListeners()` method.  
 
 ```php
 <?php
@@ -133,9 +133,15 @@ To attach a listener to any of these, you must add your event listeners in the `
 \Core\Event::addListener("core.controller.method.before", "\User::requireLogin");
 ```
 
-### core.application.init
+Listed in order of execution.  
+
+### core.global.init
 The very first event emitted before the application has initialized.  
 Arguments passed: None
+
+### core.request.init
+The event fired when request object has been constructed
+Arguments passed: `\Core\Request`
 
 ### core.controller.method.before
 Event emitted right before a controller method is invoked.  

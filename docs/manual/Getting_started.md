@@ -38,7 +38,7 @@ http {
 ## 3. Your database
 The default bundled database library currently only supports MySQL/MariaDB.
 Please refer to the documentation for your database of choice on how to set up these.  
-You'll need to alter `storage/config/application.jsonc` accordingly with your credentials.  
+You'll need to alter `storage/config/global.jsonc` accordingly with your credentials.  
 
 You may change this behaviour to using environment variables by altering `index.php` using the `\Registry::getEnvironment()` in place of `\Registry::getConfiguration()`
 
