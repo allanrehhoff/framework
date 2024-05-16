@@ -30,15 +30,12 @@ final class Template {
 		$this->name = \Registry::getConfiguration()->get("theme");
 		$this->assets = $iAssets;
 
-		$configurationFile = STORAGE . "/config/" . $this->name . ".theme.jsonc";
-		$this->iConfiguration = (new \Configuration($configurationFile));
-
-		if ($this->iConfiguration->get("version.version") == "@version") {
-			$this->iConfiguration->set("version.version", \Registry::getConfiguration()->get("version"));
+		if ($this->getConfiguration()->get("version.version") == "@version") {
+			$this->getConfiguration()->set("version.version", \Registry::getConfiguration()->get("version"));
 		}
 
 		$this->registerAssets(
-			$this->iConfiguration->get("assets")
+			$this->getConfiguration()->get("assets")
 		);
 	}
 
@@ -55,7 +52,8 @@ final class Template {
 	 * @return \Configuration - application-wide theme configuration
 	 */
 	public function getConfiguration(): \Configuration {
-		return $this->iConfiguration;
+		$configurationFile = STORAGE . "/config/" . $this->name . ".theme.jsonc";
+		return $this->iConfiguration ??= (new \Configuration($configurationFile));
 	}
 
 	/**
@@ -116,11 +114,11 @@ final class Template {
 	 * @return string
 	 */
 	private function maybeAddVersionNumber(string $url): string {
-		if ($this->iConfiguration->get("version.expose") === true) {
+		if ($this->getConfiguration()->get("version.expose") === true) {
 			$baseurl = \Url::getBaseurl();
 
 			if (str_starts_with($url, $baseurl) === true) {
-				$url .= "?v=" . $this->iConfiguration->get("version.version");
+				$url .= "?v=" . $this->getConfiguration()->get("version.version");
 			}
 		}
 
