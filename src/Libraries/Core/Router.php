@@ -8,6 +8,11 @@ namespace Core;
  */
 final class Router {
 	/**
+	 * @var \Configuration $configuration Router related configuration
+	 */
+	private \Configuration $configuration;
+
+	/**
 	 * @var \Core\Request $iRequest holds the request object
 	 */
 	private Request $request;
@@ -26,6 +31,7 @@ final class Router {
 	public function __construct(Request $iRequest, Response $iResponse) {
 		$this->request = $iRequest;
 		$this->response = $iResponse;
+		$this->configuration = new \Configuration(STORAGE . "/config/router.jsonc");
 	}
 
 	/**
@@ -45,15 +51,23 @@ final class Router {
 	}
 
 	/**
+	 * Get the \Configuration object
+	 * @return \Configuration
+	 */
+	public function getConfiguration(): \Configuration {
+		return $this->configuration;
+	}
+
+	/**
 	 * Returns default route from configuration
 	 * @throws \Core\Exception\Governance If the default route configured is not of type array.
 	 * @return array
 	 */
-	public function getConfiguredDefaultRoute(): array {
-		$defaultRoute = \Registry::getConfiguration()->get("defaultRoute");
+	public function getDefaultArguments(): array {
+		$defaultRoute = $this->getConfiguration()->get("defaultArgs");
 
 		if (is_array($defaultRoute) !== true) {
-			throw new \Core\Exception\Governance("Setting 'defaultRoute' is not an array");
+			throw new \Core\Exception\Governance("Router setting 'defaultArgs' is not an array");
 		}
 
 		return $defaultRoute;
@@ -91,7 +105,7 @@ final class Router {
 	 * @return array
 	 */
 	public function getRoute(): array {
-		$defaults = $this->getConfiguredDefaultRoute();
+		$defaults = $this->getDefaultArguments();
 
 		$controllerBase = $this->request->getArg(0, $defaults);
 		$methodNameBase = $this->request->getArg(1, $defaults);
