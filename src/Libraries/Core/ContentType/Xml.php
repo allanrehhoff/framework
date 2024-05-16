@@ -42,6 +42,7 @@ namespace Core\ContentType {
 					$this->arrayToXml($value, $child);
 				} else {
 					// Handle flat key-value pairs
+					$value = \Escape::string($value);
 					$iSimpleXMLElement->addChild($key, $value);
 				}
 			}
