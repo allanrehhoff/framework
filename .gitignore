@@ -7,3 +7,4 @@ error_log
 composer.lock
 vendor/
 docs/reference/cache/
+tests/dev.php
