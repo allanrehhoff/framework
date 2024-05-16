@@ -140,7 +140,7 @@ The very first event emitted before the application has initialized.
 Arguments passed: None
 
 ### core.request.init
-The event fired when request object has been constructed
+The event fired when request object has been constructed.  
 Arguments passed: `\Core\Request`
 
 ### core.controller.method.before
