@@ -9,7 +9,7 @@ use \SimpleXMLElement;
  *
  * This class is responsible for rendering views with data.
  */
-final class Xml implements ContentType {
+final class Xml implements ContentTypeInterface {
 	/**
 	 * @return string
 	 */

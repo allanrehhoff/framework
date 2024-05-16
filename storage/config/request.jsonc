@@ -1,0 +1,17 @@
+{
+	// Fallback to this content type
+	// if negotiations with the client
+	// Accept header fails
+	"defaultType": "html",
+	"contentTypes": {
+		"json": {
+			"enable": false
+		},
+		"xml": {
+			"enable": false
+		},
+		"html": {
+			"enable": true
+		}
+	}
+}

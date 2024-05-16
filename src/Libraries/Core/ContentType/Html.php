@@ -5,7 +5,7 @@ namespace Core\ContentType;
 /**
  * Class Core\Output\Html
  */
-final class Html implements ContentType {
+final class Html implements ContentTypeInterface {
 	/**
 	 * @return string
 	 */

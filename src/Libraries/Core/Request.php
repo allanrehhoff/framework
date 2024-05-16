@@ -2,10 +2,8 @@
 
 namespace Core;
 
-use Core\ContentType\ContentType;
-use Core\ContentType\Json;
-use Core\ContentType\Xml;
-use Core\ContentType\Html;
+use Core\ContentType\ContentTypeInterface;
+use Core\ContentType\ContentTypeEnum;
 
 /**
  * Encapsulates the details of a request and simplifies the process of working with incoming HTTP requests.
@@ -43,6 +41,11 @@ final class Request {
 	private array $arguments;
 
 	/**
+	 * @var \Configuration $configuration
+	 */
+	private \Configuration $configuration;
+
+	/**
 	 * Sets initial state of super globals
 	 */
 	public function __construct() {
@@ -66,6 +69,8 @@ final class Request {
 		}
 
 		$this->setArguments($args);
+
+		\Core\Event::trigger("core.request.init");
 	}
 
 	/**
@@ -101,18 +106,25 @@ final class Request {
 	}
 
 	/**
-	 * Tell the mime content type that the client prefer to recieve
-	 * @return ContentType
+	 * Returns request specific configuration file
+	 * @return \Configuration
 	 */
-	public function getContentType(): ContentType {
+	public function getConfiguration(): \Configuration {
+		return $this->configuration ??= new \Configuration(STORAGE . "/config/request.jsonc");
+	}
+
+	/**
+	 * Tell the mime content type that the client prefer to recieve
+	 * NULL is returned if the Accept header failed negotiation
+	 * @return null|ContentTypeInterface
+	 */
+	public function getContentType(): null|ContentTypeInterface {
 		$acceptHeader = $this->server["HTTP_ACCEPT"] ?? '';
 		$mediaTypes = explode(',', $acceptHeader);
-		$bestQuality = -1.0;
-		$bestMediaType = '';
 
 		foreach ($mediaTypes as $mediaType) {
 			$parts = explode(';', $mediaType);
-			$type = trim($parts[0]);
+			$mimeType = trim($parts[0]);
 			$quality = 1.0; // Default quality value
 
 			foreach ($parts as $part) {
@@ -122,20 +134,33 @@ final class Request {
 				}
 			}
 
-			if ($quality > $bestQuality) {
-				$bestQuality = $quality;
-				$bestMediaType = $type;
+			[$namespace, $dataType] = explode('/', $mimeType);
+
+			$preferences ??= [];
+			$preferences[$dataType] = $quality;
+		}
+
+		arsort($preferences);
+
+		$iConfiguration = $this->getConfiguration();
+
+		foreach ($preferences as $dataType => $priority) {
+			$iContentType = ContentTypeEnum::tryFrom($dataType)?->getInstance();
+
+			if ($iContentType !== null && $iConfiguration->get(sprintf("contentTypes.%s.enable", $dataType)) === true) {
+				return $iContentType;
 			}
 		}
 
-		[$namespace, $contentType] = explode('/', $bestMediaType);
+		if (($preferences["*"] ?? null) !== null) {
+			foreach ($this->getConfiguration()->get("contentTypes", $dataType) as $dataType => $config) {
+				if ($config->enable === true) {
+					return ContentTypeEnum::from($dataType)->getInstance();
+				}
+			}
+		}
 
-		// Match the parts after the '/'
-		return match ($contentType) {
-			"json" => new Json(),
-			"xml" => new Xml(),
-			default => new Html(),
-		};
+		return ContentTypeEnum::from($iConfiguration->get("defaultType"))->getInstance();
 	}
 
 	/**

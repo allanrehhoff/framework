@@ -43,9 +43,9 @@ abstract class Controller {
 	protected \Core\Assets $assets;
 
 	/**
-	 * @var \Core\ContentType\ContentType
+	 * @var \Core\ContentType\ContentTypeInterface
 	 */
-	protected \Core\ContentType\ContentType $contentType;
+	protected \Core\ContentType\ContentTypeInterface $contentType;
 
 	/**
 	 * @var \Core\Renderer

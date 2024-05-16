@@ -7,7 +7,7 @@ namespace Core\ContentType;
  *
  * This class is responsible for rendering views with data.
  */
-final class Json implements ContentType {
+final class Json implements ContentTypeInterface {
 	/**
 	 * @return string
 	 */
@@ -32,6 +32,6 @@ final class Json implements ContentType {
 	 */
 	public function stream(array $data, string $view = ''): void {
 		// phpcs:enable Generic.CodeAnalysis.UnusedFunctionParameter
-		print json_encode($data);
+		print json_encode($data, JSON_PRETTY_PRINT);
 	}
 }

@@ -2,7 +2,7 @@
 
 namespace Core;
 
-use \Core\ContentType\ContentType;
+use \Core\ContentType\ContentTypeInterface;
 use \Core\Response;
 use \Core\Template;
 
@@ -18,9 +18,9 @@ class Renderer {
 	private Template $iTemplate;
 
 	/**
-	 * @var ContentType $iContentType The content type used for rendering output.
+	 * @var ContentTypeInterface $iContentType The content type used for rendering output.
 	 */
-	private ContentType $iContentType;
+	private ContentTypeInterface $iContentType;
 
 	/**
 	 * Renderer constructor.
@@ -28,7 +28,7 @@ class Renderer {
 	 * @param Template $iTemplate The template engine used for rendering views.
 	 * @param ContentType $iContentType The content type used for rendering output.
 	 */
-	public function __construct(Template $iTemplate, ContentType $iContentType) {
+	public function __construct(Template $iTemplate, ContentTypeInterface $iContentType) {
 		$this->iTemplate = $iTemplate;
 		$this->iContentType = $iContentType;
 	}

@@ -5,7 +5,7 @@ namespace Core\ContentType;
 /**
  * Interface ContentType
  */
-interface ContentType {
+interface ContentTypeInterface {
 
 	/**
 	 * Get the content type short name
