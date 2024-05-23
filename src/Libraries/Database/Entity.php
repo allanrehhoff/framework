@@ -19,11 +19,6 @@ abstract class Entity {
 	private static array $instanceCache = [];
 
 	/**
-	 * @var mixed $key Value of the primary key field
-	 */
-	private mixed $key = null;
-
-	/**
 	 * @var array $data General data for this entity, usually this is simply all database columns for a row
 	 */
 	protected array $data = [];
@@ -62,7 +57,7 @@ abstract class Entity {
 	 * @return string
 	 */
 	public function __toString(): string {
-		$result = get_class($this) . "(" . $this->key . "):\n";
+		$result = static::class . "(" . $this->id() . "):\n";
 
 		foreach ($this->data as $key => $value) {
 			$result .= " [" . $key . "] " . $value . "\n";
@@ -219,7 +214,9 @@ abstract class Entity {
 	 * @return int Number of rows affected
 	 */
 	public function delete(): int {
-		return Connection::getInstance()->delete($this->getTableName(), $this->getKeyFilter());
+		$result = Connection::getInstance()->delete($this->getTableName(), $this->getKeyFilter());
+		$this->data = [];
+		return $result;
 	}
 
 	/**
