@@ -190,11 +190,12 @@ abstract class Entity {
 	 *
 	 * @param array $searches Sets of expressions to match. e.g. 'filepath LIKE :filepath'
 	 * @param null|array $criteria Criteria variables for the search sets
+	 * @param string $clause The clause to put between each criteria, default AND
 	 * @return Collection|static
 	 * @since 3.3.0
 	 */
-	public static function search(array $searches = [], ?array $criteria = null): Collection|static {
-		$rows = Connection::getInstance()->search(static::getTableName(), $searches, $criteria);
+	public static function search(array $searches = [], ?array $criteria = null, string $clause = "AND"): Collection|static {
+		$rows = Connection::getInstance()->search(static::getTableName(), $searches, $criteria, $clause);
 		return self::load($rows);
 	}
 

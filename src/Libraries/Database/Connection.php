@@ -57,9 +57,7 @@ class Connection {
 	 * @since 1.0
 	 */
 	public function __construct(string $hostname, string $username, string $password, string $database) {
-		if (extension_loaded("pdo") === false) {
-			throw new \RuntimeException("PDO does not appear to be enabled for this server.");
-		}
+		extension_loaded("pdo") or throw new \RuntimeException("PDO does not appear to be enabled for this server.");
 
 		$this->connect($hostname, $username, $password, $database);
 
@@ -106,6 +104,7 @@ class Connection {
 	public function connect(string $hostname, string $username, string $password, string $database): Connection {
 		$this->dbh = new \PDO("mysql:host=" . $hostname . ";charset=utf8mb4", $username, $password);
 		$this->dbh->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+		$this->dbh->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_OBJ);
 		$this->dbh->setAttribute(\PDO::ATTR_STATEMENT_CLASS, ["Database\Statement", [$this]]);
 		$this->dbh->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
 
@@ -286,7 +285,6 @@ class Connection {
 			$this->statement = null;
 			$this->statement = $this->prepare($sql);
 			$this->statement->execute();
-			$this->statement->setFetchMode($fetchMode);
 			$this->queryCount++;
 		} finally {
 			$this->filters = [];
@@ -370,11 +368,12 @@ class Connection {
 	 * @param string $table Name of the table to search
 	 * @param array $searches Sets of expressions to match. e.g. 'filepath LIKE :filepath'
 	 * @param null|array $criteria Criteria variables for the search sets
+	 * @param string $clause The clause to put between each criteria, default AND
 	 * @return Collection
 	 * @since 3.1.3
 	 */
-	public function search(string $table, array $searches = [], ?array $criteria = null): Collection {
-		$sql = "SELECT * FROM " . $this->safeTable($table) . " WHERE " . implode(" AND ", $searches);
+	public function search(string $table, array $searches = [], ?array $criteria = null, string $clause = "AND"): Collection {
+		$sql = "SELECT * FROM " . $this->safeTable($table) . " WHERE " . implode(' ' . $clause . ' ', $searches);
 		return new Collection($this->query($sql, $criteria)->fetchAll());
 	}
 
