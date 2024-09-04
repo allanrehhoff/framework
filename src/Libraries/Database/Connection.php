@@ -56,7 +56,7 @@ class Connection {
 	 * @return void
 	 * @since 1.0
 	 */
-	public function __construct(string $hostname, string $username, string $password, string $database) {
+	public function __construct(#[\SensitiveParameter] string $hostname, #[\SensitiveParameter] string $username, #[\SensitiveParameter] string $password, #[\SensitiveParameter] string $database) {
 		extension_loaded("pdo") or throw new \RuntimeException("PDO does not appear to be enabled for this server.");
 
 		$this->connect($hostname, $username, $password, $database);
@@ -101,7 +101,7 @@ class Connection {
 	 * @return Connection
 	 * @since 3.0
 	 */
-	public function connect(string $hostname, string $username, string $password, string $database): Connection {
+	public function connect(#[\SensitiveParameter] string $hostname, #[\SensitiveParameter] string $username, #[\SensitiveParameter] string $password, #[\SensitiveParameter] string $database): Connection {
 		$this->dbh = new \PDO("mysql:host=" . $hostname . ";charset=utf8mb4", $username, $password);
 		$this->dbh->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 		$this->dbh->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_OBJ);
