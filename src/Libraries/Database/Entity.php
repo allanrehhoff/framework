@@ -19,9 +19,17 @@ abstract class Entity {
 	private static array $instanceCache = [];
 
 	/**
-	 * @var array $data General data for this entity, usually this is simply all database columns for a row
+	 * General data for this entity, usually this is simply all database columns for a row
+	 * @var array $data
 	 */
 	protected array $data = [];
+
+	/**
+	 * New data to be inserted/updated once entity is saved
+	 *
+	 * @var array
+	 */
+	protected array $new = [];
 
 	/**
 	 * Subclasses must define getPrimaryKey
@@ -48,7 +56,7 @@ abstract class Entity {
 	 * @return void
 	 */
 	public function __construct(mixed $data = null, ?array $allowedFields = null) {
-		$this->set($data, $allowedFields);
+		$this->new = $this->process($data);
 	}
 
 	/**
@@ -98,7 +106,7 @@ abstract class Entity {
 	 */
 	#[\ReturnTypeWillChange]
 	public function __get(string $name) {
-		return $this->data[$name];
+		return $this->get($name);
 	}
 
 	/**
@@ -109,11 +117,21 @@ abstract class Entity {
 	 * @return int|string|static if a new entity was just inserted, returns the primary key for that entity, otherwise the current data is returned
 	 */
 	public function save(): int|string|static {
+		// Check if the entity already exists (i.e., it is an update operation)
 		if ($this->exists() === true) {
-			Connection::getInstance()->upsert($this->getTableName(), $this->data, $this->getKeyFilter());
+			Connection::getInstance()->upsert($this->getTableName(), $this->new, $this->getKeyFilter());
 		} else {
-			$this->data[static::getPrimaryKey()] = Connection::getInstance()->insert($this->getTableName(), $this->data);
+			$primaryKey = static::getPrimaryKey();
+			$insertedId = Connection::getInstance()->insert($this->getTableName(), $this->new);
+
+			// If the primary key is not provided, insert and get the auto-incremented ID
+			if (!isset($this->new[$primaryKey])) {
+				$this->new[$primaryKey] = $insertedId; // Will be merged to data array
+			}
 		}
+
+		$this->data = array_merge($this->data, $this->new);
+		$this->new = [];
 
 		$entityType = static::class;
 		self::$instanceCache[$entityType][$this->id()] = $this;
@@ -136,7 +154,7 @@ abstract class Entity {
 			$keyField = static::getPrimaryKey();
 			$data = Connection::getInstance()->fetchRow(static::getTableName(), [$keyField => $identifier]);
 
-			$instance = new static($data);
+			$instance = static::with($data);
 
 			if ($instance->exists()) {
 				self::$instanceCache[$entityType][$identifier] = $instance;
@@ -151,11 +169,31 @@ abstract class Entity {
 	 * 
 	 * @param string $field The database column/field to match
 	 * @param int|string $value The value that $field is to be matched against
-	 * @return static
+	 * @return Entity[]|Entity
 	 */
-	public static function find(string $field, int|string $value): static {
+	public static function find(string $field, int|string $value): array|Entity {
 		$row = Connection::getInstance()->fetchRow(static::getTableName(), [$field => $value]);
-		return new static($row);
+		return static::with($row);
+	}
+
+	/**
+	 * Created a new instance of entity type with existing data
+	 * @param array|\stdClass $row Row from database
+	 * @return Entity[]|Entity array of entities if passed an array, otherwise the provided object as an entity
+	 */
+	public static function with(array|\stdClass $row): array|Entity {
+		if (is_array($row)) {
+			$entities = [];
+			foreach ($row as $data) $entities[] = static::with($data);
+			return $entities;
+		} else {
+			$keyField = static::getPrimaryKey();
+			$entity = new static();
+			$entity->key = $row->$keyField ?? null;
+			$entity->data = (array)$row;
+
+			return $entity;
+		}
 	}
 
 	/**
@@ -174,7 +212,7 @@ abstract class Entity {
 			$objects = [];
 
 			foreach ($rows as $i => $row) {
-				$instance = new $class($row);
+				$instance = $class::with($row);
 				$index = $indexByIDs ? $instance->id() : $i;
 				$objects[$index] = $instance;
 			}
@@ -229,6 +267,42 @@ abstract class Entity {
 	}
 
 	/**
+	 * Sets the data for the current object.
+	 * If $data is an object, it is converted to an array.
+	 * Empty strings in the dataset are converted to null, 
+	 * and only the allowed fields are retained, if specified.
+	 * 
+	 * @param null|array|object $data          The data to be set, either an array, object, or null.
+	 * @param null|array        $allowedFields The fields that are allowed to be set (optional).
+	 * 
+	 * @return static
+	 */
+	protected function process(null|array|object $data, ?array $allowedFields = null): array {
+		// Return empty array if $data is null
+		if ($data === null) {
+			return $this->data;
+		}
+	
+		// Convert object to array
+		$data = (array) $data;
+	
+		// Find empty strings in dataset and convert to null instead
+		foreach ($data as $key => $value) {
+			if ($value === '') {
+				$data[$key] = null;
+			}
+		}
+	
+		// Filter out fields that are not allowed
+		if ($allowedFields !== null) {
+			$data = array_intersect_key($data, array_flip($allowedFields));
+		}
+	
+		// Merge with existing data
+		return array_merge($this->data, $data);
+	}
+
+	/**
 	 * Sets ones or more properties to a given value.
 	 *
 	 * @param null|array|object $data key => value pairs of values to set
@@ -237,26 +311,11 @@ abstract class Entity {
 	 */
 	public function set(null|array|object $data = null, ?array $allowedFields = null): static {
 		if ($data !== null) {
-			// Convert object to array
-			// So we can merge it later
-			$data = (array) $data;
-
-			// Find empty strings in dataset and convert to null instead.
-			// fx. JSON fields doesn't allow empty strings to be stored.
-			// This also helps against empty strings telling exists(); to return true
-			foreach ($data as $key => $value) {
-				if ($value === '') $data[$key] = null;
-			}
-
-			if ($allowedFields !== null) {
-				$data = array_intersect_key($data, array_flip($allowedFields));
-			}
-
-			$data = array_merge($this->data, $data);
+			$data = $this->process($data, $allowedFields);
 		}
-
-		$this->data = $data ?? [];
-
+	
+		$this->new = $data ?? [];
+	
 		return $this;
 	}
 
@@ -276,7 +335,7 @@ abstract class Entity {
 	 * @return mixed
 	 */
 	public function get(string $key): mixed {
-		return $this->data[$key] ?? null;
+		return $this->new[$key] ?? $this->data[$key] ?? null;
 	}
 
 	/**
