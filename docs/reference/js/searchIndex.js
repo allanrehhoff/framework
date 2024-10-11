@@ -71,11 +71,6 @@ Search.appendIndex(
             "summary": "Sanitizes\u0020and\u0020validates\u0020a\u0020controller\u0020class\u0020name\u0020is\u0020valid\u0020for\u0020use.",
             "url": "classes/Core-ClassName.html"
         },                {
-            "fqsen": "\\Core\\ContentType\\ContentType",
-            "name": "ContentType",
-            "summary": "Interface\u0020ContentType",
-            "url": "classes/Core-ContentType-ContentType.html"
-        },                {
             "fqsen": "\\Core\\ContentType\\Html",
             "name": "Html",
             "summary": "Class\u0020Core\\Output\\Html",
@@ -290,6 +285,31 @@ Search.appendIndex(
             "name": "Url",
             "summary": "This\u0020class\u0020provides\u0020utility\u0020methods\u0020for\u0020working\u0020with\u0020URLs,\nsuch\u0020as\u0020parsing\u0020and\u0020manipulating\u0020URL\u0020components.",
             "url": "classes/Url.html"
+        },                {
+            "fqsen": "\\Core\\ContentType\\ContentTypeEnum",
+            "name": "ContentTypeEnum",
+            "summary": "Enum\u0020representing\u0020different\u0020content\u0020types.",
+            "url": "classes/Core-ContentType-ContentTypeEnum.html"
+        },                {
+            "fqsen": "\\Core\\ContentType\\ContentTypeEnum\u003A\u003AHTML",
+            "name": "HTML",
+            "summary": "",
+            "url": ""
+        },                {
+            "fqsen": "\\Core\\ContentType\\ContentTypeEnum\u003A\u003AXML",
+            "name": "XML",
+            "summary": "",
+            "url": ""
+        },                {
+            "fqsen": "\\Core\\ContentType\\ContentTypeEnum\u003A\u003AJSON",
+            "name": "JSON",
+            "summary": "",
+            "url": ""
+        },                {
+            "fqsen": "\\Core\\ContentType\\ContentTypeInterface",
+            "name": "ContentTypeInterface",
+            "summary": "Interface\u0020ContentType",
+            "url": "classes/Core-ContentType-ContentTypeInterface.html"
         },                {
             "fqsen": "\\",
             "name": "\\",
