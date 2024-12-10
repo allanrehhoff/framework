@@ -1,108 +1,132 @@
 <?php
-	ini_set("display_errors", 1);
-	error_reporting(E_ALL);
+ini_set("display_errors", 1);
+error_reporting(E_ALL);
 
-	require __DIR__."/../src/Libraries/Bootstrap/Bootstrap.php";
+require __DIR__ . "/../src/Libraries/Bootstrap/Bootstrap.php";
 
-	(new \Bootstrap\Bootstrap)->startup();
+(new \Bootstrap\Bootstrap)->startup();
 
-	\Registry::set(new \Configuration(STORAGE . "/config/global.jsonc"));
+\Registry::set(new \Configuration(STORAGE . "/config/global.jsonc"));
 
-	/**
-	 * Controllers
-	 */
-	class MockController extends \Controller {
-		public function index(): void {
-			$this->children[] = new \Core\ClassName("MockChild");
+/**
+ * Controllers
+ */
+class MockController extends \Controller {
+	public function index(): void {
+		$this->children[] = new \Core\ClassName("MockChild");
 
-			$this->response->setView("mock");
-		}
-
-		public function withoutChildren(): void {
-			$this->response->setView("without-children");
-		}
-
-		private function privateFunction(): void {}
-
-		protected function protectedFunction(): void {}
+		$this->response->setView("mock");
 	}
 
-	class MockChildController extends \Controller {
-		public static string $testkey = "test";
-
-		public function index(): void {
-			$this->response->data[self::$testkey] = "hello world";
-
-			$this->response->setView("mockchild");
-		}
+	public function withoutChildren(): void {
+		$this->response->setView("without-children");
 	}
 
-	class MockEventObject {
-		public string $property = "";
+	private function privateFunction(): void {
 	}
 
-	class MockEventListener {
-		public function handle(\MockEventObject $iMockEventObject): void {
-			$iMockEventObject->property = __FUNCTION__;
-		}
+	protected function protectedFunction(): void {
+	}
+}
 
-		public static function handleStatic(\MockEventObject $iMockEventObject): void {
-			$iMockEventObject->property = __FUNCTION__;
-		}
+class MockChildController extends \Controller {
+	public static string $testkey = "test";
+
+	public function index(): void {
+		$this->response->data[self::$testkey] = "hello world";
+
+		$this->response->setView("mockchild");
+	}
+}
+
+class MockEventObject {
+	public string $property = "";
+}
+
+class MockEventListener {
+	public function handle(\MockEventObject $iMockEventObject): void {
+		$iMockEventObject->property = __FUNCTION__;
 	}
 
-	/**
-	 * Factories
-	 */
-	class RequestFactory {
-		public static function new() : \Core\Request {
-			return new \Core\Request();
-		}
+	public static function handleStatic(\MockEventObject $iMockEventObject): void {
+		$iMockEventObject->property = __FUNCTION__;
+	}
+}
 
-		public static function withArguments(array $arguments): \Core\Request {
-			$iRequest = self::new();
-			$iRequest->setArguments($arguments);
-
-			return $iRequest;
-		}
-
-		public static function withServerVars(array $arguments): \Core\Request {
-			$arguments = array_change_key_case($arguments, CASE_UPPER);
-
-			$iRequest = self::new();
-			$iRequest->server = array_merge($iRequest->server, $arguments);
-
-			return $iRequest;
-		}
+/**
+ * Factories
+ */
+class RequestFactory {
+	public static function new(): \Core\Request {
+		return new \Core\Request();
 	}
 
-	class ResponseFactory {
-		public static function new() : \Core\Response {
-			return new \Core\Response;
-		}
+	public static function withArguments(array $arguments): \Core\Request {
+		$iRequest = self::new();
+		$iRequest->setArguments($arguments);
+
+		return $iRequest;
 	}
 
-	class RouterFactory {
-		public static function withRequestArguments(array $arguments) : \Core\Router {		
-			$iRouter = new \Core\Router(
-				\RequestFactory::withArguments($arguments),
-				\ResponseFactory::new()
-			);
+	public static function withServerVars(array $arguments): \Core\Request {
+		$arguments = array_change_key_case($arguments, CASE_UPPER);
 
-			return $iRouter;
-		}
+		$iRequest = self::new();
+		$iRequest->server = array_merge($iRequest->server, $arguments);
+
+		return $iRequest;
+	}
+}
+
+class ResponseFactory {
+	public static function new(): \Core\Response {
+		return new \Core\Response;
+	}
+}
+
+class RouterFactory {
+	public static function withRequestArguments(array $arguments): \Core\Router {
+		$iRouter = new \Core\Router(
+			\RequestFactory::withArguments($arguments),
+			\ResponseFactory::new()
+		);
+
+		return $iRouter;
+	}
+}
+
+class EnvironmentFactory {
+	public static function createFromString(string $string): \Environment {
+		$tmpfile = tempnam(sys_get_temp_dir(), "framework-env-test");
+		file_put_contents($tmpfile, $string);
+
+		return new \Environment($tmpfile);
 	}
 
-	class EnvironmentFactory {
-		public static function createFromString(string $string) : \Environment {
-			$tmpfile = tempnam(sys_get_temp_dir(), "framework-env-test");
-			file_put_contents($tmpfile, $string);
+	public static function fromCleanState(): \Environment {
+		return new \Environment;
+	}
+}
 
-			return new \Environment($tmpfile);
-		}
+class TemplateFactory {
+	public static function new(): \Core\Template {
+		return new \Core\Template(new \Core\Assets);
+	}
+}
 
-		public static function fromCleanState(): \Environment {
-			return new \Environment;
-		}
+class RendererFactory {
+	public static function html() {
+		$iTemplate = TemplateFactory::new();
+		return new \Core\Renderer($iTemplate, new \Core\ContentType\Html);
 	}
 
+	public static function json() {
+		$iTemplate = TemplateFactory::new();
+		return new \Core\Renderer($iTemplate, new \Core\ContentType\Json);
+	}
+
+	public static function xml() {
+		$iTemplate = TemplateFactory::new();
+		return new \Core\Renderer($iTemplate, new \Core\ContentType\Xml);
+	}
+}
