@@ -76,7 +76,7 @@ class Negotiator {
 		}
 
 		// Reflect controller and method attributes
-		$iReflectionClass = new ReflectionClass($iClassName);
+		$iReflectionClass = new ReflectionClass($iClassName->toString());
 		$iReflectionMethod = new ReflectionMethod($iClassName->toString(), $iMethodName->toString());
 
 		foreach ([$iReflectionClass, $iReflectionMethod] as $reflector) {
