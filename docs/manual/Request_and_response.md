@@ -37,7 +37,6 @@ A `Content-Type` header containing a similar mime type will likewise be returned
 
 The clients content type preferences will be negotiated the following, in listed order:
 - Application wide config
-- Event listeners
 - Class attributes
 - Method attributes
 
