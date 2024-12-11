@@ -13,7 +13,6 @@ use \Core\Response;
 use \Core\Renderer;
 use \Core\Template;
 use \Core\ClassName;
-use \RuntimeException;
 use \Core\Application;
 use \Core\ContentType\Html;
 use \Core\ContentType\Negotiator;
@@ -128,7 +127,7 @@ abstract class Controller {
 	 */
 	public function __get(string $name): mixed {
 		if ($name == "data") {
-			throw new RuntimeException("Setting data on controller object is not allowed, use '\$this->response->data[]' instead");
+			throw new \RuntimeException("Setting data on controller object is not allowed, use '\$this->response->data[]' instead");
 		}
 
 		return $this->$name;
