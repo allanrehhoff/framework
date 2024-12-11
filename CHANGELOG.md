@@ -1,6 +1,8 @@
 # Changelog #
 v8.1.0
-- Controller method access can now be controlled with attributes
+- Controller method access can now be controlled with attributes.  
+- Added \Core\ContentType\Negotiator class, replaces logic in \Core\Request.  
+- Updated index.php to be more minimalistic.  
 
 v8.0.0
 - **This release is backwards incompatible.**  
