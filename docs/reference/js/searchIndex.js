@@ -3,12 +3,12 @@ Search.appendIndex(
                 {
             "fqsen": "\\CliController",
             "name": "CliController",
-            "summary": "This\u0020is\u0020the\u0020controller\u0020which\u0020subcontrollers\u0020should\u0020extend\u0020upon.",
+            "summary": "",
             "url": "classes/CliController.html"
         },                {
             "fqsen": "\\FooterController",
             "name": "FooterController",
-            "summary": "This\u0020is\u0020the\u0020controller\u0020which\u0020subcontrollers\u0020should\u0020extend\u0020upon.",
+            "summary": "",
             "url": "classes/FooterController.html"
         },                {
             "fqsen": "\\ForbiddenController",
@@ -18,7 +18,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\HeaderController",
             "name": "HeaderController",
-            "summary": "This\u0020is\u0020the\u0020controller\u0020which\u0020subcontrollers\u0020should\u0020extend\u0020upon.",
+            "summary": "",
             "url": "classes/HeaderController.html"
         },                {
             "fqsen": "\\IndexController",
@@ -53,7 +53,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Controller",
             "name": "Controller",
-            "summary": "This\u0020is\u0020the\u0020controller\u0020which\u0020subcontrollers\u0020should\u0020extend\u0020upon.",
+            "summary": "",
             "url": "classes/Controller.html"
         },                {
             "fqsen": "\\Core\\Application",
@@ -311,6 +311,16 @@ Search.appendIndex(
             "summary": "Interface\u0020ContentType",
             "url": "classes/Core-ContentType-ContentTypeInterface.html"
         },                {
+            "fqsen": "\\Core\\Attributes\\AllowedContentTypes",
+            "name": "AllowedContentTypes",
+            "summary": "Attribute\u0020for\u0020specifying\u0020allowed\u0020content\u0020types\u0020for\u0020controllers\u0020or\u0020methods.",
+            "url": "classes/Core-Attributes-AllowedContentTypes.html"
+        },                {
+            "fqsen": "\\Core\\ContentType\\Negotiator",
+            "name": "Negotiator",
+            "summary": "Handles\u0020the\u0020negotiation\u0020of\u0020content\u0020types\u0020between\u0020request\u0020headers,\napplication\u0020configuration,\u0020controller\/class\u0020and\u0020method\u0020attributes.",
+            "url": "classes/Core-ContentType-Negotiator.html"
+        },                {
             "fqsen": "\\",
             "name": "\\",
             "summary": "",
@@ -325,6 +335,11 @@ Search.appendIndex(
             "name": "Core",
             "summary": "",
             "url": "namespaces/core.html"
+        },                {
+            "fqsen": "\\Core\\Attributes",
+            "name": "Attributes",
+            "summary": "",
+            "url": "namespaces/core-attributes.html"
         },                {
             "fqsen": "\\Core\\ContentType",
             "name": "ContentType",
