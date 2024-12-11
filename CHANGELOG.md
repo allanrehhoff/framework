@@ -2,6 +2,9 @@
 v8.1.0
 - Controller method access can now be controlled with attributes.  
 - Added \Core\ContentType\Negotiator class, replaces logic in \Core\Request.  
+- Added \Arr Utility class.  
+- Added \Obj Utility class.  
+- Added new methods to \Str class.  
 - Updated index.php to be more minimalistic.  
 
 v8.0.0

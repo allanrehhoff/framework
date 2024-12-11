@@ -5,8 +5,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Class StrTest
  */
-class StrTest extends TestCase
-{
+class StrTest extends TestCase {
 	/**
 	 * Test case for contains method (case-sensitive).
 	 */
@@ -101,5 +100,128 @@ class StrTest extends TestCase
 		$expectedOutput = 'hello world';
 
 		$this->assertEquals($expectedOutput, \Str::ascii($input));
+	}
+
+		/**
+	 * Test encode method.
+	 */
+	public function testEncode(): void {
+		$this->assertSame('SGVsbG8=', Str::encode('Hello'));
+		$this->assertSame('', Str::encode(null));
+	}
+
+	/**
+	 * Test decode method.
+	 */
+	public function testDecode(): void {
+		$this->assertSame('Hello', Str::decode('SGVsbG8='));
+		$this->assertSame('', Str::decode(null));
+	}
+
+	/**
+	 * Test len method.
+	 */
+	public function testLen(): void {
+		$this->assertSame(5, Str::len('Hello'));
+		$this->assertSame(0, Str::len(null));
+	}
+
+	/**
+	 * Test lower method.
+	 */
+	public function testLower(): void {
+		$this->assertSame('hello', Str::lower('Hello'));
+		$this->assertSame('', Str::lower(null));
+	}
+
+	/**
+	 * Test upper method.
+	 */
+	public function testUpper(): void {
+		$this->assertSame('HELLO', Str::upper('Hello'));
+		$this->assertSame('', Str::upper(null));
+	}
+
+	/**
+	 * Test substr method.
+	 */
+	public function testSubstr(): void {
+		$this->assertSame('Hell', Str::substr('Hello', 0, 4));
+		$this->assertSame('', Str::substr(null, 0, 4));
+	}
+
+	/**
+	 * Test normalizeWhitespace method.
+	 */
+	public function testNormalizeWhitespace(): void {
+		$this->assertSame('Hello World', Str::normalizeWhitespace("Hello    World"));
+		$this->assertSame('', Str::normalizeWhitespace(null));
+	}
+
+	/**
+	 * Test slug method.
+	 */
+	public function testSlug(): void {
+		$this->assertSame('hello-world', Str::slug('Hello World!'));
+		$this->assertSame('', Str::slug(null));
+	}
+
+	/**
+	 * Test trim method.
+	 */
+	public function testTrim(): void {
+		$this->assertSame('Hello', Str::trim('  Hello  '));
+		$this->assertSame('', Str::trim(null));
+	}
+
+	/**
+	 * Test rtrim method.
+	 */
+	public function testRtrim(): void {
+		$this->assertSame('  Hello', Str::rtrim('  Hello  '));
+		$this->assertSame('', Str::rtrim(null));
+	}
+
+	/**
+	 * Test ltrim method.
+	 */
+	public function testLtrim(): void {
+		$this->assertSame('Hello  ', Str::ltrim('  Hello  '));
+		$this->assertSame('', Str::ltrim(null));
+	}
+
+	/**
+	 * Test reverse method.
+	 */
+	public function testReverse(): void {
+		$this->assertSame('olleH', Str::reverse('Hello'));
+		$this->assertSame('', Str::reverse(null));
+	}
+
+	/**
+	 * Test repeat method.
+	 */
+	public function testRepeat(): void {
+		$this->assertSame('HelloHello', Str::repeat('Hello', 2));
+		$this->assertSame('', Str::repeat(null, 2));
+	}
+
+	/**
+	 * Test replace method.
+	 */
+	public function testReplace(): void {
+		$this->assertSame('Hi World', Str::replace('Hello', 'Hi', 'Hello World'));
+		$this->assertSame('', Str::replace(null, null, null));
+	}
+
+	/**
+	 * Test safe method.
+	 */
+	public function testSafe(): void {
+		$this->assertSame('', Str::safe(null));
+		$this->assertSame('&lt;div&gt;Hello&lt;/div&gt;', Str::safe('<div>Hello</div>'));
+		$this->assertSame('&lt;div title=&quot;Hello&quot;&gt;World&lt;/div&gt;', Str::safe('<div title="Hello">World</div>'));
+		$this->assertSame('This is &amp; test', Str::safe('This is & test'));
+		$this->assertSame('', Str::safe(''));
 	}
 }
