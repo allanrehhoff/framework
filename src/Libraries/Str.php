@@ -8,6 +8,17 @@
  */
 class Str {
 	/**
+	 * Null aware string escape
+	 *
+	 * @param string $string The string to escape.
+	 * @return string The escaped string.
+	 */
+	public static function safe(null|string $string) {
+		if ($string === null) return '';
+		return htmlspecialchars($string, ENT_QUOTES | ENT_SUBSTITUTE, "UTF-8");
+	}
+
+	/**
 	 * Null aware base64 encoding
 	 * 
 	 * @param null|string $string The string to encode to base64.
@@ -59,6 +70,30 @@ class Str {
 	public static function upper(null|string $string): string {
 		if ($string === null) return '';
 		return mb_strtoupper($string);
+	}
+
+	/**
+	 * Null aware substring extraction.
+	 *
+	 * @param null|string $string The string to extract from.
+	 * @param int         $start  The start position.
+	 * @param int|null    $length (optional) The length of the substring.
+	 * @return string The extracted substring, empty if $string was null.
+	 */
+	public static function substr(?string $string, int $start, ?int $length = null): string {
+		if ($string === null) return '';
+		return mb_substr($string, $start, $length);
+	}
+
+	/**
+	 * Capitalize the first letter of a string (multibyte safe).
+	 *
+	 * @param null|string $string The string to capitalize.
+	 * @return string The capitalized string, empty if $string was null.
+	 */
+	public static function ucfirst(?string $string): string {
+		if ($string === null || $string === '') return '';
+		return mb_strtoupper(mb_substr($string, 0, 1)) . mb_substr($string, 1);
 	}
 
 	/**
@@ -186,6 +221,17 @@ class Str {
 	}
 
 	/**
+	 * Normalize multiple spaces and other whitespace to a single space.
+	 *
+	 * @param null|string $string The string to normalize.
+	 * @return string The normalized string, empty if $string was null.
+	 */
+	public static function normalizeWhitespace(?string $string): string {
+		if ($string === null) return '';
+		return preg_replace('/\s+/', ' ', $string);
+	}
+
+	/**
 	 * Attempt to replace Unicode characters with their ASCII counterparts using dynamic character encoding detection.
 	 *
 	 * @param string $input The input string with Unicode characters.
@@ -196,5 +242,93 @@ class Str {
 		$output = iconv($encoding, 'ASCII//TRANSLIT//IGNORE', $input);
 
 		return $output !== false ? $output : $input;
+	}
+
+	/**
+	 * Converts a string into a slug-friendly format.
+	 *
+	 * @param null|string $string The string to slugify.
+	 * @param string      $separator (optional) The separator to use in the slug.
+	 * @return string The slugified string, empty if $string was null.
+	 */
+	public static function slug(?string $string, string $separator = '-'): string {
+		if ($string === null) return '';
+		$string = static::ascii($string);
+		$string = preg_replace('/[^a-zA-Z0-9]+/', $separator, $string);
+		return static::trim($string, $separator);
+	}
+
+	/**
+	 * Null aware trimming.
+	 *
+	 * @param null|string $string The string to trim.
+	 * @param string      $characters (optional) Characters to trim.
+	 * @return string The trimmed string, empty if $string was null.
+	 */
+	public static function trim(?string $string, string $characters = " \t\n\r\0\x0B"): string {
+		if ($string === null) return '';
+		return trim($string, $characters);
+	}
+
+	/**
+	 * Null aware right-trimming.
+	 *
+	 * @param null|string $string The string to trim.
+	 * @param string      $characters (optional) Characters to trim.
+	 * @return string The trimmed string, empty if $string was null.
+	 */
+	public static function rtrim(?string $string, string $characters = " \t\n\r\0\x0B"): string {
+		if ($string === null) return '';
+		return rtrim($string, $characters);
+	}
+
+	/**
+	 * Null aware left-trimming.
+	 *
+	 * @param null|string $string The string to trim.
+	 * @param string      $characters (optional) Characters to trim.
+	 * @return string The trimmed string, empty if $string was null.
+	 */
+	public static function ltrim(?string $string, string $characters = " \t\n\r\0\x0B"): string {
+		if ($string === null) return '';
+		return ltrim($string, $characters);
+	}
+
+	/**
+	 * Null aware string reversal.
+	 *
+	 * @param null|string $string The string to reverse.
+	 * @param string|null $encoding The character encoding. If it is omitted, the internal character encoding value will be used.
+	 * @return string The reversed string, empty if $string was null.
+	 */
+	public static function reverse(?string $string, null|string $encoding = null): string {
+		if ($string === null) return '';
+		$chars = mb_str_split($string, 1, $encoding ?: mb_internal_encoding());
+		return implode('', array_reverse($chars));
+	}
+
+	/**
+	 * Null aware string repetition.
+	 *
+	 * @param null|string $string The string to repeat.
+	 * @param int         $times  Number of times to repeat.
+	 * @return string The repeated string, empty if $string was null.
+	 */
+	public static function repeat(?string $string, int $times): string {
+		if ($string === null) return '';
+		return str_repeat($string, $times);
+	}
+
+	/**
+	 * Null aware string replacement.
+	 *
+	 * @param null|string $search  The string to search for.
+	 * @param null|string $replace The replacement string.
+	 * @param null|string $subject The string to perform replacement on.
+	 * @return string The resulting string after replacement, empty if $subject was null.
+	 */
+	public static function replace(?string $search, ?string $replace, ?string $subject): string {
+		if ($subject === null) return '';
+		return str_replace($search ?? '', $replace ?? '', $subject);
 	}
 }
