@@ -14,7 +14,7 @@ In short, all this does is serve as a kickstart to get a readable and stable cod
 
 2. [Controller & Methods](docs/manual/Controllers_and_methods.md)
 
-3. [Requests and Response Handling](docs/manual/Request_and_response.md)
+3. [Requests, Response & Content Types](docs/manual/Request_and_response.md)
 
 4. [Templates & Theming](docs/manual/Templates_and_theming.md)
 

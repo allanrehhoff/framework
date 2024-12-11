@@ -10,13 +10,13 @@ When an event is triggered, all registered listeners for that event are invoked 
 To have your event listener called in a static context provide a callable
 ```php
 <?php
-	class EmailNotifier {
-		public static function sendWelcomeEmail(\User $iUser) {
-			// Your e-mail logic
-		}
+class EmailNotifier {
+	public static function sendWelcomeEmail(\User $iUser) {
+		// Your e-mail logic
 	}
+}
 
-	\Core\Event::addListener("user.registered", "EmailNotifier::sendWelcomeEmail");
+\Core\Event::addListener("user.registered", "EmailNotifier::sendWelcomeEmail");
 ```
 ... or a closure
 
@@ -30,16 +30,16 @@ To have your event listener called in a static context provide a callable
 If given an array the listner will be instantiated and called in an object context
 ```php
 <?php
-	class EmailNotifier {
-		public function __construct() {
-			// Constructors are likely not needed
-			// But are supported, but given no arguments.
-		}
-
-		public function sendWelcomeEmail(\User $iUser) {
-			// Your e-mail logic
-		}
+class EmailNotifier {
+	public function __construct() {
+		// Constructors are likely not needed
+		// But are supported, but given no arguments.
 	}
+
+	public function sendWelcomeEmail(\User $iUser) {
+		// Your e-mail logic
+	}
+}
 
 // Register an event listener for the 'user.registered' event
 \Core\Event::addListener("user.registered", [EmailNotifier::class, "sendWelcomeEmail"])
@@ -48,14 +48,14 @@ If given an array the listner will be instantiated and called in an object conte
 You may fallback to the default `handle` method in object context, providing only the name of the class.  
 ```php
 <?php
-	class EmailNotifier {
-		public function handle(\User $iUser): mixed {
-			// Your e-mail logic
-		}
+class EmailNotifier {
+	public function handle(\User $iUser): mixed {
+		// Your e-mail logic
 	}
+}
 
-	// Register an event listener for the 'user.registered' event
-	\Core\Event::addListener("user.registered", \EmailNotifier::class);
+// Register an event listener for the 'user.registered' event
+\Core\Event::addListener("user.registered", \EmailNotifier::class);
 ```
 
 ## Default event listeners
@@ -65,29 +65,29 @@ may be registered in here.
 The contents of the file may be:
 ```php
 <?php
-	namespace Bootstrap;
+namespace Bootstrap;
 
-	class EventService {
-		public function registerDefaultListeners(): void {
-			\Core\Event::addListener(
-				"controller.execute.before",
-				\AuthenticationService::class
-			);
+class EventService {
+	public function registerDefaultListeners(): void {
+		\Core\Event::addListener(
+			"controller.execute.before",
+			\AuthenticationService::class
+		);
 
-			\Core\Event::addListener(
-				"user.registered",
-				fn(\User $iUser) => \EmailService::sendWelcomeEmail($iUser)
-			);
-		}
+		\Core\Event::addListener(
+			"user.registered",
+			fn(\User $iUser) => \EmailService::sendWelcomeEmail($iUser)
+		);
 	}
+}
 
 ```
 
 ## Triggering events
 ```php
 <?php
-	$iUser = new \User() // Your newly created user
-	\Core\Event::trigger("user.registered", $iUser);
+$iUser = new \User() // Your newly created user
+\Core\Event::trigger("user.registered", $iUser);
 ```
 
 ## Handling Invalid Listeners:
@@ -96,11 +96,11 @@ If an unsupported or invalid listener type is provided, the \Core\Event class wi
 
 ```php
 <?php
-	try {
-		\Core\Event::addListener("core.global.init", "NonExistentClass::nonExistentMethod");
-	} catch (\InvalidArgumentException $e) {
-		// Your exception handling logic
-	}
+try {
+	\Core\Event::addListener("core.global.init", "NonExistentClass::nonExistentMethod");
+} catch (\InvalidArgumentException $e) {
+	// Your exception handling logic
+}
 ```
 
 ## Clearing Event Listeners
@@ -143,6 +143,10 @@ Arguments passed: None
 The event fired when request object has been constructed.  
 Arguments passed: `\Core\Request`
 
+### core.router.found
+When a URI path was successfully routed to a controller and method
+Arguments passed: `\Core\Request $iRequest, \Core\ClassName $iClassName, \Core\MethodName $iMethodName`
+
 ### core.controller.method.before
 Event emitted right before a controller method is invoked.  
 This event is emitted seperately for any child controllers.  
@@ -155,12 +159,15 @@ Arguments passed: `\Core\ClassName $iClassName, \Core\MethodName $iMethodName`
 
 ### core.output.json
 Event emitted right before JSON output is rendered.  
-Arguments passed: `array $data`
+Condition: Negotiated content type is JSON
+Arguments passed: `array $data`  
 
 ### core.output.xml
 Event emitted right before XML output is rendered.  
+Condition: Negotiated content type is XML  
 Arguments passed: `string $data`
 
 ### core.output.html
 Event emitted right before HTML output is rendered.  
+Condition: Negotiated content type is HTML    
 Arguments passed: `string $view, array $data`

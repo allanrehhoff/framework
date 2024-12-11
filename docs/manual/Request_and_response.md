@@ -1,4 +1,4 @@
-# Requests and Response Handling
+# Requests, Response & Content Types
 
 ## Response data
 
@@ -6,13 +6,13 @@ Controllers can set any amount of data to be passed on as variables to view file
 
 ```php
 <?php
-	// Assume this url: yourdomain.tld/animals/tiger/indo-chinese
-	class AnimalController extends Controller {
-		public function index(): void {
-			$this->response->data["pageTitle"] = "Welcome to Umbrella Corp!";
-			$this->response->setView("welcome-page");
-		}
+// Assume this url: yourdomain.tld/animals/tiger/indo-chinese
+class AnimalController extends Controller {
+	public function index(): void {
+		$this->response->data["pageTitle"] = "Welcome to Umbrella Corp!";
+		$this->response->setView("welcome-page");
 	}
+}
 ```
 
 In the above example the string `Welcome to Umbrella Corp!` will be available as `$pageTitle`
@@ -32,12 +32,18 @@ A `Content-Type` header containing a similar mime type will likewise be returned
 > For instance, if the `Accept` header contains `text/json`, while valid according to standards the `application/json` is widely adeopted by clients and will therefore be included in the `Content-Type` response header
 
 > [!NOTE]
-> For security reasons accepting content types `application/json` and `application/xml` are disabled by default.
-> To enable these, edit the `config/request.jsonc` file accordingly.
+> For security reasons accepting content types `application/json` and `application/xml` are disabled by default.  
+> Responding with these types, must be enabled explicitly, depending on use case.
+
+The clients content type preferences will be negotiated the following, in listed order:
+- Application wide config
+- Event listeners
+- Class attributes
+- Method attributes
 
 Any views set by controllers will not be rendered if client accepted content type is different from HTML.  
 
-Current supported formats are:
+Current supported content types are:
 
 > **HTML (Default)**  
 > `Accept: */*`  
@@ -74,20 +80,33 @@ Will produce something similar to:
 ```
 
 Accepting `application/json` and `application/xml` for areas of the application can be achieved by registering a listener to the `core.request.init` event
+See [Events](Events.md) for more information about registering events.  
 
 ```php
 <?php
-	namespace Bootstrap;
+namespace Bootstrap;
 
-	class EventService {
-		public function registerDefaultListeners(): void {
-			// ... other event listeners
+class EventService {
+	public function registerDefaultListeners(): void {
+		// ... other event listeners
 
-			\Core\Event::addListener(
-				"core.request.init",
-				fn(\Request $iRequest) => $iRequest->getConfiguration()->set("contentTypes.json.enable", $iRequest->getArg(0) == "api");
-			);
-		}
+		\Core\Event::addListener(
+			"core.request.init",
+			fn(\Request $iRequest) => $iRequest->getConfiguration()->set("contentTypes.json.enable", $iRequest->getArg(0) == "api");
+		);
 	}
+}
+```
 
+Content types access can likewise be set with attributes, on a per-class or per-method basis.
+```php
+<?php
+#[\Core\Attributes\AllowedContentTypes('json')] // allow application/json for all methods to this class
+class ApiController extends Controller {
+
+	#[\Core\Attributes\AllowedContentTypes('xml')] // Extraordinarily allow application/xml for this method
+	public function index(): void {
+		// ...
+	}
+}
 ```
