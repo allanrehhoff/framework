@@ -10,26 +10,12 @@ require "Libraries/Bootstrap/Bootstrap.php";
 
 (new \Bootstrap\Bootstrap)->startup();
 
-// Global state objects
-\Registry::set(new \Configuration(STORAGE . "/config/global.jsonc"));
-
-\Registry::set(new \Environment(APP_PATH . "/.env"));
-/*
-\Registry::set(new \Database\Connection(
-	\Registry::getConfiguration()->get("database.host"),
-	\Registry::getConfiguration()->get("database.username"),
-	\Registry::getConfiguration()->get("database.password"),
-	\Registry::getConfiguration()->get("database.name")
-));
-*/
-
-// Trigger init event
+// Events
 \Core\Event::trigger("core.global.init");
 
-// Other objects
+// Handle request
 $iRouter = new \Core\Router(new \Core\Request, new \Core\Response);
 
 $iApplication = new \Core\Application($iRouter);
 
-// Render the entire thing
 $iApplication->run()->output();

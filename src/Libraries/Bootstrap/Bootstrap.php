@@ -22,8 +22,26 @@ class Bootstrap {
 
 		$this->registerConstants();
 		$this->registerAutoloaders();
+		$this->registerGlobalObjects();
 		$this->registerErrorHandlers();
 		$this->registerEventListeners();
+	}
+
+	/**
+	 * Sets global state objects in the registry
+	 * @return void
+	 */
+	private function registerGlobalObjects() {
+		\Registry::set(new \Configuration(STORAGE . "/config/global.jsonc"));
+
+		\Registry::set(new \Environment(APP_PATH . "/.env"));
+
+		\Registry::set(new \Database\Connection(
+			\Registry::getConfiguration()->get("database.host"),
+			\Registry::getConfiguration()->get("database.username"),
+			\Registry::getConfiguration()->get("database.password"),
+			\Registry::getConfiguration()->get("database.name")
+		));
 	}
 
 	/**
