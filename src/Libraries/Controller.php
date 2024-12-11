@@ -5,6 +5,20 @@
  * Every controller must define their own 'index' method, which is
  * the default method invoked for all controllers.
  */
+
+use \Core\Router;
+use \Core\Assets;
+use \Core\Request;
+use \Core\Response;
+use \Core\Renderer;
+use \Core\Template;
+use \Core\ClassName;
+use \RuntimeException;
+use \Core\Application;
+use \Core\ContentType\Html;
+use \Core\ContentType\Negotiator;
+use \Core\ContentType\ContentTypeInterface;
+
 abstract class Controller {
 
 	/**
@@ -13,44 +27,44 @@ abstract class Controller {
 	protected ?\Controller $parent = null;
 
 	/**
-	 * @var \Core\Request Current request object
+	 * @var Request Current request object
 	 */
-	protected \Core\Request $request;
+	protected Request $request;
 
 	/**
-	 * @var \Core\Response Current request object
+	 * @var Response Current request object
 	 */
-	protected \Core\Response $response;
+	protected Response $response;
 
 	/**
-	 * @var \Core\Application The application object
+	 * @var Application The application object
 	 */
-	protected \Core\Application $application;
+	protected Application $application;
 
 	/**
-	 * @var \Core\Router Current router object in use
+	 * @var Router Current router object in use
 	 */
-	protected \Core\Router $router;
+	protected Router $router;
 
 	/**
-	 * @var \Core\Template Current template object
+	 * @var Template Current template object
 	 */
-	protected \Core\Template $template;
+	protected Template $template;
 
 	/**
-	 * @var \Core\Assets
+	 * @var Assets
 	 */
-	protected \Core\Assets $assets;
+	protected Assets $assets;
 
 	/**
-	 * @var \Core\ContentType\ContentTypeInterface
+	 * @var ContentTypeInterface
 	 */
-	protected \Core\ContentType\ContentTypeInterface $contentType;
+	protected ContentTypeInterface $contentType;
 
 	/**
-	 * @var \Core\Renderer
+	 * @var Renderer
 	 */
-	protected \Core\Renderer $renderer;
+	protected Renderer $renderer;
 
 	/**
 	 * @var array Child controllers classes to be executed when the main one finalizes.
@@ -68,7 +82,7 @@ abstract class Controller {
 	 * @param \Core\Application $iApplication The application class invoking this controller.
 	 * @param null|\Controller $iController The parent controller, if this controller is a child, null if it's the top-level controller
 	 */
-	public function __construct(\Core\Application $iApplication, ?\Controller $iController = null) {
+	public function __construct(Application $iApplication, ?Controller $iController = null) {
 		$this->parent = $iController;
 		$this->application = $iApplication;
 
@@ -80,11 +94,11 @@ abstract class Controller {
 		// there's as of yet, no beneficial reason to.
 		// So we'll save the memory and CPU cycles
 		if (IS_CLI === false) {
-			$this->contentType = $this->request->getContentType();
+			$this->contentType = (new Negotiator($this->router, $this->request))->getContentType();
 
-			$this->template = new \Core\Template(new \Core\Assets);
+			$this->template = new Template(new Assets);
 
-			$this->renderer = new \Core\Renderer(
+			$this->renderer = new Renderer(
 				$this->template,
 				$this->contentType
 			);
@@ -95,9 +109,9 @@ abstract class Controller {
 				$this->contentType->getMedia()
 			));
 
-			if ($iController === null && $this->contentType::class == \Core\ContentType\Html::class) {
-				$this->children[] = new \Core\ClassName("Header");
-				$this->children[] = new \Core\ClassName("Footer");
+			if ($iController === null && $this->contentType::class == Html::class) {
+				$this->children[] = new ClassName("Header");
+				$this->children[] = new ClassName("Footer");
 
 				$this->response->setTitle(array_slice($this->request->getArguments(), -1)[0] ?? '');
 			}
@@ -114,7 +128,7 @@ abstract class Controller {
 	 */
 	public function __get(string $name): mixed {
 		if ($name == "data") {
-			throw new \RuntimeException("Setting data on controller object is not allowed, use '\$this->response->data[]' instead");
+			throw new RuntimeException("Setting data on controller object is not allowed, use '\$this->response->data[]' instead");
 		}
 
 		return $this->$name;
@@ -164,37 +178,37 @@ abstract class Controller {
 	}
 
 	/**
-	 * @return \Core\Template
+	 * @return Template
 	 */
-	final public function getTemplate(): \Core\Template {
+	final public function getTemplate(): Template {
 		return $this->template;
 	}
 
 	/**
-	 * @return \Core\Application
+	 * @return Application
 	 */
-	final public function getApplication(): \Core\Application {
+	final public function getApplication(): Application {
 		return $this->application;
 	}
 
 	/**
-	 * @return \Core\Router
+	 * @return Router
 	 */
-	final public function getRouter(): \Core\Router {
+	final public function getRouter(): Router {
 		return $this->router;
 	}
 
 	/**
-	 * @return \Core\Request
+	 * @return Request
 	 */
-	final public function getRequest(): \Core\Request {
+	final public function getRequest(): Request {
 		return $this->request;
 	}
 
 	/**
-	 * @return \Core\Response
+	 * @return Response
 	 */
-	final public function getResponse(): \Core\Response {
+	final public function getResponse(): Response {
 		return $this->response;
 	}
 }

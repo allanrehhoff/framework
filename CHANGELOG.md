@@ -1,4 +1,7 @@
 # Changelog #
+v8.1.0
+- Controller method access can now be controlled with attributes
+
 v8.0.0
 - **This release is backwards incompatible.**  
 - README documentation updated.  

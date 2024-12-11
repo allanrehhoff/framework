@@ -41,6 +41,11 @@ final class Request {
 	private array $arguments;
 
 	/**
+	 * @var array Results of the parsed HTTP Accept header
+	 */
+	private array $preferences = [];
+
+	/**
 	 * @var \Configuration $configuration
 	 */
 	private \Configuration $configuration;
@@ -57,6 +62,10 @@ final class Request {
 
 		if (empty($this->files) !== true) {
 			$this->files = $this->reArrangeFilesArray($this->files);
+		}
+
+		if (isset($this->server["HTTP_ACCEPT"])) {
+			$this->preferences = $this->parseAcceptHeader($this->server["HTTP_ACCEPT"]);
 		}
 
 		if (IS_CLI === true) {
@@ -116,10 +125,19 @@ final class Request {
 	/**
 	 * Tell the mime content type that the client prefer to recieve
 	 * NULL is returned if the Accept header failed negotiation
-	 * @return null|ContentTypeInterface
+	 * @return array
 	 */
-	public function getContentType(): null|ContentTypeInterface {
-		$acceptHeader = $this->server["HTTP_ACCEPT"] ?? '';
+	public function getContentTypePreferences(): array {
+		return $this->preferences;
+	}
+
+	/**
+	 * Parse HTTP Accept header
+	 *
+	 * @param string $acceptHeader
+	 * @return array Parsed client preferences
+	 */
+	private function parseAcceptHeader(string $acceptHeader): array {
 		$mediaTypes = explode(',', $acceptHeader);
 
 		foreach ($mediaTypes as $mediaType) {
@@ -142,25 +160,7 @@ final class Request {
 
 		arsort($preferences);
 
-		$iConfiguration = $this->getConfiguration();
-
-		foreach ($preferences as $dataType => $priority) {
-			$iContentType = ContentTypeEnum::tryFrom($dataType)?->getInstance();
-
-			if ($iContentType !== null && $iConfiguration->get(sprintf("contentTypes.%s.enable", $dataType)) === true) {
-				return $iContentType;
-			}
-		}
-
-		if (($preferences["*"] ?? null) !== null) {
-			foreach ($this->getConfiguration()->get("contentTypes", $dataType) as $dataType => $config) {
-				if ($config->enable === true) {
-					return ContentTypeEnum::from($dataType)->getInstance();
-				}
-			}
-		}
-
-		return ContentTypeEnum::from($iConfiguration->get("defaultType"))->getInstance();
+		return $preferences;
 	}
 
 	/**

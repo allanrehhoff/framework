@@ -22,6 +22,8 @@ final class Router {
 	 */
 	private Response $response;
 
+	private array $route;
+
 	/**
 	 * Router constructor parses args from current environment.
 	 * @param Request $iRequest The global request object
@@ -32,6 +34,44 @@ final class Router {
 		$this->request = $iRequest;
 		$this->response = $iResponse;
 		$this->configuration = new \Configuration(STORAGE . "/config/router.jsonc");
+
+		$defaults = $this->getDefaultArguments();
+
+		$controllerBase = $this->request->getArg(0, $defaults);
+		$methodNameBase = $this->request->getArg(1, $defaults);
+
+		// Instantiating a new ReflectionClass will call autoloader
+		// which will throw \Core\Exception\FileNotFound if file is not found
+		// class_exists(); is not used because we'll need the reflection later
+		try {
+			$iClassName = new ClassName($controllerBase);
+			$iReflectionClass = new \ReflectionClass($iClassName->toString());
+		} catch (\Core\Exception\FileNotFound) {
+			return $this->handleUnroutableRequest();
+		}
+
+		// Check if method name exists on class
+		// If method is not present, fallback to default
+		try {
+			$iMethodName = new MethodName($methodNameBase ?? MethodName::DEFAULT);
+			$iReflectionMethod = $iReflectionClass->getMethod($iMethodName->toString());
+		} catch (\ReflectionException) {
+			$iMethodName = $this->getDefaultMethodName();
+		}
+
+		// \Core\Exception\Governance is deliberately thrown for non-public methods
+		// as end-users could accidently end up unwanted methods if simply re-routed to MethodName::DEFAULT
+		// However we still want our fallback to MethodName::DEFAULT if the method is simply not defined.
+		try {
+			$iReflectionMethod = $iReflectionClass->getMethod($iMethodName->toString());
+			if ($iReflectionMethod->isPublic() !== true) throw new \Core\Exception\Governance;
+		} catch (\Core\Exception\Governance) {
+			return $this->handleUnroutableRequest();
+		}
+
+		\Core\Event::trigger("core.router.found", $this->request, $iClassName, $iMethodName);
+
+		$this->route = [$iClassName, $iMethodName];
 	}
 
 	/**
@@ -105,42 +145,6 @@ final class Router {
 	 * @return array
 	 */
 	public function getRoute(): array {
-		$defaults = $this->getDefaultArguments();
-
-		$controllerBase = $this->request->getArg(0, $defaults);
-		$methodNameBase = $this->request->getArg(1, $defaults);
-
-		// Instantiating a new ReflectionClass will call autoloader
-		// which will throw \Core\Exception\FileNotFound if file is not found
-		// class_exists(); is not used because we'll need the reflection later
-		try {
-			$iClassName = new ClassName($controllerBase);
-			$iReflectionClass = new \ReflectionClass($iClassName->toString());
-		} catch (\Core\Exception\FileNotFound) {
-			return $this->handleUnroutableRequest();
-		}
-
-		// Check if method name exists on class
-		// If method is not present, fallback to default
-		try {
-			$iMethodName = new MethodName($methodNameBase ?? MethodName::DEFAULT);
-			$iReflectionMethod = $iReflectionClass->getMethod($iMethodName->toString());
-		} catch (\ReflectionException) {
-			$iMethodName = $this->getDefaultMethodName();
-		}
-
-		// \Core\Exception\Governance is deliberately thrown for non-public methods
-		// as end-users could accidently end up unwanted methods if simply re-routed to MethodName::DEFAULT
-		// However we still want our fallback to MethodName::DEFAULT if the method is simply not defined.
-		try {
-			$iReflectionMethod = $iReflectionClass->getMethod($iMethodName->toString());
-			if ($iReflectionMethod->isPublic() !== true) throw new \Core\Exception\Governance;
-		} catch (\Core\Exception\Governance) {
-			return $this->handleUnroutableRequest();
-		}
-
-		\Core\Event::trigger("core.router.found", $this->request, $iClassName, $iMethodName);
-
-		return [$iClassName, $iMethodName];
+		return $this->route;
 	}
 }

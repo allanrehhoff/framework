@@ -14,13 +14,14 @@ require "Libraries/Bootstrap/Bootstrap.php";
 \Registry::set(new \Configuration(STORAGE . "/config/global.jsonc"));
 
 \Registry::set(new \Environment(APP_PATH . "/.env"));
-
+/*
 \Registry::set(new \Database\Connection(
 	\Registry::getConfiguration()->get("database.host"),
 	\Registry::getConfiguration()->get("database.username"),
 	\Registry::getConfiguration()->get("database.password"),
 	\Registry::getConfiguration()->get("database.name")
 ));
+*/
 
 // Trigger init event
 \Core\Event::trigger("core.global.init");
