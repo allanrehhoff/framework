@@ -101,10 +101,12 @@ class EventService {
 Content types access can likewise be set with attributes, on a per-class or per-method basis.
 ```php
 <?php
-#[\Core\Attributes\AllowedContentTypes('json')] // allow application/json for all methods to this class
+// Allow application/json for all methods to this class
+#[\Core\Attributes\AllowedContentTypes('json')]
 class ApiController extends Controller {
 
-	#[\Core\Attributes\AllowedContentTypes('xml')] // Extraordinarily allow application/xml for this method
+	// Extraordinarily allow application/xml for this method
+	#[\Core\Attributes\AllowedContentTypes('xml')]
 	public function index(): void {
 		// ...
 	}
