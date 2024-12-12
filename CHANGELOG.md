@@ -6,6 +6,8 @@ v8.1.0
 - Added \Obj Utility class.  
 - Added new methods to \Str class.  
 - Updated index.php to be more minimalistic.  
+- Assumed baseurl is not localhost if it cannot be reliably determined.  
+- Upgraded PHPunit version.  
 
 v8.0.0
 - **This release is backwards incompatible.**  
