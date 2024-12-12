@@ -22,6 +22,18 @@ class MockController extends \Controller {
 		$this->response->setView("without-children");
 	}
 
+	#[\Core\Attritbutes\AllowedContentTypes('xml')]
+	public function methodAllowsXml() {
+	}
+
+	#[\Core\Attritbutes\AllowedContentTypes('json')]
+	public function methodAllowsJson() {
+	}
+
+	#[\Core\Attritbutes\AllowedContentTypes('json', 'xml')]
+	public function methodAllowsJsonAndXml() {
+	}
+
 	private function privateFunction(): void {
 	}
 
@@ -71,8 +83,13 @@ class RequestFactory {
 	public static function withServerVars(array $arguments): \Core\Request {
 		$arguments = array_change_key_case($arguments, CASE_UPPER);
 
+		$server = $_SERVER;
+
+		$_SERVER = array_merge($server, $arguments);
+
 		$iRequest = self::new();
-		$iRequest->server = array_merge($iRequest->server, $arguments);
+
+		$_SERVER = $server;
 
 		return $iRequest;
 	}
