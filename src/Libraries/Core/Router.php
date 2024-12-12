@@ -47,7 +47,8 @@ final class Router {
 			$iClassName = new ClassName($controllerBase);
 			$iReflectionClass = new \ReflectionClass($iClassName->toString());
 		} catch (\Core\Exception\FileNotFound) {
-			return $this->handleUnroutableRequest();
+			$this->route = $this->handleUnroutableRequest();
+			return;
 		}
 
 		// Check if method name exists on class
@@ -66,7 +67,8 @@ final class Router {
 			$iReflectionMethod = $iReflectionClass->getMethod($iMethodName->toString());
 			if ($iReflectionMethod->isPublic() !== true) throw new \Core\Exception\Governance;
 		} catch (\Core\Exception\Governance) {
-			return $this->handleUnroutableRequest();
+			$this->route = $this->handleUnroutableRequest();
+			return;
 		}
 
 		\Core\Event::trigger("core.router.found", $this->request, $iClassName, $iMethodName);
