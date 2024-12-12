@@ -19,13 +19,13 @@ class Url {
 	public static function getBaseurl(): string {
 		$baseurl = "";
 		$protocol = IS_SSL ? "https://" : "http://";
-		$domainName = $_SERVER["HTTP_HOST"];
+		$domainName = $_SERVER["SERVER_NAME"] ?? 'localhost';
 
 		// Add protocol and domain name to base URL
 		$baseurl .= $protocol . $domainName;
 
 		// Add port number to base URL if it"s not the default
-		if ($_SERVER["SERVER_PORT"] != ($protocol === "https://" ? 443 : 80)) {
+		if (($_SERVER["SERVER_PORT"] ?? 80) != ($protocol === "https://" ? 443 : 80)) {
 			$baseurl .= ":" . $_SERVER["SERVER_PORT"];
 		}
 
