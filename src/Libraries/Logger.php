@@ -158,10 +158,10 @@ class Logger {
 	 * Returns the start time or false if a time tracker with the same name
 	 * exists
 	 * 
-	 * @param string|null $name Name of the timer
+	 * @param null|string $name Name of the timer
 	 * @return bool|float Current timestamp in microseconds, false if the timer with the same name is already started.
 	 */
-	public static function time(string $name = null): bool|float {
+	public static function time(null|string $name = null): bool|float {
 		if ($name === null) {
 			$name = static::$defaultTimer;
 		}
@@ -181,12 +181,12 @@ class Logger {
 	 * Returns the total time elapsed for the given time-tracker, or false if the
 	 * time tracker is not found.
 	 * 
-	 * @param string|null $name Name of the timer
+	 * @param null|string $name Name of the timer
 	 * @param int $decimals Number of decimal places in the elapsed time
 	 * @param string $level Log level
 	 * @return float|bool Total time elapsed for the given time-tracker, or false if the time tracker is not found.
 	 */
-	public static function timeEnd(string $name = null, int $decimals = 6, string $level = 'debug') {
+	public static function timeEnd(null|string $name = null, int $decimals = 6, string $level = 'debug') {
 		$isDefaultTimer = $name === null;
 
 		if ($isDefaultTimer) {

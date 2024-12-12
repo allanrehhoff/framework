@@ -14,9 +14,9 @@ class ConnectionError extends \Exception {
 	 *
 	 * @param string $message Error message.
 	 * @param int $code Error code (default is 0).
-	 * @param \Exception|null $previous Previous exception (default is null).
+	 * @param null|\Exception $previous Previous exception (default is null).
 	 */
-	public function __construct(string $message, int $code = 0, \Exception $previous = null) {
+	public function __construct(string $message, int $code = 0, null|\Exception $previous = null) {
 		parent::__construct($message, $code, $previous);
 	}
 }
