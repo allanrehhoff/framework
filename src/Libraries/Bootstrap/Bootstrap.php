@@ -22,8 +22,8 @@ class Bootstrap {
 
 		$this->registerConstants();
 		$this->registerAutoloaders();
-		$this->registerGlobalObjects();
 		$this->registerErrorHandlers();
+		$this->registerGlobalObjects();
 		$this->registerEventListeners();
 	}
 
@@ -35,7 +35,7 @@ class Bootstrap {
 		\Registry::set(new \Configuration(STORAGE . "/config/global.jsonc"));
 
 		\Registry::set(new \Environment(APP_PATH . "/.env"));
-
+		return;
 		\Registry::set(new \Database\Connection(
 			\Registry::getConfiguration()->get("database.host"),
 			\Registry::getConfiguration()->get("database.username"),
@@ -82,7 +82,7 @@ class Bootstrap {
 				if (file_exists($classFile) === true) {
 					require $classFile;
 				} else {
-					throw new \Core\Exception\FileNotFound;
+					throw new \Core\Exception\FileNotFound(\basename($classFile));
 				}
 			}
 		);
