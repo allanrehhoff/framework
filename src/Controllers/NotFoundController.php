@@ -11,9 +11,9 @@ class NotFoundController extends Controller {
 	 * @return void
 	 */
 	public function index(): void {
-		$this->response->data["httpHost"] = \Escape::string($this->request->server["HTTP_HOST"] ?? '');
-		$this->response->data["requestUri"] = \Escape::string($this->request->server["REQUEST_URI"] ?? '');
-		$this->response->data["httpReferer"] = \Escape::string($this->request->server["HTTP_REFERER"] ?? '');
+		$this->response->data["httpHost"] = \Str::safe($this->request->server["HTTP_HOST"] ?? '');
+		$this->response->data["requestUri"] = \Str::safe($this->request->server["REQUEST_URI"] ?? '');
+		$this->response->data["httpReferer"] = \Str::safe($this->request->server["HTTP_REFERER"] ?? '');
 
 		$this->response->sendHttpCode(\Core\StatusCode\NotFound::getHttpCode());
 		$this->response->setTitle("Not found");

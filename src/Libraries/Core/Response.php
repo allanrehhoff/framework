@@ -84,7 +84,7 @@ final class Response {
 	public function setTitle(string $title): void {
 		$this->data["title"] = sprintf(
 			\Registry::getConfiguration()->get("titleFormat"),
-			\Escape::string($title)
+			\Str::safe($title)
 		);
 	}
 

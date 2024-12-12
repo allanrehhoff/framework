@@ -44,7 +44,7 @@ final class Xml implements ContentTypeInterface {
 				$this->arrayToXml($value, $child);
 			} else {
 				// Handle flat key-value pairs
-				$value = \Escape::string($value);
+				$value = \Str::safe($value);
 				$iSimpleXMLElement->addChild($key, $value);
 			}
 		}

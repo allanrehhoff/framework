@@ -53,6 +53,6 @@ class HeaderController extends Controller {
 
 		$classesString = implode(' ', array_unique($bodyClasses));
 
-		return \Escape::string($classesString);
+		return \Str::safe($classesString);
 	}
 }
