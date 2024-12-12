@@ -8,3 +8,4 @@ composer.lock
 vendor/
 docs/reference/cache/
 tests/dev.php
+.phpunit.cache
