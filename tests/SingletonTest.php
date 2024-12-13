@@ -1,18 +1,22 @@
 <?php
-	class SingletonTest extends PHPUnit\Framework\TestCase {
-		public function testSimpleObjectStorage() {
-			$iResponse = \ResponseFactory::new();
+use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-			\Registry::set($iResponse);
+#[CoversClass(Singleton::class)]
+class SingletonTest extends TestCase {
+	public function testSimpleObjectStorage() {
+		$iResponse = \ResponseFactory::new();
 
-			$this->assertInstanceOf(\Core\Response::class, \Registry::get("Core\Response"));
-		}
+		\Registry::set($iResponse);
 
-		public function testObjectAlias() {
-			$iResponse = \ResponseFactory::new();
-
-			\Registry::set($iResponse, "response");
-
-			$this->assertInstanceOf(\Core\Response::class, \Registry::get("response"));
-		}
+		$this->assertInstanceOf(\Core\Response::class, \Registry::get("Core\Response"));
 	}
+
+	public function testObjectAlias() {
+		$iResponse = \ResponseFactory::new();
+
+		\Registry::set($iResponse, "response");
+
+		$this->assertInstanceOf(\Core\Response::class, \Registry::get("response"));
+	}
+}

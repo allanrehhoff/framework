@@ -1,11 +1,13 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Core\Template;
 use Core\Assets;
 use Core\TemplateFactory;
 
-final class TemplateTest extends TestCase {
+#[CoversClass(Template::class)]
+class TemplateTest extends TestCase {
 	private $template;
 	private $mockAssets;
 	private $mockConfiguration;

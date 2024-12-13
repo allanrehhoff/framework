@@ -35,7 +35,7 @@ class Bootstrap {
 		\Registry::set(new \Configuration(STORAGE . "/config/global.jsonc"));
 
 		\Registry::set(new \Environment(APP_PATH . "/.env"));
-
+		return;
 		\Registry::set(new \Database\Connection(
 			\Registry::getConfiguration()->get("database.host"),
 			\Registry::getConfiguration()->get("database.username"),
@@ -74,9 +74,10 @@ class Bootstrap {
 				$className = str_replace("\\", "/", $className);
 
 				// Exclude PHPUnit-related classes
-				if (strpos($className, 'PHPUnit') !== false) {
-					return; // Skip PHPUnit files
-				}
+				// Removing this line breaks tests
+				// As throwing FileNotFound causes
+				// the testsuite to fail silently
+				if (str_contains($className, 'PHPUnit')) return;
 
 				if ($className != $controllerClass && str_ends_with($className, $controllerClass)) {
 					$classFile = APP_PATH . "/Controllers/" . $className . ".php";

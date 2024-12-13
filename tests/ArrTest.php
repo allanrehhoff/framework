@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\Unit\Utils;
-
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
+#[CoversClass(Arr::class)]
 class ArrTest extends TestCase {
 	public function testGet() {
 		$this->assertEquals('default', \Arr::get(null, 'key', 'default'));

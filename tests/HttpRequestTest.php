@@ -1,5 +1,9 @@
 <?php
-class HttpRequestTest extends \PHPUnit\Framework\TestCase {
+use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+
+#[CoversClass(HttpRequest::class)]
+class HttpRequestTest extends TestCase {
 	public static function tearDownAfterClass() : void {
 		$cookiejar =  dirname(__FILE__)."/cookiejar";
 		if(file_exists($cookiejar)) unlink($cookiejar);

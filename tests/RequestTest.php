@@ -1,5 +1,9 @@
 <?php
-class RequestTest extends PHPUnit\Framework\TestCase {
+use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+
+#[CoversClass(Request::class)]
+class RequestTest extends TestCase {
 	public function testGetArg() {
 		$iRequest = \RequestFactory::withArguments(["cli"]);
 

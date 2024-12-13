@@ -1,6 +1,8 @@
 <?php
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
+#[CoversClass(Path::class)]
 class PathTest extends TestCase {
 	public function testNormalize(): void {
 		$this->assertSame('/var/www/html', Path::normalize('/var/www//html'));
@@ -46,8 +48,8 @@ class PathTest extends TestCase {
 	}
 
 	public function testToUrl(): void {
-		$this->assertSame('/var/www/html', Path::toUrl('/var/www/html'));
-		$this->assertSame('/var/www/html', Path::toUrl('\\var\\www\\html'));
+		$this->assertSame('/var/www/html', Path::toUri('/var/www/html'));
+		$this->assertSame('/var/www/html', Path::toUri('\\var\\www\\html'));
 		$this->assertNull(Path::toUri(null));
 	}
 }

@@ -1,9 +1,10 @@
 <?php
 
-/**
- * Class LoggerTest
- */
-class LoggerTest extends PHPUnit\Framework\TestCase {
+use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+
+#[CoversClass(Logger::class)]
+class LoggerTest extends TestCase {
 	/**
 	 * Set up the test case.
 	 */

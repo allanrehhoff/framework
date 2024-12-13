@@ -1,10 +1,8 @@
 <?php
-
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * Class StrTest
- */
+#[CoversClass(Str::class)]
 class StrTest extends TestCase {
 	/**
 	 * Test case for contains method (case-sensitive).

@@ -11,12 +11,13 @@
          beStrictAboutOutputDuringTests="true"
          displayDetailsOnPhpunitDeprecations="true"
          failOnPhpunitDeprecation="true"
-         failOnRisky="false"
+         failOnRisky="true"
+         failOnError="true"
          failOnWarning="true">
     <testsuites>
         <testsuite name="default">
-            <!-- <directory>tests</directory> -->
-            <file>tests/NegotiatorTest.php</file>
+            <directory>tests</directory>
+            <!--<file>tests/NegotiatorTest.php</file>-->
         </testsuite>
     </testsuites>
 
