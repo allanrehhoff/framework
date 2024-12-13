@@ -61,7 +61,7 @@ class ArrTest extends TestCase {
 
 	public function testFilter() {
 		$this->assertEquals([], \Arr::filter(null, fn($v) => $v > 1));
-		$this->assertEquals([2, 3], \Arr::filter([1, 2, 3], fn($v) => $v > 1));
+		$this->assertEquals([2, 3], array_values(\Arr::filter([1, 2, 3], fn($v) => $v > 1)));
 		$this->assertEquals(['key' => 'value'], \Arr::filter(['key' => 'value', 'other' => null], fn($v) => !is_null($v)));
 	}
 

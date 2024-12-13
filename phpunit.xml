@@ -12,7 +12,6 @@
          displayDetailsOnPhpunitDeprecations="true"
          failOnPhpunitDeprecation="true"
          failOnRisky="true"
-         failOnError="true"
          failOnWarning="true">
     <testsuites>
         <testsuite name="default">

@@ -254,6 +254,7 @@ class Str {
 	public static function slug(?string $string, string $separator = '-'): string {
 		if ($string === null) return '';
 		$string = static::ascii($string);
+		$string = static::lower($string);
 		$string = preg_replace('/[^a-zA-Z0-9]+/', $separator, $string);
 		return static::trim($string, $separator);
 	}

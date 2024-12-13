@@ -14,7 +14,32 @@ class Path {
 	 */
 	public static function normalize(null|string $path): null|string {
 		if ($path === null) return null;
-		return preg_replace('#/+#', '/', str_replace('\\', '/', realpath($path) ?: $path));
+
+		$path = preg_replace('#/+#', '/', str_replace('\\', '/', $path));
+
+		// Attempt to use realpath to resolve the path
+		// Note: realpath fails in the following scenarios:
+		// - The path does not exist on the filesystem
+		// - The path includes symbolic links that cannot be resolved
+		// - The current user does not have permissions to access components of the path
+		// If realpath fails, resolve relative segments manually
+		if (!realpath($path)) {
+			$segments = explode('/', $path);
+			$resolved = [];
+
+			foreach ($segments as $segment) {
+				if ($segment === '.' || $segment === '') continue;
+				if ($segment === '..') {
+					array_pop($resolved);
+				} else {
+					$resolved[] = $segment;
+				}
+			}
+
+			return '/' . implode('/', $resolved);
+		}
+
+		return realpath($path);
 	}
 
 	/**

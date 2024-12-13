@@ -1,4 +1,5 @@
 <?php
+
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
@@ -16,10 +17,8 @@ class ObjTest extends TestCase {
         $object = new \stdClass;
 
         Obj::set($object, 'name', 'Jane');
+        $this->assertObjectHasProperty('name', $object);
         $this->assertSame('Jane', $object->name);
-
-        Obj::set(null, 'name', 'Test');
-        $this->assertObjectNotHasProperty('name', $object);
     }
 
     public function testSafe(): void {

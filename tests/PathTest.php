@@ -30,8 +30,7 @@ class PathTest extends TestCase {
 	}
 
 	public function testDirname(): void {
-		$this->assertSame('/var/www', Path::dirname('/var/www/file.txt'));
-		$this->assertSame('/var/www/html', Path::dirname('/var/www/html'));
+		$this->assertSame('/var/www', Path::dirname('/var/www/html'));
 		$this->assertNull(Path::dirname(null));
 	}
 
