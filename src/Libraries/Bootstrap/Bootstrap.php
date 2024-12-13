@@ -35,7 +35,7 @@ class Bootstrap {
 		\Registry::set(new \Configuration(STORAGE . "/config/global.jsonc"));
 
 		\Registry::set(new \Environment(APP_PATH . "/.env"));
-		return;
+
 		\Registry::set(new \Database\Connection(
 			\Registry::getConfiguration()->get("database.host"),
 			\Registry::getConfiguration()->get("database.username"),
