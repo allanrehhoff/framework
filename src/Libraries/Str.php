@@ -321,6 +321,19 @@ class Str {
 	}
 
 	/**
+	 * Null aware string split.
+	 *
+	 * @param string $separator
+	 * @param null|string $string
+	 * @param int $limit
+	 * @return string[]
+	 */
+	public static function split(string $separator, null|string $string, int $limit = PHP_INT_MAX): array {
+		if ($string === null) return '';
+		return explode($separator, $string, $limit);
+	}
+
+	/**
 	 * Null aware string replacement.
 	 *
 	 * @param null|string $search  The string to search for.
