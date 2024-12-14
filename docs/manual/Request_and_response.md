@@ -111,3 +111,20 @@ class ApiController extends Controller {
 	}
 }
 ```
+
+## Unacceptable requests (406 Not Acceptable)
+
+You can configure the framework to explicitly send a bodyless **406 Not Acceptable** response when negotiating content type fails.  
+Effectively requiring clients to send an `Accept` header with a supported content type preference.
+
+This behavior occurs when:
+- The client’s `Accept` header contains MIME types that the application cannot serve.
+- The default content type is set to `null`, which prevents the application from falling back to any other content type.
+
+To configure this behavior, set the default content type to `null` in the `request.jsonc` file:
+
+```jsonc
+{
+  "defaultContentType": null
+}
+```

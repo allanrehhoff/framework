@@ -8,6 +8,7 @@ v8.1.0
 - Updated index.php to be more minimalistic.  
 - Assumed baseurl is not localhost if it cannot be reliably determined.  
 - Upgraded PHPunit version.  
+- Support sending 406 header, when no content type could be negotiated.  
 
 v8.0.0
 - **This release is backwards incompatible.**  
