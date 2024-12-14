@@ -134,7 +134,7 @@ class Bootstrap {
 				$trace = array_reverse($iException->getTrace());
 
 				foreach ($trace as $item) {
-					$stacktrace[] = (isset($item["file"]) ? $item["file"] : "<unknown file>") . " line " . (isset($item["line"]) ? $item["line"] : "<unknown line>") . " calling " . $item["function"] . "()" . LF;
+					$stacktrace[] = (isset($item["file"]) ? str_replace(APP_PATH . '/', '', $item["file"]) : "<unknown file>") . " line " . (isset($item["line"]) ? $item["line"] : "<unknown line>") . " calling " . $item["function"] . "()" . LF;
 				}
 
 				if (IS_CLI) {
@@ -164,7 +164,7 @@ class Bootstrap {
 								"class" => $iException::class,
 								"message" => $iException->getMessage(),
 								"code" => $iException->getCode(),
-								"file" => $iException->getFile(),
+								"file" => str_replace(APP_PATH . '/', '', $iException->getFile()),
 								"line" => $iException->getLine()
 							],
 							"trace" => $stacktrace
@@ -175,7 +175,7 @@ class Bootstrap {
 										<h1 style=\"margin:0px;\">Uncaught \\" . $iException::class . "</h1>" . BR . "
 										<strong>Message: </strong>" . $iException->getMessage() . BR . "
 										<strong>Code: </strong>" . $iException->getCode() . BR . "
-										<strong>File: </strong>" . $iException->getFile() . BR . "
+										<strong>File: </strong>" . str_replace(APP_PATH . '/', '', $iException->getFile()) . BR . "
 										<strong>Line: </strong>" . $iException->getLine() . BR . "
 										<strong>Stacktrace: </strong>" . BR . "
 										<ol style=\"margin-top:0px;\">" . LF . "
