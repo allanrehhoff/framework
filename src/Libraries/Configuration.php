@@ -54,7 +54,6 @@ class Configuration {
 			'$1',
 			$jsonConfig
 		);
-
 		$this->parsedConfig = json_decode($jsonConfig, null, 512, JSON_THROW_ON_ERROR);
 	}
 
@@ -128,7 +127,7 @@ class Configuration {
 		$configValue = $this->parsedConfig;
 
 		foreach ($paths as $path) {
-			if (!isset($configValue->$path)) {
+			if (!property_exists($configValue, $path)) {
 				throw new \InvalidArgumentException($key . " is not a valid configuration");
 			}
 
