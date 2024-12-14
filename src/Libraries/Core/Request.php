@@ -137,6 +137,7 @@ final class Request {
 	 * @param string $acceptHeader
 	 * @return array Parsed client preferences
 	 */
+	/*
 	private function parseAcceptHeader(string $acceptHeader): array {
 		$mediaTypes = explode(',', $acceptHeader);
 
@@ -156,6 +157,36 @@ final class Request {
 
 			$preferences ??= [];
 			$preferences[$dataType] = $quality;
+		}
+
+		arsort($preferences);
+
+		return $preferences;
+	}
+	*/
+	/**
+	 * Parse the HTTP Accept header into an array of media type preferences.
+	 *
+	 * @param string $acceptHeader The raw Accept header string.
+	 * @return array<string, float> Sorted array of media types with their quality values.
+	 */
+	private function parseAcceptHeader(string $acceptHeader): array {
+		$mediaTypes = explode(',', $acceptHeader);
+		$preferences = [];
+
+		foreach ($mediaTypes as $mediaType) {
+			$parts = explode(';', $mediaType);
+			$mimeType = trim($parts[0]);
+			$quality = 1.0; // Default quality value
+
+			foreach ($parts as $part) {
+				if (strpos($part, 'q=') === 0) {
+					$quality = (float) substr($part, 2);
+					break;
+				}
+			}
+
+			$preferences[$mimeType] = $quality;
 		}
 
 		arsort($preferences);
