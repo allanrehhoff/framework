@@ -80,7 +80,6 @@ final class Application {
 	 * @return \Controller The executed controller that has just been executed.
 	 */
 	public function executeController(ClassName $iClassName, ?MethodName $iMethodName = null, ?\Controller $parentController = null): \Controller {
-
 		$controllerName = $iClassName->toString();
 		$methodName = $iMethodName ? $iMethodName->toString() : MethodName::DEFAULT;
 
