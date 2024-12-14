@@ -45,14 +45,20 @@ class Negotiator {
 		// Fetch allowed content types from configuration and attributes
 		$availableContentTypes = $this->getAllowedContentTypes(...$this->router->getRoute());
 
-		// Default fallback enum
-		$iContentTypeEnum = ContentTypeEnum::from($this->request->getConfiguration()->get("defaultType"));
+		// Attempt to retrieve the default content type from configuration
+		$iContentTypeEnum = ContentTypeEnum::tryFrom($this->request->getConfiguration()->get("defaultType"));
 
-		foreach ($requestedContentTypes as $contentType => $priority) {
+		foreach ($requestedContentTypes as $mimeType => $priority) {
+			[$namespace, $contentType] = \Str::split('/', $mimeType);
+
 			if (($availableContentTypes[$contentType] ?? null) !== null) {
 				$iContentTypeEnum = $availableContentTypes[$contentType];
 				break;
 			}
+		}
+
+		if ($iContentTypeEnum === null) {
+			throw new \Core\StatusCode\NotAcceptable;
 		}
 
 		return $iContentTypeEnum->getInstance();
