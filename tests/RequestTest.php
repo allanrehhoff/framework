@@ -26,42 +26,48 @@ class RequestTest extends TestCase {
 		$iRequest = \RequestFactory::withServerVars(["HTTP_ACCEPT" => "application/json"]);
 		$iRequest->getConfiguration()->set("contentTypes.json.enable", true);
 
-		$iContentType = $iRequest->getContentType();
+		$preferences = $iRequest->getContentTypePreferences();
 
-		$this->assertEquals(\Core\ContentType\Json::class, $iContentType::class);
+		$this->assertEquals(["application/json" => 1], $preferences);
 	}
 
 	public function testContentTypeIsXml() {
 		$iRequest = \RequestFactory::withServerVars(["HTTP_ACCEPT" => "application/xml"]);
 		$iRequest->getConfiguration()->set("contentTypes.xml.enable", true);
 
-		$iContentType = $iRequest->getContentType();
+		$preferences = $iRequest->getContentTypePreferences();
 
-		$this->assertEquals(\Core\ContentType\Xml::class, $iContentType::class);
-	}
-
-	public function testContentTypeFallbackToHtml() {
-		$iRequest = \RequestFactory::withServerVars(["HTTP_ACCEPT" => "image/avif,image/webp"]);
-
-		$iContentType = $iRequest->getContentType();
-
-		$this->assertEquals(\Core\ContentType\Html::class, $iContentType::class);
+		$this->assertEquals(["application/xml" => 1], $preferences);
 	}
 
 	public function testContentTypeWithQuality() {
 		$iRequest = \RequestFactory::withServerVars(["HTTP_ACCEPT" => "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8"]);
 
-		$iContentType = $iRequest->getContentType();
+		$preferences = $iRequest->getContentTypePreferences();
 
-		$this->assertEquals(\Core\ContentType\Html::class, $iContentType::class);
+		$this->assertEquals([
+			'text/html' => 1,
+			'application/xhtml+xml' => 1,
+			'image/avif' => 1,
+			'image/webp' => 1,
+			'application/xml' => 0.9,
+			'*/*' => 0.8,
+		], $preferences);
 	}
 
 	public function testContentTypeWithQualityCanWeightHigher() {
 		$iRequest = \RequestFactory::withServerVars(["HTTP_ACCEPT" => "text/html,application/xhtml+xml,application/xml;q=2.9,image/avif,image/webp,*/*;q=0.8"]);
 		$iRequest->getConfiguration()->set("contentTypes.xml.enable", true);
 
-		$iContentType = $iRequest->getContentType();
+		$preferences = $iRequest->getContentTypePreferences();
 
-		$this->assertEquals(\Core\ContentType\Xml::class, $iContentType::class);
+		$this->assertEquals([
+			'application/xml' => 2.9,
+			'text/html' => 1,
+			'application/xhtml+xml' => 1,
+			'image/avif' => 1,
+			'image/webp' => 1,
+			'*/*' => 0.8,
+		], $preferences);
 	}
 }
