@@ -1,5 +1,5 @@
 # Changelog #
-v8.1.0
+v8.2.0
 - Controller method access can now be controlled with attributes.  
 - Added \Core\ContentType\Negotiator class, replaces logic in \Core\Request.  
 - Added \Arr Utility class.  
@@ -9,6 +9,9 @@ v8.1.0
 - Assumed baseurl is not localhost if it cannot be reliably determined.  
 - Upgraded PHPunit version.  
 - Support sending 406 header, when no content type could be negotiated.  
+
+v8.1.0
+- Updated bundled libraries
 
 v8.0.0
 - **This release is backwards incompatible.**  
