@@ -6,7 +6,7 @@ v8.2.0
 - Added \Obj Utility class.  
 - Added new methods to \Str class.  
 - Updated index.php to be more minimalistic.  
-- Assumed baseurl is not localhost if it cannot be reliably determined.  
+- Assumed baseurl is now localhost if it cannot be reliably determined.  
 - Upgraded PHPunit version.  
 - Support sending 406 header, when no content type could be negotiated.  
 
