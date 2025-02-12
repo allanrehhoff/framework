@@ -1,4 +1,8 @@
 # Changelog #
+v8.2.1
+- Added new UUID class.  
+- Updated bundled jQuery.  
+
 v8.2.0
 - Controller method access can now be controlled with attributes.  
 - Added \Core\ContentType\Negotiator class, replaces logic in \Core\Request.  
