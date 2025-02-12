@@ -186,11 +186,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Environment.html"
         },                {
-            "fqsen": "\\Escape",
-            "name": "Escape",
-            "summary": "This\u0020PHP\u0020class\u0020provides\u0020static\u0020methods\u0020for\u0020escaping\u0020HTML\u0020and\u0020string\u0020entities\nto\u0020prevent\u0020cross\u002Dsite\u0020scripting\u0020\u0028XSS\u0029\u0020attacks.",
-            "url": "classes/Escape.html"
-        },                {
             "fqsen": "\\EventListeners\\HttpsRedirect",
             "name": "HttpsRedirect",
             "summary": "",
@@ -320,6 +315,31 @@ Search.appendIndex(
             "name": "Negotiator",
             "summary": "Handles\u0020the\u0020negotiation\u0020of\u0020content\u0020types\u0020between\u0020request\u0020headers,\napplication\u0020configuration,\u0020controller\/class\u0020and\u0020method\u0020attributes.",
             "url": "classes/Core-ContentType-Negotiator.html"
+        },                {
+            "fqsen": "\\Arr",
+            "name": "Arr",
+            "summary": "Class\u0020Arr\nA\u0020collection\u0020of\u0020null\u002Daware\u0020array\u0020utility\u0020functions.",
+            "url": "classes/Arr.html"
+        },                {
+            "fqsen": "\\Core\\StatusCode\\NotAcceptable",
+            "name": "NotAcceptable",
+            "summary": "Throw\u0020this\u0020whenever\u0020you\u0020want\u0020to\u0020redirect\u0020the\u0020current\u0020controller\u0020to\u0020a\u0020\u0022forbidden\u0022\u0020controller",
+            "url": "classes/Core-StatusCode-NotAcceptable.html"
+        },                {
+            "fqsen": "\\Obj",
+            "name": "Obj",
+            "summary": "Class\u0020Obj",
+            "url": "classes/Obj.html"
+        },                {
+            "fqsen": "\\Path",
+            "name": "Path",
+            "summary": "Class\u0020Path",
+            "url": "classes/Path.html"
+        },                {
+            "fqsen": "\\UUID",
+            "name": "UUID",
+            "summary": "Represents\u0020a\u0020universally\u0020unique\u0020identifier\u0020\u0028UUID\u0029,\u0020according\u0020to\u0020RFC\u00209562.",
+            "url": "classes/UUID.html"
         },                {
             "fqsen": "\\",
             "name": "\\",
