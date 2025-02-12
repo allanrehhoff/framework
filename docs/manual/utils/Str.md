@@ -2,6 +2,11 @@
 
 The `\Str` class can be used for null-aware string manipukation.  
 Handles null values gracefully, ensuring that methods return a value of a similar or predictable type.
+## safe
+```php
+// Escapes provided string for use in client-side HTML
+\Str::safe("Hello, World!");
+```
 
 ## encode
 ```php
