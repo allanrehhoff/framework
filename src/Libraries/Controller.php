@@ -89,31 +89,31 @@ abstract class Controller {
 		$this->request = $this->router->getRequest();
 		$this->response = $this->router->getResponse();
 
-		// While it's safe to load these children class in cli
+		// While it's safe to load the rest while in cli
 		// there's as of yet, no beneficial reason to.
 		// So we'll save the memory and CPU cycles
-		if (IS_CLI === false) {
-			$this->contentType = (new Negotiator($this->router, $this->request))->getContentType();
+		if (IS_CLI === true) return;
 
-			$this->template = new Template(new Assets);
+		$this->contentType = (new Negotiator($this->router, $this->request))->getContentType();
 
-			$this->renderer = new Renderer(
-				$this->template,
-				$this->contentType
-			);
+		$this->template = new Template(new Assets);
 
-			$this->response->addHeader(sprintf(
-				"Content-Type: %s/%s; charset=utf-8",
-				$this->contentType->getType(),
-				$this->contentType->getMedia()
-			));
+		$this->renderer = new Renderer(
+			$this->template,
+			$this->contentType
+		);
 
-			if ($iController === null && $this->contentType::class == Html::class) {
-				$this->children[] = new ClassName("Header");
-				$this->children[] = new ClassName("Footer");
+		$this->response->addHeader(sprintf(
+			"Content-Type: %s/%s; charset=utf-8",
+			$this->contentType->getType(),
+			$this->contentType->getMedia()
+		));
 
-				$this->response->setTitle(array_slice($this->request->getArguments(), -1)[0] ?? '');
-			}
+		if ($iController === null && $this->contentType::class == Html::class) {
+			$this->children[] = new ClassName("Header");
+			$this->children[] = new ClassName("Footer");
+
+			$this->response->setTitle(array_slice($this->request->getArguments(), -1)[0] ?? '');
 		}
 	}
 
