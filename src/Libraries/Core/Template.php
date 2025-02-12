@@ -52,7 +52,7 @@ final class Template {
 	 * @return \Configuration - application-wide theme configuration
 	 */
 	public function getConfiguration(): \Configuration {
-		$configurationFile = STORAGE . "/config/" . $this->name . ".theme.jsonc";
+		$configurationFile = STORAGE . "/config/" . $this->name . ".template.jsonc";
 		return $this->iConfiguration ??= (new \Configuration($configurationFile));
 	}
 
