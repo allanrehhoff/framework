@@ -1,4 +1,4 @@
-# The Str utility class
+# The UUID utility class
 
 The \UUID class can be used for generating and manipulating UUIDs
 
