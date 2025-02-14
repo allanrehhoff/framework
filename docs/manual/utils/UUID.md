@@ -3,7 +3,7 @@
 The \UUID class can be used for generating and manipulating UUIDs
 
 **Recommended:**  
-v4 - General use random IDs
+v4 - General use random IDs  
 v7 - Sortable random IDs
 
 **Not recommended:**  
