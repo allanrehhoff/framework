@@ -2,6 +2,8 @@
 ini_set("display_errors", 1);
 error_reporting(E_ALL);
 
+define('TESTS_RUNNING', true);
+
 require __DIR__ . "/../src/Libraries/Bootstrap/Bootstrap.php";
 
 (new \Bootstrap\Bootstrap)->startup();

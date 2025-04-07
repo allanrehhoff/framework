@@ -78,6 +78,22 @@ class Request {
 	public array $options = [];
 
 	/**
+	 * @var array<string, array> $fakes
+	 * Stores faked responses keyed by URL or pattern.
+	 */
+	private static array $fakes = [
+		Method::GET->value => [],
+		Method::POST->value => [],
+		Method::PUT->value => [],
+		Method::PATCH->value => [],
+		Method::DELETE->value => [],
+		Method::HEAD->value => [],
+		Method::OPTIONS->value => [],
+		Method::TRACE->value => [],
+		Method::CONNECT->value => []
+	];
+
+	/**
 	 * The constructor takes a single argument, the url of the host to request.
 	 * @param null|string $url A fully qualified URL to a remote entity.
 	 */
@@ -131,6 +147,93 @@ class Request {
 	}
 
 	/**
+	 * Registers a fake response for a specific URL pattern using glob matching.
+	 * URL patterns are matched against incoming requests using glob-style patterns
+	 * 
+	 * If a URL matches a pattern, the fake response will be returned instead of making a real request.
+	 * This is useful for testing or development when you want to avoid making real HTTP requests.
+	 * 
+	 * A default "204 No Content" response is faked if the response array is ommitted.
+	 *
+	 * Common Examples:
+	 * - `https://example.com/*` matches all pages under `https://example.com/`.
+	 * - `https://*.example.com` matches any subdomain of `example.com`.
+	 * - `*example.com*` matches any URL containing `example.com`.
+	 *
+	 * @param string $pattern The glob pattern used to match URLs.
+	 * @param array<string, mixed> $response The fake response to return when the pattern is matched.
+	 *        Expected keys:
+	 *        - `body` (string): The response body to be returned.
+	 *        - `http_code` (int): The HTTP status code to be returned.
+	 *        - Any other custom keys can be added for additional response metadata as needed.
+	 *
+	 * @return void
+	 *
+	 * @example
+	 * // Fake a response for any page under https://example.com/
+	 * Request::fake('https://example.com/*', [
+	 *     'body' => '{"message": "Not Found"}',
+	 *     'http_code' => 404,
+	 *     'headers' => [
+	 *         'Content-Type: application/json',
+	 *         'X-Error-Detail: Page Not Found'
+	 *     ]
+	 * ]);
+	 *
+	 * @example
+	 * // Fake a response for any subdomain of example.com with custom headers
+	 * Request::fake('https://*.example.com', [
+	 *     'body' => '{"status": "OK"}',
+	 *     'http_code' => 200,
+	 *     'headers' => [
+	 *         'Content-Type: application/json',
+	 *         'X-Custom-Header: CustomValue'
+	 *     ]
+	 * ]);
+	 *
+	 * @example
+	 * // Fake a response for URLs containing 'example.com' and include custom headers
+	 * Request::fake('*example.com*', [
+	 *     'body' => '{"content": "Welcome to example.com"}',
+	 *     'http_code' => 200,
+	 *     'headers' => [
+	 *         'Content-Type: text/html',
+	 *         'Cache-Control: no-cache'
+	 *     ]
+	 * ]);
+	 */
+	public static function fake(string|Method $method, string $pattern, array $response = []): void {
+		$response['body'] 	   ??= "";
+		$response['http_code'] ??= 204; // "204 No Content" aligns with an empty body
+		$response['headers']   ??= ["Content-Type: text/html", "Content-Length: 0"];
+
+		$method instanceof Method ? $method : Method::from($method);
+
+		self::$fakes[$method][$pattern] = $response;
+	}
+
+	/**
+	 * Fakes a response for a given URL
+	 * 
+	 * @param string $url The URL to fake a response for
+	 * @param array $response The response to fake
+	 * @return Request
+	 */
+	private function fakedResponse(string $url, array $response): Request {
+		$headerHandle = fopen("php://temp", "rw+");
+
+		fwrite($this->headerHandle, implode("\r\n", $response['headers']));
+		fwrite($this->headerHandle, "\r\n\r\n");
+
+		$this->returndata = $response['body'];
+		$this->curlInfo = ['http_code' => $fakeResponse['http_code'] ?? 200, 'url' => $url];
+		$this->headerHandle = $headerHandle;
+		$this->response = new Response($this);
+
+		return $this;
+	}
+
+	/**
 	 * Construct a request object in a static way, useful for chaining
 	 * Supports the following syntaxes:
 	 * - `Request::with('GET', 'https://example.com')`
@@ -163,14 +266,21 @@ class Request {
 	 * @return Request
 	 */
 	public function send(null|string|array $data = null): Request {
-		if ($this->method === Method::GET) {
-			$url =  $this->getUrl();
+		$url =  $this->getUrl();
 
-			if ($data !== null) {
-				$sign = strpos($url, '?') ? '&' : '?';
-				$url .= $sign . http_build_query($data, '', '&');
+		if ($this->method === Method::GET && $data !== null) {
+			$sign = strpos($url, '?') ? '&' : '?';
+			$url .= $sign . http_build_query($data, '', '&');
+		}
+
+		// Check for faked responses
+		foreach (self::$fakes[$this->method->value] as $pattern => $fakeResponse) {
+			if (fnmatch($pattern, $url) === true) {
+				return $this->fakedResponse($url, $fakeResponse);
 			}
+		}
 
+		if ($this->method === Method::GET) {
 			$this->setUrl($url);
 			$this->setOption(CURLOPT_HTTPGET, true);
 		} else if ($this->method instanceof Method) {

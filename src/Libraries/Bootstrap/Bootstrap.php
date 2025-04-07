@@ -36,6 +36,9 @@ class Bootstrap {
 
 		\Registry::set(new \Environment(APP_PATH . "/.env"));
 
+		// Skip database connection if tests are running
+		if (defined('TESTS_RUNNING') && TESTS_RUNNING) return;
+
 		\Registry::set(new \Database\Connection(
 			\Registry::getConfiguration()->get("database.host"),
 			\Registry::getConfiguration()->get("database.username"),
