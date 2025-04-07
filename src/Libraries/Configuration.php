@@ -181,7 +181,6 @@ class Configuration {
 		foreach ($paths as $path) {
 			if (!isset($configValue->$path)) {
 				throw new \InvalidArgumentException($key . " is not a valid configuration");
-				return false;
 			}
 
 			if (isset($configValue->$unsetKey)) {
