@@ -12,9 +12,9 @@ Values can be accessed, changed, removed and saved using a dot syntax.
 <?php
 	class RestaurantController extends \Controller {
 		public function __construct() {
-			\Registry::getConfigiration()->get("menu.pizzas"); // ["Hawaii", "MeatLover", "Vegan", ...]
-			\Registry::getConfigiration()->set("menu.pizzas.Hawaii", "Ananas"); // ["Ananas", "MeatLover", "Vegan", ...]
-			\Registry::getConfigiration()->remove("menu.pizzass.Vegan"); // ["Ananas", "MeatLover", ...]
+			\Registry::getConfiguration()->get("menu.pizzas"); // ["Hawaii", "MeatLover", "Vegan", ...]
+			\Registry::getConfiguration()->set("menu.pizzas.Hawaii", "Ananas"); // ["Hawaii" => "Ananas"]
+			\Registry::getConfiguration()->remove("menu.pizzas.Vegan"); // ["Ananas", "MeatLover", ...]
 		}
 	}
 ```
@@ -63,6 +63,6 @@ Using getenv();
 }
 ```
 
-The core base_title setting only supports one wildcard %s use **(controller)->setTitle($title)** in your controller files to set a dynamic title.  
+The core base_title setting only supports one wildcard %s use **(controller)->response->setTitle($title)** in your controller files to set a dynamic title.  
 
 Custom wildcards and variables aren't affected in other configuration values.  
