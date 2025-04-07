@@ -1,4 +1,9 @@
 # Changelog #
+v8.2.2
+- Added option to fake HTTp requests with \Http\Request::fake.  
+- Do not retur false after throwing excepttions.  
+- Fixed typos in the documentation.  
+
 v8.2.1
 - Added new UUID class.  
 - Updated bundled jQuery.  
