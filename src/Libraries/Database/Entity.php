@@ -285,8 +285,16 @@ abstract class Entity {
 			return $this->new;
 		}
 
+		// Get primary key
+		$primaryKey = static::getPrimaryKey();
+
 		// Convert object to array
 		$data = (array) $data;
+
+		//if ($this->new[$primaryKey] ?? null === null && $data[$primaryKey] ?? null === null) {
+		if (!isset($this->new[$primaryKey]) && !isset($data[$primaryKey])) {
+			$data[$primaryKey] = $this->data[$primaryKey] ?? null;
+		}
 
 		// Find empty strings in dataset and convert to null instead
 		foreach ($data as $key => $value) {
