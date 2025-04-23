@@ -373,7 +373,7 @@ class Connection {
 	 * @since 3.1.3
 	 */
 	public function search(string $table, array $searches = [], ?array $criteria = null, string $clause = "AND"): Collection {
-		$sql = "SELECT * FROM " . $this->safeTable($table) . " WHERE " . implode(' ' . $clause . ' ', $searches);
+		$sql = "SELECT * FROM " . $this->safeTable($table) . (!empty($searches) ? " WHERE " . implode(' ' . $clause . ' ', $searches) : '');
 		return new Collection($this->query($sql, $criteria)->fetchAll());
 	}
 

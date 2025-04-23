@@ -51,12 +51,12 @@ abstract class Entity {
 	 * Loads a given entity and populates it with the given data.
 	 * Use static::from(); to load a new entity by its primary key.
 	 *
-	 * @param mixed $data Can be either an array of existing data or an entity ID to load.
+	 * @param null|array|object $data Can be either an array of existing data or an entity ID to load.
 	 * @param null|array $allowedFields Fields allowed to be set as data.
 	 * @return void
 	 */
-	public function __construct(mixed $data = null, ?array $allowedFields = null) {
-		$this->new = $this->process($data);
+	public function __construct(null|array|object $data = null, ?array $allowedFields = null) {
+		$this->new = $this->process($data, $allowedFields);
 	}
 
 	/**
@@ -179,13 +179,13 @@ abstract class Entity {
 	/**
 	 * Created a new instance of entity type with existing data
 	 * @param array|\stdClass $row Row from database
-	 * @return Entity[]|Entity array of entities if passed an array, otherwise the provided object as an entity
+	 * @return Collection<Entity>|Entity array of entities if passed an array, otherwise the provided object as an entity
 	 */
-	public static function with(array|\stdClass $row): array|Entity {
-		if (is_array($row)) {
+	public static function with(iterable|\stdClass $row): Collection|Entity {
+		if (is_iterable($row)) {
 			$entities = [];
 			foreach ($row as $data) $entities[] = static::with($data);
-			return $entities;
+			return new Collection($entities);
 		} else {
 			$keyField = static::getPrimaryKey();
 			$entity = new static();
@@ -205,6 +205,7 @@ abstract class Entity {
 	 * @param bool $indexByIDs If loading multiple ID's set this to true, to index the resulting array by entity IDs
 	 * @return Collection|static The loaded entities or a single if no array was provided
 	 */
+	/*
 	public static function load(mixed $rows, bool $indexByIDs = true): Collection|static {
 		$class = static::class;
 
@@ -222,6 +223,7 @@ abstract class Entity {
 			return new $class($rows);
 		}
 	}
+	*/
 
 	/**
 	 * Performs a search of the given criteria
@@ -234,7 +236,7 @@ abstract class Entity {
 	 */
 	public static function search(array $searches = [], ?array $criteria = null, string $clause = "AND"): Collection|static {
 		$rows = Connection::getInstance()->search(static::getTableName(), $searches, $criteria, $clause);
-		return self::load($rows);
+		return self::with($rows);
 	}
 
 	/**
@@ -275,31 +277,31 @@ abstract class Entity {
 	 * @param null|array|object $data          The data to be set, either an array, object, or null.
 	 * @param null|array        $allowedFields The fields that are allowed to be set (optional).
 	 * 
-	 * @return static
+	 * @return array
 	 */
 	protected function process(null|array|object $data, ?array $allowedFields = null): array {
 		// Return empty array if $data is null
 		if ($data === null) {
-			return $this->data;
+			return $this->new;
 		}
-	
+
 		// Convert object to array
 		$data = (array) $data;
-	
+
 		// Find empty strings in dataset and convert to null instead
 		foreach ($data as $key => $value) {
 			if ($value === '') {
 				$data[$key] = null;
 			}
 		}
-	
+
 		// Filter out fields that are not allowed
 		if ($allowedFields !== null) {
 			$data = array_intersect_key($data, array_flip($allowedFields));
 		}
-	
+
 		// Merge with existing data
-		return array_merge($this->data, $data);
+		return array_merge($this->new, $data);
 	}
 
 	/**
@@ -313,9 +315,9 @@ abstract class Entity {
 		if ($data !== null) {
 			$data = $this->process($data, $allowedFields);
 		}
-	
+
 		$this->new = $data ?? [];
-	
+
 		return $this;
 	}
 
