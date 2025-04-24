@@ -144,11 +144,15 @@ abstract class Entity {
 	 * Loaded antities are cached statically for the remainder of the request.
 	 * When saved, the cache will be refreshed with the updated instance.
 	 * 
-	 * @param int|string $identifier The value of the entity's primary key. 
+	 * @param null|int|string $identifier The value of the entity's primary key. 
 	 * @return static The loaded entity, empty entity if not exists
 	 */
-	public static function from(int|string $identifier): static {
+	public static function from(null|int|string $identifier): static {
 		$entityType = static::class;
+
+		if($identifier === null) {
+			return new static();
+		}
 
 		if (!isset(self::$instanceCache[$entityType][$identifier])) {
 			$keyField = static::getPrimaryKey();
@@ -169,9 +173,9 @@ abstract class Entity {
 	 * 
 	 * @param string $field The database column/field to match
 	 * @param int|string $value The value that $field is to be matched against
-	 * @return Entity[]|Entity
+	 * @return static
 	 */
-	public static function find(string $field, int|string $value): array|Entity {
+	public static function find(string $field, int|string $value): static {
 		$row = Connection::getInstance()->fetchRow(static::getTableName(), [$field => $value]);
 		return static::with($row);
 	}
@@ -179,7 +183,7 @@ abstract class Entity {
 	/**
 	 * Created a new instance of entity type with existing data
 	 * @param array|\stdClass $row Row from database
-	 * @return Collection<Entity>|Entity array of entities if passed an array, otherwise the provided object as an entity
+	 * @return Collection<Entity>|Entity Collection of entities if passed an array, otherwise the provided object as an entity
 	 */
 	public static function with(iterable|\stdClass $row): Collection|Entity {
 		if (is_iterable($row)) {
@@ -292,7 +296,7 @@ abstract class Entity {
 		$data = (array) $data;
 
 		//if ($this->new[$primaryKey] ?? null === null && $data[$primaryKey] ?? null === null) {
-		if (!isset($this->new[$primaryKey]) && !isset($data[$primaryKey])) {
+		if(!isset($this->new[$primaryKey]) && !isset($data[$primaryKey])) {
 			$data[$primaryKey] = $this->data[$primaryKey] ?? null;
 		}
 
