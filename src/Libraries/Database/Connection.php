@@ -14,19 +14,19 @@ namespace Database;
  */
 class Connection {
 	/** @var boolean True if a transaction has started, false otherwise. */
-	protected $transactionStarted = false;
+	protected bool $transactionStarted = false;
 
 	/** @var object  The singleton instance of the this class. */
 	protected static $singletonInstance;
 
 	/** @var null|\PDO PDO Database handle */
-	protected ?\PDO $dbh;
+	protected null|\PDO $dbh;
 
 	/** @var null|array Filters to prepare before querying */
-	protected ?array $filters = [];
+	protected null|array $filters = [];
 
-	/** @var ?Statement Holds the last prepared statement after execution. */
-	public ?Statement $statement;
+	/** @var null|Statement Holds the last prepared statement after execution. */
+	public null|Statement $statement;
 
 	/** @var int Number of affected rows from last query */
 	public int $rowCount = 0;
@@ -272,13 +272,12 @@ class Connection {
 	 * Execute a parameterized SQL query.
 	 *
 	 * @param string $sql The parameterized SQL string to query against the database
-	 * @param array $filters Arguments to pass along with the query.
-	 * @param int $fetchMode Set fetch mode for the query performed. Must be one of PDO::FETCH_* default is PDO::FETCH_OBJECT
+	 * @param null|array $filters Arguments to pass along with the query.
 	 * @since 1.0 
 	 * @throws \PDOException On error if PDO::ERRMODE_EXCEPTION option is true.
 	 * @return Statement
 	 */
-	public function query(string $sql, ?array $filters = null, int $fetchMode = \PDO::FETCH_OBJ): Statement {
+	public function query(string $sql, null|array $filters = null): Statement {
 		try {
 			$this->filters 	 = $filters;
 
@@ -298,10 +297,10 @@ class Connection {
 	 * Count total number rows in a column
 	 *
 	 * @param string $table Name of the table containing the rows to be counted
-	 * @param array $criteria Criteria used to filter the rows.
+	 * @param null|array $criteria Criteria used to filter the rows.
 	 * @return int Number of row count
 	 */
-	public function count(string $table, ?array $criteria = null): int {
+	public function count(string $table, null|array $criteria = null): int {
 		$sql = "SELECT * FROM `" . $this->safeTable($table) . "`";
 
 		if ($criteria != null) {
@@ -316,11 +315,11 @@ class Connection {
 	 * Rows are not ordered, make sure your criteria matches the desired row.
 	 *
 	 * @param string $table Name of the table containing the row to be fetched
-	 * @param array $criteria Criteria used to filter the rows.
-	 * @return ?\stdClass Returns the first row in the result set, false upon failure.
+	 * @param null|array $criteria Criteria used to filter the rows.
+	 * @return null|\stdClass Returns the first row in the result set, false upon failure.
 	 * @since 1.0
 	 */
-	public function fetchRow(string $table, ?array $criteria = null): ?\stdClass {
+	public function fetchRow(string $table, null|array $criteria = null): null|\stdClass {
 		return $this->select($table, $criteria)->getFirst();
 	}
 
@@ -329,11 +328,11 @@ class Connection {
 	 *
 	 * @param string $table Name of the table containing the row to be fetched
 	 * @param string $column Column name in $table where cell value will be returned
-	 * @param array $criteria Criteria used to filter the rows.
+	 * @param null|array $criteria Criteria used to filter the rows.
 	 * @return mixed Returns a single column from the next row of a result set or FALSE if there are no rows.
 	 * @since 1.0
 	 */
-	public function fetchCell(string $table, string $column, ?array $criteria = null): mixed {
+	public function fetchCell(string $table, string $column, null|array $criteria = null): mixed {
 		return $this->select($table, $criteria)->getColumn($column)[0] ?? null;
 	}
 
@@ -353,11 +352,11 @@ class Connection {
 	 * Select rows based on the given criteria
 	 *
 	 * @param string $table Name of the table to query
-	 * @param array $criteria column => value pairs to filter the query results
+	 * @param null|array $criteria column => value pairs to filter the query results
 	 * @return Collection
 	 * @since 1.0
 	 */
-	public function select(string $table, ?array $criteria = null): Collection {
+	public function select(string $table, null|array $criteria = null): Collection {
 		$sql = "SELECT * FROM " . $this->safeTable($table) . " WHERE " . $this->keysToSql($criteria, "AND");
 		return new Collection($this->query($sql, $criteria)->fetchAll());
 	}
@@ -372,7 +371,7 @@ class Connection {
 	 * @return Collection
 	 * @since 3.1.3
 	 */
-	public function search(string $table, array $searches = [], ?array $criteria = null, string $clause = "AND"): Collection {
+	public function search(string $table, array $searches = [], null|array $criteria = null, string $clause = "AND"): Collection {
 		$sql = "SELECT * FROM " . $this->safeTable($table) . (!empty($searches) ? " WHERE " . implode(' ' . $clause . ' ', $searches) : '');
 		return new Collection($this->query($sql, $criteria)->fetchAll());
 	}
@@ -384,7 +383,7 @@ class Connection {
 	 * @param null|array $variables Multidimensional with associative sub-arrays to insert
 	 * @return Statement
 	 */
-	public function insertMultiple(string $table, ?array $variables = null): Statement {
+	public function insertMultiple(string $table, null|array $variables = null): Statement {
 		$binds = [];
 		$values = [];
 
@@ -414,7 +413,7 @@ class Connection {
 	 * @return int The last inserted ID
 	 * @since 1.0
 	 */
-	public function insert(string $table, ?array $variables = null): int {
+	public function insert(string $table, null|array $variables = null): int {
 		$sql = $this->createRowSql("INSERT", $table, $variables);
 		$this->query($sql, $variables);
 		return (int) $this->dbh->lastInsertId();
@@ -429,7 +428,7 @@ class Connection {
 	 * @return int The last inserted ID
 	 * @since 1.0
 	 */
-	public function replace(string $table, ?array $variables = null): int {
+	public function replace(string $table, null|array $variables = null): int {
 		$sql = $this->createRowSql("REPLACE", $table, $variables);
 		$this->query($sql, $variables);
 		return (int) $this->dbh->lastInsertId();
@@ -443,7 +442,7 @@ class Connection {
 	 * @return Statement
 	 * @since 3.2.0
 	 */
-	public function upsert(string $table, ?array $variables = null): Statement {
+	public function upsert(string $table, null|array $variables = null): Statement {
 		$updates = [];
 		foreach ($variables as $column => $value) $updates[] = '`' . $column . '` = VALUES(' . $column . ')';
 		$sql = $this->createRowSql("INSERT", $table, $variables) . " ON DUPLICATE KEY UPDATE " . implode(',', $updates);
@@ -460,7 +459,7 @@ class Connection {
 	 * @return int Number of affected rows
 	 * @since 1.0
 	 */
-	public function update(string $table, ?array $variables, ?array $criteria = null): int {
+	public function update(string $table, ?array $variables, null|array $criteria = null): int {
 		$args = [];
 
 		foreach ($variables as $key => $value) $args["new_" . $key] = $value;
@@ -478,7 +477,7 @@ class Connection {
 	 * @return int Number of rows affected.
 	 * @since 1.0
 	 */
-	public function delete(string $table, ?array $criteria = null): int {
+	public function delete(string $table, null|array $criteria = null): int {
 		$sql = "DELETE FROM `" . $this->safeTable($table) . "` WHERE " . $this->keysToSql($criteria, " AND");
 		return $this->query($sql, $criteria)->rowCount();
 	}
@@ -492,7 +491,7 @@ class Connection {
 	 * @return string The last inserted ID
 	 * @since 1.0
 	 */
-	private function createRowSql(string $type, string $table, ?array $variables = null): string {
+	private function createRowSql(string $type, string $table, null|array $variables = null): string {
 		$binds = [];
 		$variables = $variables ?? [];
 
