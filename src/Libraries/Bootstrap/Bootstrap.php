@@ -31,7 +31,7 @@ class Bootstrap {
 	 * Sets global state objects in the registry
 	 * @return void
 	 */
-	private function registerGlobalObjects() {
+	private function registerGlobalObjects(): void {
 		\Registry::set(new \Configuration(STORAGE . "/config/global.jsonc"));
 
 		\Registry::set(new \Environment(APP_PATH . "/.env"));
