@@ -72,7 +72,8 @@ final class Request {
 			$args = $this->server["argv"];
 			$args = array_slice($args, 1);
 		} else {
-			$args = trim($this->server["REQUEST_URI"], '/');
+			$args = parse_url($this->server["REQUEST_URI"], PHP_URL_PATH);
+			$args = trim($args, '/');
 			$args = explode('/', $args);
 			$args = array_filter($args);
 		}
