@@ -4,6 +4,8 @@ v9.0.0
 - \Template class no longer adds version numbers when called outside of core.  
 - Request URI query params should no longer route to controller.  
 - Template::getPath renamed to Template::getViewPath.  
+- Improve exception handling with user-friendly error messages  
+- Simplified stack trace logging  
 
 v8.2.2
 - Added option to fake HTTP requests with \Http\Request::fake.  
