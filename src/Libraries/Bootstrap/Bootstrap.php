@@ -148,14 +148,6 @@ class Bootstrap {
 				error_log($iException->getMessage() . " in file " . $iException->getFile() . " on line " . $iException->getLine());
 				error_log("Stacktrace: " . LF . $iException->getTraceAsString());
 
-				// Exception handling logic
-				$stacktrace = [];
-				$trace = array_reverse($iException->getTrace());
-
-				foreach ($trace as $item) {
-					$stacktrace[] = (isset($item["file"]) ? str_replace(APP_PATH . '/', '', $item["file"]) : "<unknown file>") . " line " . (isset($item["line"]) ? $item["line"] : "<unknown line>") . " calling " . $item["function"] . "()" . LF;
-				}
-
 				if (IS_CLI) {
 					// CLI error response
 					print "Uncaught " . $iException::class . ':' . LF .
@@ -164,7 +156,7 @@ class Bootstrap {
 						"File: " . $iException->getFile() . LF .
 						"Line: " . $iException->getLine() . LF .
 						"Stacktrace: " . LF .
-						TAB . implode(LF, $stacktrace);
+						$iException->getTraceAsString() . LF;
 				} else {
 					// Web error response
 					while (ob_get_length()) ob_end_clean();
@@ -179,28 +171,27 @@ class Bootstrap {
 						header("Content-Type: application/json");
 						print json_encode([
 							"status" => "error",
-							"data" => [
-								"class" => $iException::class,
-								"message" => $iException->getMessage(),
-								"code" => $iException->getCode(),
-								"file" => str_replace(APP_PATH . '/', '', $iException->getFile()),
-								"line" => $iException->getLine()
-							],
-							"trace" => $stacktrace
+							"data" => "An unexpected error occurred"
 						]);
 					} else {
 						// HTML error response
-						print "<div style=\"font-family: monospace; background-color: #f44336; border-color: #f32c1e; color:#FFF; padding: 15px 15px 15px 15px;\">
-										<h1 style=\"margin:0px;\">Uncaught \\" . $iException::class . "</h1>" . BR . "
-										<strong>Message: </strong>" . $iException->getMessage() . BR . "
-										<strong>Code: </strong>" . $iException->getCode() . BR . "
-										<strong>File: </strong>" . str_replace(APP_PATH . '/', '', $iException->getFile()) . BR . "
-										<strong>Line: </strong>" . $iException->getLine() . BR . "
-										<strong>Stacktrace: </strong>" . BR . "
-										<ol style=\"margin-top:0px;\">" . LF . "
-											<li>" . implode("</li><li>", $stacktrace) . "</li>
-										</ol>
-									</div>";
+						print " <div style=\"font-family: monospace; background-color: #f44336; border-color: #f32c1e; color:#FFF; padding: 15px 15px 15px 15px;\">
+									<h1 style=\"margin:0px;\">Something unexpected happened, and we couldn't process your request</h1>" . BR . "
+									<p>Please try the following:</p>
+									<ul>
+										<li>Refresh the page or try again at a later time.</li>
+										<li>If the problem persists, contact us with the following information:</li>
+										<li>
+											<ul>
+												<li>A detailed step-by-step guide how you got this error</li>
+												<li>What you were trying to do</li>
+												<li>What you expected to happen</li>
+												<li>This part: " . $_SERVER["REQUEST_URI"] . "</li>
+												<li>This time: " . date("Y-m-d H:i:s") . "</li>
+											</ul>
+										</li>
+									</ul>
+								</div>";
 					}
 				}
 
