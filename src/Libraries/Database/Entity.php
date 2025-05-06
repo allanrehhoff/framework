@@ -191,10 +191,7 @@ abstract class Entity {
 			foreach ($row as $data) $entities[] = static::with($data);
 			return new Collection($entities);
 		} else {
-			$entity = new static();
-			$entity->data = (array)$row;
-
-			return $entity;
+			return static::new()->setData($row);
 		}
 	}
 
@@ -218,8 +215,7 @@ abstract class Entity {
 	 * @return static
 	 */
 	public static function insert(null|array|object $data, null|array $allowedFields = null): static {
-		$iEntity = new static($data, $allowedFields);
-		return $iEntity->save();
+		return static::new()->set($data, $allowedFields)->save();
 	}
 
 	/**
@@ -313,6 +309,19 @@ abstract class Entity {
 	 */
 	public function getData(): array {
 		return $this->data;
+	}
+
+	/**
+	 * Sets the current entity data
+	 * This will overwrite any existing data
+	 * And should be used with extreme caution
+	 *
+	 * @param array|object $data The data to set
+	 * @return static
+	 */
+	public function setData(array|object $data): static {
+		$this->data = (array)$data;
+		return $this;
 	}
 
 	/**
