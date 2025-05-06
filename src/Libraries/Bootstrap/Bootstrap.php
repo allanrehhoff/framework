@@ -156,7 +156,7 @@ class Bootstrap {
 						"File: " . $iException->getFile() . LF .
 						"Line: " . $iException->getLine() . LF .
 						"Stacktrace: " . LF .
-						$iException->getTraceAsString() . LF;
+						str_replace(["#"], [str_repeat(SPACE, 4) . "#"], $iException->getTraceAsString()) . LF;
 				} else {
 					// Web error response
 					while (ob_get_length()) ob_end_clean();
