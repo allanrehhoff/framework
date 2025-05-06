@@ -312,12 +312,15 @@ abstract class Entity {
 	}
 
 	/**
+	 * ⚠️ DANGER ZONE ⚠️
 	 * Sets the current entity data
 	 * This will overwrite any existing data
 	 * And should be used with extreme caution
 	 *
 	 * @param array|object $data The data to set
 	 * @return static
+	 * @internal This method is used internally
+	 * @since 3.3.0
 	 */
 	public function setData(array|object $data): static {
 		$this->data = (array)$data;
