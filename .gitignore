@@ -9,3 +9,4 @@ vendor/
 docs/reference/cache/
 tests/dev.php
 .phpunit.cache
+php_error.log
