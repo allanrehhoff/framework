@@ -8,7 +8,7 @@ class FooterController extends Controller {
 		// Do not allow this controller to be access directly
 		if ($this->getParent() == null) throw new \Core\StatusCode\NotFound;
 
-		$this->response->data["footer"] = $this->template->getPath("footer");
+		$this->response->data["footer"] = $this->template->getViewPath("footer");
 
 		$this->response->data["stylesheets"] = array_merge(
 			$this->response->data["stylesheets"] ?? [],

@@ -61,7 +61,7 @@ final class Template {
 	 * @param string $shortname The shortened template name e.g partials/sidebar 
 	 * @return string
 	 */
-	public function getPath(string $shortname = ''): string {
+	public function getViewPath(string $shortname = ''): string {
 		if ($shortname == '') return '';
 
 		$path = APP_PATH . "/Templates/" . $this->getName();
@@ -92,8 +92,6 @@ final class Template {
 			$this->getName(),
 			ltrim($file, '/')
 		);
-
-		$result = $this->maybeAddVersionNumber($result);
 
 		return $result;
 	}
@@ -137,6 +135,7 @@ final class Template {
 		foreach ($files->js as $region => $javascripts) {
 			foreach ($javascripts as $javascript) {
 				$src = $this->getDirectoryUri($javascript);
+				$src = $this->maybeAddVersionNumber($src);
 
 				$this->assets->addJavascript($src);
 			}
@@ -145,6 +144,7 @@ final class Template {
 		foreach ($files->css as $region => $stylesheets) {
 			foreach ($stylesheets as $stylesheet) {
 				$src = $this->getDirectoryUri($stylesheet);
+				$src = $this->maybeAddVersionNumber($src);
 
 				$this->assets->addStylesheet($src, $region);
 			}

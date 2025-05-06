@@ -26,7 +26,7 @@ class Renderer {
 	 * Renderer constructor.
 	 *
 	 * @param Template $iTemplate The template engine used for rendering views.
-	 * @param ContentType $iContentType The content type used for rendering output.
+	 * @param ContentTypeInterface $iContentType The content type used for rendering output.
 	 */
 	public function __construct(Template $iTemplate, ContentTypeInterface $iContentType) {
 		$this->iTemplate = $iTemplate;
@@ -44,7 +44,7 @@ class Renderer {
 		$data = $iResponse->getData();
 
 		$event = sprintf("core.output.%s", $this->iContentType->getMedia());
-		$file = $this->iTemplate->getPath($view);
+		$file = $this->iTemplate->getViewPath($view);
 
 		/**
 		 * Trigger an event before rendering the view.

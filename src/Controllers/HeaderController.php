@@ -8,7 +8,7 @@ class HeaderController extends Controller {
 		// Do not allow this controller to be access directly
 		if ($this->getParent() == null) throw new \Core\StatusCode\NotFound;
 
-		$this->response->data["header"] = $this->template->getPath("header");
+		$this->response->data["header"] = $this->template->getViewPath("header");
 
 		$this->response->data["stylesheets"] = array_merge(
 			$this->response->data["stylesheets"] ?? [],
