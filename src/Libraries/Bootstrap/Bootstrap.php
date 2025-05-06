@@ -36,7 +36,7 @@ class Bootstrap {
 
 		\Registry::set(new \Environment(APP_PATH . "/.env"));
 
-		// Skip database connection if tests are running
+		/** @disregard P1011 Do not connect when running tests */
 		if (defined('TESTS_RUNNING') && TESTS_RUNNING) return;
 
 		\Registry::set(new \Database\Connection(
@@ -118,6 +118,9 @@ class Bootstrap {
 	 * @return void
 	 */
 	private function registerErrorHandlers(): void {
+		ini_set('log_errors', 1);
+		ini_set('error_log', STORAGE . '/logs/php_error.log');
+
 		set_error_handler(
 			function (int $errno, string $errstr, string $errfile, int $errline): bool {
 				// Support suppressing errors with '@'
@@ -130,8 +133,21 @@ class Bootstrap {
 			}
 		);
 
+		// Exception handler
+		// Free'd when an unhandled error happens
+		// e.g. out of memory errors.
+		$emergencyMemory = str_repeat('*', 1024 * 50);
+
 		set_exception_handler(
-			function (\Throwable $iException): void {
+			function (\Throwable $iException) use ($emergencyMemory): void {
+				// Free up our reserved memory.
+				$emergencyMemory = null;
+				unset($emergencyMemory);
+				gc_collect_cycles();
+
+				error_log($iException->getMessage() . " in file " . $iException->getFile() . " on line " . $iException->getLine());
+				error_log("Stacktrace: " . LF . $iException->getTraceAsString());
+
 				// Exception handling logic
 				$stacktrace = [];
 				$trace = array_reverse($iException->getTrace());
