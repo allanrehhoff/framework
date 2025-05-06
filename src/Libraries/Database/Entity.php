@@ -82,7 +82,7 @@ abstract class Entity {
 	 * @return void
 	 */
 	public function __set(string $name, mixed $value) {
-		$this->data[$name] = $value;
+		$this->new[$name] = $value;
 	}
 
 	/**
@@ -150,7 +150,7 @@ abstract class Entity {
 	public static function from(null|int|string $identifier): static {
 		$entityType = static::class;
 
-		if($identifier === null) {
+		if ($identifier === null) {
 			return new static();
 		}
 
@@ -182,7 +182,7 @@ abstract class Entity {
 
 	/**
 	 * Created a new instance of entity type with existing data
-	 * @param array|\stdClass $row Row from database
+	 * @param iterable|\stdClass $row Row from database
 	 * @return Collection<Entity>|Entity Collection of entities if passed an array, otherwise the provided object as an entity
 	 */
 	public static function with(iterable|\stdClass $row): Collection|Entity {
@@ -191,43 +191,12 @@ abstract class Entity {
 			foreach ($row as $data) $entities[] = static::with($data);
 			return new Collection($entities);
 		} else {
-			$keyField = static::getPrimaryKey();
 			$entity = new static();
-			$entity->key = $row->$keyField ?? null;
 			$entity->data = (array)$row;
 
 			return $entity;
 		}
 	}
-
-	/**
-	 * Loads up one or more entities with given data.
-	 * It is assumed the data to populate with is already fetched elsewhere.
-	 * e.g. by the use of static::search();
-	 *
-	 * @param mixed $rows an array of ID's or a single ID to load
-	 * @param bool $indexByIDs If loading multiple ID's set this to true, to index the resulting array by entity IDs
-	 * @return Collection|static The loaded entities or a single if no array was provided
-	 */
-	/*
-	public static function load(mixed $rows, bool $indexByIDs = true): Collection|static {
-		$class = static::class;
-
-		if (is_iterable($rows)) {
-			$objects = [];
-
-			foreach ($rows as $i => $row) {
-				$instance = $class::with($row);
-				$index = $indexByIDs ? $instance->id() : $i;
-				$objects[$index] = $instance;
-			}
-
-			return new Collection($objects);
-		} else {
-			return new $class($rows);
-		}
-	}
-	*/
 
 	/**
 	 * Performs a search of the given criteria
@@ -238,7 +207,7 @@ abstract class Entity {
 	 * @return Collection|static
 	 * @since 3.3.0
 	 */
-	public static function search(array $searches = [], ?array $criteria = null, string $clause = "AND"): Collection|static {
+	public static function search(array $searches = [], null|array $criteria = null, string $clause = "AND"): Collection|static {
 		$rows = Connection::getInstance()->search(static::getTableName(), $searches, $criteria, $clause);
 		return self::with($rows);
 	}
@@ -283,22 +252,26 @@ abstract class Entity {
 	 * 
 	 * @return array
 	 */
-	protected function process(null|array|object $data, ?array $allowedFields = null): array {
+	protected function process(null|array|object $data, null|array $allowedFields = null): array {
 		// Return empty array if $data is null
 		if ($data === null) {
 			return $this->new;
 		}
 
-		// Get primary key
+		// Get primary key field as string
 		$primaryKey = static::getPrimaryKey();
 
 		// Convert object to array
 		$data = (array) $data;
 
-		//if ($this->new[$primaryKey] ?? null === null && $data[$primaryKey] ?? null === null) {
-		if(!isset($this->new[$primaryKey]) && !isset($data[$primaryKey])) {
-			$data[$primaryKey] = $this->data[$primaryKey] ?? null;
-		}
+		// Ensure the primary key is preserved during update operations.
+		// If it's missing from both $data and $this->new, pull it from existing $this->data.
+		// This prevents accidentally treating an update as a new insert.
+		$data[$primaryKey] ??= $this->new[$primaryKey] ?? $this->data[$primaryKey] ?? null;
+
+		//if(!isset($this->new[$primaryKey]) && !isset($data[$primaryKey])) {
+		//	$data[$primaryKey] = $this->data[$primaryKey] ?? null;
+		//}
 
 		// Find empty strings in dataset and convert to null instead
 		foreach ($data as $key => $value) {
@@ -323,7 +296,7 @@ abstract class Entity {
 	 * @param null|array $allowedFields keys of fields allowed to be altered
 	 * @return static The current entity instance
 	 */
-	public function set(null|array|object $data = null, ?array $allowedFields = null): static {
+	public function set(null|array|object $data = null, null|array $allowedFields = null): static {
 		if ($data !== null) {
 			$data = $this->process($data, $allowedFields);
 		}
@@ -384,7 +357,7 @@ abstract class Entity {
 	 * @param string $key Key of the data value to retrieve
 	 * @return null|string A html friendly string
 	 */
-	public function safe(string $key): ?string {
+	public function safe(string $key): null|string {
 		$data = $this->get($key);
 
 		if ($data === null) return null;
@@ -427,5 +400,22 @@ abstract class Entity {
 	 */
 	public function isNew(): bool {
 		return !$this->exists();
+	}
+
+	/**
+	 * Determine if the entity has been modified
+	 *
+	 * @return bool
+	 */
+	public function isModified(): bool {
+		return !empty($this->new);
+	}
+
+	/**
+	 * Check if the primary key is set in either the data or new array
+	 */
+	public function hasPrimaryKeyValue(): bool {
+		$key = static::getPrimaryKey();
+		return isset($this->data[$key]) || isset($this->new[$key]);
 	}
 }
