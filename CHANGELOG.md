@@ -1,6 +1,12 @@
 # Changelog #
+v9.0.0
+- Added default setup for logging errors.  
+- \Template class no longer adds version numbers when called outside of core.  
+- Request URI query params should no longer route to controller.  
+- Template::getPath renamed to Template::getViewPath.  
+
 v8.2.2
-- Added option to fake HTTp requests with \Http\Request::fake.  
+- Added option to fake HTTP requests with \Http\Request::fake.  
 - Do not retur false after throwing excepttions.  
 - Fixed typos in the documentation.  
 
