@@ -22,6 +22,9 @@ final class Router {
 	 */
 	private Response $response;
 
+	/**
+	 * @var array $route The route to be executed
+	 */
 	private array $route;
 
 	/**
@@ -40,11 +43,13 @@ final class Router {
 		$controllerBase = $this->request->getArg(0, $defaults);
 		$methodNameBase = $this->request->getArg(1, $defaults);
 
+		$iMethodName = new MethodName($methodNameBase ?? MethodName::DEFAULT);
+		$iClassName = new ClassName($controllerBase);
+
 		// Instantiating a new ReflectionClass will call autoloader
 		// which will throw \Core\Exception\FileNotFound if file is not found
 		// class_exists(); is not used because we'll need the reflection later
 		try {
-			$iClassName = new ClassName($controllerBase);
 			$iReflectionClass = new \ReflectionClass($iClassName->toString());
 		} catch (\Core\Exception\FileNotFound) {
 			$this->route = $this->handleUnroutableRequest();
@@ -54,7 +59,6 @@ final class Router {
 		// Check if method name exists on class
 		// If method is not present, fallback to default
 		try {
-			$iMethodName = new MethodName($methodNameBase ?? MethodName::DEFAULT);
 			$iReflectionMethod = $iReflectionClass->getMethod($iMethodName->toString());
 		} catch (\ReflectionException) {
 			$iMethodName = $this->getDefaultMethodName();
@@ -119,7 +123,7 @@ final class Router {
 	 * Get ClassName for requests that cannot be routed
 	 * @return \Core\ClassName
 	 */
-	private function getNotFoundClassName(): ClassName {
+	public function getNotFoundClassName(): ClassName {
 		return new ClassName("NotFound");
 	}
 
@@ -127,7 +131,7 @@ final class Router {
 	 * Get default MethodName to be called on controlelrs
 	 * @return \Core\MethodName
 	 */
-	private function getDefaultMethodName(): MethodName {
+	public function getDefaultMethodName(): MethodName {
 		return new MethodName(MethodName::DEFAULT);
 	}
 
@@ -135,7 +139,7 @@ final class Router {
 	 * Handle requests that cannot be routed.
 	 * @return array An array with two elements: [0] ClassName An instance of ClassName. [1] MethodName An instance of MethodName.
 	 */
-	private function handleUnroutableRequest(): array {
+	public function handleUnroutableRequest(): array {
 		\Core\Event::trigger("core.router.notfound", $this->request);
 		return [$this->getNotFoundClassName(), $this->getDefaultMethodName()];
 	}
