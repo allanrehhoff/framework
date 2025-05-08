@@ -128,3 +128,57 @@ To configure this behavior, set the default content type to `null` in the `reque
   "defaultContentType": null
 }
 ```
+
+## The files array.
+> **Note**  
+> Since the `$_FILES` array is normalized in the `request` property.
+> You should always validate the number of files uploaded or only consume index `0`.  
+> Even when expecting a single file upload to ensures your upload process handles unexpected multiple uploads gracefully.
+
+The global state `$_FILES` array is normalized in the controllers `request` property.  
+Both single-file and multi-file uploads will be structured in a similar format.  
+
+**Single File Uploads:**
+When a single file is uploaded via an input field (e.g., `<input type="file" name="myfile">`), 
+The `$this->request->files` property will be similar to:
+
+```php
+<?php
+[
+    'myfile' => [
+        0 => [ // Wrapped in an array to maintain consistent structure
+            'name'     => 'document.pdf',
+            'type'     => 'application/pdf',
+            'tmp_name' => '/tmp/phpABCDE',
+            'error'    => 0,
+            'size'     => 54321,
+        ]
+    ]
+];
+```
+
+**Multiple File Uploads:**
+When multiple files are uploaded via an input field with array notation and the multiple attribute (e.g., <input type="file" name="recipe-files[]" multiple>).  
+The `$this->request->files` property will be similar to:
+
+```php
+<?php
+[
+    'recipe-images' => [
+        0 => [
+            'name'     => 'cheese.jpg',
+            'type'     => 'image/jpeg',
+            'tmp_name' => '/tmp/phpFGHIJ',
+            'error'    => 0,
+            'size'     => 102400,
+        ],
+        1 => [
+            'name'     => 'how-to-cook.mp4',
+            'type'     => 'video/mp4',
+            'tmp_name' => '/tmp/phpKLMNO',
+            'error'    => 0,
+            'size'     => 5120000,
+        ]
+    ]
+]
+```

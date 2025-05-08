@@ -53,6 +53,9 @@ Controllers may also set child controllers to be executed once the parent contro
 ```
 Will result in **TigerController** being invoked as if it was a normal controller, AFTER **AnimalController**
 
+Only the `index` method will be invoked by core on children controllers.  
+To descend the request chain further, you must handle such logic manually.  
+
 A view must be by each controller, throught the **setView();** method.
 ```php
 class AnimalController extends Controller {
