@@ -10,6 +10,7 @@ v9.0.0
 - Simplified stack trace logging  
 - File upload nomralization fix.  
 - Support for entities auto-generating primary keys.  
+- Application baseurl is now part of setting up.
 
 v8.2.2
 - Added option to fake HTTP requests with \Http\Request::fake.  
