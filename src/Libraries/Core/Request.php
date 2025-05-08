@@ -2,9 +2,6 @@
 
 namespace Core;
 
-use Core\ContentType\ContentTypeInterface;
-use Core\ContentType\ContentTypeEnum;
-
 /**
  * Encapsulates the details of a request and simplifies the process of working with incoming HTTP requests.
  * It provides functionality for retrieving request parameters, headers, and simplifying file uploads.
@@ -61,7 +58,7 @@ final class Request {
 		$this->server = $_SERVER;
 
 		if (empty($this->files) !== true) {
-			$this->files = $this->reArrangeFilesArray($this->files);
+			$this->files = $this->normalizeFiles($this->files);
 		}
 
 		if (isset($this->server["HTTP_ACCEPT"])) {
@@ -133,39 +130,6 @@ final class Request {
 	}
 
 	/**
-	 * Parse HTTP Accept header
-	 *
-	 * @param string $acceptHeader
-	 * @return array Parsed client preferences
-	 */
-	/*
-	private function parseAcceptHeader(string $acceptHeader): array {
-		$mediaTypes = explode(',', $acceptHeader);
-
-		foreach ($mediaTypes as $mediaType) {
-			$parts = explode(';', $mediaType);
-			$mimeType = trim($parts[0]);
-			$quality = 1.0; // Default quality value
-
-			foreach ($parts as $part) {
-				if (strpos($part, 'q=') === 0) {
-					$quality = (float) substr($part, 2);
-					break;
-				}
-			}
-
-			[$namespace, $dataType] = explode('/', $mimeType);
-
-			$preferences ??= [];
-			$preferences[$dataType] = $quality;
-		}
-
-		arsort($preferences);
-
-		return $preferences;
-	}
-	*/
-	/**
 	 * Parse the HTTP Accept header into an array of media type preferences.
 	 *
 	 * @param string $acceptHeader The raw Accept header string.
@@ -196,18 +160,30 @@ final class Request {
 	}
 
 	/**
-	 * Re-arrange a $_FILES array to a more intuitive format
-	 * @param array $files the $_FILES array
-	 * @return array The re-arranged files array
+	 * Normalize a $_FILES array to a more intuitive format.
+	 * Single file uploads are converted to an array with a single element.
+	 * Multi-file uploads are converted to a more structured format.
+	 * Utilizing the same structure for both single and multiple file uploads.
+	 * @param array $files The $_FILES array to normalize.
+	 * @return array The normalized $_FILES array.
 	 */
-	private function reArrangeFilesArray(array $files): array {
+	private function normalizeFiles(array $files): array {
 		$result = [];
-		$count  = count($files["name"]);
-		$keys   = array_keys($files);
 
-		for ($i = 0; $i < $count; $i++) {
-			foreach ($keys as $key) {
-				$result[$i][$key] = $files[$key][$i];
+		foreach ($files as $name => $array) {
+			if (is_array($array["name"])) {
+				$count  = count($array["name"]);
+				$keys   = array_keys($array);
+
+				for ($i = 0; $i < $count; $i++) {
+					foreach ($keys as $key) {
+						$result[$name][$i][$key] = $array[$key][$i];
+					}
+				}
+			} else {
+				$result = [
+					$name => [$array]
+				];
 			}
 		}
 
