@@ -341,6 +341,16 @@ Search.appendIndex(
             "summary": "Represents\u0020a\u0020universally\u0020unique\u0020identifier\u0020\u0028UUID\u0029,\u0020according\u0020to\u0020RFC\u00209562.",
             "url": "classes/UUID.html"
         },                {
+            "fqsen": "\\Database\\PrimaryKey\\UuidV4",
+            "name": "UuidV4",
+            "summary": "",
+            "url": "classes/Database-PrimaryKey-UuidV4.html"
+        },                {
+            "fqsen": "\\Database\\PrimaryKey\\UuidV7",
+            "name": "UuidV7",
+            "summary": "",
+            "url": "classes/Database-PrimaryKey-UuidV7.html"
+        },                {
             "fqsen": "\\",
             "name": "\\",
             "summary": "",
@@ -380,6 +390,11 @@ Search.appendIndex(
             "name": "Database",
             "summary": "",
             "url": "namespaces/database.html"
+        },                {
+            "fqsen": "\\Database\\PrimaryKey",
+            "name": "PrimaryKey",
+            "summary": "",
+            "url": "namespaces/database-primarykey.html"
         },                {
             "fqsen": "\\EventListeners",
             "name": "EventListeners",
