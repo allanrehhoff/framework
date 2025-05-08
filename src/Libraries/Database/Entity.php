@@ -56,7 +56,7 @@ abstract class Entity {
 	 * @return void
 	 */
 	public function __construct(null|array|object $data = null, ?array $allowedFields = null) {
-		$this->new = $this->process($data, $allowedFields);
+		$this->new = $this->merge($data, $allowedFields);
 	}
 
 	/**
@@ -109,135 +109,7 @@ abstract class Entity {
 		return $this->get($name);
 	}
 
-	/**
-	 * Saves the entity to a long term storage.
-	 * Empty strings are converted to null values
-	 *
-	 * @throws \BadMethodCallException If attempting to do an insert and data array is empty.
-	 * @return int|string|static if a new entity was just inserted, returns the primary key for that entity, otherwise the current data is returned
-	 */
-	public function save(): int|string|static {
-		// Check if the entity already exists (i.e., it is an update operation)
-		if ($this->exists() === true) {
-			Connection::getInstance()->upsert($this->getTableName(), $this->new, $this->getKeyFilter());
-		} else {
-			$primaryKey = static::getPrimaryKey();
-			$insertedId = Connection::getInstance()->insert($this->getTableName(), $this->new);
-
-			// If the primary key is not provided, insert and get the auto-incremented ID
-			if (!isset($this->new[$primaryKey])) {
-				$this->new[$primaryKey] = $insertedId; // Will be merged to data array
-			}
-		}
-
-		$this->data = array_merge($this->data, $this->new);
-		$this->new = [];
-
-		$entityType = static::class;
-		self::$instanceCache[$entityType][$this->id()] = $this;
-
-		return $this;
-	}
-
-	/**
-	 * Queries database for a given entity by the value of its primary key.
-	 * Loaded antities are cached statically for the remainder of the request.
-	 * When saved, the cache will be refreshed with the updated instance.
-	 * 
-	 * @param null|int|string $identifier The value of the entity's primary key. 
-	 * @return static The loaded entity, empty entity if not exists
-	 */
-	public static function from(null|int|string $identifier): static {
-		$entityType = static::class;
-
-		if ($identifier === null) {
-			return new static();
-		}
-
-		if (!isset(self::$instanceCache[$entityType][$identifier])) {
-			$keyField = static::getPrimaryKey();
-			$data = Connection::getInstance()->fetchRow(static::getTableName(), [$keyField => $identifier]);
-
-			$instance = static::with($data);
-
-			if ($instance->exists()) {
-				self::$instanceCache[$entityType][$identifier] = $instance;
-			}
-		}
-
-		return self::$instanceCache[$entityType][$identifier] ?? new static();
-	}
-
-	/**
-	 * Attempts to find an entity from a given field and value
-	 * 
-	 * @param string $field The database column/field to match
-	 * @param int|string $value The value that $field is to be matched against
-	 * @return static
-	 */
-	public static function find(string $field, int|string $value): static {
-		$row = Connection::getInstance()->fetchRow(static::getTableName(), [$field => $value]);
-		return static::with($row);
-	}
-
-	/**
-	 * Created a new instance of entity type with existing data
-	 * @param iterable|\stdClass $row Row from database
-	 * @return Collection<Entity>|Entity Collection of entities if passed an array, otherwise the provided object as an entity
-	 */
-	public static function with(iterable|\stdClass $row): Collection|Entity {
-		if (is_iterable($row)) {
-			$entities = [];
-			foreach ($row as $data) $entities[] = static::with($data);
-			return new Collection($entities);
-		} else {
-			return static::new()->setData($row);
-		}
-	}
-
-	/**
-	 * Performs a search of the given criteria
-	 *
-	 * @param array $searches Sets of expressions to match. e.g. 'filepath LIKE :filepath'
-	 * @param null|array $criteria Criteria variables for the search sets
-	 * @param string $clause The clause to put between each criteria, default AND
-	 * @return Collection|static
-	 * @since 3.3.0
-	 */
-	public static function search(array $searches = [], null|array $criteria = null, string $clause = "AND"): Collection|static {
-		$rows = Connection::getInstance()->search(static::getTableName(), $searches, $criteria, $clause);
-		return self::with($rows);
-	}
-
-	/**
-	 * Helper method to quickly register a new entity
-	 * @param null|array|object $data Data to insert
-	 * @return static
-	 */
-	public static function insert(null|array|object $data, null|array $allowedFields = null): static {
-		return static::new()->set($data, $allowedFields)->save();
-	}
-
-	/**
-	 * Permanently delete a given entity row
-	 *
-	 * @return int Number of rows affected
-	 */
-	public function delete(): int {
-		$result = Connection::getInstance()->delete($this->getTableName(), $this->getKeyFilter());
-		$this->data = [];
-		return $result;
-	}
-
-	/**
-	 * Creates a new instance of any given entity
-	 * @return Entity
-	 */
-	public static function new(): Entity {
-		return new static;
-	}
-
-	/**
+		/**
 	 * Sets the data for the current object.
 	 * If $data is an object, it is converted to an array.
 	 * Empty strings in the dataset are converted to null, 
@@ -248,7 +120,7 @@ abstract class Entity {
 	 * 
 	 * @return array
 	 */
-	protected function process(null|array|object $data, null|array $allowedFields = null): array {
+	protected function merge(null|array|object $data, null|array $allowedFields = null): array {
 		// Return empty array if $data is null
 		if ($data === null) {
 			return $this->new;
@@ -286,6 +158,162 @@ abstract class Entity {
 	}
 
 	/**
+	 * Saves the entity to a long term storage.
+	 * Empty strings are converted to null values
+	 *
+	 * @throws \BadMethodCallException If attempting to do an insert and data array is empty.
+	 * @return int|string|static if a new entity was just inserted, returns the primary key for that entity, otherwise the current data is returned
+	 */
+	public function save(): int|string|static {
+		// Check if the entity already exists (i.e., it is an update operation)
+		if ($this->exists() === true) {
+			Connection::getInstance()->upsert($this->getTableName(), $this->new, $this->getKeyFilter());
+		} else {
+			$primaryKey = static::getPrimaryKey();
+
+			// Entities can opt-in to use a randomizer for their primary key
+			// Usually happens when using UUIDs and the entity is using a
+			// trait. If a primary key trait is not set, we will fallback 
+			// to the default auto-incrementing behavior.
+			if($this->generatesPrimaryKey() === true) {
+				// If the primary key is not provided, generate a new one
+				// Allows entities using traits to set their own primary key value
+				// using the getPrimaryKeyValue() method if not set by the user
+				/** @disregard P1013 Function defined in trait */
+				$this->new[$primaryKey] ??= $this->generatePrimaryKey();
+				Connection::getInstance()->insert($this->getTableName(), $this->new, $primaryKey);
+			} else {
+				// If the primary key is not provided, insert and get the auto-incremented ID
+				// New primary key will be merged into the data array later
+				$insertedId = Connection::getInstance()->insert($this->getTableName(), $this->new);	
+				$this->new[$primaryKey] ??= $insertedId;
+			}
+		}
+
+		$this->data = array_merge($this->data, $this->new);
+		$this->new = [];
+
+		// Caches the current entity instance in
+		// the static cache for quick retrieval.
+		// Mitigates multiple database queries
+		// for the same entity instance.
+		$entityType = static::class;
+		self::$instanceCache[$entityType][$this->id()] = $this;
+
+		return $this;
+	}
+
+	/**
+	 * Queries database for a given entity by the value of its primary key.
+	 * Loaded antities are cached statically for the remainder of the request.
+	 * When saved, the cache will be refreshed with the updated instance.
+	 * 
+	 * @param null|int|string $identifier The value of the entity's primary key. 
+	 * @return static The loaded entity, empty entity if not exists
+	 */
+	public static function from(null|int|string $identifier): static {
+		$entityType = static::class;
+
+		if ($identifier === null) {
+			return new static();
+		}
+
+		if (!isset(self::$instanceCache[$entityType][$identifier])) {
+			$keyField = static::getPrimaryKey();
+			$data = Connection::getInstance()->fetchRow(static::getTableName(), [$keyField => $identifier]);
+
+			$instance = static::hydrate($data);
+
+			if ($instance->exists()) {
+				self::$instanceCache[$entityType][$identifier] = $instance;
+			}
+		}
+
+		return self::$instanceCache[$entityType][$identifier] ?? new static();
+	}
+
+	/**
+	 * Attempts to find an entity from a given field and value
+	 * 
+	 * @param string $field The database column/field to match
+	 * @param int|string $value The value that $field is to be matched against
+	 * @return static
+	 */
+	public static function find(string $field, int|string $value): static {
+		$row = Connection::getInstance()->fetchRow(static::getTableName(), [$field => $value]);
+		return static::hydrate($row);
+	}
+
+	/**
+	 * Backwards compatibility for the new hydrate method.
+	 * @param iterable|\stdClass $row Row from database
+	 * @since 6.0.0
+	 * @deprecated 6.0.0 use hydrate() instead
+	 * @return Collection<Entity>|Entity Collection of entities if passed an array, otherwise the provided object as an entity
+	 */
+	#[\Deprecated("6.0.0", "Use hydrate() instead")]
+	public static function with(iterable|\stdClass $row): Collection|Entity {
+		return static::hydrate(...func_get_args());
+	}
+
+	/**
+	 * Created a new instance of entity type with existing data
+	 * @param iterable|\stdClass $row Row from database
+	 * @return Collection<Entity>|Entity Collection of entities if passed an array, otherwise the provided object as an entity
+	 */
+	public static function hydrate(iterable|\stdClass $row): Collection|Entity {
+		if (is_iterable($row)) {
+			$entities = [];
+			foreach ($row as $data) $entities[] = static::hydrate($data);
+			return new Collection($entities);
+		} else {
+			return static::new()->setData($row);
+		}
+	}
+
+	/**
+	 * Performs a search of the given criteria
+	 *
+	 * @param array $searches Sets of expressions to match. e.g. 'filepath LIKE :filepath'
+	 * @param null|array $criteria Criteria variables for the search sets
+	 * @param string $clause The clause to put between each criteria, default AND
+	 * @return Collection|static
+	 * @since 3.3.0
+	 */
+	public static function search(array $searches = [], null|array $criteria = null, string $clause = "AND"): Collection|static {
+		$rows = Connection::getInstance()->search(static::getTableName(), $searches, $criteria, $clause);
+		return self::hydrate($rows);
+	}
+
+	/**
+	 * Helper method to quickly register a new entity
+	 * @param null|array|object $data Data to insert
+	 * @return static
+	 */
+	public static function insert(null|array|object $data, null|array $allowedFields = null): static {
+		return static::new()->set($data, $allowedFields)->save();
+	}
+
+	/**
+	 * Permanently delete a given entity row
+	 *
+	 * @return int Number of rows affected
+	 */
+	public function delete(): int {
+		$result = Connection::getInstance()->delete($this->getTableName(), $this->getKeyFilter());
+		$this->data = [];
+		return $result;
+	}
+
+	/**
+	 * Creates a new instance of any given entity
+	 * @return Entity
+	 */
+	public static function new(): Entity {
+		return new static;
+	}
+
+	/**
 	 * Sets ones or more properties to a given value.
 	 *
 	 * @param null|array|object $data key => value pairs of values to set
@@ -294,7 +322,7 @@ abstract class Entity {
 	 */
 	public function set(null|array|object $data = null, null|array $allowedFields = null): static {
 		if ($data !== null) {
-			$data = $this->process($data, $allowedFields);
+			$data = $this->merge($data, $allowedFields);
 		}
 
 		$this->new = $data ?? [];
@@ -349,7 +377,7 @@ abstract class Entity {
 	public function shift(string $key): mixed {
 		$data = $this->get($key);
 
-		if (array_key_exists($key, $data) === true) {
+		if (array_key_exists($key, $this->data) === true) {
 			unset($this->data[$key]);
 		}
 
@@ -424,6 +452,16 @@ abstract class Entity {
 	 */
 	public function isModified(): bool {
 		return !empty($this->new);
+	}
+
+	/**
+	 * Check if the entity generates its own primary key
+	 * Happens when entity uses a trait that implements
+	 * the generatePrimaryKey method.
+	 * @return bool
+	 */
+	public function generatesPrimaryKey(): bool {
+		return method_exists($this, 'generatePrimaryKey');
 	}
 
 	/**

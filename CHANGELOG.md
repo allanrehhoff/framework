@@ -1,5 +1,6 @@
 # Changelog #
 v9.0.0
+- **This release is backwards incompatible.**  
 - Added default setup for logging errors.  
 - \Template class no longer adds version numbers when called outside of core.  
 - Request URI query params should no longer route to controller.  
@@ -8,6 +9,7 @@ v9.0.0
 - Now uses default method name for child controllers.   
 - Simplified stack trace logging  
 - File upload nomralization fix.  
+- Support for entities auto-generating primary keys.  
 
 v8.2.2
 - Added option to fake HTTP requests with \Http\Request::fake.  

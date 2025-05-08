@@ -1,9 +1,18 @@
-## Database queries and entities ##
-This section assumes you have basic knowledge of PDO, and will be using the bundled MySQL client.  
-The \Database\Connection(); class wraps around PHP's PDO, so you are able to call all of the built-in PDO functions on the instantiated object as you normally would.  
-With the exception of the \Database\Connection::query(); method, this has been overloaded to a more convenient way and usage, such that it supports all the below methods.  
+# Database\Connection class #
+
+**Database\Connection V4**
+A library for querying your database in an easy-to-maintain objected oriented manner.  
+It features a few classes to speed up CMS / MVC / API and general CRUD development, and abstracts away your database queries.  
  
 This documentation assumes you have basic knowledge of PDO. 
+  
+## Installing ##
+**Method 1:**
+Install manually: ```<?php require "autoload.php"; ?>```
+
+**Method 2: (recommended)**
+Likely will work with standard autoloaders.
+Copy the **Database/** directory from any recent release into your project. `cp -r Database path/to/project/libs/`  
 
 ### Simple query 
 The `\Database\Connection` class wraps around PHP's PDO, so you are able to call all of the built-in PDO functions on the instantiated object as you normally would.  
@@ -98,7 +107,7 @@ For easier data manipulation, data objects should extend the **\Database\Entity*
 Every class that extends **\Database\Entity** must implement the following methods.  
 
 - getTableName(); // Table in which this data object should store data.  
-- getPrimaryKey(); // The primary key of the table in which this object stores data.  
+- getKeyField(); // The primary key of the table in which this object stores data.  
 
 Every data object take an optional parameter [(int) primary_key] upon instantiating,  
 identifying whether a new data object should be instantiated or an already existing row should be loaded from the table.  
@@ -234,6 +243,57 @@ AnimalLogger::insert([
 
 This will likely trigger a duplicate key error.
 
+## Auto-generating primary keys
+
+By default, entities expect auto-incrementing primary keys.  
+However, if you prefer to use UUIDs as primary keys, you can opt-in by utilizing the provided traits.
+
+To enable UUIDs, include one of `\Database\Primary\UuidV4` or `\Database\Primary\UuidV7` traits in your entity class.  
+This trait will automatically generate a UUID of the specified version for the primary key when a new entity is created.  
+
+When using a trait, the primary key will be generated as a UUID string before the entity is saved to the database. 
+
+To use a general-purpose unique UUIDv4
+
+```php
+<?php
+
+class Animal extends Database\Entity {
+	use \Database\Primary\UuidV4;
+
+	public static function getPrimaryKey(): string {
+		return "animalID";
+	}
+
+	public static function getTableName(): string {
+		return "animals";
+	}
+}
+```
+
+To use a time-based and sortable v7 UUID
+
+> [!WARNING]  
+> **Version 7 UUIDs are not secure**  
+> V7 UUIDs are by design based on timestamps and may leak generation time, which can expose sensitive information about when the UUID was created.
+> Avoid using V7 UUIDs in scenarios where security and privacy are critical. Consider using a more secure UUID version, such as V4, for these use cases.
+
+```php
+<?php
+
+class Animal extends Database\Entity {
+	use \Database\Primary\UuidV7;
+
+	public static function getPrimaryKey(): string {
+		return "animalID";
+	}
+
+	public static function getTableName(): string {
+		return "animals";
+	}
+}
+```
+
 ## Collections / Result sets ##
 The **Database\Collection** class is inspired by Laravel collections.  
 
@@ -247,20 +307,3 @@ Get row (assuming your criteria matches only one row)
 <?php
 	\Database\Connection::getInstance()->select("animals", ["name" => "Asian Rhino"])->getFirst();
 ```
-or
-```php
-<?php \Registry::getDatabaseConnection()->select("animals", ["name" => "Asian Rhino"])->getLast(); ?>
-```
-
-other methods include:
-```php
-<?php
-	\Registry::getDatabaseConnection()->select("animals")->all();
-
-	\Registry::getDatabaseConnection()->select("animals")->count();
-
-	\Registry::getDatabaseConnection()->select("animals")->isEmpty();
-?>
-```
-
-And any methods from the following interfaces `\ArrayAccess`, `\Iterator` and `\Countable`

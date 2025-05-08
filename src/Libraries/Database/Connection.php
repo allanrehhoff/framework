@@ -409,11 +409,11 @@ class Connection {
 	 * Inserts a row in the given table.
 	 *
 	 * @param string $table Name of the table to insert the row in
-	 * @param null|array $variables Column => Value pairs to be inserted
+	 * @param array $variables Column => Value pairs to be inserted
 	 * @return int The last inserted ID
 	 * @since 1.0
 	 */
-	public function insert(string $table, null|array $variables = null): int {
+	public function insert(string $table, array $variables = []): int {
 		$sql = $this->createRowSql("INSERT", $table, $variables);
 		$this->query($sql, $variables);
 		return (int) $this->dbh->lastInsertId();
@@ -424,11 +424,11 @@ class Connection {
 	 * Already existing rows with matching PRIMARY key or UNIQUE index are deleted and then re-inserted.
 	 *
 	 * @param string $table Name of the table to replace into
-	 * @param null|array $variables Column => Value pairs to be inserted
+	 * @param array $variables Column => Value pairs to be inserted
 	 * @return int The last inserted ID
 	 * @since 1.0
 	 */
-	public function replace(string $table, null|array $variables = null): int {
+	public function replace(string $table, array $variables = []): int {
 		$sql = $this->createRowSql("REPLACE", $table, $variables);
 		$this->query($sql, $variables);
 		return (int) $this->dbh->lastInsertId();
@@ -438,11 +438,11 @@ class Connection {
 	 * Update or insert row, uses ON DUPLICATE KEY syntax
 	 * 
 	 * @param string $table Table to update or insert again
-	 * @param null|array $variables column => value pairs to insert/update
+	 * @param array $variables column => value pairs to insert/update
 	 * @return Statement
 	 * @since 3.2.0
 	 */
-	public function upsert(string $table, null|array $variables = null): Statement {
+	public function upsert(string $table, array $variables = []): Statement {
 		$updates = [];
 		foreach ($variables as $column => $value) $updates[] = '`' . $column . '` = VALUES(' . $column . ')';
 		$sql = $this->createRowSql("INSERT", $table, $variables) . " ON DUPLICATE KEY UPDATE " . implode(',', $updates);
@@ -455,11 +455,11 @@ class Connection {
 	 *
 	 * @param string $table Name of the table to update rows in
 	 * @param array $variables Column => Value pairs containg the new values for the row
-	 * @param null|array $criteria Array of criterie for updating a row
+	 * @param array $criteria Array of criterie for updating a row
 	 * @return int Number of affected rows
 	 * @since 1.0
 	 */
-	public function update(string $table, ?array $variables, null|array $criteria = null): int {
+	public function update(string $table, ?array $variables, array $criteria = []): int {
 		$args = [];
 
 		foreach ($variables as $key => $value) $args["new_" . $key] = $value;
@@ -473,11 +473,11 @@ class Connection {
 	 * Delete rows from the given table by criteria.
 	 *
 	 * @param string $table Table to delete rows from
-	 * @param null|array $criteria Criteria for deletion
+	 * @param array $criteria Criteria for deletion
 	 * @return int Number of rows affected.
 	 * @since 1.0
 	 */
-	public function delete(string $table, null|array $criteria = null): int {
+	public function delete(string $table, array $criteria = []): int {
 		$sql = "DELETE FROM `" . $this->safeTable($table) . "` WHERE " . $this->keysToSql($criteria, " AND");
 		return $this->query($sql, $criteria)->rowCount();
 	}
@@ -487,13 +487,12 @@ class Connection {
 	 *
 	 * @param string $type SQL operator to with the INTO can be either INSERT or REPLACE
 	 * @param string $table Table to insert/replace the row in.
-	 * @param null|array $variables Column => Value pairs to insert.
+	 * @param array $variables Column => Value pairs to insert.
 	 * @return string The last inserted ID
 	 * @since 1.0
 	 */
-	private function createRowSql(string $type, string $table, null|array $variables = null): string {
+	private function createRowSql(string $type, string $table, array $variables = []): string {
 		$binds = [];
-		$variables = $variables ?? [];
 
 		foreach ($variables as $key => $value) {
 			$binds[] = ":" . $key;
