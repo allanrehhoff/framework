@@ -82,10 +82,11 @@ final class Application {
 	public function executeController(ClassName $iClassName, ?MethodName $iMethodName = null, ?\Controller $parentController = null): \Controller {
 		$controllerName = $iClassName->toString();
 		$methodName = $iMethodName ? $iMethodName->toString() : MethodName::DEFAULT;
+		$defaultMethodName = $this->getRouter()->getDefaultMethodName();
 
 		if ($parentController === null) {
 			$this->executedClassName = $iClassName;
-			$this->calledMethodName = $iMethodName ?? new MethodName(MethodName::DEFAULT);
+			$this->calledMethodName = $iMethodName ?? $defaultMethodName;
 		}
 
 		$iController = new $controllerName($this, $parentController);
@@ -105,7 +106,7 @@ final class Application {
 		}
 
 		foreach ($iController->getChildren() as $childControllerName) {
-			$childController = $this->executeController($childControllerName, $iMethodName, parentController: $iController);
+			$childController = $this->executeController($childControllerName, $defaultMethodName, $iController);
 			$iController->getResponse()->setData($childController->getResponse()->getData());
 		}
 
