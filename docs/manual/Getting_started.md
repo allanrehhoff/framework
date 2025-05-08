@@ -42,5 +42,34 @@ You'll need to alter `storage/config/global.jsonc` accordingly with your credent
 
 You may change this behaviour to using environment variables by altering `index.php` using the `\Registry::getEnvironment()` in place of `\Registry::getConfiguration()`
 
-## 4. Start coding
+## 4. Set up your baseurl
+To set up your base URL, you need to define it in the `storage/config/global.jsonc` file. Locate the `baseurl` property and set it to the root URL of your application. For example:
+
+```jsonc
+{
+	"baseurl": "http://localhost"
+}
+```
+
+If your application is installed in a subdirectory or listens on a non-default port, these needs to be specified as well.
+
+```jsonc
+{
+	"baseurl": "https://yourdomain.com:8080/app"
+}
+```
+
+Leverage the `\Core\Configuration` class' ability to pull configuration values from the environment.  
+Refer to [Configuration files](Configuration_files.md) documentation for more information.  
+
+```jsonc
+{
+	"baseurl": "getenv('APP_BASEURL')"
+}
+```
+
+Ensure that the URL matches the domain or subdomain where your application is hosted.   
+Proper configuration is essential for generating correct links and redirects.
+
+## 5. Start coding
 Once you see a blank "hello world" screen, you're all good to start your next journey.  

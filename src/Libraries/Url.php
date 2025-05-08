@@ -17,33 +17,21 @@ class Url {
 	 * @return string The base URL of the application.
 	 */
 	public static function getBaseurl(): string {
-		$baseurl = "";
-		$protocol = IS_SSL ? "https://" : "http://";
-		$domainName = $_SERVER["SERVER_NAME"] ?? 'localhost';
-
-		// Add protocol and domain name to base URL
-		$baseurl .= $protocol . $domainName;
-
-		// Add port number to base URL if it"s not the default
-		if (($_SERVER["SERVER_PORT"] ?? 80) != ($protocol === "https://" ? 443 : 80)) {
-			$baseurl .= ":" . $_SERVER["SERVER_PORT"];
-		}
-
-		// Add path to base URL
-		$baseurl .= rtrim(dirname($_SERVER["PHP_SELF"]), "/\\");
-
+		$baseurl = \Registry::getConfiguration()->get("baseurl");
 		return $baseurl;
 	}
 
 	/**
-	 * Removes any need for having a hardcoded basepath in some obscure place
-	 * "cough"wordpress"cough"
+	 * Get the provided uri appended to the baseurl of the application.
 	 * @param string $uri Path to element of which to create a URI.
 	 * @return string
 	 */
 	public static function fromUri(string $uri = ""): string {
-		$baseurl = self::getBaseurl();
+		if (\Str::startsWith($uri, "http")) {
+			return $uri;
+		}
 
+		$baseurl = self::getBaseurl();
 		return $baseurl . ltrim($uri, "/");
 	}
 

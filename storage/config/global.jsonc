@@ -1,6 +1,7 @@
 {
     "version": "1.0.0",
     "theme": "default",
+    "baseurl": "http://localhost",
     // titleFormat supports only one wildcard
     "titleFormat": "%s | default-title",
     "database": {
