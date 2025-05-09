@@ -1,4 +1,4 @@
-# Custom PHP Framework - Introduction (Version 8)
+# Custom PHP Framework - Introduction (Version 9)
 A no-nonsense, lightweight, custom framework using intuitive patterns and requiring almost no boilerplate code.  
 Say goodbye to manually defining routes and unnecessary bloatware. 
 
