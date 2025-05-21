@@ -22,8 +22,6 @@ final class Assets {
 	 * Constructor
 	 */
 	public function __construct() {
-		$this->stylesheets["all"] = [];
-		$this->javascript["footer"] = [];
 	}
 
 	/**
@@ -33,6 +31,7 @@ final class Assets {
 	 * @return void
 	 */
 	public function addStylesheet(string $style, string $region = "header"): void {
+		$this->stylesheets[$region] ??= [];
 		$this->stylesheets[$region][] = $style;
 	}
 
@@ -44,6 +43,7 @@ final class Assets {
 	 * @return void
 	 */
 	public function addJavascript(string $script, string $region = "footer"): void {
+		$this->javascript[$region] ??= [];
 		$this->javascript[$region][] = $script;
 	}
 
