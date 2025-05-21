@@ -20,11 +20,21 @@ class Bootstrap {
 	public function startup(): void {
 		!defined("APP_PATH") or throw new \RuntimeException("Attempt to bootstrap, when application is already running.");
 
+		$this->registerTimezone();
 		$this->registerConstants();
 		$this->registerAutoloaders();
 		$this->registerErrorHandlers();
 		$this->registerGlobalObjects();
 		$this->registerEventListeners();
+	}
+
+	/**
+	 * Sets the default timezone to UTC.
+	 * @return void
+	 */
+	private function registerTimezone(): void {
+		ini_set("date.timezone", "UTC");
+		date_default_timezone_set("UTC");
 	}
 
 	/**
