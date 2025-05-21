@@ -32,7 +32,7 @@ class Url {
 		}
 
 		$baseurl = self::getBaseurl();
-		return $baseurl . ltrim($uri, "/");
+		return $baseurl . '/' . ltrim($uri, "/");
 	}
 
 	/**
