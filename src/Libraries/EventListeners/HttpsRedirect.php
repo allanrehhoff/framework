@@ -8,8 +8,13 @@ class HttpsRedirect {
 	 * @return void
 	 */
 	public function handle(): void {
-		if (IS_SSL === false && IS_CLI === false) {
-			$url = \Url::fromUri("https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
+		if (IS_CLI) return;
+
+		$baseurl = \Url::getBaseurl();
+		$parsedUrl = \Url::parse($baseurl);
+
+		if ($parsedUrl['scheme'] != $_SERVER['REQUEST_SCHEME']) {
+			$url = $parsedUrl['scheme'] . "://" . $parsedUrl['host'] . $_SERVER["REQUEST_URI"];
 			\Url::redirect($url, __METHOD__);
 		}
 	}

@@ -3,13 +3,6 @@ Options -Indexes
 <IfModule mod_rewrite.c>
 	RewriteEngine on
 
-	# This redirect is only here in an attempt to force HTTPS
-	# Before the application itself bootstraps.
-	# A HTTPS redirect is also done by the application itself
-	# e.g. the webserver being used is not apache.
-	RewriteCond %{HTTPS} off
-	RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-
 	RewriteBase /
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
