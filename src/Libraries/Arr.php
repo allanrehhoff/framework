@@ -26,6 +26,7 @@ class Arr {
 
 		return $escapedArray;
 	}
+
 	/**
 	 * Get the value from an array using a key, with null safety.
 	 * Or provided default if array is null, or key was not found
@@ -38,6 +39,19 @@ class Arr {
 	public static function get(null|array $array, string|int $key, mixed $default = null): mixed {
 		if ($array === null || !array_key_exists($key, $array)) return $default;
 		return $array[$key];
+	}
+
+
+	/**
+	 * Checks if a given value exists in the provided array.
+	 *
+	 * @param array|null $array The array to search in. If null, the function returns false.
+	 * @param string|int $value The value to search for within the array.
+	 * @return bool Returns true if the value is found in the array, false otherwise.
+	 */
+	public static function contains(null|array $array, string|int $value): bool {
+		if ($array === null) return false;
+		return in_array($value, $array, true);
 	}
 
 	/**
