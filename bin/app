@@ -5,6 +5,8 @@ if (($startupFile = "Libraries/Bootstrap/Bootstrap.php") && file_exists($startup
 	require $startupFile;
 } elseif (($startupFile = "../Libraries/Bootstrap/Bootstrap.php") && file_exists($startupFile)) {
 	require $startupFile;
+} elseif (($startupFile = "src/Libraries/Bootstrap/Bootstrap.php") && file_exists($startupFile)) {
+	require $startupFile;
 } else {
 	die("Neither current working directory or its parent is a valid application directory\n");
 }
