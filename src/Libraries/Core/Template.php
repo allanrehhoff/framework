@@ -137,7 +137,7 @@ final class Template {
 				$src = $this->getDirectoryUri($javascript);
 				$src = $this->maybeAddVersionNumber($src);
 
-				$this->assets->addJavascript($src);
+				$this->assets->addJavascript($src, $region);
 			}
 		}
 
