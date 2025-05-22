@@ -55,8 +55,8 @@ class Url {
 	 * @link https://www.php.net/parse_url
 	 * @return array|string|int|null|false Same as parse_url
 	 */
-	public static function parse(string $url): array|string|int|null|false {
-		return parse_url($url);
+	public static function parse(string $url,  int $component = -1): array|string|int|null|false {
+		return parse_url($url, $component);
 	}
 
 	/**
