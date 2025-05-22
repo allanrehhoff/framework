@@ -51,6 +51,11 @@ class Negotiator {
 		foreach ($requestedContentTypes as $mimeType => $priority) {
 			[$namespace, $contentType] = \Str::split('/', $mimeType);
 
+			if ($contentType === '*') {
+				$iContentTypeEnum = current($availableContentTypes);
+				break;
+			}
+
 			if (($availableContentTypes[$contentType] ?? null) !== null) {
 				$iContentTypeEnum = $availableContentTypes[$contentType];
 				break;
@@ -66,6 +71,7 @@ class Negotiator {
 
 	/**
 	 * Get allowed content types based on controller/method attributes and configuration.
+	 * Setting attributes overrides configuration.
 	 * @param \Core\ClassName $controller Fully qualified controller class name
 	 * @param \Core\MethodName $method Controller method being invoked
 	 * @return array List of allowed content types
@@ -73,25 +79,26 @@ class Negotiator {
 	private function getAllowedContentTypes(\Core\ClassName $iClassName, \Core\MethodName $iMethodName): array {
 		$allowedContentTypes = [];
 
-		$configContentTypes = $this->request->getConfiguration()->get('contentTypes');
-
-		foreach ($configContentTypes as $contentType => $config) {
-			if ($config->enable) {
-				$allowedContentTypes[$contentType] = ContentTypeEnum::from($contentType);
-			}
-		}
-
 		// Reflect controller and method attributes
 		$iReflectionClass = new ReflectionClass($iClassName->toString());
 		$iReflectionMethod = new ReflectionMethod($iClassName->toString(), $iMethodName->toString());
 
 		foreach ([$iReflectionClass, $iReflectionMethod] as $reflector) {
 			$attributes = $reflector->getAttributes(AllowedContentTypes::class);
-
 			foreach ($attributes as $iReflectionAttribute) {
 				/** @var AllowedContentTypes $iAllowedContentTypes */
 				$iAllowedContentTypes = $iReflectionAttribute->newInstance();
 				$allowedContentTypes = array_merge($allowedContentTypes, $iAllowedContentTypes->getContentTypes());
+			}
+		}
+
+		if (empty($allowedContentTypes)) {
+			$configContentTypes = $this->request->getConfiguration()->get('contentTypes');
+
+			foreach ($configContentTypes as $contentType => $config) {
+				if ($config->enable) {
+					$allowedContentTypes[$contentType] = ContentTypeEnum::from($contentType);
+				}
 			}
 		}
 
