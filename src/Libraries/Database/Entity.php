@@ -109,7 +109,7 @@ abstract class Entity {
 		return $this->get($name);
 	}
 
-		/**
+	/**
 	 * Sets the data for the current object.
 	 * If $data is an object, it is converted to an array.
 	 * Empty strings in the dataset are converted to null, 
@@ -175,7 +175,7 @@ abstract class Entity {
 			// Usually happens when using UUIDs and the entity is using a
 			// trait. If a primary key trait is not set, we will fallback 
 			// to the default auto-incrementing behavior.
-			if($this->generatesPrimaryKey() === true) {
+			if ($this->generatesPrimaryKey() === true) {
 				// If the primary key is not provided, generate a new one
 				// Allows entities using traits to set their own primary key value
 				// using the getPrimaryKeyValue() method if not set by the user
@@ -185,7 +185,7 @@ abstract class Entity {
 			} else {
 				// If the primary key is not provided, insert and get the auto-incremented ID
 				// New primary key will be merged into the data array later
-				$insertedId = Connection::getInstance()->insert($this->getTableName(), $this->new);	
+				$insertedId = Connection::getInstance()->insert($this->getTableName(), $this->new);
 				$this->new[$primaryKey] ??= $insertedId;
 			}
 		}
@@ -241,7 +241,7 @@ abstract class Entity {
 	 */
 	public static function find(string $field, int|string $value): static {
 		$row = Connection::getInstance()->fetchRow(static::getTableName(), [$field => $value]);
-		return static::hydrate($row);
+		return static::hydrate($row ?? new \stdClass);
 	}
 
 	/**
