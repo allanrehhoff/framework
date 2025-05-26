@@ -258,10 +258,14 @@ abstract class Entity {
 
 	/**
 	 * Created a new instance of entity type with existing data
-	 * @param iterable|\stdClass $row Row from database
+	 * @param null|iterable|\stdClass $row Row from database
 	 * @return Collection<Entity>|Entity Collection of entities if passed an array, otherwise the provided object as an entity
 	 */
-	public static function hydrate(iterable|\stdClass $row): Collection|Entity {
+	public static function hydrate(null|iterable|\stdClass $row): Collection|Entity {
+		if ($row === null) {
+			return new static();
+		}
+
 		if (is_iterable($row)) {
 			$entities = [];
 			foreach ($row as $data) $entities[] = static::hydrate($data);
