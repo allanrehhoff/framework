@@ -304,6 +304,7 @@ abstract class Entity {
 	 * @return int Number of rows affected
 	 */
 	public function delete(): int {
+		if (!$this->exists()) return 0; // Prevent deletion of non-existing entity, undefined index error
 		$result = Connection::getInstance()->delete($this->getTableName(), $this->getKeyFilter());
 		$this->data = [];
 		return $result;
