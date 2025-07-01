@@ -1,5 +1,5 @@
 <?php
-class FooterController extends Controller {
+class FooterController extends \Controller {
 	/**
 	 * Default entry point for footer partial
 	 * @return void

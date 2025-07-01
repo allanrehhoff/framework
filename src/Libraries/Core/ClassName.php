@@ -14,7 +14,9 @@ final class ClassName extends MVCStructure {
 	public function __construct(string $string) {
 		$controllerClassParts = [];
 
-		foreach (explode('/', $string) as $segment) {
+		$parts = preg_split('/[\/\\\\]+/', $string);
+
+		foreach ($parts as $segment) {
 			$words = preg_split("/\W+/", $segment, -1, PREG_SPLIT_NO_EMPTY);
 
 			$parts = '';

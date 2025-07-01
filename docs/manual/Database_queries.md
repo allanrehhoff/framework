@@ -259,7 +259,7 @@ To use a general-purpose unique UUIDv4
 <?php
 
 class Animal extends Database\Entity {
-	use \Database\Primary\UuidV4;
+	use \Database\PrimaryKey\UuidV4; // Add this line
 
 	public static function getPrimaryKey(): string {
 		return "animalID";
@@ -282,7 +282,7 @@ To use a time-based and sortable v7 UUID
 <?php
 
 class Animal extends Database\Entity {
-	use \Database\Primary\UuidV7;
+	use \Database\PrimaryKey\UuidV7; // Add this line
 
 	public static function getPrimaryKey(): string {
 		return "animalID";
@@ -290,6 +290,58 @@ class Animal extends Database\Entity {
 
 	public static function getTableName(): string {
 		return "animals";
+	}
+}
+```
+
+You may also use your own ID-types, simply create a new trait in the `\Database\PrimaryKey` namespace and implement the `generatePrimaryKey` method.
+
+```php
+<?php
+namespace Database\PrimaryKey;
+
+trait PrefixedHash
+{
+	/**
+	 * @var \Random\Randomizer
+	 */
+	private \Random\Randomizer $randomizer;
+
+	/**
+	 * Generates a version 4 UUID (Universally Unique Identifier).
+	 *
+	 * @return string A version 4 UUID in the format xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx
+	 */
+    public function generatePrimaryKey(): string {
+		// Initialize the randomizer
+		$this->randomizer = new \Random\Randomizer();
+
+		// Retrieve 16 cryptographically secure random bytes
+		$bytes = $this->randomizer->getBytes(16);
+
+		// Return a prefixed primary key
+		return static::getKeyPrefix() . bin2hex($bytes);
+    }
+}
+```
+
+Above example will require an additional method to entities.  
+
+```php
+class Animal extends Database\Entity {
+	use \Database\PrimaryKey\PrefixedHash;
+
+	public static function getPrimaryKey(): string {
+		return "animalID";
+	}
+
+	public static function getTableName(): string {
+		return "animals";
+	}
+
+	// New method implemented
+	public static function getKeyPrefix(): string {
+		return "an_"; 
 	}
 }
 ```

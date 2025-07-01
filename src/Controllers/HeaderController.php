@@ -1,5 +1,5 @@
 <?php
-class HeaderController extends Controller {
+class HeaderController extends \Controller {
 	/**
 	 * Default entry point for the header partial
 	 * @return void
