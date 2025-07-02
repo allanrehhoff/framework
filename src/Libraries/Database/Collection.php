@@ -7,7 +7,7 @@ namespace Database;
  *
  * @package Database
  */
-class Collection implements \ArrayAccess, \Iterator, \Countable {
+class Collection implements \ArrayAccess, \Iterator, \Countable, \JsonSerializable {
 
 	/**
 	 * @var array Collection of objects that's iterable
@@ -179,6 +179,15 @@ class Collection implements \ArrayAccess, \Iterator, \Countable {
 	 * @return array
 	 */
 	public function all(): array {
+		return $this->items;
+	}
+
+	/**
+	 * Support serializing this collection to json object
+	 *
+	 * @return array
+	 */
+	public function jsonSerialize(): array {
 		return $this->items;
 	}
 }

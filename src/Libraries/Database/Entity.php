@@ -10,7 +10,7 @@ namespace Database;
  * Represents a CRUD'able entity.
  * @phpstan-consistent-constructor
  */
-abstract class Entity {
+abstract class Entity implements \JsonSerializable {
 	/**
 	 * All loaded entities will br stored for the remainder of the request
 	 * @var array $instanceCache
@@ -312,10 +312,10 @@ abstract class Entity {
 
 	/**
 	 * Creates a new instance of any given entity
-	 * @return Entity
+	 * @return static
 	 */
-	public static function new(): Entity {
-		return new static;
+	public static function new(...$arguments): static {
+		return new static(...$arguments);
 	}
 
 	/**
@@ -475,5 +475,14 @@ abstract class Entity {
 	public function hasPrimaryKeyValue(): bool {
 		$key = static::getPrimaryKey();
 		return isset($this->data[$key]) || isset($this->new[$key]);
+	}
+
+	/**
+	 * Support serializing this entity to json object
+	 *
+	 * @return array
+	 */
+	public function jsonSerialize(): array {
+		return $this->items;
 	}
 }
