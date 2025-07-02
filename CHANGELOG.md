@@ -10,7 +10,10 @@ v9.0.0
 - Simplified stack trace logging  
 - File upload nomralization fix.  
 - Support for entities auto-generating primary keys.  
-- Application baseurl is now part of setting up.
+- Application baseurl is now part of setting up.  
+- Database\Entity not longer hydrates objects from null.  
+- Database\Entity and Database\Collection can now be json encoded.  
+- Children controllers can now be namespaced.  
 
 v8.2.2
 - Added option to fake HTTP requests with \Http\Request::fake.  
