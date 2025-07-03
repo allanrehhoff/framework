@@ -49,7 +49,7 @@ class Negotiator {
 		$iContentTypeEnum = ContentTypeEnum::tryFrom($this->request->getConfiguration()->get("defaultType"));
 
 		foreach ($requestedContentTypes as $mimeType => $priority) {
-			[$namespace, $contentType] = \Str::split('/', $mimeType);
+			[$namespace, $contentType] = \Str::cut('/', $mimeType);
 
 			if ($contentType === '*') {
 				$iContentTypeEnum = current($availableContentTypes);

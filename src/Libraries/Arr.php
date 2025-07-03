@@ -145,12 +145,13 @@ class Arr {
 	 * Filter elements of an array using a callback, with null safety.
 	 *
 	 * @param null|array $array
-	 * @param callable $callback
+	 * @param null|callable $callback
+	 * @param int $mode
 	 * @return array
 	 */
-	public static function filter(null|array $array, callable $callback): array {
+	public static function filter(null|array $array, ?callable $callback = null, int $mode = 0): array {
 		if ($array === null) return [];
-		return array_filter($array, $callback, ARRAY_FILTER_USE_BOTH);
+		return array_filter($array, $callback, $mode);
 	}
 
 	/**
@@ -163,5 +164,17 @@ class Arr {
 	public static function map(null|array $array, callable $callback): array {
 		if ($array === null) return [];
 		return array_map($callback, $array);
+	}
+
+	/**
+	 * Join array elements with a string, with null safety.
+	 *
+	 * @param null|array $array
+	 * @param string $glue
+	 * @return string
+	 */
+	public static function join(null|array $array, string $glue): string {
+		if ($array === null) return '';
+		return implode($glue, $array);
 	}
 }

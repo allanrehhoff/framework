@@ -321,16 +321,29 @@ class Str {
 	}
 
 	/**
-	 * Null aware string split.
+	 * Null aware string explode.
 	 *
 	 * @param string $separator
 	 * @param null|string $string
 	 * @param int $limit
 	 * @return string[]
 	 */
-	public static function split(string $separator, null|string $string, int $limit = PHP_INT_MAX): array {
-		if ($string === null) return '';
+	public static function cut(string $separator, null|string $string, int $limit = PHP_INT_MAX): array {
+		if ($string === null) return [];
 		return explode($separator, $string, $limit);
+	}
+
+	/**
+	 * Null aware string split (multibyte safe).
+	 *
+	 * @param null|string $string The string to split.
+	 * @param int $length Length of each chunk.
+	 * @param string|null $encoding Character encoding. If omitted, internal encoding is used.
+	 * @return array The array of string chunks, empty if $string was null.
+	 */
+	public static function split(null|string $string, int $length = 1, null|string $encoding = null): array {
+		if ($string === null) return [];
+		return mb_str_split($string, $length, $encoding ?: mb_internal_encoding());
 	}
 
 	/**
@@ -344,5 +357,17 @@ class Str {
 	public static function replace(?string $search, ?string $replace, ?string $subject): string {
 		if ($subject === null) return '';
 		return str_replace($search ?? '', $replace ?? '', $subject);
+	}
+
+	/**
+	 * Null aware string join (implode).
+	 *
+	 * @param string $glue The string to use as glue.
+	 * @param null|array $pieces The array of strings to join.
+	 * @return string The joined string, empty if $pieces was null.
+	 */
+	public static function join(string $glue, ?array $pieces): string {
+		if ($pieces === null) return '';
+		return implode($glue, $pieces);
 	}
 }

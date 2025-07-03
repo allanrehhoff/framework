@@ -92,6 +92,19 @@ Handles null values gracefully, ensuring that methods return a value of a simila
 \Str::matchAll("/\w+/", "Hello, World!");
 ```
 
+## split
+```php
+// Returns ['c', 'l', 'i', 'c', 'h', 'e'], empty array if null
+\Str::split("cliché");
+```
+
+## cut
+```php
+// Returns ['cli', 'che'], empty array if null
+\Str::split(' ', "cli ché");
+```
+
+
 ## ascii
 ```php
 // Returns 'cliche', empty string if null
