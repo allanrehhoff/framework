@@ -5,6 +5,7 @@ class CliController extends Controller {
 	 * @return void
 	 */
 	public function index(): void {
+		IS_CLI or throw new \Core\StatusCode\NotFound;
 		print "hello from cli" . CRLF;
 	}
 
@@ -13,6 +14,7 @@ class CliController extends Controller {
 	 * @return void
 	 */
 	public function interface(): void {
+		IS_CLI or throw new \Core\StatusCode\NotFound;
 		print "Hello from interface" . CRLF;
 	}
 
@@ -21,6 +23,7 @@ class CliController extends Controller {
 	 * @return void
 	 */
 	public function myMethod(): void {
+		IS_CLI or throw new \Core\StatusCode\NotFound;
 		print "myMethod was called..";
 	}
 }

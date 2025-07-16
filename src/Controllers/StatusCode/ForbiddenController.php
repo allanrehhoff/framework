@@ -1,9 +1,12 @@
 <?php
 
+namespace StatusCode;
+
 /**
  * Controller for paths that is inaccessible in the current environment.
  */
-class ForbiddenController extends Controller {
+class ForbiddenController extends \Controller {
+
 	/**
 	 * Constructs and indicates the path was not allowed.
 	 * Paths are routed here when \Core\StatusCode\Forbidden is thrown

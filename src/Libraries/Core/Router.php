@@ -121,10 +121,11 @@ final class Router {
 
 	/**
 	 * Get ClassName for requests that cannot be routed
+	 * This is the class that will be executed when a route cannot be found
 	 * @return \Core\ClassName
 	 */
 	public function getNotFoundClassName(): ClassName {
-		return new ClassName("NotFound");
+		return new ClassName("StatusCode\NotFound");
 	}
 
 	/**

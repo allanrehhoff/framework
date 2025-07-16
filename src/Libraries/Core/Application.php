@@ -84,6 +84,7 @@ final class Application {
 		$methodName = $iMethodName ? $iMethodName->toString() : MethodName::DEFAULT;
 		$defaultMethodName = $this->getRouter()->getDefaultMethodName();
 
+		// Only record the top-level controller
 		if ($parentController === null) {
 			$this->executedClassName = $iClassName;
 			$this->calledMethodName = $iMethodName ?? $defaultMethodName;
@@ -91,6 +92,8 @@ final class Application {
 
 		$iController = new $controllerName($this, $parentController);
 
+		// Pass response data from parent
+		// controller to child controller
 		if ($parentController !== null) {
 			$iController->getResponse()->setData($parentController->getResponse()->getData());
 		}
@@ -102,7 +105,7 @@ final class Application {
 
 			\Core\Event::trigger("core.controller.method.after", $iController, $iMethodName);
 		} catch (\Core\StatusCode\StatusCode $iStatusCode) {
-			$iController = $this->executeController(new ClassName($iStatusCode->getClassName()));
+			$iController = $this->executeController($iStatusCode->getClassName(), new MethodName(MethodName::DEFAULT));
 		}
 
 		foreach ($iController->getChildren() as $childControllerName) {

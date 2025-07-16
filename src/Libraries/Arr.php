@@ -138,7 +138,7 @@ class Arr {
 	 * @return array
 	 */
 	public static function merge(null|array ...$arrays): array {
-		return array_merge(...array_map(static fn($array) => $array ?? [], $arrays));
+		return array_merge(...array_filter($arrays));
 	}
 
 	/**

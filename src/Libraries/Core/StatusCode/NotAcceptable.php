@@ -2,28 +2,24 @@
 
 namespace Core\StatusCode;
 
-use \Core\StatusCode\StatusCode;
-
 /**
  * Throw this whenever you want to redirect the current controller to a "forbidden" controller
  */
-class NotAcceptable extends StatusCode {
-
+class NotAcceptable extends \Exception implements StatusCode {
 	/**
-	 * Treat this HTTP code as a bodyless response
-	 * This class is usually constructed outside
-	 * of the scope where StatusCode is caught
-	 * and handled by a controller.
-	 */
-	public function __construct() {
-		\http_response_code(self::getHttpCode());
-		exit;
-	}
-
-	/**
+	 * The HTTP status code for Not Acceptable controller.
 	 * @return int
 	 */
 	public static function getHttpCode(): int {
 		return 406;
+	}
+
+	/**
+	 * Returns a class name matching the name
+	 * of the http error exception being thrown.
+	 * @return \Core\ClassName
+	 */
+	public static function getClassName(): \Core\ClassName {
+		return new \Core\ClassName("StatusCode\NotAcceptable");
 	}
 }

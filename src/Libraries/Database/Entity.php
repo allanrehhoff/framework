@@ -285,6 +285,12 @@ abstract class Entity implements \JsonSerializable {
 	 * @since 3.3.0
 	 */
 	public static function search(array $searches = [], null|array $criteria = null, string $clause = "AND"): Collection|static {
+		if (empty($searches)) {
+			foreach ($criteria ?? [] as $field => $value) {
+				$searches[] = "$field = :$field";
+			}
+		}
+
 		$rows = Connection::getInstance()->search(static::getTableName(), $searches, $criteria, $clause);
 		return self::hydrate($rows);
 	}

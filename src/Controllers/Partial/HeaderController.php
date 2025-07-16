@@ -1,4 +1,7 @@
 <?php
+
+namespace Partial;
+
 class HeaderController extends \Controller {
 	/**
 	 * Default entry point for the header partial
@@ -10,14 +13,19 @@ class HeaderController extends \Controller {
 
 		$this->response->data["header"] = $this->template->getViewPath("header");
 
-		$this->response->data["stylesheets"] = array_merge(
+		$this->response->data["stylesheets"] = \Arr::merge(
 			$this->response->data["stylesheets"] ?? [],
 			$this->template->assets->getStylesheets("header")
 		);
 
-		$this->response->data["javascript"] = array_merge(
+		$this->response->data["javascript"] = \Arr::merge(
 			$this->response->data["javascript"] ?? [],
 			$this->template->assets->getJavascript("header")
+		);
+
+		$this->response->data["route"] = \Arr::map(
+			$this->router->getRoute(),
+			fn($iMVCStructure) => \Str::safe(\Str::lower($iMVCStructure->toStringWithoutSuffix()))
 		);
 
 		$this->response->data["bodyClasses"] = $this->getBodyTagClasses();

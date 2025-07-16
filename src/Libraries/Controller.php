@@ -110,8 +110,8 @@ abstract class Controller {
 		));
 
 		if ($iController === null && $this->contentType::class == Html::class) {
-			$this->children[] = new ClassName("Header");
-			$this->children[] = new ClassName("Footer");
+			$this->children[] = new ClassName("Partial\Header");
+			$this->children[] = new ClassName("Partial\Footer");
 
 			$this->response->setTitle(array_slice($this->request->getArguments(), -1)[0] ?? '');
 		}

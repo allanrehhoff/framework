@@ -1,10 +1,12 @@
 <?php
 
+namespace StatusCode;
+
 /**
  * Controller for paths that either cannot be routed.
  * Or when a \Core\Exception\NotFound was thrown
  */
-class NotFoundController extends Controller {
+class NotFoundController extends \Controller {
 
 	/**
 	 * Constructs an indicates the path wasn't found

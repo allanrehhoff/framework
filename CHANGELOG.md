@@ -1,4 +1,13 @@
 # Changelog #
+v9.1.0
+- StatusCode exceptions now responsible for returning controllers.
+- Children controllers can now be namespaced - full support for partials.  
+- Namespaced Header, Footer and statuscode controllers.  
+- Database\Entity not longer hydrates objects from null.  
+- Database\Entity and Database\Collection can now be json encoded.  
+- Database\Entity::search now assumes first argument, given only the second.  
+- Replaced httpbin.org with httpbin.dev in HttpRequestTest.  
+
 v9.0.0
 - **This release is backwards incompatible.**  
 - Added default setup for logging errors.  
@@ -11,9 +20,6 @@ v9.0.0
 - File upload nomralization fix.  
 - Support for entities auto-generating primary keys.  
 - Application baseurl is now part of setting up.  
-- Database\Entity not longer hydrates objects from null.  
-- Database\Entity and Database\Collection can now be json encoded.  
-- Children controllers can now be namespaced.  
 
 v8.2.2
 - Added option to fake HTTP requests with \Http\Request::fake.  

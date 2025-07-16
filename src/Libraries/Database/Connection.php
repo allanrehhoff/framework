@@ -16,8 +16,8 @@ class Connection {
 	/** @var boolean True if a transaction has started, false otherwise. */
 	protected bool $transactionStarted = false;
 
-	/** @var object  The singleton instance of the this class. */
-	protected static $singletonInstance;
+	/** @var object The singleton instances of the this class. */
+	protected static array $singletonInstance = [];
 
 	/** @var null|\PDO PDO Database handle */
 	protected null|\PDO $dbh;
@@ -34,8 +34,8 @@ class Connection {
 	/** @var int Number of queries executed. */
 	public int $queryCount = 0;
 
-	/** @var ?string Last query attempted to be executed. */
-	public ?string $lastQuery = null;
+	/** @var null|string Last query attempted to be executed. */
+	public null|string $lastQuery = null;
 
 	/** @var int Number When an array is passed as criteria this will be incremented for each value across all arrays */
 	protected int $arrayINCounter = 0;
@@ -56,12 +56,12 @@ class Connection {
 	 * @return void
 	 * @since 1.0
 	 */
-	public function __construct(#[\SensitiveParameter] string $hostname, #[\SensitiveParameter] string $username, #[\SensitiveParameter] string $password, #[\SensitiveParameter] string $database) {
+	public function __construct(#[\SensitiveParameter] string $hostname, #[\SensitiveParameter] string $username, #[\SensitiveParameter] string $password, #[\SensitiveParameter] string $database, string $alias = "default") {
 		extension_loaded("pdo") or throw new \RuntimeException("PDO does not appear to be enabled for this server.");
 
 		$this->connect($hostname, $username, $password, $database);
 
-		self::$singletonInstance = $this;
+		self::$singletonInstance[$alias] = $this;
 	}
 
 	/**
@@ -130,8 +130,8 @@ class Connection {
 	 * @return Connection
 	 * @since 1.0
 	 */
-	public static function getInstance(): Connection {
-		return self::$singletonInstance;
+	public static function getInstance(string $alias = 'default'): Connection {
+		return self::$singletonInstance[$alias] ?? throw new \RuntimeException("No database connection with alias '" . $alias . "' found.");
 	}
 
 	/**

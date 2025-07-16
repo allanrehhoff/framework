@@ -29,7 +29,7 @@ class ApplicationTest extends \PHPUnit\Framework\TestCase {
 
 			$iController = $iApplication->run();
 
-			$this->assertInstanceOf(\NotFoundController::class, $iController);
+			$this->assertInstanceOf(\StatusCode\NotFoundController::class, $iController);
 		}
 	}
 
@@ -44,7 +44,7 @@ class ApplicationTest extends \PHPUnit\Framework\TestCase {
 
 		$iController = $iApplication->executeController($controller, $method);
 
-		$this->assertInstanceOf(NotFoundController::class, $iController);
+		$this->assertInstanceOf(\StatusCode\NotFoundController::class, $iController);
 	}
 
 	/**
@@ -58,6 +58,6 @@ class ApplicationTest extends \PHPUnit\Framework\TestCase {
 
 		$iController = $iApplication->executeController($controller, $method);
 
-		$this->assertInstanceOf(NotFoundController::class, $iController);
+		$this->assertInstanceOf(\StatusCode\NotFoundController::class, $iController);
 	}
 }

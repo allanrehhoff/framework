@@ -32,7 +32,7 @@ class RouterTest extends TestCase {
 		$this->assertInstanceOf(\Core\ClassName::class, $controller);
 		$this->assertInstanceOf(\Core\MethodName::class, $method);
 
-		$this->assertEquals(\NotFoundController::class, $controller->toString());
+		$this->assertEquals(\StatusCode\NotFoundController::class, $controller->toString());
 		$this->assertEquals("index", $method->toString());
 	}
 
@@ -59,7 +59,7 @@ class RouterTest extends TestCase {
 		$this->assertInstanceOf(\Core\ClassName::class, $controller);
 		$this->assertInstanceOf(\Core\MethodName::class, $method);
 
-		$this->assertEquals(\NotFoundController::class, $controller->toString());
+		$this->assertEquals(\StatusCode\NotFoundController::class, $controller->toString());
 		$this->assertEquals("index", $method->toString());
 	}
 }

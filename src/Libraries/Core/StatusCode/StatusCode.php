@@ -9,22 +9,17 @@ namespace Core\StatusCode;
  * and only serves as a catch-all class for
  * all http error exceptions extending this 
  */
-abstract class StatusCode extends \Exception {
+interface StatusCode {
 	/**
 	 * Return an integer representing a HTTP code
 	 * @return int Any HTTP code
 	 */
-	abstract public static function getHttpCode(): int;
+	public static function getHttpCode(): int;
 
 	/**
-	 * Returns a class shortname matching the name
+	 * Returns a class name matching the name
 	 * of the http error exception being thrown.
-	 * The request should be internally redirected
-	 * to a controller of this name responsible
-	 * of handling the remainder of the request.
-	 * @return string
+	 * @return \Core\ClassName
 	 */
-	public function getClassName(): string {
-		return substr(strrchr(static::class, '\\'), 1);
-	}
+	public static function getClassName(): \Core\ClassName;
 }

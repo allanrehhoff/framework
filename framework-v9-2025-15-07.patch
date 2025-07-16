@@ -1,0 +1,798 @@
+diff --git a/src/Controllers/CliController.php b/src/Controllers/CliController.php
+index cc25a08..8265c3c 100644
+--- a/src/Controllers/CliController.php
++++ b/src/Controllers/CliController.php
+@@ -5,6 +5,7 @@ class CliController extends Controller {
+ 	 * @return void
+ 	 */
+ 	public function index(): void {
++		IS_CLI or throw new \Core\StatusCode\NotFound;
+ 		print "hello from cli" . CRLF;
+ 	}
+ 
+@@ -13,6 +14,7 @@ class CliController extends Controller {
+ 	 * @return void
+ 	 */
+ 	public function interface(): void {
++		IS_CLI or throw new \Core\StatusCode\NotFound;
+ 		print "Hello from interface" . CRLF;
+ 	}
+ 
+@@ -21,6 +23,7 @@ class CliController extends Controller {
+ 	 * @return void
+ 	 */
+ 	public function myMethod(): void {
++		IS_CLI or throw new \Core\StatusCode\NotFound;
+ 		print "myMethod was called..";
+ 	}
+ }
+diff --git a/src/Controllers/FooterController.php b/src/Controllers/Partial/FooterController.php
+similarity index 81%
+rename from src/Controllers/FooterController.php
+rename to src/Controllers/Partial/FooterController.php
+index 47ac8fd..5fd1ad1 100644
+--- a/src/Controllers/FooterController.php
++++ b/src/Controllers/Partial/FooterController.php
+@@ -1,4 +1,7 @@
+ <?php
++
++namespace Partial;
++
+ class FooterController extends \Controller {
+ 	/**
+ 	 * Default entry point for footer partial
+@@ -10,12 +13,12 @@ class FooterController extends \Controller {
+ 
+ 		$this->response->data["footer"] = $this->template->getViewPath("footer");
+ 
+-		$this->response->data["stylesheets"] = array_merge(
++		$this->response->data["stylesheets"] = \Arr::merge(
+ 			$this->response->data["stylesheets"] ?? [],
+ 			$this->template->assets->getStylesheets("footer")
+ 		);
+ 
+-		$this->response->data["javascript"] = array_merge(
++		$this->response->data["javascript"] = \Arr::merge(
+ 			$this->response->data["javascript"] ?? [],
+ 			$this->template->assets->getJavascript("footer")
+ 		);
+diff --git a/src/Controllers/HeaderController.php b/src/Controllers/Partial/HeaderController.php
+similarity index 85%
+rename from src/Controllers/HeaderController.php
+rename to src/Controllers/Partial/HeaderController.php
+index 6e8a583..c2fe161 100644
+--- a/src/Controllers/HeaderController.php
++++ b/src/Controllers/Partial/HeaderController.php
+@@ -1,4 +1,7 @@
+ <?php
++
++namespace Partial;
++
+ class HeaderController extends \Controller {
+ 	/**
+ 	 * Default entry point for the header partial
+@@ -10,16 +13,21 @@ class HeaderController extends \Controller {
+ 
+ 		$this->response->data["header"] = $this->template->getViewPath("header");
+ 
+-		$this->response->data["stylesheets"] = array_merge(
++		$this->response->data["stylesheets"] = \Arr::merge(
+ 			$this->response->data["stylesheets"] ?? [],
+ 			$this->template->assets->getStylesheets("header")
+ 		);
+ 
+-		$this->response->data["javascript"] = array_merge(
++		$this->response->data["javascript"] = \Arr::merge(
+ 			$this->response->data["javascript"] ?? [],
+ 			$this->template->assets->getJavascript("header")
+ 		);
+ 
++		$this->response->data["route"] = \Arr::map(
++			$this->router->getRoute(),
++			fn($iMVCStructure) => \Str::safe(\Str::lower($iMVCStructure->toStringWithoutSuffix()))
++		);
++
+ 		$this->response->data["bodyClasses"] = $this->getBodyTagClasses();
+ 	}
+ 
+diff --git a/src/Controllers/ForbiddenController.php b/src/Controllers/StatusCode/ForbiddenController.php
+similarity index 85%
+rename from src/Controllers/ForbiddenController.php
+rename to src/Controllers/StatusCode/ForbiddenController.php
+index 6297b6f..32fce56 100644
+--- a/src/Controllers/ForbiddenController.php
++++ b/src/Controllers/StatusCode/ForbiddenController.php
+@@ -1,9 +1,12 @@
+ <?php
+ 
++namespace StatusCode;
++
+ /**
+  * Controller for paths that is inaccessible in the current environment.
+  */
+-class ForbiddenController extends Controller {
++class ForbiddenController extends \Controller {
++
+ 	/**
+ 	 * Constructs and indicates the path was not allowed.
+ 	 * Paths are routed here when \Core\StatusCode\Forbidden is thrown
+diff --git a/src/Controllers/StatusCode/NotAcceptableController.php b/src/Controllers/StatusCode/NotAcceptableController.php
+new file mode 100644
+index 0000000..2e1f7a2
+--- /dev/null
++++ b/src/Controllers/StatusCode/NotAcceptableController.php
+@@ -0,0 +1,21 @@
++<?php
++
++namespace StatusCode;
++
++class NotAcceptableController extends \Controller {
++
++	/**
++	 * Constructs and indicates the request was not acceptable.
++	 * Paths are routed here when \Core\StatusCode\NotAcceptable is thrown
++	 * This is typically used when the requested resource format is not supported.
++	 * 
++	 * HTTP response code 406 should be body-less, as it indicates that the server
++	 * cannot produce a response matching the list of acceptable values defined in the request's headers.
++	 * 
++	 * @return void
++	 */
++	public function index(): void {
++		http_response_code(\Core\StatusCode\NotAcceptable::getHttpCode());
++		exit;
++	}
++}
+diff --git a/src/Controllers/NotFoundController.php b/src/Controllers/StatusCode/NotFoundController.php
+similarity index 87%
+rename from src/Controllers/NotFoundController.php
+rename to src/Controllers/StatusCode/NotFoundController.php
+index 2810c0e..ba7cec8 100644
+--- a/src/Controllers/NotFoundController.php
++++ b/src/Controllers/StatusCode/NotFoundController.php
+@@ -1,10 +1,12 @@
+ <?php
+ 
++namespace StatusCode;
++
+ /**
+  * Controller for paths that either cannot be routed.
+  * Or when a \Core\Exception\NotFound was thrown
+  */
+-class NotFoundController extends Controller {
++class NotFoundController extends \Controller {
+ 
+ 	/**
+ 	 * Constructs an indicates the path wasn't found
+diff --git a/src/Libraries/Arr.php b/src/Libraries/Arr.php
+index 0ff1c4c..014503f 100644
+--- a/src/Libraries/Arr.php
++++ b/src/Libraries/Arr.php
+@@ -138,7 +138,7 @@ class Arr {
+ 	 * @return array
+ 	 */
+ 	public static function merge(null|array ...$arrays): array {
+-		return array_merge(...array_map(static fn($array) => $array ?? [], $arrays));
++		return array_merge(...array_filter($arrays));
+ 	}
+ 
+ 	/**
+diff --git a/src/Libraries/Controller.php b/src/Libraries/Controller.php
+index 0671310..3f917fd 100644
+--- a/src/Libraries/Controller.php
++++ b/src/Libraries/Controller.php
+@@ -110,8 +110,8 @@ abstract class Controller {
+ 		));
+ 
+ 		if ($iController === null && $this->contentType::class == Html::class) {
+-			$this->children[] = new ClassName("Header");
+-			$this->children[] = new ClassName("Footer");
++			$this->children[] = new ClassName("Partial\Header");
++			$this->children[] = new ClassName("Partial\Footer");
+ 
+ 			$this->response->setTitle(array_slice($this->request->getArguments(), -1)[0] ?? '');
+ 		}
+diff --git a/src/Libraries/Core/Application.php b/src/Libraries/Core/Application.php
+index 181f4e7..db0a715 100644
+--- a/src/Libraries/Core/Application.php
++++ b/src/Libraries/Core/Application.php
+@@ -84,6 +84,7 @@ final class Application {
+ 		$methodName = $iMethodName ? $iMethodName->toString() : MethodName::DEFAULT;
+ 		$defaultMethodName = $this->getRouter()->getDefaultMethodName();
+ 
++		// Only record the top-level controller
+ 		if ($parentController === null) {
+ 			$this->executedClassName = $iClassName;
+ 			$this->calledMethodName = $iMethodName ?? $defaultMethodName;
+@@ -91,6 +92,8 @@ final class Application {
+ 
+ 		$iController = new $controllerName($this, $parentController);
+ 
++		// Pass response data from parent
++		// controller to child controller
+ 		if ($parentController !== null) {
+ 			$iController->getResponse()->setData($parentController->getResponse()->getData());
+ 		}
+@@ -102,7 +105,7 @@ final class Application {
+ 
+ 			\Core\Event::trigger("core.controller.method.after", $iController, $iMethodName);
+ 		} catch (\Core\StatusCode\StatusCode $iStatusCode) {
+-			$iController = $this->executeController(new ClassName($iStatusCode->getClassName()));
++			$iController = $this->executeController($iStatusCode->getClassName(), new MethodName(MethodName::DEFAULT));
+ 		}
+ 
+ 		foreach ($iController->getChildren() as $childControllerName) {
+diff --git a/src/Libraries/Core/Router.php b/src/Libraries/Core/Router.php
+index 9bf447e..edc0e4c 100644
+--- a/src/Libraries/Core/Router.php
++++ b/src/Libraries/Core/Router.php
+@@ -121,10 +121,11 @@ final class Router {
+ 
+ 	/**
+ 	 * Get ClassName for requests that cannot be routed
++	 * This is the class that will be executed when a route cannot be found
+ 	 * @return \Core\ClassName
+ 	 */
+ 	public function getNotFoundClassName(): ClassName {
+-		return new ClassName("NotFound");
++		return new ClassName("StatusCode\NotFound");
+ 	}
+ 
+ 	/**
+diff --git a/src/Libraries/Core/StatusCode/Forbidden.php b/src/Libraries/Core/StatusCode/Forbidden.php
+index dc9fce0..7ebc72a 100644
+--- a/src/Libraries/Core/StatusCode/Forbidden.php
++++ b/src/Libraries/Core/StatusCode/Forbidden.php
+@@ -2,12 +2,10 @@
+ 
+ namespace Core\StatusCode;
+ 
+-use \Core\StatusCode\StatusCode;
+-
+ /**
+  * Throw this whenever you want to redirect the current controller to a "forbidden" controller
+  */
+-class Forbidden extends StatusCode {
++class Forbidden extends \Exception implements StatusCode {
+ 
+ 	/**
+ 	 * @return int
+@@ -15,4 +13,13 @@ class Forbidden extends StatusCode {
+ 	public static function getHttpCode(): int {
+ 		return 403;
+ 	}
++
++	/**
++	 * Returns a class name matching the name
++	 * of the http error exception being thrown.
++	 * @return \Core\ClassName
++	 */
++	public static function getClassName(): \Core\ClassName {
++		return new \Core\ClassName("StatusCode\Forbidden");
++	}
+ }
+diff --git a/src/Libraries/Core/StatusCode/NotAcceptable.php b/src/Libraries/Core/StatusCode/NotAcceptable.php
+index ec34c1a..6f19dae 100644
+--- a/src/Libraries/Core/StatusCode/NotAcceptable.php
++++ b/src/Libraries/Core/StatusCode/NotAcceptable.php
+@@ -2,28 +2,24 @@
+ 
+ namespace Core\StatusCode;
+ 
+-use \Core\StatusCode\StatusCode;
+-
+ /**
+  * Throw this whenever you want to redirect the current controller to a "forbidden" controller
+  */
+-class NotAcceptable extends StatusCode {
+-
++class NotAcceptable extends \Exception implements StatusCode {
+ 	/**
+-	 * Treat this HTTP code as a bodyless response
+-	 * This class is usually constructed outside
+-	 * of the scope where StatusCode is caught
+-	 * and handled by a controller.
++	 * The HTTP status code for Not Acceptable controller.
++	 * @return int
+ 	 */
+-	public function __construct() {
+-		\http_response_code(self::getHttpCode());
+-		exit;
++	public static function getHttpCode(): int {
++		return 406;
+ 	}
+ 
+ 	/**
+-	 * @return int
++	 * Returns a class name matching the name
++	 * of the http error exception being thrown.
++	 * @return \Core\ClassName
+ 	 */
+-	public static function getHttpCode(): int {
+-		return 406;
++	public static function getClassName(): \Core\ClassName {
++		return new \Core\ClassName("StatusCode\NotAcceptable");
+ 	}
+ }
+diff --git a/src/Libraries/Core/StatusCode/NotFound.php b/src/Libraries/Core/StatusCode/NotFound.php
+index 25340bc..630c271 100644
+--- a/src/Libraries/Core/StatusCode/NotFound.php
++++ b/src/Libraries/Core/StatusCode/NotFound.php
+@@ -2,16 +2,23 @@
+ 
+ namespace Core\StatusCode;
+ 
+-use \Core\StatusCode\StatusCode;
+-
+ /**
+  * Throw this whenever you want to redirect the current controller to a not found controller
+  */
+-class NotFound extends StatusCode {
++class NotFound extends \Exception implements StatusCode {
+ 	/**
+ 	 * @return int
+ 	 */
+ 	public static function getHttpCode(): int {
+ 		return 404;
+ 	}
++
++	/**
++	 * Returns a class name matching the name
++	 * of the http error exception being thrown.
++	 * @return \Core\ClassName
++	 */
++	public static function getClassName(): \Core\ClassName {
++		return new \Core\ClassName("StatusCode\NotFound");
++	}
+ }
+diff --git a/src/Libraries/Core/StatusCode/StatusCode.php b/src/Libraries/Core/StatusCode/StatusCode.php
+index 42a2abd..5f5517c 100644
+--- a/src/Libraries/Core/StatusCode/StatusCode.php
++++ b/src/Libraries/Core/StatusCode/StatusCode.php
+@@ -9,22 +9,17 @@ namespace Core\StatusCode;
+  * and only serves as a catch-all class for
+  * all http error exceptions extending this 
+  */
+-abstract class StatusCode extends \Exception {
++interface StatusCode {
+ 	/**
+ 	 * Return an integer representing a HTTP code
+ 	 * @return int Any HTTP code
+ 	 */
+-	abstract public static function getHttpCode(): int;
++	public static function getHttpCode(): int;
+ 
+ 	/**
+-	 * Returns a class shortname matching the name
++	 * Returns a class name matching the name
+ 	 * of the http error exception being thrown.
+-	 * The request should be internally redirected
+-	 * to a controller of this name responsible
+-	 * of handling the remainder of the request.
+-	 * @return string
++	 * @return \Core\ClassName
+ 	 */
+-	public function getClassName(): string {
+-		return substr(strrchr(static::class, '\\'), 1);
+-	}
++	public static function getClassName(): \Core\ClassName;
+ }
+diff --git a/tests/ApplicationTest.php b/tests/ApplicationTest.php
+index 0bf5b6a..e2b011e 100644
+--- a/tests/ApplicationTest.php
++++ b/tests/ApplicationTest.php
+@@ -29,7 +29,7 @@ class ApplicationTest extends \PHPUnit\Framework\TestCase {
+ 
+ 			$iController = $iApplication->run();
+ 
+-			$this->assertInstanceOf(\NotFoundController::class, $iController);
++			$this->assertInstanceOf(\StatusCode\NotFoundController::class, $iController);
+ 		}
+ 	}
+ 
+@@ -44,7 +44,7 @@ class ApplicationTest extends \PHPUnit\Framework\TestCase {
+ 
+ 		$iController = $iApplication->executeController($controller, $method);
+ 
+-		$this->assertInstanceOf(NotFoundController::class, $iController);
++		$this->assertInstanceOf(\StatusCode\NotFoundController::class, $iController);
+ 	}
+ 
+ 	/**
+@@ -58,6 +58,6 @@ class ApplicationTest extends \PHPUnit\Framework\TestCase {
+ 
+ 		$iController = $iApplication->executeController($controller, $method);
+ 
+-		$this->assertInstanceOf(NotFoundController::class, $iController);
++		$this->assertInstanceOf(\StatusCode\NotFoundController::class, $iController);
+ 	}
+ }
+\ No newline at end of file
+diff --git a/tests/HttpRequestTest.php b/tests/HttpRequestTest.php
+index 63e9aad..d05b72b 100644
+--- a/tests/HttpRequestTest.php
++++ b/tests/HttpRequestTest.php
+@@ -1,52 +1,71 @@
+ <?php
++
+ use PHPUnit\Framework\TestCase;
+ use PHPUnit\Framework\Attributes\CoversClass;
+ 
+ #[CoversClass(HttpRequest::class)]
+ class HttpRequestTest extends TestCase {
+-	public static function tearDownAfterClass() : void {
+-		$cookiejar =  dirname(__FILE__)."/cookiejar";
+-		if(file_exists($cookiejar)) unlink($cookiejar);
++	public static function tearDownAfterClass(): void {
++		$cookiejar =  dirname(__FILE__) . "/cookiejar";
++		if (file_exists($cookiejar)) unlink($cookiejar);
+ 	}
+ 
+-	public function testWithMethodUrlOnly() {
+-		$data = \Http\Request::with("https://httpbin.org/post")
+-		->post(["data" => "foo"])
+-		->getResponse()
+-		->asObject();
++	/**
++	 * Helper to skip test if httpbin.dev times out (CURLE_OPERATION_TIMEDOUT = 28)
++	 */
++	protected function skipOnTimeout(\Throwable $e) {
++		if (method_exists($e, 'getCode') && $e->getCode() === CURLE_OPERATION_TIMEDOUT) {
++			$this->markTestSkipped('Skipped due to httpbin.dev timeout');
++		}
++		throw $e;
++	}
+ 
+-		$this->assertEquals($data->form->data, "foo");
++	public function testWithMethodUrlOnly() {
++		try {
++			$data = \Http\Request::with("https://httpbin.dev/post")
++				->post(["data" => "foo"])
++				->getResponse()
++				->asObject();
++
++			$this->assertEquals($data->form->data[0], "foo");
++		} catch (\Throwable $e) {
++			$this->skipOnTimeout($e);
++		}
+ 	}
+ 
+ 	public function testWithMethodTwoParams() {
+-		$data = \Http\Request::with("POST", "https://httpbin.org/post")
+-		->send(["data" => "foo"])
+-		->getResponse()
+-		->asObject();
+-
+-		$this->assertEquals($data->form->data, "foo");
++		try {
++			$data = \Http\Request::with("POST", "https://httpbin.dev/post")
++				->send(["data" => "foo"])
++				->getResponse()
++				->asObject();
++
++			$this->assertEquals("foo", $data->form->data[0]);
++		} catch (\Throwable $e) {
++			$this->skipOnTimeout($e);
++		}
+ 	}
+ 
+ 	public function testWithMethodThrowsException() {
+ 		$this->expectException(\ValueError::class);
+-		\Http\Request::with("https://httpbin.org/post", "https://httpbin.org/post");
++		\Http\Request::with("https://httpbin.dev/post", "https://httpbin.dev/post");
+ 	}
+ 
+ 	public function testGetHttpCode() {
+-		$httpCode = (new \Http\Request("https://httpbin.org/status/301"))
+-		->setOption(CURLOPT_FOLLOWLOCATION, false)
+-		->head()
+-		->getResponse()
+-		->getHttpCode();
++		$httpCode = (new \Http\Request("https://httpbin.dev/status/301"))
++			->setOption(CURLOPT_FOLLOWLOCATION, false)
++			->head()
++			->getResponse()
++			->getHttpCode();
+ 
+ 		$this->assertEquals(301, $httpCode);
+ 	}
+ 
+ 	/**
+ 	 * Tests GET request works as expected
+-	 */	
++	 */
+ 	public function testGetRequest() {
+-		$iRequest = (new Http\Request("https://httpbin.org/get"))->get();
++		$iRequest = (new Http\Request("https://httpbin.dev/get"))->get();
+ 		$this->assertEquals(200, $iRequest->getResponse()->getHttpCode());
+ 	}
+ 
+@@ -54,7 +73,7 @@ class HttpRequestTest extends TestCase {
+ 	 * Tests POST request works as expected
+ 	 */
+ 	public function testPostRequest() {
+-		$iRequest = (new Http\Request("https://httpbin.org/post"))->post();
++		$iRequest = (new Http\Request("https://httpbin.dev/post"))->post();
+ 		$this->assertEquals(200, $iRequest->getResponse()->getHttpCode());
+ 	}
+ 
+@@ -62,7 +81,7 @@ class HttpRequestTest extends TestCase {
+ 	 * Tests PATCH request works as expected
+ 	 */
+ 	public function testPatchRequest() {
+-		$iRequest = (new Http\Request("https://httpbin.org/patch"))->patch();
++		$iRequest = (new Http\Request("https://httpbin.dev/patch"))->patch();
+ 		$this->assertEquals(200, $iRequest->getResponse()->getHttpCode());
+ 	}
+ 
+@@ -70,7 +89,7 @@ class HttpRequestTest extends TestCase {
+ 	 * Tests PUT request works as expected
+ 	 */
+ 	public function testPutRequest() {
+-		$iRequest = (new Http\Request("https://httpbin.org/put"))->put();
++		$iRequest = (new Http\Request("https://httpbin.dev/put"))->put();
+ 		$this->assertEquals(200, $iRequest->getResponse()->getHttpCode());
+ 	}
+ 
+@@ -78,7 +97,7 @@ class HttpRequestTest extends TestCase {
+ 	 * Now test that we can actually put stuff.
+ 	 */
+ 	public function testPutData() {
+-		$iRequest = new Http\Request("https://httpbin.org/put");
++		$iRequest = new Http\Request("https://httpbin.dev/put");
+ 		$response = $iRequest->put(http_build_query(["foo" => "bar"]))->getResponse()->asObject();
+ 
+ 		$this->assertTrue(isset($response->form->foo));
+@@ -88,7 +107,7 @@ class HttpRequestTest extends TestCase {
+ 	 * Tests DELETE request works as expected
+ 	 */
+ 	public function testDeleteRequest() {
+-		$iRequest = (new Http\Request("https://httpbin.org/delete"))->delete();
++		$iRequest = (new Http\Request("https://httpbin.dev/delete"))->delete();
+ 		$this->assertEquals(200, $iRequest->getResponse()->getHttpCode());
+ 	}
+ 
+@@ -99,7 +118,7 @@ class HttpRequestTest extends TestCase {
+ 		$this->expectException(\Http\HttpError::class);
+ 		$this->expectExceptionCode(418);
+ 
+-		$iRequest = new \Http\Request("https://httpbin.org/status/418");
++		$iRequest = new \Http\Request("https://httpbin.dev/status/418");
+ 		$iResponse = $iRequest->get();
+ 
+ 		$this->assertFalse($iResponse->isSuccess());
+@@ -109,24 +128,34 @@ class HttpRequestTest extends TestCase {
+ 	 * Tests cookies can be set and parsed accordingly.
+ 	 */
+ 	public function testCanRecieveCookies() {
+-		$cookiejar = dirname(__FILE__)."/cookiejar";
++		$cookiejar = dirname(__FILE__) . "/cookiejar";
+ 
+-		$iRequest = new \Http\Request("https://httpbin.org/cookies/set?name1=value1&value2=value2&value3=value3");
++		$iRequest = new \Http\Request("https://httpbin.dev/cookies/set?name1=value1&value2=value2&value3=value3");
+ 		$iRequest->setCookiejar($cookiejar);
+ 		$iResponse = $iRequest->get()->getResponse();
+ 
+-		$this->assertSame([
+-			"name1=value1; Path=/",
+-			"value2=value2; Path=/",
+-			"value3=value3; Path=/"
+-		], $iResponse->getHeaders("Set-Cookie"));
++		$responseCookies = $iResponse->getHeaders("Set-Cookie");
++
++		$expectedCookies = [
++			"name1=value1; HttpOnly",
++			"value2=value2; HttpOnly",
++			"value3=value3; HttpOnly"
++		];
++
++		// Flatten cookies array if needed
++		$responseCookies = is_array($responseCookies) ? array_values($responseCookies) : [$responseCookies];
++
++		// Assert that all expected cookies are present and no excess
++		sort($responseCookies);
++		sort($expectedCookies);
++		$this->assertSame($expectedCookies, $responseCookies);
+ 	}
+ 
+ 	/**
+ 	 * Quick test that we get a useful object from an XML response
+ 	 */
+ 	public function testParseXmlPositive() {
+-		$iRequest = new Http\Request("https://httpbin.org/xml");
++		$iRequest = new Http\Request("https://httpbin.dev/xml");
+ 		$xml = $iRequest->get()->getResponse()->asXml();
+ 		$this->assertInstanceOf("SimpleXMLElement", $xml);
+ 	}
+@@ -135,16 +164,16 @@ class HttpRequestTest extends TestCase {
+ 	 * Test GET request parameters are send as expected
+ 	 */
+ 	public function testGetRequestParams() {
+-		$iRequest = (new Http\Request("https://httpbin.org/get?john=doe"))->get();
++		$iRequest = (new Http\Request("https://httpbin.dev/get?john=doe"))->get();
+ 		$response = json_decode($iRequest->getResponse());
+ 		$this->assertNotEmpty($response->args);
+-		$this->assertEquals("doe", $response->args->john);
++		$this->assertEquals("doe", $response->args->john[0]);
+ 
+ 		$params = ["meal" => "pizza", "toppings" => ["cheese", "ham", "pineapple", "bacon"]];
+-		$iRequest2 = (new Http\Request("https://httpbin.org/get"))->get($params);
++		$iRequest2 = (new Http\Request("https://httpbin.dev/get"))->get($params);
+ 		$response2 = json_decode($iRequest2->getResponse(), true);
+ 		$this->assertNotEmpty($response2["args"]);
+-		
++
+ 		/*
+ 		 * I check the keys this way because the returned keys are in this format:
+ 		 * Array (
+@@ -168,9 +197,9 @@ class HttpRequestTest extends TestCase {
+ 		 *	)
+ 		 */
+ 		$args = $response2["args"];
+-		foreach($params["toppings"] as $key => $value) {
+-			$key2check = "toppings[".$key.']';
+-			if(!isset($args[$key2check]) || $args[$key2check] != $value) {
++		foreach ($params["toppings"] as $key => $value) {
++			$key2check = "toppings[" . $key . ']';
++			if (!isset($args[$key2check][0]) || $args[$key2check][0] != $value) {
+ 				$this->fail("A response key/value was not properly returned.");
+ 			}
+ 		}
+@@ -180,27 +209,27 @@ class HttpRequestTest extends TestCase {
+ 	 * Test set header
+ 	 */
+ 	public function testSetHeader() {
+-        $header = 'Content-Type: application/json';
+-        $iRequest = new Http\Request();
+-        $iRequest->setHeader($header);
++		$header = 'Content-Type: application/json';
++		$iRequest = new Http\Request();
++		$iRequest->setHeader($header);
+ 
+-        $this->assertContains($header, $iRequest->headers);
+-    }
++		$this->assertContains($header, $iRequest->headers);
++	}
+ 
+ 	/**
+ 	 * Test authorization
+ 	 */
+ 	public function testSetAuthorization() {
+-        $username = 'user';
+-        $password = 'pass';
+-        $authType = CURLAUTH_BASIC;
++		$username = 'user';
++		$password = 'pass';
++		$authType = CURLAUTH_BASIC;
+ 
+-        $iRequest = new \Http\Request();
+-        $iRequest->setAuthorization($username, $password, $authType);
++		$iRequest = new \Http\Request();
++		$iRequest->setAuthorization($username, $password, $authType);
+ 
+-        $this->assertEquals($authType, $iRequest->getOption(CURLOPT_HTTPAUTH));
+-        $this->assertEquals("$username:$password", $iRequest->getOption(CURLOPT_USERPWD));
+-    }
++		$this->assertEquals($authType, $iRequest->getOption(CURLOPT_HTTPAUTH));
++		$this->assertEquals("$username:$password", $iRequest->getOption(CURLOPT_USERPWD));
++	}
+ 
+ 	/**
+ 	 * Test we are able to send a header
+@@ -211,19 +240,25 @@ class HttpRequestTest extends TestCase {
+ 			"X-Lastname" => "Doe",
+ 		];
+ 
+-		$iRequest = new Http\Request("https://httpbin.org/headers");
+-		foreach($ourHeaders as $key => $value) {
+-			$iRequest->setHeader($key.": ".$value);
++		$iRequest = new Http\Request("https://httpbin.dev/headers");
++		foreach ($ourHeaders as $key => $value) {
++			$iRequest->setHeader($key . ": " . $value);
+ 		}
+ 
+ 		$response = json_decode($iRequest->get()->getResponse(), true);
+ 
+ 		$this->assertNotEmpty($response["headers"]);
+ 
++		foreach($ourHeaders as $key => $value) {
++			$this->assertEquals($value, $response["headers"][$key][0]);
++		}
++		/*
+ 		$responseHeadersInCommonWtihOurHeaders = array_intersect($response["headers"], $ourHeaders);
+ 
+ 		// This should assert that we got all our headers back.
+ 		$this->assertEquals($ourHeaders, $responseHeadersInCommonWtihOurHeaders);
++
++		*/
+ 	}
+ 
+ 	/**
+@@ -232,7 +267,7 @@ class HttpRequestTest extends TestCase {
+ 	public function testUserAgentSpoofing() {
+ 		$agent = "Mozilla/5.0 (Windows; U; Windows NT 6.1; rv:2.2) Gecko/20110201";
+ 
+-		$iRequest = new Http\Request("https://httpbin.org/user-agent");
++		$iRequest = new Http\Request("https://httpbin.dev/user-agent");
+ 		$iRequest->setOption(CURLOPT_USERAGENT, $agent);
+ 		$response = $iRequest->get()->getResponse();
+ 		$response = json_decode($response, true);
+@@ -248,8 +283,8 @@ class HttpRequestTest extends TestCase {
+ 
+ 		$this->expectException(\Http\ConnectionError::class);
+ 		$this->expectExceptionCode(CURLE_TOO_MANY_REDIRECTS);
+-	
+-		$iRequest = new Http\Request("https://httpbin.org/redirect/" . $numRedirs);
++
++		$iRequest = new Http\Request("https://httpbin.dev/redirect/" . $numRedirs);
+ 		$iRequest->setOption(CURLOPT_MAXREDIRS, 5);
+ 		$iRequest->get();
+ 	}
+@@ -261,14 +296,14 @@ class HttpRequestTest extends TestCase {
+ 		$u = "john";
+ 		$p = "doe";
+ 
+-		$iRequest = new Http\Request("https://httpbin.org/basic-auth/".$u.'/'.$p);
++		$iRequest = new Http\Request("https://httpbin.dev/basic-auth/" . $u . '/' . $p);
+ 		$iRequest->setAuthorization($u, $p);
+ 		$iResponse = $iRequest->get()->getResponse();
+ 
+ 		$this->assertEquals(200, $iResponse->getHttpCode());
+ 
+ 		$iResponse = $iResponse->asObject();
+-		$this->assertTrue($iResponse->authenticated);
++		$this->assertTrue($iResponse->authorized);
+ 	}
+ 
+ 	/**
+@@ -279,7 +314,7 @@ class HttpRequestTest extends TestCase {
+ 		$u = "john";
+ 		$p = "wayne";
+ 
+-		$url = "https://httpbin.org/digest-auth/".$qop."/".$u."/".$p."/MD5/never";
++		$url = "https://httpbin.dev/digest-auth/" . $qop . "/" . $u . "/" . $p . "/MD5";
+ 
+ 		$iRequest = new \Http\Request($url);
+ 		$iRequest->setVerbose();
+@@ -301,16 +336,16 @@ class HttpRequestTest extends TestCase {
+ 		fwrite($tmpfileHandle, $time);
+ 
+ 		// As of PHP 5.5 CURLFile objects should be used instead for POSTing files.
+-		$cfile = new CURLFile($tmpfile, mime_content_type($tmpfile),'tmpfile.txt');
++		$cfile = new CURLFile($tmpfile, mime_content_type($tmpfile), 'tmpfile.txt');
+ 		$data = array('tmpfile' => $cfile);
+ 
+ 		// Let's now do the more fancy part
+ 		$iRequest = new Http\Request("https://httpbin.org/post");
+ 		$iRequest->setHeader("Content-Type", "multipart/form-data");
+ 		$res = $iRequest->post($data)->getResponse();
+-		
+ 		// Time to validate the data we got.
+ 		$res = json_decode($res);
++
+ 		$this->assertNotEmpty($res->files);
+ 		$this->assertEquals($time, $res->files->tmpfile);
+ 	}
+diff --git a/tests/RouterTest.php b/tests/RouterTest.php
+index eb85df7..98b029f 100644
+--- a/tests/RouterTest.php
++++ b/tests/RouterTest.php
+@@ -32,7 +32,7 @@ class RouterTest extends TestCase {
+ 		$this->assertInstanceOf(\Core\ClassName::class, $controller);
+ 		$this->assertInstanceOf(\Core\MethodName::class, $method);
+ 
+-		$this->assertEquals(\NotFoundController::class, $controller->toString());
++		$this->assertEquals(\StatusCode\NotFoundController::class, $controller->toString());
+ 		$this->assertEquals("index", $method->toString());
+ 	}
+ 
+@@ -59,7 +59,7 @@ class RouterTest extends TestCase {
+ 		$this->assertInstanceOf(\Core\ClassName::class, $controller);
+ 		$this->assertInstanceOf(\Core\MethodName::class, $method);
+ 
+-		$this->assertEquals(\NotFoundController::class, $controller->toString());
++		$this->assertEquals(\StatusCode\NotFoundController::class, $controller->toString());
+ 		$this->assertEquals("index", $method->toString());
+ 	}
+ }
+\ No newline at end of file

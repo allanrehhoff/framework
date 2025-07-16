@@ -16,7 +16,7 @@
     <testsuites>
         <testsuite name="default">
             <directory>tests</directory>
-            <!--<file>tests/NegotiatorTest.php</file>-->
+            <!-- <file>tests/ApplicationTest.php</file> -->
         </testsuite>
     </testsuites>
 
