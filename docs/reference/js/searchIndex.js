@@ -6,30 +6,10 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/CliController.html"
         },                {
-            "fqsen": "\\FooterController",
-            "name": "FooterController",
-            "summary": "",
-            "url": "classes/FooterController.html"
-        },                {
-            "fqsen": "\\ForbiddenController",
-            "name": "ForbiddenController",
-            "summary": "Controller\u0020for\u0020paths\u0020that\u0020is\u0020inaccessible\u0020in\u0020the\u0020current\u0020environment.",
-            "url": "classes/ForbiddenController.html"
-        },                {
-            "fqsen": "\\HeaderController",
-            "name": "HeaderController",
-            "summary": "",
-            "url": "classes/HeaderController.html"
-        },                {
             "fqsen": "\\IndexController",
             "name": "IndexController",
             "summary": "This\u0020is\u0020the\u0020frontpage\u0020\u0028index\u0029\u0020specific\u0020controller,\u0020use\u0020it\u0020as\u0020your\u0020boilerplate\u0020for\u0020other\u0020controllers.",
             "url": "classes/IndexController.html"
-        },                {
-            "fqsen": "\\NotFoundController",
-            "name": "NotFoundController",
-            "summary": "Controller\u0020for\u0020paths\u0020that\u0020either\u0020cannot\u0020be\u0020routed.",
-            "url": "classes/NotFoundController.html"
         },                {
             "fqsen": "\\Bootstrap\\Bootstrap",
             "name": "Bootstrap",
@@ -351,10 +331,45 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Database-PrimaryKey-UuidV7.html"
         },                {
+            "fqsen": "\\Partial\\FooterController",
+            "name": "FooterController",
+            "summary": "",
+            "url": "classes/Partial-FooterController.html"
+        },                {
+            "fqsen": "\\Partial\\HeaderController",
+            "name": "HeaderController",
+            "summary": "",
+            "url": "classes/Partial-HeaderController.html"
+        },                {
+            "fqsen": "\\StatusCode\\ForbiddenController",
+            "name": "ForbiddenController",
+            "summary": "Controller\u0020for\u0020paths\u0020that\u0020is\u0020inaccessible\u0020in\u0020the\u0020current\u0020environment.",
+            "url": "classes/StatusCode-ForbiddenController.html"
+        },                {
+            "fqsen": "\\StatusCode\\NotAcceptableController",
+            "name": "NotAcceptableController",
+            "summary": "",
+            "url": "classes/StatusCode-NotAcceptableController.html"
+        },                {
+            "fqsen": "\\StatusCode\\NotFoundController",
+            "name": "NotFoundController",
+            "summary": "Controller\u0020for\u0020paths\u0020that\u0020either\u0020cannot\u0020be\u0020routed.",
+            "url": "classes/StatusCode-NotFoundController.html"
+        },                {
             "fqsen": "\\",
             "name": "\\",
             "summary": "",
             "url": "namespaces/default.html"
+        },                {
+            "fqsen": "\\Partial",
+            "name": "Partial",
+            "summary": "",
+            "url": "namespaces/partial.html"
+        },                {
+            "fqsen": "\\StatusCode",
+            "name": "StatusCode",
+            "summary": "",
+            "url": "namespaces/statuscode.html"
         },                {
             "fqsen": "\\Bootstrap",
             "name": "Bootstrap",

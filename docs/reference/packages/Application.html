@@ -56,6 +56,14 @@
                     <section class="phpdocumentor-sidebar__category">
             <h2 class="phpdocumentor-sidebar__category-header">Namespaces</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/partial.html" class="">Partial</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/statuscode.html" class="">StatusCode</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="namespaces/bootstrap.html" class="">Bootstrap</a>
 </h4>
 
@@ -150,21 +158,19 @@
 </h3>
 
 <dl class="phpdocumentor-table-of-contents">
+            <dt class="phpdocumentor-table-of-contents__entry -interface"><a href="classes/Core-StatusCode-StatusCode.html"><abbr title="\Core\StatusCode\StatusCode">StatusCode</abbr></a></dt>
+        <dd>The base class for all HTTP exceptions to extend upon
+This class is intentionally abstract
+As it should not be instantiated directly
+and only serves as a catch-all class for
+all http error exceptions extending this</dd>
             <dt class="phpdocumentor-table-of-contents__entry -interface"><a href="classes/Core-ContentType-ContentTypeInterface.html"><abbr title="\Core\ContentType\ContentTypeInterface">ContentTypeInterface</abbr></a></dt>
         <dd>Interface ContentType</dd>
     
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/CliController.html"><abbr title="\CliController">CliController</abbr></a></dt>
         <dd></dd>
-            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/FooterController.html"><abbr title="\FooterController">FooterController</abbr></a></dt>
-        <dd></dd>
-            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/ForbiddenController.html"><abbr title="\ForbiddenController">ForbiddenController</abbr></a></dt>
-        <dd>Controller for paths that is inaccessible in the current environment.</dd>
-            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/HeaderController.html"><abbr title="\HeaderController">HeaderController</abbr></a></dt>
-        <dd></dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/IndexController.html"><abbr title="\IndexController">IndexController</abbr></a></dt>
         <dd>This is the frontpage (index) specific controller, use it as your boilerplate for other controllers.</dd>
-            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/NotFoundController.html"><abbr title="\NotFoundController">NotFoundController</abbr></a></dt>
-        <dd>Controller for paths that either cannot be routed.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Bootstrap-Bootstrap.html"><abbr title="\Bootstrap\Bootstrap">Bootstrap</abbr></a></dt>
         <dd>Class Bootstrap</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Bootstrap-EventService.html"><abbr title="\Bootstrap\EventService">EventService</abbr></a></dt>
@@ -212,12 +218,6 @@ Follows a simple routing mechanism to match URLs and execute the corresponding c
         <dd>Throw this whenever you want to redirect the current controller to a &quot;forbidden&quot; controller</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Core-StatusCode-NotFound.html"><abbr title="\Core\StatusCode\NotFound">NotFound</abbr></a></dt>
         <dd>Throw this whenever you want to redirect the current controller to a not found controller</dd>
-            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Core-StatusCode-StatusCode.html"><abbr title="\Core\StatusCode\StatusCode">StatusCode</abbr></a></dt>
-        <dd>The base class for all HTTP exceptions to extend upon
-This class is intentionally abstract
-As it should not be instantiated directly
-and only serves as a catch-all class for
-all http error exceptions extending this</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Core-Template.html"><abbr title="\Core\Template">Template</abbr></a></dt>
         <dd>Loads and setups the current configured theme in use.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Database-Connection.html"><abbr title="\Database\Connection">Connection</abbr></a></dt>
@@ -259,6 +259,16 @@ A collection of null-aware array utility functions.</dd>
         <dd>Class Path</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/UUID.html"><abbr title="\UUID">UUID</abbr></a></dt>
         <dd>Represents a universally unique identifier (UUID), according to RFC 9562.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Partial-FooterController.html"><abbr title="\Partial\FooterController">FooterController</abbr></a></dt>
+        <dd></dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Partial-HeaderController.html"><abbr title="\Partial\HeaderController">HeaderController</abbr></a></dt>
+        <dd></dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/StatusCode-ForbiddenController.html"><abbr title="\StatusCode\ForbiddenController">ForbiddenController</abbr></a></dt>
+        <dd>Controller for paths that is inaccessible in the current environment.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/StatusCode-NotAcceptableController.html"><abbr title="\StatusCode\NotAcceptableController">NotAcceptableController</abbr></a></dt>
+        <dd></dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/StatusCode-NotFoundController.html"><abbr title="\StatusCode\NotFoundController">NotFoundController</abbr></a></dt>
+        <dd>Controller for paths that either cannot be routed.</dd>
     
             <dt class="phpdocumentor-table-of-contents__entry -trait"><a href="classes/Database-PrimaryKey-UuidV4.html"><abbr title="\Database\PrimaryKey\UuidV4">UuidV4</abbr></a></dt>
         <dd></dd>
