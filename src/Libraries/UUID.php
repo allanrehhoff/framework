@@ -92,7 +92,10 @@ class UUID {
 	/** @internal */
 	private static $unixtsMs = 0;
 
-	/** @internal */
+	/**
+	 * @internal
+	 * @return array<int, int>
+	 */
 	private static function getUnixTimeSubsec(): array {
 		$timestamp = microtime(false);
 		$unixts = intval(substr($timestamp, 11), 10);
@@ -115,7 +118,10 @@ class UUID {
 		return [$unixts, $subsec];
 	}
 
-	/** @internal */
+	/**
+	 * @internal
+	 * @return int Unix time in milliseconds
+	 */
 	private static function getUnixTimeMs(): int {
 		$timestamp = microtime(false);
 		$unixts = intval(substr($timestamp, 11), 10);
@@ -129,7 +135,12 @@ class UUID {
 		return $unixtsMs;
 	}
 
-	/** @internal */
+	/**
+	 * @internal
+	 * @param string $uuid The UUID string to strip extras from
+	 * @throws \InvalidArgumentException If the UUID string is invalid.
+	 * @return string
+	 */
 	private static function stripExtras(string $uuid): string {
 		if (preg_match(self::UUID_REGEX, $uuid, $m) !== 1) {
 			throw new \InvalidArgumentException('Invalid UUID string: ' . $uuid);
@@ -139,12 +150,22 @@ class UUID {
 		return strtolower($m[2] . $m[3] . $m[4] . $m[5] . $m[6]);
 	}
 
-	/** @internal */
+	/**
+	 * @internal
+	 * @param string $uuid The UUID string to convert to bytes
+	 * @throws \InvalidArgumentException If the UUID string is invalid.
+	 * @return string
+	 */
 	private static function getBytes(string $uuid): string {
 		return pack('H*', self::stripExtras($uuid));
 	}
 
-	/** @internal */
+	/**
+	 * @internal
+	 * @param string $uhex The UUID string in hexadecimal format
+	 * @param int $version The UUID version to set in the generated UUID
+	 * @return string
+	 */
 	private static function fromHex(string $uhex, int $version): string {
 		return sprintf(
 			'%08s-%04s-%04x-%04x-%12s',
@@ -164,12 +185,20 @@ class UUID {
 		);
 	}
 
-	/** @internal */
+	/**
+	 * @internal
+	 * @param int $value The value to encode
+	 * @return int
+	 */
 	private static function encodeSubsec(int $value): int {
 		return intdiv($value << self::V8_SUBSEC_BITS, self::V8_SUBSEC_RANGE);
 	}
 
-	/** @internal */
+	/**
+	 * @internal
+	 * @param int $value The value to decode
+	 * @return int
+	 */
 	private static function decodeSubsec(int $value): int {
 		return - (-$value * self::V8_SUBSEC_RANGE >> self::V8_SUBSEC_BITS);
 	}

@@ -53,6 +53,7 @@ class Connection {
 	 * @param string $username Username to use for authentication
 	 * @param string $password Password to use for authentication
 	 * @param string $database Name of the database to use
+	 * @param string $alias Alias for the connection instance, defaults to "default"
 	 * @return void
 	 * @since 1.0
 	 */
@@ -127,6 +128,7 @@ class Connection {
 	/**
 	 * Retrieve the latest initiated \Database\Connection instance.
 	 *
+	 * @param string $alias The alias of the connection instance to retrieve, defaults to "default".
 	 * @return Connection
 	 * @since 1.0
 	 */

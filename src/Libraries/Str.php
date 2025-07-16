@@ -10,7 +10,7 @@ class Str {
 	/**
 	 * Null aware string escape
 	 *
-	 * @param string $string The string to escape.
+	 * @param null|string $string The string to escape.
 	 * @return string The escaped string.
 	 */
 	public static function safe(null|string $string) {
@@ -323,9 +323,9 @@ class Str {
 	/**
 	 * Null aware string explode.
 	 *
-	 * @param string $separator
-	 * @param null|string $string
-	 * @param int $limit
+	 * @param string $separator The separator to use for splitting the string.
+	 * @param null|string $string The string to split.
+	 * @param int $limit The maximum number of elements in the resulting array. If omitted, there is no limit.
 	 * @return string[]
 	 */
 	public static function cut(string $separator, null|string $string, int $limit = PHP_INT_MAX): array {

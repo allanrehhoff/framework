@@ -149,10 +149,10 @@ class Request {
 	/**
 	 * Registers a fake response for a specific URL pattern using glob matching.
 	 * URL patterns are matched against incoming requests using glob-style patterns
-	 * 
+	 *
 	 * If a URL matches a pattern, the fake response will be returned instead of making a real request.
 	 * This is useful for testing or development when you want to avoid making real HTTP requests.
-	 * 
+	 *
 	 * A default "204 No Content" response is faked if the response array is ommitted.
 	 *
 	 * Common Examples:
@@ -160,8 +160,9 @@ class Request {
 	 * - `https://*.example.com` matches any subdomain of `example.com`.
 	 * - `*example.com*` matches any URL containing `example.com`.
 	 *
+	 * @param string|Method $method The HTTP method to fake (e.g. GET, POST, etc.)
 	 * @param string $pattern The glob pattern used to match URLs.
-	 * @param array<string, mixed> $response The fake response to return when the pattern is matched.
+	 * @param array $response The fake response to return when the pattern is matched.
 	 *        Expected keys:
 	 *        - `body` (string): The response body to be returned.
 	 *        - `http_code` (int): The HTTP status code to be returned.
@@ -203,13 +204,13 @@ class Request {
 	 * ]);
 	 */
 	public static function fake(string|Method $method, string $pattern, array $response = []): void {
-		$response['body'] 	   ??= "";
+		$response['body']       ??= "";
 		$response['http_code'] ??= 204; // "204 No Content" aligns with an empty body
 		$response['headers']   ??= ["Content-Type: text/html", "Content-Length: 0"];
 
-		$method instanceof Method ? $method : Method::from($method);
+		$method = $method instanceof Method ? $method : Method::from($method);
 
-		self::$fakes[$method][$pattern] = $response;
+		self::$fakes[$method->value][$pattern] = $response;
 	}
 
 	/**

@@ -253,7 +253,7 @@ abstract class Entity implements \JsonSerializable {
 	 */
 	#[\Deprecated("6.0.0", "Use hydrate() instead")]
 	public static function with(iterable|\stdClass $row): Collection|Entity {
-		return static::hydrate(...func_get_args());
+		return static::hydrate($row);
 	}
 
 	/**
@@ -287,7 +287,7 @@ abstract class Entity implements \JsonSerializable {
 	public static function search(array $searches = [], null|array $criteria = null, string $clause = "AND"): Collection|static {
 		if (empty($searches)) {
 			foreach ($criteria ?? [] as $field => $value) {
-				$searches[] = "$field = :$field";
+				$searches[] = $field . " = :" . $field;
 			}
 		}
 
@@ -298,6 +298,7 @@ abstract class Entity implements \JsonSerializable {
 	/**
 	 * Helper method to quickly register a new entity
 	 * @param null|array|object $data Data to insert
+	 * @param null|array $allowedFields Name of the columns that are allowed to be set/updated
 	 * @return static
 	 */
 	public static function insert(null|array|object $data, null|array $allowedFields = null): static {
@@ -318,9 +319,11 @@ abstract class Entity implements \JsonSerializable {
 
 	/**
 	 * Creates a new instance of any given entity
+	 * @param mixed ...$arguments Arguments to pass to the constructor
+	 * @since 6.0.0
 	 * @return static
 	 */
-	public static function new(...$arguments): static {
+	public static function new(mixed ...$arguments): static {
 		return new static(...$arguments);
 	}
 
@@ -398,7 +401,7 @@ abstract class Entity implements \JsonSerializable {
 	/**
 	 * Escape data for output
 	 * 
-	 * @param $data The data string to escape
+	 * @param string $data The data string to escape
 	 * @return string The Escaped string
 	 */
 	public function escape(string $data): string {
@@ -477,6 +480,8 @@ abstract class Entity implements \JsonSerializable {
 
 	/**
 	 * Check if the primary key is set in either the data or new array
+	 * @return bool
+	 * @since 6.0.0
 	 */
 	public function hasPrimaryKeyValue(): bool {
 		$key = static::getPrimaryKey();

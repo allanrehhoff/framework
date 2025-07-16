@@ -7,6 +7,7 @@ v9.1.0
 - Database\Entity and Database\Collection can now be json encoded.  
 - Database\Entity::search now assumes first argument, given only the second.  
 - Replaced httpbin.org with httpbin.dev in HttpRequestTest.  
+- Coding standard fixes (phpcs).  
 
 v9.0.0
 - **This release is backwards incompatible.**  

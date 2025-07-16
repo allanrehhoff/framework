@@ -1,8 +1,8 @@
 <?php
+
 namespace Database\PrimaryKey;
 
-trait UuidV4
-{
+trait UuidV4 {
 	/**
 	 * @var \Random\Randomizer
 	 */
@@ -13,7 +13,7 @@ trait UuidV4
 	 *
 	 * @return string A version 4 UUID in the format xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx
 	 */
-    public function generatePrimaryKey(): string {
+	public function generatePrimaryKey(): string {
 		// Initialize the randomizer
 		$this->randomizer = new \Random\Randomizer();
 
@@ -32,5 +32,5 @@ trait UuidV4
 
 		// Format the bytes into the standard UUID string representation
 		return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
-    }
+	}
 }

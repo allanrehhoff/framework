@@ -37,7 +37,7 @@ class Obj {
 	/**
 	 * Escapes an object's properties for use in HTML.
 	 *
-	 * @param object $iStdClass The object to escape.
+	 * @param null|object $iStdClass The object to escape.
 	 * @return object The escaped object.
 	 */
 	public static function safe(null|object $iStdClass): object {

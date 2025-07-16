@@ -52,6 +52,8 @@ class Url {
 	/**
 	 * Parses a URL and returns an associative array containing its components.
 	 * @param string $url The URL to parse.
+	 * @param int $component Optional. If specified, only returns the specified component.
+	 *                       Possible values are: PHP_URL_SCHEME, PHP_URL_HOST, PHP_URL_PORT
 	 * @link https://www.php.net/parse_url
 	 * @return array|string|int|null|false Same as parse_url
 	 */

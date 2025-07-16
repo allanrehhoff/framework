@@ -24,8 +24,8 @@ class Negotiator {
 	private \Core\Router $router;
 
 	/**
-	 * @param \Core\Router $iRouter
-	 * @param \Core\Request $iRequest
+	 * @param \Core\Router $iRouter The application router, used to retrieve route information.
+	 * @param \Core\Request $iRequest The current request object, used to access request payload.
 	 */
 	public function __construct(\Core\Router $iRouter, \Core\Request $iRequest) {
 		$this->request = $iRequest;
@@ -34,8 +34,6 @@ class Negotiator {
 
 	/**
 	 * Determine the appropriate content type for the current request.
-	 * @param string $controller Fully qualified controller class name
-	 * @param string $method Controller method being invoked
 	 * @return ContentTypeInterface
 	 */
 	public function getContentType(): ContentTypeInterface {
@@ -72,8 +70,8 @@ class Negotiator {
 	/**
 	 * Get allowed content types based on controller/method attributes and configuration.
 	 * Setting attributes overrides configuration.
-	 * @param \Core\ClassName $controller Fully qualified controller class name
-	 * @param \Core\MethodName $method Controller method being invoked
+	 * @param \Core\ClassName $iClassName Fully qualified controller class name
+	 * @param \Core\MethodName $iMethodName Controller method being invoked
 	 * @return array List of allowed content types
 	 */
 	private function getAllowedContentTypes(\Core\ClassName $iClassName, \Core\MethodName $iMethodName): array {
