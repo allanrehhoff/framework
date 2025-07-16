@@ -347,7 +347,15 @@ class Animal extends Database\Entity {
 ```
 
 ## Collections / Result sets ##
-The **Database\Collection** class is inspired by Laravel collections.  
+
+The `Database\Collection` class is a specialized iterable object that represents a set of database rows returned from a query.  
+It behaves similarly to an array of objects, but provides additional convenience methods for working with result sets, such as:
+- Iterating over results with `foreach`
+- Accessing rows by index (e.g., `$collection[0]`)
+- Using helper methods like `getFirst()`, `getColumn($name)`, `count()`, and more
+- Chaining methods for filtering, mapping, or reducing results
+
+You can treat a `Database\Collection` much like an array of entity objects, but with extra features for database result handling and manipulation.
 
 ```php
 <?php

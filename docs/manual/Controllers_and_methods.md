@@ -69,3 +69,58 @@ Any response data set by a controller, may be accessed or altered by children th
 
 In any controllers of the heirachy you may throw a `\Core\HttpError\NotFound` to reroute the entire stack to **NotFoundController**   
 You may also throw a `\Core\HttpError\Forbidden` to instead reroute to **ForbiddenController**
+
+## Namespaced Controllers
+
+Controllers can be namespaced to support partials and more complex application structures.  
+For example, you can have controllers under a namespace such as `Partial` or `StatusCode`.
+
+> [!IMPORTANT]
+> **Namespaced controllers are not routable via URL.**  
+> Namespaced controllers are not mapped directly from URLs.  
+> They are intended to be invoked as children from other controllers, not as standalone endpoints.  
+> Attempting to access a partial controller directly will result in a NotFound error.  
+
+```php
+<?php
+class PageController extends Controller {
+    public function index(): void {
+        // Add a partial as a child controller
+		// response data set will be passed
+		// down from parent to children
+        $this->children[] = new ClassName("Partial\Alerts");
+        $this->children[] = new ClassName("Partial\Sidenav");
+    }
+}
+```
+
+Your namespaced controllers would then be similar too:
+
+```php
+<?php
+
+namespace Partial;
+
+class AlertsController extends \Controller {
+	public function index(): void {
+		$view = $this->template->getViewPath("partials/alerts");
+		$this->response->data["alerts"] = $view;
+	}
+}
+```
+
+```php
+<?php
+
+namespace Partial;
+
+class SidenavController extends \Controller {
+	public function index(): void {
+		$view = $this->template->getViewPath("partials/sidenav");
+		$this->response->data["sidenav"] = $view;
+	}
+}
+```
+
+The above example will assume you have a view file called `alerts.tpl.php` inside a folder named `partials`.  
+For more details on working with views and customizing the output, see the [Template and theming](./Template_and_theming.md) section.
