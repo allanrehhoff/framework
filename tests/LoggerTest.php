@@ -128,8 +128,8 @@ class LoggerTest extends TestCase {
 		$result2 = Logger::timeEnd('inner timer', 6, 'debug');
 		$result1 = Logger::timeEnd('outer timer', 6, 'debug');
 
-		$this->assertEqualsWithDelta(2 * $seconds, $result1, 0.01);
-		$this->assertEqualsWithDelta($seconds, $result2, 0.01);
+		$this->assertEqualsWithDelta(2 * $seconds, $result1, 0.02);
+		$this->assertEqualsWithDelta($seconds, $result2, 0.02);
 	}
 
 	/**

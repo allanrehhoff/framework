@@ -232,13 +232,21 @@ class Str {
 	}
 
 	/**
-	 * Attempt to replace Unicode characters with their ASCII counterparts using dynamic character encoding detection.
+	 * Attempt to replace Unicode characters with their ASCII counterparts.
 	 *
 	 * @param string $input The input string with Unicode characters.
 	 * @return string The string with Unicode characters replaced by their ASCII counterparts. If transilteration fails, the original string is returned.
 	 */
 	public static function ascii(string $input): string {
-		$encoding = mb_detect_encoding($input, mb_list_encodings());
+		if (class_exists(\Transliterator::class)) {
+			$transliterator = \Transliterator::create('Any-Latin; Latin-ASCII;');
+			$output = $transliterator->transliterate($input);
+
+			return $output !== null ? $output : $input;
+		}
+
+		// iconv fallback
+		$encoding = mb_detect_encoding($input, ['UTF-8', 'ISO-8859-1', 'WINDOWS-1252'], true) ?: 'UTF-8';
 		$output = iconv($encoding, 'ASCII//TRANSLIT//IGNORE', $input);
 
 		return $output !== false ? $output : $input;
