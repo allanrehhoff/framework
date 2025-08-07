@@ -157,8 +157,10 @@ class Connection {
 
 		$this->database = $database;
 
-		$this->tables = $this->query("SHOW TABLES")->fetchAll(\PDO::FETCH_COLUMN, 0);
-		$this->tables = array_flip($this->tables);
+		if (!isset($this->tables[$this->database])) {
+			$tables = $this->query("SHOW TABLES")->fetchAll(\PDO::FETCH_COLUMN, 0);
+			$this->tables[$database] = array_flip($tables);
+		}
 	}
 
 	/**
@@ -222,25 +224,27 @@ class Connection {
 	 * @since 2.3
 	 */
 	public function prepare(string $sql, array $driverOptions = []): Statement|false {
-		// if a filter value is an array we'll create an IN syntax
 		foreach ($this->filters ?? [] as $column => $filter) {
-			if (gettype($filter) === "array") {
-				$tmparr = [];
+			if ($filter instanceof \Database\Collection) {
+				$this->filters[$column] = (array)$filter;
+			}
 
+			if (is_array($filter)) {
+				// Don't bind anything for empty arrays,
+				// already handled in SQL string as 0=1
+				if (empty($filter)) {
+					unset($this->filters[$column]);
+					continue;
+				}
+
+				$tmparr = [];
 				foreach ($filter as $item) {
 					$key = "val" . $this->arrayINCounter++;
 					$tmparr[$key]  = $item;
 					$this->filters[$key] = $item;
 				}
 
-				// (:val0, :val1, :val2)
 				$in = "(:" . implode(", :", array_keys($tmparr)) . ')';
-
-				// Catches and replace only the whole part of a named parameter,
-				// determined by a whitespace or end of line.
-				// This prevents parameters from being wrongfully replaced,
-				// where one parameter overlaps with the string of another
-				// e.g. ':pizza¨' would replace part of ':pizzaria'
 				$sql = preg_replace("/:" . preg_quote($column, '/') . "(\s|$)/", $in . '$1', $sql);
 
 				unset($this->filters[$column]);
@@ -249,9 +253,6 @@ class Connection {
 
 		$statement = $this->dbh->prepare($sql, $driverOptions);
 
-		// Simply passing $this->filters to PDO::execute();
-		// will treat all parameter values as PDO::PARAM_STR
-		// resulting in errors when passing int or NULL as values
 		foreach ($this->filters ?? [] as $param => $value) {
 			$type = gettype($value);
 
@@ -382,10 +383,10 @@ class Connection {
 	 * Inserts multiple rows in a single query
 	 * 
 	 * @param string $table Table to insert into
-	 * @param null|array $variables Multidimensional with associative sub-arrays to insert
+	 * @param null|iterable $variables Multidimensional with associative sub-arrays to insert
 	 * @return Statement
 	 */
-	public function insertMultiple(string $table, null|array $variables = null): Statement {
+	public function insertMultiple(string $table, null|iterable $variables = null): Statement {
 		$binds = [];
 		$values = [];
 
@@ -523,13 +524,19 @@ class Connection {
 		foreach ($array as $column => $value) {
 			if ($value === null && $seperator != ',') {
 				$operator = "<=>";
+				$list[] = " `" . $column . "` " . $operator . " :" . $variablePrefix . $column;
 			} else if (is_array($value)) {
-				$operator = "IN";
+				if (empty($value)) {
+					// Empty array: always false
+					$list[] = "0 = 1";
+				} else {
+					$operator = "IN";
+					$list[] = " `" . $column . "` " . $operator . " :" . $variablePrefix . $column;
+				}
 			} else {
 				$operator = '=';
+				$list[] = " `" . $column . "` " . $operator . " :" . $variablePrefix . $column;
 			}
-
-			$list[] = " `" . $column . "` " . $operator . " :" . $variablePrefix . $column;
 		}
 
 		return implode(' ' . $seperator, $list);
@@ -616,7 +623,7 @@ class Connection {
 	 * @throws \InvalidArgumentException If table name provided does not exists.
 	 */
 	public function safeTable(string $table) {
-		if (($this->tables[$table] ?? null) === null) {
+		if (($this->tables[$this->database][$table] ?? null) === null) {
 			throw new \InvalidArgumentException(sprintf("'%s' is not a valid table in %s",  $table, $this->database));
 		}
 

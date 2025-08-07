@@ -1,4 +1,8 @@
 # Changelog #
+v9.1.1
+- Update database library to handle collections when passed for IN queries.
+- Handle empty arrays in IN queries.
+
 v9.1.0
 - StatusCode exceptions now responsible for returning controllers.
 - Children controllers can now be namespaced - full support for partials.  
