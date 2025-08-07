@@ -191,15 +191,13 @@ class Bootstrap {
 									<ul>
 										<li>Refresh the page or try again at a later time.</li>
 										<li>If the problem persists, contact us with the following information:</li>
-										<li>
-											<ul>
-												<li>A detailed step-by-step guide how you got this error</li>
-												<li>What you were trying to do</li>
-												<li>What you expected to happen</li>
-												<li>This part: " . $_SERVER["REQUEST_URI"] . "</li>
-												<li>This time: " . date("Y-m-d H:i:s") . "</li>
-											</ul>
-										</li>
+										<ul>
+											<li>A detailed step-by-step guide how you got this error</li>
+											<li>What you were trying to do</li>
+											<li>What you expected to happen</li>
+											<li>This part: " . $_SERVER["REQUEST_URI"] . "</li>
+											<li>This time: " . date("Y-m-d H:i:s") . "</li>
+										</ul>
 									</ul>
 								</div>";
 					}

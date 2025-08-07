@@ -1,28 +1,4 @@
 # Requests, Response & Content Types
-
-## Response data
-
-Controllers can set any amount of data to be passed on as variables to view files by accessing the `Response` object.  
-
-```php
-<?php
-// Assume this url: yourdomain.tld/animals/tiger/indo-chinese
-class AnimalController extends Controller {
-	public function index(): void {
-		$this->response->data["pageTitle"] = "Welcome to Umbrella Corp!";
-		$this->response->setView("welcome-page");
-	}
-}
-```
-
-In the above example the string `Welcome to Umbrella Corp!` will be available as `$pageTitle`
-
-```html
-<!-- welcome-page.tpl.php -->
-<h1><?php print $pageTitle; ?></h1>
-```
-
-## Content Types
 Framework supports responding with in different data formats adhering to the clients `Accept` header preference.
 
 A `Content-Type` header containing a similar mime type will likewise be returned.  
@@ -35,6 +11,7 @@ A `Content-Type` header containing a similar mime type will likewise be returned
 > For security reasons accepting content types `application/json` and `application/xml` are disabled by default.  
 > Responding with these types, must be enabled explicitly, depending on use case.
 
+## Content Types
 The clients content type preferences will be negotiated the following, in listed order:
 - Application wide config
 - Class attributes
@@ -100,11 +77,11 @@ class EventService {
 Content types access can likewise be set with attributes, on a per-class or per-method basis.
 ```php
 <?php
-// Allow application/json for all methods to this class
+// Set application/json for all methods to this class
 #[\Core\Attributes\AllowedContentTypes('json')]
 class ApiController extends Controller {
 
-	// Extraordinarily allow application/xml for this method
+	// Extraordinarily set application/xml as content-type for this method
 	#[\Core\Attributes\AllowedContentTypes('xml')]
 	public function index(): void {
 		// ...

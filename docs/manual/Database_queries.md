@@ -1,19 +1,5 @@
 # Database\Connection class #
 
-**Database\Connection V4**
-A library for querying your database in an easy-to-maintain objected oriented manner.  
-It features a few classes to speed up CMS / MVC / API and general CRUD development, and abstracts away your database queries.  
- 
-This documentation assumes you have basic knowledge of PDO. 
-  
-## Installing ##
-**Method 1:**
-Install manually: ```<?php require "autoload.php"; ?>```
-
-**Method 2: (recommended)**
-Likely will work with standard autoloaders.
-Copy the **Database/** directory from any recent release into your project. `cp -r Database path/to/project/libs/`  
-
 ### Simple query 
 The `\Database\Connection` class wraps around PHP's PDO, so you are able to call all of the built-in PDO functions on the instantiated object as you normally would.  
 With the exception of the \Database\Connection::query(); method, this has been overloaded to a more convenient way and usage, such that it supports all the below methods.  
@@ -163,6 +149,17 @@ In cases where multiple rows are expected use the more advanced `search` method 
  * @var Collection<Entity>
  */
 $animals = Animal::search(["name = :name"], ["name" => "Asian Rhino"]);
+```
+
+Above example can also be shortened with named parameters.
+Given only the `criteria` parameter `Entity::search` assumes the mapping from each key => value pair.
+
+```php
+<?php
+/**
+ * @var Collection<Entity>
+ */
+$animals = Animal::search(criteria: ["name" => "Asian Rhino"]);
 ```
 
 ... or slightly similar  using a LIKE syntax

@@ -1,62 +1,33 @@
 # Controller & Methods
-If you're familiar with MVC frameworks you might already know the url-to-controller concept.  
-Given the URL **yourdomain.tld/animal** will map to a controller file **AnimalController.php** in the application/controllers/ directory.  
+Controllers are the central building blocks of your application’s logic.  
+Each controller handles incoming requests, processes data, and determines which views or responses should be returned to the client.  
+Controllers must extend the **Controller** class to access all necessary methods and properties.
 
-Your controllers must extend upon **Controller** to have all the neccessary methods and properties available.  
+## Passing Data to Templates
 
-Additionally the method to be called on your controller can be set by the next argument in the request URI, alias arg(1).  
-
-**yourdomain.tld/animal/tiger** will trigger **AnimalController()->tiger();** to be called.  
-
-arg(1) will be sanitized to a PHP5 compatible method name in camelCase format, this means that dashes, numbers, everything that's not a valid letter will be stripped
-and the upcoming word will be uppercased, except the first.  
-
-By design there's no way for PHP to validate that you (namely the developer),
-define your methods in camelCaseFormat, so please! for you and the next developers sake, do this, and be strict about it. 
-
-Any other parts beyond arg(1) ARE NOT passed directly to the controller or any methods, these are for you to pick up using the applications arg() method.  
-The **$this->request->getrg();** method starts from index 0, whereas the first two indices are already used by the core to determine the route.  
-
-> [!NOTE] 
-> `index` is the default method invoked, if arg(1) is nowhere to be found in the given controller, or arg(1) is void.  
-> Same method will also be the method called for all child controllers set by any parent.  
+Controllers can pass data to view files by setting values on the `Response` object:
 
 ```php
 <?php
-	// Assume this url: yourdomain.tld/animals/tiger/indo-chinese
-	class AnimalController extends Controller {
-		public function index(): void {
-			// Will only trigger at yourdomain.tld/animal
-		}
-
-		public function tiger(): void {
-			\Registry::getRouter()->getRequest()->arg(2); // indo-chinese
-		}
+// Example URL: yourdomain.tld/animals/tiger/indo-chinese
+class AnimalController extends Controller {
+	public function index(): void {
+		$this->response->data["pageTitle"] = "Welcome to Umbrella Corp!";
+		$this->response->setTitle("Welcome!");
+		$this->response->setView("welcome-page");
 	}
+}
 ```
 
-The above example will output something similar to:  
-
-```
-string(12) "indo-chinese"
-```
-
-Controllers may also set child controllers to be executed once the parent controller finalizes.  
+In the above example, the string `Welcome to Umbrella Corp!` will be available as `$pageTitle` in the view:
 
 ```php
-<?php
-	class AnimalController extends Controller {
-		public function index(): void {
-			$this->children[] = "TigerController";
-		}
-	}
+<!-- welcome-page.tpl.php -->
+<h1><?php print $pageTitle; ?></h1>
 ```
-Will result in **TigerController** being invoked as if it was a normal controller, AFTER **AnimalController**
 
-Only the `index` method will be invoked by core on children controllers.  
-To descend the request chain further, you must handle such logic manually.  
+A view must be set by each controller using the `setView` method:
 
-A view must be by each controller, throught the **setView();** method.
 ```php
 class AnimalController extends Controller {
 	public function index(): void {
@@ -65,36 +36,46 @@ class AnimalController extends Controller {
 }
 ```
 
-Any response data set by a controller, may be accessed or altered by children through the rest of the heirachy.  
+The `setTitle` method is a shortcut for setting a `title` key in the response data array.  
+By default, `$title` is used by the provided header partial in the `<title>` tag.
 
-In any controllers of the heirachy you may throw a `\Core\HttpError\NotFound` to reroute the entire stack to **NotFoundController**   
-You may also throw a `\Core\HttpError\Forbidden` to instead reroute to **ForbiddenController**
+## Child Controllers
+
+Controllers can specify child controllers to be executed after the parent controller:
+
+```php
+<?php
+class AnimalController extends Controller {
+	public function index(): void {
+		$this->children[] = "TigerController";
+	}
+}
+```
+
+In this example, **TigerController** will be invoked after **AnimalController**.  
+Only the `index` method is called on child controllers.  
+Response data set by a parent controller is accessible and modifiable by its children.
+
+You may throw a `\Core\HttpError\NotFound` to reroute the stack to **NotFoundController**,  
+or throw a `\Core\HttpError\Forbidden` to reroute to **ForbiddenController**.
 
 ## Namespaced Controllers
 
-Controllers can be namespaced to support partials and more complex application structures.  
-For example, you can have controllers under a namespace such as `Partial` or `StatusCode`.
-
-> [!IMPORTANT]
-> **Namespaced controllers are not routable via URL.**  
-> Namespaced controllers are not mapped directly from URLs.  
-> They are intended to be invoked as children from other controllers, not as standalone endpoints.  
-> Attempting to access a partial controller directly will result in a NotFound error.  
+Controllers can be namespaced for partials and complex structures.  
+For example, you can use namespaces like `Partial` or `StatusCode`:
 
 ```php
 <?php
 class PageController extends Controller {
-    public function index(): void {
-        // Add a partial as a child controller
-		// response data set will be passed
-		// down from parent to children
-        $this->children[] = new ClassName("Partial\Alerts");
-        $this->children[] = new ClassName("Partial\Sidenav");
-    }
+	public function index(): void {
+		// Add partials as child controllers
+		$this->children[] = new ClassName("Partial\Alerts");
+		$this->children[] = new ClassName("Partial\Sidenav");
+	}
 }
 ```
 
-Your namespaced controllers would then be similar too:
+Example namespaced controllers:
 
 ```php
 <?php
@@ -122,5 +103,112 @@ class SidenavController extends \Controller {
 }
 ```
 
-The above example will assume you have a view file called `alerts.tpl.php` inside a folder named `partials`.  
-For more details on working with views and customizing the output, see the [Template and theming](./Template_and_theming.md) section.
+This assumes you have view files like `alerts.tpl.php` in a `partials` folder.  
+See [Template and theming](./Template_and_theming.md) for more details.
+
+## Inherited Controller Properties
+
+Controllers extending the base `Controller` class inherit several pre-wired properties for routing, templating, content negotiation, and more.  
+These are set automatically and should not be manually overwritten.
+
+### `$parent`
+- **Type:** `null|\Controller`
+- **Description:** Reference to the parent controller, if any.
+- **Usage Example:**
+  ```php
+  if ($this->parent instanceof \AuthController) { /* ... */ }
+  if ($this->parent === null) { /* top-level controller */ }
+  ```
+
+### `$request`
+- **Type:** `\Core\Request`
+- **Description:** Represents the current HTTP request (GET, POST, files, cookies, etc.).
+- **Usage Example:**
+  ```php
+  $this->request->get;
+  $this->request->post;
+  $this->request->files;
+  $this->request->cookies;
+  $this->request->server;
+  ```
+
+### `$response`
+- **Type:** `\Core\Response`
+- **Description:** Handles output data and headers.
+- **Usage Example:**
+  ```php
+  $this->response->data['title'] = 'My Page';
+  $this->response->setStatusCode(404);
+  ```
+
+### `$application`
+- **Type:** `\Core\Application`
+- **Description:** The root application instance.
+- **Usage Example:**
+  ```php
+  $this->application->getExecutedClassName();
+  $this->application->getCalledMethodName();
+  ```
+
+### `$router`
+- **Type:** `\Core\Router`
+- **Description:** Manages routing state and request/response resolution.
+- **Usage Example:**
+  ```php
+  $path = $this->router->getRoute();
+  ```
+
+### `$template`
+- **Type:** `\Core\Template`
+- **Description:** Handles asset injection and layout template resolution.
+- **Usage Example:**
+  ```php
+  $view = $this->template->getViewPath("partial/sidenav");
+  $path = $this->template->getDirectoryUri("assets/img/logo.png");
+  ```
+
+### `$assets`
+- **Type:** `\Core\Assets`
+- **Description:** Manages asset registration and injection (CSS, JS, images).
+- **Usage Example:**
+  ```php
+  $this->assets->addStylesheet("assets/css/styles.css");
+  $this->assets->addJavascript("assets/js/app.js");
+  ```
+
+### `$contentType`
+- **Type:** `\Core\ContentType\ContentTypeInterface`
+- **Description:** Holds the negotiated content type (HTML, JSON, XML, etc.).
+- **Usage Example:**
+  ```php
+  if ($this->contentType::class === \Core\ContentType\Html::class) {
+	  // Render HTML
+  }
+  ```
+
+### `$renderer`
+- **Type:** `\Core\Renderer`
+- **Description:** Combines response data, template, and content type into output.
+- **Usage Example:**
+  ```php
+  $this->renderer->render($this->response);
+  ```
+
+### `$children`
+- **Type:** `array`
+- **Description:** List of child controllers to execute after the main one (used for layouts/partials).
+- **Usage Example:**
+  ```php
+  $this->children[] = new ClassName('Partial\\Sidebar');
+  ```
+
+## Accessors / Getters
+
+While the above properties are `protected` and can be access by inheritance, they each have a corresponding getX() method:
+- `getRequest()` → `$request`
+- `getResponse()` → `$response`
+- `getApplication()` → `$application`
+- `getRouter()` → `$router`
+- `getTemplate()` → `$template`
+- `getChildren()` → `$children`
+- `getParent()` → `$parent`

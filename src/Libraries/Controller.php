@@ -21,9 +21,9 @@ use \Core\ContentType\ContentTypeInterface;
 abstract class Controller {
 
 	/**
-	 * @var ?\Controller Holds the parent controller instance
+	 * @var null|\Controller Holds the parent controller instance
 	 */
-	protected ?\Controller $parent = null;
+	protected null|\Controller $parent = null;
 
 	/**
 	 * @var Request Current request object
@@ -163,7 +163,7 @@ abstract class Controller {
 	 * 
 	 * @return null|\Controller The current parent controller instance, will be null for the root controller.
 	 */
-	final public function getParent(): ?\Controller {
+	final public function getParent(): null|\Controller {
 		return $this->parent;
 	}
 

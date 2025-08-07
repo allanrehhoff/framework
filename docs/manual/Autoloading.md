@@ -1,9 +1,14 @@
 # Autoloading classes
-Autoloading is a mechanism which requires class, interface and trait definitions.  
-Files containing the definition of a class must share name with the class name, and have the extention `.php`.  
-Additionally instances residing within a namespace must be located within a folder structure matching the namespacing structure (relative from `Libraries` folder).  
+Autoloading Behavior
 
-Controller files are autoloaded from the `src/Controllers` directory.  
+The framework uses a custom autoloading scheme.  
+In this scheme, class files must match their class names and `.php` extension, and namespaces must correspond to directory structure under the `src/Libraries/` or `src/Controllers` folder.  
+
+Specifically:  
+- **Controllers:** Any controller class is placed in `src/Controllers/` and is routed automatically. fx `src/Controllers/AuthController.php` will be routed from URI `/auth`
+- **Other Classes (Libraries):** All other classes (services, models, utilities, etc.) are placed under `src/Libraries/`  
+	The namespace (if used) must mirror subfolders of src/Libraries. For example, `src/Libraries/User.php` defines a User class, and `src/Libraries/Store/Product.php` defines class `Store\Product`, matching the `Store/` subdirectory.
+- **Composer Autoloader:** If the project includes a `vendor/` directory, either at the top-level or inside `src/`, the framework will register Composer’s autoloader automatically.
 
 ```php
 <?php
@@ -16,6 +21,7 @@ class AuthController {
 ```
 
 Other classes are autoloaded from the `src/Libraries` directory.  
+
 ```php
 <?php
 // File: src/Libraries/User.php
