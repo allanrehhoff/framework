@@ -1,4 +1,7 @@
 # Changelog #
+v9.1.2
+- Separeted entity cache from entity class.  
+
 v9.1.1
 - Update database library to handle collections when passed for IN queries.
 - Handle empty arrays in IN queries.

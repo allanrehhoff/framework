@@ -12,13 +12,6 @@ namespace Database;
  */
 abstract class Entity implements \JsonSerializable {
 	/**
-	 * All loaded entities will br stored for the remainder of the request
-	 * @var array $instanceCache
-	 * @since v5.0.0
-	 */
-	private static array $instanceCache = [];
-
-	/**
 	 * General data for this entity, usually this is simply all database columns for a row
 	 * @var array $data
 	 */
@@ -197,8 +190,7 @@ abstract class Entity implements \JsonSerializable {
 		// the static cache for quick retrieval.
 		// Mitigates multiple database queries
 		// for the same entity instance.
-		$entityType = static::class;
-		self::$instanceCache[$entityType][$this->id()] = $this;
+		EntityCache::store($this);
 
 		return $this;
 	}
@@ -218,18 +210,18 @@ abstract class Entity implements \JsonSerializable {
 			return new static();
 		}
 
-		if (!isset(self::$instanceCache[$entityType][$identifier])) {
+		if (!EntityCache::contains($entityType, $identifier)) {
 			$keyField = static::getPrimaryKey();
 			$data = Connection::getInstance()->fetchRow(static::getTableName(), [$keyField => $identifier]);
 
-			$instance = static::hydrate($data);
+			$entity = static::hydrate($data);
 
-			if ($instance->exists()) {
-				self::$instanceCache[$entityType][$identifier] = $instance;
+			if ($entity->exists()) {
+				EntityCache::store($entity);
 			}
 		}
 
-		return self::$instanceCache[$entityType][$identifier] ?? new static();
+		return EntityCache::retrieve($entityType, $identifier) ?? new static();
 	}
 
 	/**
