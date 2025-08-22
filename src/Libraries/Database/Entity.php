@@ -160,7 +160,10 @@ abstract class Entity implements \JsonSerializable {
 	public function save(): int|string|static {
 		// Check if the entity already exists (i.e., it is an update operation)
 		if ($this->exists() === true) {
-			Connection::getInstance()->upsert($this->getTableName(), $this->new, $this->getKeyFilter());
+			// Do not use upsert here!
+			// It can cause seemingly duplicate records to occur, if primary key is the only identifier
+			// and it is not being loaded into the 'new' array
+			Connection::getInstance()->update($this->getTableName(), $this->new, $this->getKeyFilter());
 		} else {
 			$primaryKey = static::getPrimaryKey();
 

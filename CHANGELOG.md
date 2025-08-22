@@ -1,4 +1,7 @@
 # Changelog #
+v9.1.3
+- Fix accidently creating duplicate entities.  
+
 v9.1.2
 - Separeted entity cache from entity class.  
 
