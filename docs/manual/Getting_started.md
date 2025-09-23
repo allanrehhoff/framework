@@ -16,10 +16,10 @@ The exception being the dotenv `.env` file typically used for local development.
 This framework has mainly been designed to work with apache webservers, but have confirmed compatibility with nginx and Caddy in conjunction with php-fpm.  
 Make sure that every request is routed to `index.php`  
 
-**Apache**
+**Apache**  
 Use the bundled `.htaccess` file.  
 
-**nginx**
+**nginx**  
 Your `nginx.conf` file may include the following in the `http.server` block.  
 
 ```

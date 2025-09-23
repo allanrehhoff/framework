@@ -36,12 +36,11 @@ class Builder {
 	 * Add a policy directive
 	 * @param string $policy The policy directive (e.g., "script-src")
 	 * @param string|array $value The value(s) for the policy. Can be a single string or array of strings.
+	 * @return void
 	 */
 	public function addPolicy(string $policy, string|array $value): void {
 		if (is_array($value)) {
-			if (!isset($this->policies[$policy])) {
-				$this->policies[$policy] = [];
-			}
+			$this->policies[$policy] ??= [];
 			$this->policies[$policy] = array_merge($this->policies[$policy], $value);
 		} else {
 			$this->policies[$policy][] = $value;
@@ -51,13 +50,11 @@ class Builder {
 	/**
 	 * Enable nonce for a specific policy
 	 * @param string $policy The policy to enable nonce for (e.g., "script-src", "style-src")
+	 * @return void
 	 */
 	public function enableNonceForPolicy(string $policy): void {
-		if ($this->nonce === null) {
-			$this->generateNonce();
-		}
-
-		$this->addPolicy($policy, "'nonce-{$this->nonce}'");
+		$this->nonce ??= $this->generateNonce();
+		$this->addPolicy($policy, sprintf("'nonce-%s'", $this->nonce));
 	}
 
 	/**

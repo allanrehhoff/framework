@@ -16,7 +16,7 @@ class EntityCache {
 	/**
 	 * Check if an entity exists in the cache
 	 * 
-	 * @param string $class The entity class name
+	 * @param string $entityType The entity class name
 	 * @param string|int $id The entity ID
 	 * @return bool True if the entity exists in cache
 	 */
@@ -27,7 +27,7 @@ class EntityCache {
 	/**
 	 * Retrieve an entity from the cache
 	 * 
-	 * @param string $class The entity class name
+	 * @param string $entityType The entity class name
 	 * @param string|int $id The entity ID
 	 * @return Entity|null The cached entity or null if not found
 	 */
@@ -38,7 +38,7 @@ class EntityCache {
 	/**
 	 * Remove an entity from the cache
 	 * 
-	 * @param string $class The entity class name
+	 * @param string $entityType The entity class name
 	 * @param string|int $id The entity ID
 	 * @return void
 	 */
@@ -49,8 +49,7 @@ class EntityCache {
 	/**
 	 * Store an entity in the cache
 	 * 
-	 * @param Entity $entity The entity to store
-	 * @param string|int $id The entity ID
+	 * @param Entity $iEntity The entity to store
 	 * @return void
 	 */
 	public static function store(Entity $iEntity): void {
