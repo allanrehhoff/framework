@@ -16,6 +16,7 @@ class Path {
 		if ($path === null) return null;
 
 		$path = preg_replace('#/+#', '/', str_replace('\\', '/', $path));
+		$resolvedPath = realpath($path);
 
 		// Attempt to use realpath to resolve the path
 		// Note: realpath fails in the following scenarios:
@@ -23,7 +24,7 @@ class Path {
 		// - The path includes symbolic links that cannot be resolved
 		// - The current user does not have permissions to access components of the path
 		// If realpath fails, resolve relative segments manually
-		if (!realpath($path)) {
+		if (!$resolvedPath) {
 			$segments = explode('/', $path);
 			$resolved = [];
 
@@ -39,7 +40,7 @@ class Path {
 			return '/' . implode('/', $resolved);
 		}
 
-		return realpath($path);
+		return $resolvedPath;
 	}
 
 	/**

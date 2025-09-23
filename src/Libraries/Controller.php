@@ -143,6 +143,17 @@ abstract class Controller {
 		// This is fine as we don't need a view layer for CLI
 		if (IS_CLI) exit(0);
 
+		// The event that is about to be triggered
+		$event = sprintf("core.output.%s", $this->contentType->getMedia());
+
+		/**
+		 * Trigger an event before rendering the view.
+		 *
+		 * @param string $event The event name.
+		 * @param Response $response The response object to be modified by listeners.
+		 */
+		\Core\Event::trigger($event, $this->response);
+
 		$this->response->sendHeaders();
 
 		$this->renderer->render($this->response);

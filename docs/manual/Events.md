@@ -59,7 +59,7 @@ class EmailNotifier {
 ```
 
 ## Default event listeners
-The `\Bootstrap\EventService` provides a `registerDefaultListeners` utility method, any listener that is needed across all processes
+The `\Bootstrap\Bootstrap` file provides a `registerEventListeners` utility method, any listener that is needed across all processes
 may be registered in here.
 
 The contents of the file may be:
@@ -67,8 +67,10 @@ The contents of the file may be:
 <?php
 namespace Bootstrap;
 
-class EventService {
-	public function registerDefaultListeners(): void {
+class Bootstrap {
+	// ... other methods
+
+	private function registerEventListeners(): void {
 		\Core\Event::addListener(
 			"controller.execute.before",
 			\AuthenticationService::class
@@ -160,14 +162,14 @@ Arguments passed: `\Core\ClassName $iClassName, \Core\MethodName $iMethodName`
 ### core.output.json
 Event emitted right before JSON output is rendered.  
 Condition: Negotiated content type is JSON
-Arguments passed: `array $data`  
+Arguments passed: `\Core\Response $iResponse`  
 
 ### core.output.xml
 Event emitted right before XML output is rendered.  
 Condition: Negotiated content type is XML  
-Arguments passed: `string $data`
+Arguments passed: `\Core\Response $iResponse`  
 
 ### core.output.html
 Event emitted right before HTML output is rendered.  
 Condition: Negotiated content type is HTML    
-Arguments passed: `string $view, array $data`
+Arguments passed: `\Core\Response $iResponse`  

@@ -118,7 +118,7 @@ class Configuration {
 	 * @return mixed|null null on failure.
 	 * @throws \InvalidArgumentException If key does not exist in parsed json.
 	 */
-	public function get(?string $key = null): mixed {
+	public function get(null|string $key = null): mixed {
 		if ($key === null) {
 			return $this->parsedConfig;
 		}

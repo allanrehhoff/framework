@@ -489,6 +489,6 @@ abstract class Entity implements \JsonSerializable {
 	 * @return array
 	 */
 	public function jsonSerialize(): array {
-		return $this->items;
+		return $this->data + $this->new;
 	}
 }

@@ -227,7 +227,7 @@ class Request {
 		fwrite($this->headerHandle, "\r\n\r\n");
 
 		$this->returndata = $response['body'];
-		$this->curlInfo = ['http_code' => $fakeResponse['http_code'] ?? 200, 'url' => $url];
+		$this->curlInfo = ['http_code' => $response['http_code'] ?? 200, 'url' => $url];
 		$this->headerHandle = $headerHandle;
 		$this->response = new Response($this);
 
@@ -414,7 +414,7 @@ class Request {
 	 * @return Request
 	 */
 	public function connect(): Request {
-		return $this->setMethod(Method::OPTIONS)->send();
+		return $this->setMethod(Method::CONNECT)->send();
 	}
 
 	/**

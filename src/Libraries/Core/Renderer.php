@@ -43,21 +43,7 @@ class Renderer {
 		$view = $iResponse->getView();
 		$data = $iResponse->getData();
 
-		$event = sprintf("core.output.%s", $this->iContentType->getMedia());
 		$file = $this->iTemplate->getViewPath($view);
-
-		/**
-		 * Trigger an event before rendering the view.
-		 *
-		 * @param string $event The event name.
-		 * @param string $view The view to be rendered.
-		 * @param array $data The data to be passed to the view.
-		 */
-		\Core\Event::trigger(
-			$event,
-			$view,
-			$data
-		);
 
 		$this->iContentType->stream($data, $file);
 	}

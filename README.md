@@ -25,3 +25,4 @@ Kickstart your new web project or API with a clean, stable codebase.
 14. [The Assets class](docs/manual/Assets.md) – Managing CSS, JS, and other assets
 15. [The Registry class](docs/manual/Registry.md) – Shared object storage and access
 16. [Utility classes](docs/manual/Utilities.md) – Helper classes and common utilities
+17. [Content Security Policies](docs/manual/Content_Security_Policies.md) - Configure and manage content security policy (CSP)

@@ -2,6 +2,9 @@
 
 namespace Bootstrap;
 
+use \EventListeners\HttpsRedirect;
+use \EventListeners\ContentSecurityPolicy;
+
 /**
  * Class Bootstrap
  *
@@ -55,6 +58,8 @@ class Bootstrap {
 			\Registry::getConfiguration()->get("database.password"),
 			\Registry::getConfiguration()->get("database.name")
 		));
+
+		\Registry::set(new \ContentSecurityPolicy\Builder());
 	}
 
 	/**
@@ -124,7 +129,7 @@ class Bootstrap {
 	/**
 	 * Registers error handlers.
 	 * Any PHP error will be be converted to \ErrorException and thrown.
-	 * 
+	 *
 	 * @return void
 	 */
 	private function registerErrorHandlers(): void {
@@ -209,10 +214,34 @@ class Bootstrap {
 	}
 
 	/**
-	 * Registers event listeners.
+	 * Define your default event listeners in this function.
+	 * These listeners will be added upon every request
+	 *
+	 * Example event listener class defined elsewhere:
+	 *
+	 * ```php
+	 * <?php
+	 * namespace EventListners;
+	 *
+	 * class UserRegistration {
+	 *		public function handle(User $iUser) {
+	 *			// Assuming you have the following classes loaded
+	 *			\EmailService::sendWelcomeEmail($iUser);
+	 *
+	 *			\Logger::debug("User registered: " . $iUser->getUsername());
+	 *		}
+	 * }
+	 * ```
+	 * Use the fully qualified class name
+	 * \Core\Event::addListener("controller.execute.before", \UserRegistration::class);
+	 *
+	 * Closures may also be passes
+	 * \Core\Event::addListener("controller.execute.before", fn(\User $iUser) => \EmailService::sendWelcomeEmail($iUser));
+	 *
 	 * @return void
 	 */
 	private function registerEventListeners(): void {
-		(new EventService)->registerDefaultListeners();
+		\Core\Event::addListener("core.global.init", HttpsRedirect::class);
+		\Core\Event::addListener("core.output.html", ContentSecurityPolicy::class);
 	}
 }

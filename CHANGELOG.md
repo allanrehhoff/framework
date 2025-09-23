@@ -1,4 +1,12 @@
 # Changelog #
+v9.2.0
+- Removed the unused EventService class and moved event listener registration to \Bootstrap\Bootstrap  
+- Support for Content-Security-Policy header, strict by default.  
+- Updated Controller and Renderer classes to trigger events before rendering views.  
+- Documentation updated to reflect changes.  
+- Added test suite for CSP builder class.  
+- Bug- and performance fixes.  
+
 v9.1.3
 - Fix accidently creating duplicate entities.  
 

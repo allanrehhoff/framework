@@ -13,25 +13,40 @@ Because configuration files should not reside in the same directory as the appli
 
 The exception being the dotenv `.env` file typically used for local development.  
 
-This framework has mainly been designed to work with apache webservers, but have confirmed compatibility with nginx in conjunction with php-fpm.  
+This framework has mainly been designed to work with apache webservers, but have confirmed compatibility with nginx and Caddy in conjunction with php-fpm.  
 Make sure that every request is routed to `index.php`  
 
-For **Apache** webservers use the bundled `.htaccess` file.  
+**Apache**
+Use the bundled `.htaccess` file.  
 
-For **nginx** webservers your `nginx.conf` file may include the following in the `http.server` block.  
+**nginx**
+Your `nginx.conf` file may include the following in the `http.server` block.  
 
 ```
 http {
-	server {
-		...
+    server_name example.com;
 
-		location / {
-			index index.php;
-			try_files $uri $uri/ /index.php$args;
-		}
+	# Set this path to your site's directory.
+	root /var/www/html/src;
 
-		...
+	location / {
+		index index.php;
+		try_files $uri $uri/ /index.php$args;
 	}
+}
+```
+
+**Caddy**
+Your `Caddyfile` file may include the following.
+Change port numbers accordingly.  
+
+```
+:80 {
+	# Set this path to your site's directory.
+	root * /var/www/html
+
+	php_fastcgi * php:9000
+	file_server
 }
 ```
 
