@@ -1,0 +1,429 @@
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+index 25bd151..6eb1c76 100644
+--- a/CHANGELOG.md
++++ b/CHANGELOG.md
+@@ -1,8 +1,11 @@
+ # Changelog #
+ v9.2.0
+-- Simplified event registering by removing EventListener (currently unused), moved to \Bootstrap\Bootstrap.  
+-- Support for Content-Security-Policy header, strict by default.
+-- Bug- and performance fixes.
++- Removed the unused EventService class and moved event listener registration to \Bootstrap\Bootstrap  
++- Support for Content-Security-Policy header, strict by default.  
++- Updated Controller and Renderer classes to trigger events before rendering views.  
++- Documentation updated to reflect changes.  
++- Added test suite for CSP builder class.  
++- Bug- and performance fixes.  
+ 
+ v9.1.3
+ - Fix accidently creating duplicate entities.  
+diff --git a/v9.2.0.patch b/v9.2.0.patch
+index cea6c82..e69de29 100644
+--- a/v9.2.0.patch
++++ b/v9.2.0.patch
+@@ -1,405 +0,0 @@
+-diff --git a/CHANGELOG.md b/CHANGELOG.md
+-index 7d4dc46..25bd151 100644
+---- a/CHANGELOG.md
+-+++ b/CHANGELOG.md
+-@@ -1,4 +1,9 @@
+- # Changelog #
+-+v9.2.0
+-+- Simplified event registering by removing EventListener (currently unused), moved to \Bootstrap\Bootstrap.  
+-+- Support for Content-Security-Policy header, strict by default.
+-+- Bug- and performance fixes.
+-+
+- v9.1.3
+- - Fix accidently creating duplicate entities.  
+- 
+-diff --git a/README.md b/README.md
+-index 951f2bc..72366ed 100644
+---- a/README.md
+-+++ b/README.md
+-@@ -25,3 +25,4 @@ Kickstart your new web project or API with a clean, stable codebase.
+- 14. [The Assets class](docs/manual/Assets.md) – Managing CSS, JS, and other assets
+- 15. [The Registry class](docs/manual/Registry.md) – Shared object storage and access
+- 16. [Utility classes](docs/manual/Utilities.md) – Helper classes and common utilities
+-+17. [Content Security Policies](docs/manual/Content_Security_Policies.md) - Configure and manage content security policy (CSP)
+-\ No newline at end of file
+-diff --git a/docs/manual/Events.md b/docs/manual/Events.md
+-index 741c031..dbd7b48 100644
+---- a/docs/manual/Events.md
+-+++ b/docs/manual/Events.md
+-@@ -59,7 +59,7 @@ class EmailNotifier {
+- ```
+- 
+- ## Default event listeners
+--The `\Bootstrap\EventService` provides a `registerDefaultListeners` utility method, any listener that is needed across all processes
+-+The `\Bootstrap\Bootstrap` file provides a `registerEventListeners` utility method, any listener that is needed across all processes
+- may be registered in here.
+- 
+- The contents of the file may be:
+-@@ -67,8 +67,10 @@ The contents of the file may be:
+- <?php
+- namespace Bootstrap;
+- 
+--class EventService {
+--	public function registerDefaultListeners(): void {
+-+class Bootstrap {
+-+	// ... other methods
+-+
+-+	private function registerEventListeners(): void {
+- 		\Core\Event::addListener(
+- 			"controller.execute.before",
+- 			\AuthenticationService::class
+-@@ -160,14 +162,14 @@ Arguments passed: `\Core\ClassName $iClassName, \Core\MethodName $iMethodName`
+- ### core.output.json
+- Event emitted right before JSON output is rendered.  
+- Condition: Negotiated content type is JSON
+--Arguments passed: `array $data`  
+-+Arguments passed: `\Core\Response $iResponse`  
+- 
+- ### core.output.xml
+- Event emitted right before XML output is rendered.  
+- Condition: Negotiated content type is XML  
+--Arguments passed: `string $data`
+-+Arguments passed: `\Core\Response $iResponse`  
+- 
+- ### core.output.html
+- Event emitted right before HTML output is rendered.  
+- Condition: Negotiated content type is HTML    
+--Arguments passed: `string $view, array $data`
+-\ No newline at end of file
+-+Arguments passed: `\Core\Response $iResponse`  
+-\ No newline at end of file
+-diff --git a/docs/manual/Getting_started.md b/docs/manual/Getting_started.md
+-index 5dde93e..3de54de 100644
+---- a/docs/manual/Getting_started.md
+-+++ b/docs/manual/Getting_started.md
+-@@ -13,28 +13,43 @@ Because configuration files should not reside in the same directory as the appli
+- 
+- The exception being the dotenv `.env` file typically used for local development.  
+- 
+--This framework has mainly been designed to work with apache webservers, but have confirmed compatibility with nginx in conjunction with php-fpm.  
+-+This framework has mainly been designed to work with apache webservers, but have confirmed compatibility with nginx and Caddy in conjunction with php-fpm.  
+- Make sure that every request is routed to `index.php`  
+- 
+--For **Apache** webservers use the bundled `.htaccess` file.  
+-+**Apache**
+-+Use the bundled `.htaccess` file.  
+- 
+--For **nginx** webservers your `nginx.conf` file may include the following in the `http.server` block.  
+-+**nginx**
+-+Your `nginx.conf` file may include the following in the `http.server` block.  
+- 
+- ```
+- http {
+--	server {
+--		...
+-+    server_name example.com;
+- 
+--		location / {
+--			index index.php;
+--			try_files $uri $uri/ /index.php$args;
+--		}
+-+	# Set this path to your site's directory.
+-+	root /var/www/html/src;
+- 
+--		...
+-+	location / {
+-+		index index.php;
+-+		try_files $uri $uri/ /index.php$args;
+- 	}
+- }
+- ```
+- 
+-+**Caddy**
+-+Your `Caddyfile` file may include the following.
+-+Change port numbers accordingly.  
+-+
+-+```
+-+:80 {
+-+	# Set this path to your site's directory.
+-+	root * /var/www/html
+-+
+-+	php_fastcgi * php:9000
+-+	file_server
+-+}
+-+```
+-+
+- ## 3. Your database
+- The default bundled database library currently only supports MySQL/MariaDB.
+- Please refer to the documentation for your database of choice on how to set up these.  
+-diff --git a/src/Libraries/Bootstrap/Bootstrap.php b/src/Libraries/Bootstrap/Bootstrap.php
+-index 35bc3e1..afd6396 100644
+---- a/src/Libraries/Bootstrap/Bootstrap.php
+-+++ b/src/Libraries/Bootstrap/Bootstrap.php
+-@@ -2,6 +2,9 @@
+- 
+- namespace Bootstrap;
+- 
+-+use \EventListeners\HttpsRedirect;
+-+use \EventListeners\ContentSecurityPolicy;
+-+
+- /**
+-  * Class Bootstrap
+-  *
+-@@ -55,6 +58,8 @@ class Bootstrap {
+- 			\Registry::getConfiguration()->get("database.password"),
+- 			\Registry::getConfiguration()->get("database.name")
+- 		));
+-+
+-+		\Registry::set(new \ContentSecurityPolicy\Builder());
+- 	}
+- 
+- 	/**
+-@@ -124,7 +129,7 @@ class Bootstrap {
+- 	/**
+- 	 * Registers error handlers.
+- 	 * Any PHP error will be be converted to \ErrorException and thrown.
+--	 * 
+-+	 *
+- 	 * @return void
+- 	 */
+- 	private function registerErrorHandlers(): void {
+-@@ -209,10 +214,34 @@ class Bootstrap {
+- 	}
+- 
+- 	/**
+--	 * Registers event listeners.
+-+	 * Define your default event listeners in this function.
+-+	 * These listeners will be added upon every request
+-+	 *
+-+	 * Example event listener class defined elsewhere:
+-+	 *
+-+	 * ```php
+-+	 * <?php
+-+	 * namespace EventListners;
+-+	 *
+-+	 * class UserRegistration {
+-+	 *		public function handle(User $iUser) {
+-+	 *			// Assuming you have the following classes loaded
+-+	 *			\EmailService::sendWelcomeEmail($iUser);
+-+	 *
+-+	 *			\Logger::debug("User registered: " . $iUser->getUsername());
+-+	 *		}
+-+	 * }
+-+	 * ```
+-+	 * Use the fully qualified class name
+-+	 * \Core\Event::addListener("controller.execute.before", \UserRegistration::class);
+-+	 *
+-+	 * Closures may also be passes
+-+	 * \Core\Event::addListener("controller.execute.before", fn(\User $iUser) => \EmailService::sendWelcomeEmail($iUser));
+-+	 *
+- 	 * @return void
+- 	 */
+- 	private function registerEventListeners(): void {
+--		(new EventService)->registerDefaultListeners();
+-+		\Core\Event::addListener("core.global.init", HttpsRedirect::class);
+-+		\Core\Event::addListener("core.output.html", ContentSecurityPolicy::class);
+- 	}
+- }
+-diff --git a/src/Libraries/Bootstrap/EventService.php b/src/Libraries/Bootstrap/EventService.php
+-deleted file mode 100644
+-index 732f421..0000000
+---- a/src/Libraries/Bootstrap/EventService.php
+-+++ /dev/null
+-@@ -1,37 +0,0 @@
+--<?php
+--
+--namespace Bootstrap;
+--
+--class EventService {
+--	/**
+--	 * Define your default event listeners in this function.
+--	 * These listeners will be added upon every request
+--	 * 
+--	 * Example event listener class defined elsewhere:
+--	 * 
+--	 * ```php
+--	 * <?php
+--	 * namespace EventListners;
+--	 *
+--	 * class UserRegistration {
+--	 *		public function handle(User $iUser) {
+--	 *			// Assuming you have the following classes loaded
+--	 *			\EmailService::sendWelcomeEmail($iUser);
+--	 *
+--	 *			\Logger::debug("User registered: " . $iUser->getUsername());
+--	 *		}
+--	 * }
+--	 * ```
+--	 * Use the fully qualified class name
+--	 * \Core\Event::addListener("controller.execute.before", \UserRegistration::class);
+--	 * 
+--	 * Closures may also be passes
+--	 * \Core\Event::addListener("controller.execute.before", fn(\User $iUser) => \EmailService::sendWelcomeEmail($iUser));
+--	 *
+--	 * @return void
+--	 */
+--	public function registerDefaultListeners(): void {
+--		// Force HTTPS redirect
+--		\Core\Event::addListener("core.global.init", \EventListeners\HttpsRedirect::class);
+--	}
+--}
+-diff --git a/src/Libraries/Configuration.php b/src/Libraries/Configuration.php
+-index 45f93b5..54c5d77 100644
+---- a/src/Libraries/Configuration.php
+-+++ b/src/Libraries/Configuration.php
+-@@ -118,7 +118,7 @@ class Configuration {
+- 	 * @return mixed|null null on failure.
+- 	 * @throws \InvalidArgumentException If key does not exist in parsed json.
+- 	 */
+--	public function get(?string $key = null): mixed {
+-+	public function get(null|string $key = null): mixed {
+- 		if ($key === null) {
+- 			return $this->parsedConfig;
+- 		}
+-diff --git a/src/Libraries/Controller.php b/src/Libraries/Controller.php
+-index 2b16d0b..6e32ce7 100644
+---- a/src/Libraries/Controller.php
+-+++ b/src/Libraries/Controller.php
+-@@ -143,6 +143,17 @@ abstract class Controller {
+- 		// This is fine as we don't need a view layer for CLI
+- 		if (IS_CLI) exit(0);
+- 
+-+		// The event that is about to be triggered
+-+		$event = sprintf("core.output.%s", $this->contentType->getMedia());
+-+
+-+		/**
+-+		 * Trigger an event before rendering the view.
+-+		 *
+-+		 * @param string $event The event name.
+-+		 * @param Response $response The response object to be modified by listeners.
+-+		 */
+-+		\Core\Event::trigger($event, $this->response);
+-+
+- 		$this->response->sendHeaders();
+- 
+- 		$this->renderer->render($this->response);
+-diff --git a/src/Libraries/Core/Renderer.php b/src/Libraries/Core/Renderer.php
+-index 086704b..ce334f8 100644
+---- a/src/Libraries/Core/Renderer.php
+-+++ b/src/Libraries/Core/Renderer.php
+-@@ -43,22 +43,8 @@ class Renderer {
+- 		$view = $iResponse->getView();
+- 		$data = $iResponse->getData();
+- 
+--		$event = sprintf("core.output.%s", $this->iContentType->getMedia());
+- 		$file = $this->iTemplate->getViewPath($view);
+- 
+--		/**
+--		 * Trigger an event before rendering the view.
+--		 *
+--		 * @param string $event The event name.
+--		 * @param string $view The view to be rendered.
+--		 * @param array $data The data to be passed to the view.
+--		 */
+--		\Core\Event::trigger(
+--			$event,
+--			$view,
+--			$data
+--		);
+--
+- 		$this->iContentType->stream($data, $file);
+- 	}
+- }
+-diff --git a/src/Libraries/Database/Entity.php b/src/Libraries/Database/Entity.php
+-index 569c7ae..0fceddd 100644
+---- a/src/Libraries/Database/Entity.php
+-+++ b/src/Libraries/Database/Entity.php
+-@@ -489,6 +489,6 @@ abstract class Entity implements \JsonSerializable {
+- 	 * @return array
+- 	 */
+- 	public function jsonSerialize(): array {
+--		return $this->items;
+-+		return $this->data + $this->new;
+- 	}
+- }
+-diff --git a/src/Libraries/Http/Request.php b/src/Libraries/Http/Request.php
+-index 85c74a1..fefe871 100644
+---- a/src/Libraries/Http/Request.php
+-+++ b/src/Libraries/Http/Request.php
+-@@ -227,7 +227,7 @@ class Request {
+- 		fwrite($this->headerHandle, "\r\n\r\n");
+- 
+- 		$this->returndata = $response['body'];
+--		$this->curlInfo = ['http_code' => $fakeResponse['http_code'] ?? 200, 'url' => $url];
+-+		$this->curlInfo = ['http_code' => $response['http_code'] ?? 200, 'url' => $url];
+- 		$this->headerHandle = $headerHandle;
+- 		$this->response = new Response($this);
+- 
+-@@ -414,7 +414,7 @@ class Request {
+- 	 * @return Request
+- 	 */
+- 	public function connect(): Request {
+--		return $this->setMethod(Method::OPTIONS)->send();
+-+		return $this->setMethod(Method::CONNECT)->send();
+- 	}
+- 
+- 	/**
+-diff --git a/src/Libraries/Path.php b/src/Libraries/Path.php
+-index bd75ca6..d9fa94b 100644
+---- a/src/Libraries/Path.php
+-+++ b/src/Libraries/Path.php
+-@@ -16,6 +16,7 @@ class Path {
+- 		if ($path === null) return null;
+- 
+- 		$path = preg_replace('#/+#', '/', str_replace('\\', '/', $path));
+-+		$resolvedPath = realpath($path);
+- 
+- 		// Attempt to use realpath to resolve the path
+- 		// Note: realpath fails in the following scenarios:
+-@@ -23,7 +24,7 @@ class Path {
+- 		// - The path includes symbolic links that cannot be resolved
+- 		// - The current user does not have permissions to access components of the path
+- 		// If realpath fails, resolve relative segments manually
+--		if (!realpath($path)) {
+-+		if (!$resolvedPath) {
+- 			$segments = explode('/', $path);
+- 			$resolved = [];
+- 
+-@@ -39,7 +40,7 @@ class Path {
+- 			return '/' . implode('/', $resolved);
+- 		}
+- 
+--		return realpath($path);
+-+		return $resolvedPath;
+- 	}
+- 
+- 	/**
+-diff --git a/src/Templates/default/footer.tpl.php b/src/Templates/default/footer.tpl.php
+-index daae27b..0f4253f 100644
+---- a/src/Templates/default/footer.tpl.php
+-+++ b/src/Templates/default/footer.tpl.php
+-@@ -1,5 +1,5 @@
+--	<?php foreach($javascript as $script): ?>
+--	<script type="text/javascript" src="<?php print $script; ?>"></script>
+-+	<?php foreach ($javascript as $script): ?>
+-+		<script type="text/javascript" nonce="<?php print $nonce; ?>" src="<?php print $script; ?>"></script>
+- 	<?php endforeach; ?>
+- 	</body>
+--</html>
+-\ No newline at end of file
+-+</html>
+-diff --git a/src/Templates/default/header.tpl.php b/src/Templates/default/header.tpl.php
+-index 02369c5..70f587e 100644
+---- a/src/Templates/default/header.tpl.php
+-+++ b/src/Templates/default/header.tpl.php
+-@@ -1,9 +1,11 @@
+- <!DOCTYPE html>
+- <html>
+--	<head>
+--		<title><?php print $title ?></title>
+--		<?php foreach($stylesheets as $style): ?>
+--		<link rel="stylesheet" type="text/css" href="<?php print $style; ?>" media="all" />
+--		<?php endforeach; ?>
+--	</head>
+--	<body class="<?php print $bodyClasses; ?>">
+-\ No newline at end of file
+-+
+-+<head>
+-+	<title><?php print $title ?></title>
+-+	<?php foreach ($stylesheets as $style): ?>
+-+		<link rel="stylesheet" type="text/css" nonce="<?php print $nonce; ?>" href="<?php print $style; ?>" media="all" />
+-+	<?php endforeach; ?>
+-+</head>
+-+
+-+<body class="<?php print $bodyClasses; ?>">
+-\ No newline at end of file

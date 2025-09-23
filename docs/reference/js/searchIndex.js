@@ -16,11 +16,6 @@ Search.appendIndex(
             "summary": "Class\u0020Bootstrap",
             "url": "classes/Bootstrap-Bootstrap.html"
         },                {
-            "fqsen": "\\Bootstrap\\EventService",
-            "name": "EventService",
-            "summary": "",
-            "url": "classes/Bootstrap-EventService.html"
-        },                {
             "fqsen": "\\Configuration",
             "name": "Configuration",
             "summary": "Parses\u0020a\u0020JSONC\u0020file,\u0020and\u0020lets\u0020you\u0020access\u0020properties\u0020using\u0020a\u0020dot\u0020syntax\nalso\u0020supports\u0020.jsonc\u0020files",
@@ -356,6 +351,21 @@ Search.appendIndex(
             "summary": "Controller\u0020for\u0020paths\u0020that\u0020either\u0020cannot\u0020be\u0020routed.",
             "url": "classes/StatusCode-NotFoundController.html"
         },                {
+            "fqsen": "\\ContentSecurityPolicy\\Builder",
+            "name": "Builder",
+            "summary": "",
+            "url": "classes/ContentSecurityPolicy-Builder.html"
+        },                {
+            "fqsen": "\\Database\\EntityCache",
+            "name": "EntityCache",
+            "summary": "Handles\u0020caching\u0020of\u0020entity\u0020instances",
+            "url": "classes/Database-EntityCache.html"
+        },                {
+            "fqsen": "\\EventListeners\\ContentSecurityPolicy",
+            "name": "ContentSecurityPolicy",
+            "summary": "",
+            "url": "classes/EventListeners-ContentSecurityPolicy.html"
+        },                {
             "fqsen": "\\",
             "name": "\\",
             "summary": "",
@@ -375,6 +385,11 @@ Search.appendIndex(
             "name": "Bootstrap",
             "summary": "",
             "url": "namespaces/bootstrap.html"
+        },                {
+            "fqsen": "\\ContentSecurityPolicy",
+            "name": "ContentSecurityPolicy",
+            "summary": "",
+            "url": "namespaces/contentsecuritypolicy.html"
         },                {
             "fqsen": "\\Core",
             "name": "Core",
