@@ -345,22 +345,113 @@ class Animal extends Database\Entity {
 
 ## Collections / Result sets ##
 
-The `Database\Collection` class is a specialized iterable object that represents a set of database rows returned from a query.  
-It behaves similarly to an array of objects, but provides additional convenience methods for working with result sets, such as:
-- Iterating over results with `foreach`
-- Accessing rows by index (e.g., `$collection[0]`)
-- Using helper methods like `getFirst()`, `getColumn($name)`, `count()`, and more
-- Chaining methods for filtering, mapping, or reducing results
+The `Database\Collection` class is a specialized iterable object that holds the resultset from a database query.
 
-You can treat a `Database\Collection` much like an array of entity objects, but with extra features for database result handling and manipulation.
+### Basic Access Methods
 
 ```php
-<?php
-	\Database\Connection::getInstance()->select("animals")->getColumn("name");
+// Get the first element
+$first = $iCollection->getFirst();
+
+// Get the last element
+$last = $iCollection->getLast();
+
+// Find an item using a callback
+$item = $iCollection->getOne(fn($value) => $value->name === 'Asian Rhino');
+
+// Get a specific column from all items
+$names = $iCollection->getColumn('name');
+
+// Check if empty
+if ($iCollection->isEmpty()) {
+    // Handle empty collection
+}
+
+// Get all items as array
+$array = $iCollection->all();
+
+// Count items
+$count = $iCollection->count();
 ```
 
-Get row (assuming your criteria matches only one row) 
+### Array-like Access
+Collections can be used like arrays:
 ```php
-<?php
-	\Database\Connection::getInstance()->select("animals", ["name" => "Asian Rhino"])->getFirst();
+// Check if index exists
+if (isset($iCollection[0])) {
+    // Access by index
+    $item = $iCollection[0];
+    
+    // Set by index
+    $iCollection[1] = $newItem;
+    
+    // Unset by index
+    unset($iCollection[0]);
+}
 ```
+
+### Iteration
+Collections can be used in foreach loops:
+```php
+foreach ($iCollection as $key => $item) {
+    // Work with each item
+}
+```
+
+### Transformation Methods
+
+```php
+// Filter items
+$filtered = $iCollection->filter(fn($item) => $item->extinct === false);
+
+// Transform items
+$transformed = $iCollection->map(fn($item) => $item->name);
+
+// Reduce to single value
+$count = $iCollection->reduce(fn($carry, $item) => $carry + 1, 0);
+
+// Get a subset of items
+$slice = $iCollection->slice(1, 3);
+
+// Merge with another collection
+$merged = $iCollection->merge($otherCollection);
+
+// Get unique items
+$unique = $iCollection->unique();
+
+// Remove items by key
+$iCollection->forget(['key1', 'key2']);
+```
+
+### JSON Serialization
+Collections can be directly encoded to JSON:
+```php
+$json = json_encode($iCollection);
+```
+
+### Common Use Cases
+
+Getting a specific row:
+```php
+// Find first matching row
+$rhino = $animals->getOne(fn($animal) => $animal->name === 'Asian Rhino');
+
+// Get first row (if you know there's only one)
+$first = $animals->getFirst();
+
+// Extract all names
+$names = $animals->getColumn('name');
+
+// Filter extinct animals
+$extinct = $animals->filter(fn($animal) => $animal->extinct === true);
+```
+
+Combining operations:
+```php
+$endangeredNames = $animals
+    ->filter(fn($animal) => $animal->endangered === true)
+    ->getColumn('name')
+    ->map(fn($name) => strtoupper($name));
+```
+
+The Collection class provides a fluent interface for working with sets of database results or any array of objects. All transformation methods (filter, map, slice, etc.) return new Collection instances, making them safe for chaining without modifying the original collection.

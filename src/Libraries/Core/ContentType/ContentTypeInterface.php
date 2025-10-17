@@ -25,5 +25,5 @@ interface ContentTypeInterface {
 	 * @param string $view Path to a view file for relevant content types.
 	 * @return void
 	 */
-	public function stream(array $data, string $view): void;
+	public function stream(array $data, null|string $view): void;
 }

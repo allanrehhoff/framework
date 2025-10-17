@@ -10,17 +10,17 @@ namespace Database;
 class Collection implements \ArrayAccess, \Iterator, \Countable, \JsonSerializable {
 
 	/**
-	 * @var array Collection of objects that's iterable
+	 * @var array Collection of items that's iterable
 	 */
 	private array $items = [];
 
 	/**
 	 * Collection constructor.
 	 *
-	 * @param array $objects Array of objects to store as a collection.
+	 * @param array $items Array of items to store as a collection.
 	 */
-	public function __construct(array $objects) {
-		$this->items = $objects;
+	public function __construct(array $items = []) {
+		$this->items = $items;
 	}
 
 	/**
@@ -29,7 +29,6 @@ class Collection implements \ArrayAccess, \Iterator, \Countable, \JsonSerializab
 	 *
 	 * @return mixed|null
 	 */
-	#[\ReturnTypeWillChange]
 	public function getFirst(): mixed {
 		if ($this->isEmpty() === true) return null;
 
@@ -43,13 +42,30 @@ class Collection implements \ArrayAccess, \Iterator, \Countable, \JsonSerializab
 	 *
 	 * @return mixed|null
 	 */
-	#[\ReturnTypeWillChange]
 	public function getLast(): mixed {
 		if ($this->isEmpty() === true) return null;
 
 		$keys = array_keys($this->items);
 		$key = end($keys);
 		return $this->items[$key];
+	}
+
+	/**
+	 * Find and return the first element in the collection where the callback returns true
+	 *
+	 * @param callable(mixed, mixed): bool $callback Function that receives (mixed $value, mixed $key)
+	 *                                              and returns true when the desired item is found
+	 * @param mixed $default Value to return if no matching element is found
+	 * @return mixed The first matching element or the default value
+	 */
+	public function getOne(callable $callback, mixed $default = null): mixed {
+		foreach ($this->items as $key => $value) {
+			if ($callback($value, $key) === true) {
+				return $value;
+			}
+		}
+
+		return $default;
 	}
 
 	/**
@@ -189,5 +205,87 @@ class Collection implements \ArrayAccess, \Iterator, \Countable, \JsonSerializab
 	 */
 	public function jsonSerialize(): array {
 		return $this->items;
+	}
+
+	/**
+	 * Filter the collection using the provided callback.
+	 *
+	 * Iterates over each element in the collection and retains elements for which
+	 * the callback returns a truthy value.
+	 *
+	 * A new Collection instance containing the filtered items is returned; the
+	 * original collection is not modified.
+	 *
+	 * @param callable(mixed, mixed): bool $callback Callable that receives (mixed $item, mixed $key)
+	 *       						and returns true to include the item in the resulting collection.
+	 * @return Collection The new Collection containing only the items that passed the callback.
+	 */
+	public function filter(callable $callback): Collection {
+		return new self(array_filter($this->items, $callback));
+	}
+
+	/**
+	 * Apply a callback to each item in the collection and return a new collection with the results
+	 *
+	 * @param callable(mixed): mixed $callback Function to apply to each item
+	 * @return Collection New collection with mapped items
+	 */
+	public function map(callable $callback): Collection {
+		return new self(array_map($callback, $this->items));
+	}
+
+	/**
+	 * Reduce the collection to a single value using a callback
+	 *
+	 * @param callable(mixed, mixed): mixed $callback Function that receives (mixed $carry, mixed $item)
+	 * @param mixed $initial Initial value for the reduction
+	 * @return mixed The final reduced value
+	 */
+	public function reduce(callable $callback, mixed $initial = null): mixed {
+		return array_reduce($this->items, $callback, $initial);
+	}
+
+	/**
+	 * Extract a slice of the collection
+	 *
+	 * @param int $offset Starting position
+	 * @param int|null $length Length of the slice, or null for all remaining elements
+	 * @return Collection New collection containing the slice
+	 */
+	public function slice(int $offset, ?int $length = null): Collection {
+		return new self(array_slice($this->items, $offset, $length, true));
+	}
+
+	/**
+	 * Merge another collection into this one
+	 *
+	 * @param Collection $other Collection to merge with
+	 * @return Collection New collection containing all items from both collections
+	 */
+	public function merge(Collection $other): Collection {
+		return new self(array_merge($this->items, $other->all()));
+	}
+
+	/**
+	 * Remove duplicate values from the collection
+	 *
+	 * @return Collection New collection with unique items
+	 */
+	public function unique(): Collection {
+		return new self(array_unique($this->items, SORT_REGULAR));
+	}
+
+	/**
+	 * Remove one or more items from the collection by key
+	 *
+	 * @param array $key Single key or array of keys to remove
+	 * @return self
+	 */
+	public function forget(array $keys): self {
+		foreach ($keys as $k) {
+			unset($this->items[$k]);
+		}
+
+		return $this;
 	}
 }

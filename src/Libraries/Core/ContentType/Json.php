@@ -30,7 +30,7 @@ final class Json implements ContentTypeInterface {
 	 * @param string $view Purposely ignored by this media type
 	 * @return void
 	 */
-	public function stream(array $data, string $view = ''): void {
+	public function stream(array $data, null|string $view = ''): void {
 		// phpcs:enable Generic.CodeAnalysis.UnusedFunctionParameter
 		print json_encode($data, JSON_PRETTY_PRINT);
 	}
