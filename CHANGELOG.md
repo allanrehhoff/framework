@@ -1,4 +1,10 @@
 # Changelog #
+v9.2.1
+- Added `getOne()` method to Collection class for finding items using callbacks.  
+- Added tests for Collection class.  
+- ContentTypeInterface not allows nullable views.  
+- Updated documentation for collections
+
 v9.2.0
 - Removed the unused EventService class and moved event listener registration to \Bootstrap\Bootstrap  
 - Support for Content-Security-Policy header, strict by default.  
