@@ -1,5 +1,5 @@
 # Changelog #
-v9.2.1
+v9.2.2
 - Added `getOne()` method to Collection class for finding items using callbacks.  
 - Added tests for Collection class.  
 - ContentTypeInterface not allows nullable views.  
