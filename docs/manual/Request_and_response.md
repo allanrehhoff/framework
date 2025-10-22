@@ -78,11 +78,17 @@ Content types access can likewise be set with attributes, on a per-class or per-
 ```php
 <?php
 // Set application/json for all methods to this class
-#[\Core\Attributes\AllowedContentTypes('json')]
+#[\Core\Attributes\RespondWith('json')]
 class ApiController extends Controller {
 
-	// Extraordinarily set application/xml as content-type for this method
-	#[\Core\Attributes\AllowedContentTypes('xml')]
+	// set application/xml as content-type for this method
+	#[\Core\Attributes\RespondWith('xml')]
+	public function index(): void {
+		// ...
+	}
+
+    // Or set both. and determine using client 'Accept' header
+	#[\Core\Attributes\RespondWith('xml', 'json')]
 	public function index(): void {
 		// ...
 	}

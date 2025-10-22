@@ -24,15 +24,15 @@ class MockController extends \Controller {
 		$this->response->setView("without-children");
 	}
 
-	#[\Core\Attritbutes\AllowedContentTypes('xml')]
+	#[\Core\Attributes\RespondWith('xml')]
 	public function methodAllowsXml() {
 	}
 
-	#[\Core\Attritbutes\AllowedContentTypes('json')]
+	#[\Core\Attributes\RespondWith('json')]
 	public function methodAllowsJson() {
 	}
 
-	#[\Core\Attritbutes\AllowedContentTypes('json', 'xml')]
+	#[\Core\Attributes\RespondWith('json', 'xml')]
 	public function methodAllowsJsonAndXml() {
 	}
 

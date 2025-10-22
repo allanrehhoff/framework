@@ -4,7 +4,7 @@ namespace Core\ContentType;
 
 use Core\ContentType\ContentTypeInterface;
 use Core\ContentType\ContentTypeEnum;
-use Core\Attributes\AllowedContentTypes;
+use Core\Attributes\RespondWith;
 use ReflectionClass;
 use ReflectionMethod;
 
@@ -78,15 +78,15 @@ class Negotiator {
 		$allowedContentTypes = [];
 
 		// Reflect controller and method attributes
-		$iReflectionClass = new ReflectionClass($iClassName->toString());
-		$iReflectionMethod = new ReflectionMethod($iClassName->toString(), $iMethodName->toString());
+		$iReflectionClass = new \ReflectionClass($iClassName->toString());
+		$iReflectionMethod = new \ReflectionMethod($iClassName->toString(), $iMethodName->toString());
 
 		foreach ([$iReflectionClass, $iReflectionMethod] as $reflector) {
-			$attributes = $reflector->getAttributes(AllowedContentTypes::class);
+			$attributes = $reflector->getAttributes(RespondWith::class);
 			foreach ($attributes as $iReflectionAttribute) {
-				/** @var AllowedContentTypes $iAllowedContentTypes */
-				$iAllowedContentTypes = $iReflectionAttribute->newInstance();
-				$allowedContentTypes = array_merge($allowedContentTypes, $iAllowedContentTypes->getContentTypes());
+				/** @var RespondWith $iRespondWith */
+				$iRespondWith = $iReflectionAttribute->newInstance();
+				$allowedContentTypes = array_merge($allowedContentTypes, $iRespondWith->getContentTypes());
 			}
 		}
 

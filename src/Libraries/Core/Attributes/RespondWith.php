@@ -9,7 +9,7 @@ use Core\ContentType\ContentTypeEnum;
  * Attribute for specifying allowed content types for controllers or methods.
  */
 #[Attribute(Attribute::TARGET_CLASS | Attribute::TARGET_METHOD)]
-class AllowedContentTypes {
+class RespondWith {
 	private array $contentTypes;
 
 	/**

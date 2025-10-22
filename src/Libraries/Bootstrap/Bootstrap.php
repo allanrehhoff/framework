@@ -86,30 +86,31 @@ class Bootstrap {
 	 * @return void
 	 */
 	private function registerAutoloaders(): void {
-		spl_autoload_register(
-			function (string $className): void {
-				$controllerClass = \Controller::class;
-				$className = str_replace("\\", "/", $className);
+		spl_autoload_register(function (string $className): void {
+			$controllerClass = \Controller::class;
+			$className = str_replace("\\", "/", $className);
 
-				// Exclude PHPUnit-related classes
-				// Removing this line breaks tests
-				// As throwing FileNotFound causes
-				// the testsuite to fail silently
-				if (str_contains($className, 'PHPUnit')) return;
+			// Exclude PHPUnit-related classes
+			// Removing this line breaks tests
+			// As throwing FileNotFound causes
+			// the testsuite to fail silently
+			if (str_contains($className, 'PHPUnit')) return;
 
-				if ($className != $controllerClass && str_ends_with($className, $controllerClass)) {
-					$classFile = APP_PATH . "/Controllers/" . $className . ".php";
-				} else {
-					$classFile = APP_PATH . "/Libraries/" . $className . ".php";
-				}
-
-				if (file_exists($classFile) === true) {
-					require $classFile;
-				} else {
-					throw new \Core\Exception\FileNotFound(\basename($classFile));
-				}
+			if ($className != $controllerClass && str_ends_with($className, $controllerClass)) {
+				$classFile = APP_PATH . "/Controllers/" . $className . ".php";
+			} else {
+				$classFile = APP_PATH . "/Libraries/" . $className . ".php";
 			}
-		);
+
+			if (file_exists($classFile) === true) {
+				require $classFile;
+			} else {
+				throw new \Core\Exception\FileNotFound(\basename($classFile));
+			}
+		});
+
+		// Backwards compatibility alias
+		class_alias(\Core\Attributes\RespondWith::class, '\Core\Attributes\AllowedContentTypes');
 
 		$vendorAutoload = [
 			APP_PATH . "/vendor/autoload.php",

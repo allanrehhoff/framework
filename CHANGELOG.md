@@ -1,4 +1,7 @@
 # Changelog #
+v9.2.3
+- Rename content type response attribute, for better understanding and readability.  
+
 v9.2.2
 - Added `getOne()` method to Collection class for finding items using callbacks.  
 - Added tests for Collection class.  
