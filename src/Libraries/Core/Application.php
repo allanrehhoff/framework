@@ -2,25 +2,21 @@
 
 namespace Core;
 
+use \Core\ContentType\Negotiator;
+
 /**
  * The main class for this application.
  */
 final class Application {
-
-	/**
-	 * @var ClassName Actual controller path routed by given args
-	 */
-	private ClassName $executedClassName;
-
-	/**
-	 * @var MethodName Method name called on the master controller
-	 */
-	private MethodName $calledMethodName;
-
 	/**
 	 * @var Router The router responsible for parsing request uri to callable system path
 	 */
 	private Router $router;
+
+	/**
+	 * @var Template The template object, holds information about templates/views
+	 */
+	private Template $template;
 
 	/**
 	 * Parse the current route and set caching as needed.
@@ -28,35 +24,12 @@ final class Application {
 	 * @param \Core\Router $iRouter Application arguments, usually url-parts divided by /, or argv.
 	 */
 	public function __construct(Router $iRouter) {
+		$iNegotiator = new Negotiator($iRouter);
+		$iTemplate = \Registry::set(new Template);
+
+		$this->template = $iTemplate;
 		$this->router = $iRouter;
-	}
-
-	/**
-	 * Get controller name/path of the executed main controller
-	 * 
-	 * @return ClassName Called controller name
-	 */
-	public function getExecutedClassName(): ClassName {
-		return $this->executedClassName;
-	}
-
-	/**
-	 * Get controller name/path of the executed main controller
-	 * 
-	 * @return MethodName Called method name
-	 */
-	public function getCalledMethodName(): MethodName {
-		return $this->calledMethodName;
-	}
-
-	/**
-	 * Get path to the specified controller file. Omit the .php extension
-	 * 
-	 * @param string $controller Name of the controller file.
-	 * @return ?string|null On failure
-	 */
-	public function getControllerPath(string $controller): ?string {
-		return APP_PATH . "/Controllers/" . basename($controller) . ".php";
+		$this->router->getResponse()->setContentType($iNegotiator->getContentType());
 	}
 
 	/**
@@ -69,60 +42,68 @@ final class Application {
 	}
 
 	/**
-	 * Executes a given controller by name.
-	 * Reroutes to NotFoundController if a \Core\Exception\NotFound is thrown
-	 * within the controller or any of its child controllers.
-	 * 
-	 * @param \Core\ClassName         $iClassName      Name of a class representing the controller that should be executed
-	 * @param null|\Core\MethodName   $iMethodName     Method name that should be executed on instantiated controller, default is index
-	 * @param null|\Controller        $parentController Execute controller with this as its parent, default null
-	 * 
-	 * @return \Controller The executed controller that has just been executed.
+	 * Get the template object
+	 * @return \Core\Template
 	 */
-	public function executeController(ClassName $iClassName, ?MethodName $iMethodName = null, ?\Controller $parentController = null): \Controller {
-		$controllerName = $iClassName->toString();
-		$methodName = $iMethodName ? $iMethodName->toString() : MethodName::DEFAULT;
-		$defaultMethodName = $this->getRouter()->getDefaultMethodName();
-
-		// Only record the top-level controller
-		if ($parentController === null) {
-			$this->executedClassName = $iClassName;
-			$this->calledMethodName = $iMethodName ?? $defaultMethodName;
-		}
-
-		$iController = new $controllerName($this, $parentController);
-
-		// Pass response data from parent
-		// controller to child controller
-		if ($parentController !== null) {
-			$iController->getResponse()->setData($parentController->getResponse()->getData());
-		}
-
-		try {
-			\Core\Event::trigger("core.controller.method.before", $iController, $iMethodName);
-
-			$iController->$methodName();
-
-			\Core\Event::trigger("core.controller.method.after", $iController, $iMethodName);
-		} catch (\Core\StatusCode\StatusCode $iStatusCode) {
-			$iController = $this->executeController($iStatusCode->getClassName(), new MethodName(MethodName::DEFAULT));
-		}
-
-		foreach ($iController->getChildren() as $childControllerName) {
-			$childController = $this->executeController($childControllerName, $defaultMethodName, $iController);
-			$iController->getResponse()->setData($childController->getResponse()->getData());
-		}
-
-		return $iController;
+	public function getTemplate(): Template {
+		return $this->template;
 	}
 
 	/**
 	 * Dispatches a controller, based upon the requested path.
 	 * Serves a NotFoundController if it doesn't exist
 	 * 
-	 * @return \Controller Instance of extended Controller
+	 * @return void
 	 */
-	public function run(): \Controller {
-		return $this->executeController(...$this->router->getRoute());
+	public function run(): void {
+		$route = $this->router->getRoute();
+
+		$iController = $this->router->dispatch(...$route);
+
+		$iResponse = $iController->getResponse();
+
+		// Exiting here during tests prevents output capture
+		// So we just return instead, to let tests conitnue
+		if (TESTS_RUNNING) return;
+
+		// Stopping here prevents further output when
+		// in CLI mode, but exiting with the last
+		// error code, if any.
+		if (IS_CLI) exit(error_get_last()["type"] ?? 0);
+
+		// The event that is about to be triggered
+		$event = sprintf("core.output.%s", $iResponse->getContentType()->getMedia());
+
+		/**
+		 * Trigger an event before rendering the view.
+		 *
+		 * @param string $event The event name.
+		 * @param Response $response The response object to be modified by listeners.
+		 */
+		\Core\Event::trigger($event, $iResponse);
+
+		$this->send($iResponse);
+	}
+
+	/**
+	 * Send the response to the client.
+	 * 
+	 * @param \Core\Response $iResponse The response object to be sent.
+	 * @return void
+	 */
+	public function send(\Core\Response $iResponse): void {
+		// Set the correct Content-Type header
+		// At this point, the Content-Type will
+		// have been negotiated and set appropriately
+		$iResponse->addHeader(sprintf(
+			"Content-Type: %s/%s; charset=utf-8",
+			$iResponse->getContentType()->getType(),
+			$iResponse->getContentType()->getMedia()
+		));
+
+		$iResponse->sendHeaders();
+		$iTemplate = $this->getTemplate();
+
+		(new Renderer($iTemplate, $iResponse))->render();
 	}
 }

@@ -6,17 +6,13 @@
  * the default method invoked for all controllers.
  */
 
-use \Core\Router;
 use \Core\Assets;
 use \Core\Request;
+use \Core\Context;
 use \Core\Response;
 use \Core\Renderer;
 use \Core\Template;
 use \Core\ClassName;
-use \Core\Application;
-use \Core\ContentType\Html;
-use \Core\ContentType\Negotiator;
-use \Core\ContentType\ContentTypeInterface;
 
 abstract class Controller {
 
@@ -24,6 +20,11 @@ abstract class Controller {
 	 * @var null|\Controller Holds the parent controller instance
 	 */
 	protected null|\Controller $parent = null;
+
+	/**
+	 * @var Context Current route context
+	 */
+	protected Context $context;
 
 	/**
 	 * @var Request Current request object
@@ -36,16 +37,6 @@ abstract class Controller {
 	protected Response $response;
 
 	/**
-	 * @var Application The application object
-	 */
-	protected Application $application;
-
-	/**
-	 * @var Router Current router object in use
-	 */
-	protected Router $router;
-
-	/**
 	 * @var Template Current template object
 	 */
 	protected Template $template;
@@ -54,11 +45,6 @@ abstract class Controller {
 	 * @var Assets
 	 */
 	protected Assets $assets;
-
-	/**
-	 * @var ContentTypeInterface
-	 */
-	protected ContentTypeInterface $contentType;
 
 	/**
 	 * @var Renderer
@@ -78,42 +64,22 @@ abstract class Controller {
 
 	/**
 	 * Extending child controllers must not have a constructor.
-	 * @param \Core\Application $iApplication The application class invoking this controller.
+	 * @param \Core\Request    $iRequest    The current request object
+	 * @param \Core\Response   $iResponse   The current response object
 	 * @param null|\Controller $iController The parent controller, if this controller is a child, null if it's the top-level controller
 	 */
-	public function __construct(Application $iApplication, ?Controller $iController = null) {
+	public function __construct(Request $iRequest, Response $iResponse, null|Controller $iController = null) {
 		$this->parent = $iController;
-		$this->application = $iApplication;
+		$this->request = $iRequest;
+		$this->response = $iResponse;
 
-		$this->router = $this->application->getRouter();
-		$this->request = $this->router->getRequest();
-		$this->response = $this->router->getResponse();
+		$this->template = \Registry::get(Template::class);
 
-		// While it's safe to load the rest while in cli
-		// there's as of yet, no beneficial reason to.
-		// So we'll save the memory and CPU cycles
-		if (IS_CLI === true) return;
-
-		$this->contentType = (new Negotiator($this->router, $this->request))->getContentType();
-
-		$this->template = new Template(new Assets);
-
-		$this->renderer = new Renderer(
-			$this->template,
-			$this->contentType
-		);
-
-		$this->response->addHeader(sprintf(
-			"Content-Type: %s/%s; charset=utf-8",
-			$this->contentType->getType(),
-			$this->contentType->getMedia()
-		));
-
-		if ($iController === null && $this->contentType::class == Html::class) {
+		if ($iController === null && $iResponse->getContentType()->getMedia() === "html") {
 			$this->children[] = new ClassName("Partial\Header");
 			$this->children[] = new ClassName("Partial\Footer");
 
-			$this->response->setTitle(array_slice($this->request->getArguments(), -1)[0] ?? '');
+			$this->response->setTitle(\Arr::slice($this->request->getArguments(), -1)[0] ?? '');
 		}
 	}
 
@@ -131,32 +97,6 @@ abstract class Controller {
 		}
 
 		return $this->$name;
-	}
-
-	/**
-	 * Send output to client based on their preffered media type
-	 * @return void
-	 */
-	final public function output(): void {
-		// Stopping here, will prevent errors such as
-		// "Call to a member function getTemplatePath() on null"
-		// This is fine as we don't need a view layer for CLI
-		if (IS_CLI) exit(0);
-
-		// The event that is about to be triggered
-		$event = sprintf("core.output.%s", $this->contentType->getMedia());
-
-		/**
-		 * Trigger an event before rendering the view.
-		 *
-		 * @param string $event The event name.
-		 * @param Response $response The response object to be modified by listeners.
-		 */
-		\Core\Event::trigger($event, $this->response);
-
-		$this->response->sendHeaders();
-
-		$this->renderer->render($this->response);
 	}
 
 	/**
@@ -195,17 +135,10 @@ abstract class Controller {
 	}
 
 	/**
-	 * @return Application
+	 * @return Context
 	 */
-	final public function getApplication(): Application {
-		return $this->application;
-	}
-
-	/**
-	 * @return Router
-	 */
-	final public function getRouter(): Router {
-		return $this->router;
+	final public function getRouteContext(): Context {
+		return $this->context;
 	}
 
 	/**

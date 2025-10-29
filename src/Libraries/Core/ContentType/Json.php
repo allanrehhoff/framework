@@ -27,7 +27,7 @@ final class Json implements ContentTypeInterface {
 	 *
 	 * phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter
 	 * @param array $data An associative array of data to be encoded as json
-	 * @param string $view Purposely ignored by this media type
+	 * @param null|string $view Purposely ignored by this media type
 	 * @return void
 	 */
 	public function stream(array $data, null|string $view = ''): void {

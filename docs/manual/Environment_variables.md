@@ -50,3 +50,9 @@ Variable names will be automatically converted to uppercase.
 // The above will likewise be accessible with
 \Registry::getEnvironment()->get("VARNAME", "value");
 ```
+
+## Immutable variables
+Some variables are considered immutable, and cannot be changed once they have been set.
+
+The following variables are immutable.
+- `APP_ENV`

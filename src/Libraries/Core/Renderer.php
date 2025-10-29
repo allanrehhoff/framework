@@ -2,7 +2,6 @@
 
 namespace Core;
 
-use \Core\ContentType\ContentTypeInterface;
 use \Core\Response;
 use \Core\Template;
 
@@ -20,31 +19,47 @@ class Renderer {
 	/**
 	 * @var ContentTypeInterface $iContentType The content type used for rendering output.
 	 */
-	private ContentTypeInterface $iContentType;
+	private Response $iResponse;
 
 	/**
 	 * Renderer constructor.
 	 *
 	 * @param Template $iTemplate The template engine used for rendering views.
-	 * @param ContentTypeInterface $iContentType The content type used for rendering output.
+	 * @param Response $iResponse The response object containg data to render.
 	 */
-	public function __construct(Template $iTemplate, ContentTypeInterface $iContentType) {
+	public function __construct(Template $iTemplate, Response $iResponse) {
 		$this->iTemplate = $iTemplate;
-		$this->iContentType = $iContentType;
+		$this->iResponse = $iResponse;
+	}
+
+	/**
+	 * Get the response to be rendered
+	 * @return Response
+	 */
+	public function getResponse(): Response {
+		return $this->iResponse;
+	}
+
+	/**
+	 * Get the template/theme object.
+	 *
+	 * @return Template The template engine.
+	 */
+	public function getTemplate(): Template {
+		return $this->iTemplate;
 	}
 
 	/**
 	 * Renders the given response.
 	 *
-	 * @param Response $iResponse The response to be rendered.
 	 * @return void
 	 */
-	public function render(Response $iResponse): void {
-		$view = $iResponse->getView();
-		$data = $iResponse->getData();
+	public function render(): void {
+		$view = $this->getResponse()->getView();
+		$data = $this->getResponse()->getData();
 
-		$file = $this->iTemplate->getViewPath($view);
+		$file = $this->getTemplate()->getViewPath($view);
 
-		$this->iContentType->stream($data, $file);
+		$this->getResponse()->getContentType()->stream($data, $file);
 	}
 }

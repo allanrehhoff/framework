@@ -22,7 +22,7 @@ interface ContentTypeInterface {
 	/**
 	 * Send the resulting output of a rendered view with data
 	 * @param array $data Data to expose within in the view
-	 * @param string $view Path to a view file for relevant content types.
+	 * @param null|string $view Path to a view file for relevant content types.
 	 * @return void
 	 */
 	public function stream(array $data, null|string $view): void;

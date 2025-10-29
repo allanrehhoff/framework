@@ -1,6 +1,15 @@
 # Changelog #
-v9.2.3
-- Rename content type response attribute, for better understanding and readability.  
+v10.0.0
+- **This release is backwards incompatible.**  
+- Simplified \Controller constructor and dependencies.  
+- Updated unit tests to account for new structure.  
+- Moved constant TESTS_RUNNING from test suite to source.  
+- AllowedContentType attribute renamed to RespondWith for easier glancing.  
+- Removed support for multiple themes, as feature was unused.  
+
+> Note: This release prioritizes simplicity and removing 
+> unused features and is therefore marked as incompatible
+> However the core concepts and structure stay the same.
 
 v9.2.2
 - Added `getOne()` method to Collection class for finding items using callbacks.  

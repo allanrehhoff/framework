@@ -278,7 +278,7 @@ class Collection implements \ArrayAccess, \Iterator, \Countable, \JsonSerializab
 	/**
 	 * Remove one or more items from the collection by key
 	 *
-	 * @param array $key Single key or array of keys to remove
+	 * @param array $keys Single key or array of keys to remove
 	 * @return self
 	 */
 	public function forget(array $keys): self {

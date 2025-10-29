@@ -7,11 +7,6 @@ namespace Core;
  */
 final class Template {
 	/**
-	 * @var string Holds the current theme name
-	 */
-	private string $name;
-
-	/**
 	 * @var \Core\Assets The assets class
 	 */
 	public \Core\Assets $assets;
@@ -23,12 +18,14 @@ final class Template {
 
 	/**
 	 * Doesn't do much of interest, this shouldn't be required to mess with.
-	 * @param \Core\Assets $iAssets Instance of assets to be rendered later on
 	 * @return void
 	 */
-	public function __construct(\Core\Assets $iAssets) {
-		$this->name = \Registry::getConfiguration()->get("theme");
-		$this->assets = $iAssets;
+	public function __construct() {
+		$this->assets = new \Core\Assets();
+
+		// Do not load assets here
+		// when running in CLI mode
+		if (IS_CLI) return;
 
 		if ($this->getConfiguration()->get("version.version") == "@version") {
 			$this->getConfiguration()->set("version.version", \Registry::getConfiguration()->get("version"));
@@ -52,7 +49,7 @@ final class Template {
 	 * @return \Configuration - application-wide theme configuration
 	 */
 	public function getConfiguration(): \Configuration {
-		$configurationFile = STORAGE . "/config/" . $this->name . ".template.jsonc";
+		$configurationFile = STORAGE . "/config/template.jsonc";
 		return $this->iConfiguration ??= (new \Configuration($configurationFile));
 	}
 
@@ -64,7 +61,7 @@ final class Template {
 	public function getViewPath(string $shortname = ''): string {
 		if ($shortname == '') return '';
 
-		$path = APP_PATH . "/Templates/" . $this->getName();
+		$path = APP_PATH . "/Templates";
 
 		if ($shortname !== '') {
 			$path .= '/' . $shortname;
@@ -87,21 +84,12 @@ final class Template {
 		if (filter_var($file, FILTER_VALIDATE_URL) == $file) return $file;
 
 		$result = sprintf(
-			"%s/Templates/%s/%s",
+			"%s/Templates/%s",
 			\Url::getBaseurl(),
-			$this->getName(),
 			ltrim($file, '/')
 		);
 
 		return $result;
-	}
-
-	/**
-	 * Get the current theme name loaded.
-	 * @return string
-	 */
-	public function getName(): string {
-		return $this->name;
 	}
 
 	/**

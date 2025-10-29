@@ -21,10 +21,30 @@ class EnvironmentTest extends TestCase {
 
 	public function testSimpleEnvironmentVariable() {
 		$iEnvironment = \EnvironmentFactory::createFromString("
-			PHP_ENV=development
+			TEST_VAR=development
 		");
 
-		$this->assertEquals("development", $iEnvironment->get("PHP_ENV"));
+		$this->assertEquals("development", $iEnvironment->get("TEST_VAR"));
+	}
+
+	public function testNumericEnvironmentVariable() {
+		$iEnvironment = \EnvironmentFactory::createFromString('
+			MAX_RETRIES=5
+			TIMEOUT=3.5
+		');
+
+		$this->assertEquals(5, $iEnvironment->get("MAX_RETRIES"));
+		$this->assertEquals(3.5, $iEnvironment->get("TIMEOUT"));
+	}
+
+	public function testImmutableVarsCannotBeSet() {
+		$iEnvironment = \EnvironmentFactory::createFromString('
+			APP_ENV=production
+		');
+
+		$iEnvironment->put("APP_ENV", "testing");
+
+		$this->assertEquals("testing", $iEnvironment->get("APP_ENV"));
 	}
 
 	public function testQuotedString() {

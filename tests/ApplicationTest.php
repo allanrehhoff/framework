@@ -1,33 +1,32 @@
 <?php
+
 use PHPUnit\Framework\Attributes\CoversClass;
+
 #[CoversClass(Application::class)]
 class ApplicationTest extends \PHPUnit\Framework\TestCase {
-	public function testExecuteController() {
+	public function testRouteToControllerAndMethod() {
 		$iRouter = \RouterFactory::withRequestArguments(["mock"]);
 		$iApplication = new \Core\Application($iRouter);
 
 		[$controller, $method] = $iRouter->getRoute();
 
-		$iApplication->executeController($controller, $method);
-
-		$this->assertEquals(MockController::class, $iApplication->getExecutedClassName()->toString());
-		$this->assertEquals(\Core\MethodName::DEFAULT, $iApplication->getCalledMethodName()->toString());
+		$this->assertEquals(MockController::class, $controller->toString());
+		$this->assertEquals(\Core\MethodName::DEFAULT, $method->toString());
 	}
 
 	/**
 	 * Test that Header and Footer controllers cannot be called directly
 	 */
 	public function testHeaderAndFooterCannotBeCalledDirectly() {
-		foreach(["Header", "Footer"] as $childController) {
+		foreach (["Partial\Header", "Partial\Footer"] as $childController) {
 			$iRouter = \RouterFactory::withRequestArguments([$childController, "index"]);
+			$iApplication = new \Core\Application($iRouter);
 			[$controller, $method] = $iRouter->getRoute();
 
 			$this->assertInstanceOf(\Core\ClassName::class, $controller);
 			$this->assertInstanceOf(\Core\MethodName::class, $method);
 
-			$iApplication = new \Core\Application($iRouter);
-
-			$iController = $iApplication->run();
+			$iController = $iRouter->dispatch($controller, $method);
 
 			$this->assertInstanceOf(\StatusCode\NotFoundController::class, $iController);
 		}
@@ -42,7 +41,7 @@ class ApplicationTest extends \PHPUnit\Framework\TestCase {
 
 		[$controller, $method] = $iRouter->getRoute();
 
-		$iController = $iApplication->executeController($controller, $method);
+		$iController = $iRouter->dispatch($controller, $method);
 
 		$this->assertInstanceOf(\StatusCode\NotFoundController::class, $iController);
 	}
@@ -56,7 +55,7 @@ class ApplicationTest extends \PHPUnit\Framework\TestCase {
 
 		[$controller, $method] = $iRouter->getRoute();
 
-		$iController = $iApplication->executeController($controller, $method);
+		$iController = $iRouter->dispatch($controller, $method);
 
 		$this->assertInstanceOf(\StatusCode\NotFoundController::class, $iController);
 	}

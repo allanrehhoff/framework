@@ -2,6 +2,12 @@
 
 class Environment {
 	/**
+	 * List of immutable environment variables that cannot be changed once set.
+	 * @var array
+	 */
+	private array $immutableVars = ["APP_ENV"];
+
+	/**
 	 * Constructor for the Environment class.
 	 *
 	 * @param null|string $environmentFile The path to the environment file (e.g., '.env').
@@ -44,9 +50,9 @@ class Environment {
 	 *
 	 * @param string $name The name of the environment variable.
 	 * @param int|float|string|array $value The value of the environment variable.
-	 * @return void
+	 * @return bool True on success, false on failure.
 	 */
-	public function put(string $name, int|float|string|array $value): void {
+	public function put(string $name, int|float|string|array $value): bool {
 		$name = strtoupper($name);
 
 		if (is_array($value)) {
@@ -54,6 +60,8 @@ class Environment {
 				$newName = $name . '.' . $key;
 				$this->put($newName, $value2);
 			}
+
+			return true;
 		} else {
 			$keys = explode('.', $name);
 			$env = &$_ENV;
@@ -70,7 +78,12 @@ class Environment {
 
 			$env[array_shift($keys)] = $value;
 
-			putenv($name . '=' . $value);
+			// Only set the variable if it is mutable.
+			if (in_array($name, $this->immutableVars, true) && getenv($name) !== false) {
+				return false;
+			}
+
+			return putenv($name . '=' . $value);
 		}
 	}
 

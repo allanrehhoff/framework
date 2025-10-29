@@ -18,4 +18,4 @@ $iRouter = new \Core\Router(new \Core\Request, new \Core\Response);
 
 $iApplication = new \Core\Application($iRouter);
 
-$iApplication->run()->output();
+$iApplication->run();

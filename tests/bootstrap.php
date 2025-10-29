@@ -1,8 +1,7 @@
 <?php
 ini_set("display_errors", 1);
 error_reporting(E_ALL);
-
-define('TESTS_RUNNING', true);
+putenv("APP_ENV=testing");
 
 require __DIR__ . "/../src/Libraries/Bootstrap/Bootstrap.php";
 
@@ -104,6 +103,14 @@ class ResponseFactory {
 }
 
 class RouterFactory {
+	public static function withRequestObject(\Core\Request $iRequest): \Core\Router {
+		$iRouter = new \Core\Router(
+			$iRequest,
+			\ResponseFactory::new()
+		);
+
+		return $iRouter;
+	}
 	public static function withRequestArguments(array $arguments): \Core\Router {
 		$iRouter = new \Core\Router(
 			\RequestFactory::withArguments($arguments),

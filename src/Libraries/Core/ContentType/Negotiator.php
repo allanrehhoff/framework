@@ -19,17 +19,16 @@ class Negotiator {
 	private \Core\Request $request;
 
 	/**
-	 * @var \Core\Router
+	 * @var array $route
 	 */
 	private \Core\Router $router;
 
 	/**
 	 * @param \Core\Router $iRouter The application router, used to retrieve route information.
-	 * @param \Core\Request $iRequest The current request object, used to access request payload.
 	 */
-	public function __construct(\Core\Router $iRouter, \Core\Request $iRequest) {
-		$this->request = $iRequest;
+	public function __construct(\Core\Router $iRouter) {
 		$this->router = $iRouter;
+		$this->request = $iRouter->getRequest();
 	}
 
 	/**

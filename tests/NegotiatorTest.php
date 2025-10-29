@@ -46,14 +46,15 @@ class NegotiatorTest extends TestCase {
 	 * Test content type negotiation prefers allowed types over configuration.
 	 */
 	public function testNegotiationPrefersTypeAllowedByConfig(): void {
-		$iRouter = \RouterFactory::withRequestArguments(["MockController", "index"]);
-
 		$iRequest = \RequestFactory::withServerVars([
 			"HTTP_ACCEPT" => "application/json"
 		]);
 
-		$iRequest->getConfiguration()->set("defaultType", "html");
-		$iRequest->getConfiguration()->set("contentTypes.json.enable", true);
+		$iRouter = \RouterFactory::withRequestObject($iRequest);
+
+		$iRouter->getRequest()->getConfiguration()->set("defaultType", "html");
+		$iRouter->getRequest()->getConfiguration()->set("contentTypes.json.enable", true);
+
 
 		$contentType = (new Negotiator($iRouter, $iRequest))->getContentType();
 
@@ -65,17 +66,14 @@ class NegotiatorTest extends TestCase {
 	 * Test content type negotiation prefers allowed types over configuration.
 	 */
 	public function testNegotiationPrefersTypeAllowedByMethodAttribute(): void {
-		$iRouter = \RouterFactory::withRequestArguments([
-			"mock-controller",
-			"method-allows-json-and-xml"
-		]);
-
 		$iRequest = \RequestFactory::withServerVars([
 			"HTTP_ACCEPT" => "application/json"
 		]);
 
-		$iRequest->getConfiguration()->set("defaultType", "html");
-		$iRequest->getConfiguration()->set("contentTypes.json.enable", true);
+		$iRouter = \RouterFactory::withRequestObject($iRequest);
+
+		$iRouter->getRequest()->getConfiguration()->set("defaultType", "html");
+		$iRouter->getRequest()->getConfiguration()->set("contentTypes.json.enable", true);
 
 		$contentType = (new Negotiator($iRouter, $iRequest))->getContentType();
 
@@ -86,6 +84,20 @@ class NegotiatorTest extends TestCase {
 	/**
 	 * Test negotiation rejects an unacceptable content type
 	 */
+	public function testNegotiationRejectsUnacceptableType(): void {
+		$iRequest = \RequestFactory::withServerVars([
+			"HTTP_ACCEPT" => "application/json"
+		]);
+
+		$iRouter = \RouterFactory::withRequestObject($iRequest);
+
+		$iRouter->getRequest()->getConfiguration()->set("defaultType", "html");
+
+		$contentType = (new Negotiator($iRouter, $iRequest))->getContentType();
+
+		$this->assertInstanceOf(ContentTypeInterface::class, $contentType);
+		$this->assertEquals($contentType::class, \Core\ContentType\Html::class);
+	}
 
 	/**
 	 * Test content type negotiation fallback.

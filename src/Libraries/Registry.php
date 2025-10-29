@@ -24,16 +24,18 @@ final class Registry {
 	/**
 	 * Stores a given object by it's class name, namespaces included
 	 * 
-	 * @param object $object The instance to have a global state.
+	 * @param array|object $item The instance to have a global state.
 	 * @param null|string $alias An alias to save the instance by, if null class name of object will be used
-	 * @return object The instance just stored. 
+	 * @return array|object
 	 */
-	public static function set(object $object, ?string $alias = null): object {
-		$key = $alias ?? $object::class;
+	public static function set(array|object $item, null|string $alias = null) {
+		if (gettype($item) === "array" && $alias === null) {
+			throw new \InvalidArgumentException("Cannot store item of type array in registry without an alias");
+		}
 
-		self::$store[$key] = $object;
+		self::$store[$alias ?? $item::class] = $item;
 
-		return $object;
+		return $item;
 	}
 
 	/**

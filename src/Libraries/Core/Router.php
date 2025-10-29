@@ -23,9 +23,14 @@ final class Router {
 	private Response $response;
 
 	/**
-	 * @var array $route The route to be executed
+	 * @var array{0: ClassName, 1: MethodName} $route A tuple containing [ClassName, MethodName]
 	 */
 	private array $route;
+
+	/**
+	 * @var Context Current route context
+	 */
+	private Context $context;
 
 	/**
 	 * Router constructor parses args from current environment.
@@ -78,6 +83,49 @@ final class Router {
 		\Core\Event::trigger("core.router.found", $this->request, $iClassName, $iMethodName);
 
 		$this->route = [$iClassName, $iMethodName];
+		\Registry::set($this->route, "route");
+	}
+
+	/**
+	 * Executes a given controller by name.
+	 * Reroutes to NotFoundController if a \Core\Exception\NotFound is thrown
+	 * within the controller or any of its child controllers.
+	 * 
+	 * @param \Core\ClassName         $iClassName      Name of a class representing the controller that should be executed
+	 * @param null|\Core\MethodName   $iMethodName     Method name that should be executed on instantiated controller, default is index
+	 * @param null|\Controller        $parentController Execute controller with this as its parent, default null
+	 * 
+	 * @return \Controller The executed controller that has just been executed.
+	 */
+	public function dispatch(ClassName $iClassName, null|MethodName $iMethodName = null, null|\Controller $parentController = null): \Controller {
+		$controllerName = $iClassName->toString();
+		$methodName = $iMethodName ? $iMethodName->toString() : MethodName::DEFAULT;
+		$defaultMethodName = $this->getDefaultMethodName();
+
+		$iController = new $controllerName($this->request, $this->response, $parentController);
+
+		// Pass response data from parent
+		// controller to child controller
+		if ($parentController !== null) {
+			$iController->getResponse()->setData($parentController->getResponse()->getData());
+		}
+
+		try {
+			\Core\Event::trigger("core.controller.method.before", $iController, $iMethodName);
+
+			$iController->$methodName();
+
+			\Core\Event::trigger("core.controller.method.after", $iController, $iMethodName);
+		} catch (\Core\StatusCode\StatusCode $iStatusCode) {
+			$iController = $this->dispatch($iStatusCode->getClassName(), new MethodName(MethodName::DEFAULT));
+		}
+
+		foreach ($iController->getChildren() as $childControllerName) {
+			$childController = $this->dispatch($childControllerName, $defaultMethodName, $iController);
+			$iController->getResponse()->setData($childController->getResponse()->getData());
+		}
+
+		return $iController;
 	}
 
 	/**
@@ -138,18 +186,23 @@ final class Router {
 
 	/**
 	 * Handle requests that cannot be routed.
-	 * @return array An array with two elements: [0] ClassName An instance of ClassName. [1] MethodName An instance of MethodName.
+	 * @return array{0: ClassName, 1: MethodName} An array with two elements: [0] ClassName An instance of ClassName. [1] MethodName An instance of MethodName.
 	 */
 	public function handleUnroutableRequest(): array {
 		\Core\Event::trigger("core.router.notfound", $this->request);
-		return [$this->getNotFoundClassName(), $this->getDefaultMethodName()];
+
+		$route = [$this->getNotFoundClassName(), $this->getDefaultMethodName()];
+
+		\Registry::set($route, "route");
+
+		return $route;
 	}
 
 	/**
 	 * Returns the resolved route from path arguments
 	 * First index will always be the controller to invoke
 	 * second index, if present, will be the method name
-	 * @return array
+	 * @return array{0: ClassName, 1: MethodName} An array with two elements: [0] ClassName An instance of ClassName. [1] MethodName An instance of MethodName.
 	 */
 	public function getRoute(): array {
 		return $this->route;

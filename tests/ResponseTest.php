@@ -10,7 +10,7 @@ class ResponseTest extends TestCase {
 
 		[$controller, $method] = $iRouter->getRoute();
 
-		$iController = $iApplication->executeController($controller, $method);
+		$iController = $iRouter->dispatch($controller, $method);
 
 		$this->assertEquals("without-children", $iController->getResponse()->getView());
 	}
@@ -21,7 +21,7 @@ class ResponseTest extends TestCase {
 
 		[$controller, $method] = $iRouter->getRoute();
 
-		$iController = $iApplication->executeController($controller, $method);
+		$iController = $iRouter->dispatch($controller, $method);
 
 		$this->assertEquals("mockchild", $iController->getResponse()->getView());
 	}
@@ -35,7 +35,7 @@ class ResponseTest extends TestCase {
 
 		[$controller, $method] = $iRouter->getRoute();
 
-		$iController = $iApplication->executeController($controller, $method);
+		$iController = $iRouter->dispatch($controller, $method);
 
 		$data = $iController->getResponse()->getData();
 

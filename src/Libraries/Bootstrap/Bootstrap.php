@@ -46,11 +46,13 @@ class Bootstrap {
 	 */
 	private function registerGlobalObjects(): void {
 		\Registry::set(new \Configuration(STORAGE . "/config/global.jsonc"));
-
 		\Registry::set(new \Environment(APP_PATH . "/.env"));
+		\Registry::set(new \ContentSecurityPolicy\Builder());
 
-		/** @disregard P1011 Do not connect when running tests */
-		if (defined('TESTS_RUNNING') && TESTS_RUNNING) return;
+		// Skip database connection in testing environments
+		if (\Registry::get(\Environment::class)->get("APP_ENV") === "testing") {
+			return;
+		}
 
 		\Registry::set(new \Database\Connection(
 			\Registry::getConfiguration()->get("database.host"),
@@ -58,8 +60,6 @@ class Bootstrap {
 			\Registry::getConfiguration()->get("database.password"),
 			\Registry::getConfiguration()->get("database.name")
 		));
-
-		\Registry::set(new \ContentSecurityPolicy\Builder());
 	}
 
 	/**
@@ -79,6 +79,7 @@ class Bootstrap {
 		define("APP_PATH", realpath(__DIR__ . "/../../"));
 		define("STORAGE", realpath(APP_PATH . "/../storage"));
 		define("ACCEPT_JSON", !IS_CLI && (str_contains(strtolower((getallheaders()["Accept"] ?? "*/*")), "application/json")));
+		define("TESTS_RUNNING", defined('PHPUNIT_COMPOSER_INSTALL') || defined('__PHPUNIT_PHAR__'));
 	}
 
 	/**

@@ -9,7 +9,9 @@ class HeaderController extends \Controller {
 	 */
 	public function index(): void {
 		// Do not allow this controller to be access directly
-		if ($this->getParent() == null) throw new \Core\StatusCode\NotFound;
+		if ($this->getParent() == null) {
+			throw new \Core\StatusCode\NotFound;
+		}
 
 		$this->response->data["header"] = $this->template->getViewPath("header");
 
@@ -24,7 +26,7 @@ class HeaderController extends \Controller {
 		);
 
 		$this->response->data["route"] = \Arr::map(
-			$this->router->getRoute(),
+			\Registry::get("route"),
 			fn($iMVCStructure) => \Str::safe(\Str::lower($iMVCStructure->toStringWithoutSuffix()))
 		);
 
@@ -39,8 +41,8 @@ class HeaderController extends \Controller {
 	 * @return string An escaped string suitable for printing to the 'class' attribute of the <body> tag
 	 */
 	private function getBodyTagClasses(): string {
-		$controllerName = $this->getApplication()->getExecutedClassName()->toStringWithoutSuffix();
-		$methodName 	= $this->getApplication()->getCalledMethodName()->toStringWithoutSuffix();
+		$controllerName = \Registry::get("route")[0]->toStringWithoutSuffix();
+		$methodName 	= \Registry::get("route")[1]->toStringWithoutSuffix();
 
 		$bodyClasses = [];
 		$bodyClasses[] = $controllerName;

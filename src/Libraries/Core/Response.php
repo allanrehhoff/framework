@@ -2,6 +2,8 @@
 
 namespace Core;
 
+use \Core\ContentType\ContentTypeInterface;
+
 /**
  * Class Response
  *
@@ -17,6 +19,11 @@ final class Response {
 	 * @var array The data to be passed to the view template.
 	 */
 	public array $data = [];
+
+	/**
+	 * @var ContentTypeInterface The content type of the response.
+	 */
+	private ContentTypeInterface $contentType;
 
 	/**
 	 * @var array Headers to be sent when sendHttpHeaders are called
@@ -73,6 +80,23 @@ final class Response {
 	 */
 	public function getTitle(): string {
 		return $this->data["title"];
+	}
+
+	/**
+	 * Get the content type of the response.
+	 * @return ContentTypeInterface The content type.
+	 */
+	public function getContentType(): ContentTypeInterface {
+		return $this->contentType;
+	}
+
+	/**
+	 * Set the content type of the response.
+	 * @param ContentTypeInterface $iContentType The content type.
+	 * @return void
+	 */
+	public function setContentType(ContentTypeInterface $iContentType): void {
+		$this->contentType = $iContentType;
 	}
 
 	/**

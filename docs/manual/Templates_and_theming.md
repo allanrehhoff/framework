@@ -1,5 +1,11 @@
 ## Templates and theming
-> [!WARNING] 
+> [!WARNING]
+> This documentation only applies to version prior to v10
+> v10 and beyond does not support different themes
+> Feature was removed due to low use.
+> Documentation is kept for backwards compatibility.
+
+> [!IMPORTANT] 
 > This framework does not (as of yet) bundle any template/theming engine.  
 > You'll therefore have to handle escaping of all output using the helper methods `$entity->safe("key")` or `\Str::safe("content")`  
 > Alternatively you may composer install/bundle, your preffered engine, and alter `\Core\Renderer` accordingly.  
