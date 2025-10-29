@@ -281,11 +281,6 @@ Search.appendIndex(
             "summary": "Interface\u0020ContentType",
             "url": "classes/Core-ContentType-ContentTypeInterface.html"
         },                {
-            "fqsen": "\\Core\\Attributes\\AllowedContentTypes",
-            "name": "AllowedContentTypes",
-            "summary": "Attribute\u0020for\u0020specifying\u0020allowed\u0020content\u0020types\u0020for\u0020controllers\u0020or\u0020methods.",
-            "url": "classes/Core-Attributes-AllowedContentTypes.html"
-        },                {
             "fqsen": "\\Core\\ContentType\\Negotiator",
             "name": "Negotiator",
             "summary": "Handles\u0020the\u0020negotiation\u0020of\u0020content\u0020types\u0020between\u0020request\u0020headers,\napplication\u0020configuration,\u0020controller\/class\u0020and\u0020method\u0020attributes.",
@@ -365,6 +360,16 @@ Search.appendIndex(
             "name": "ContentSecurityPolicy",
             "summary": "",
             "url": "classes/EventListeners-ContentSecurityPolicy.html"
+        },                {
+            "fqsen": "\\Core\\Attributes\\RespondWith",
+            "name": "RespondWith",
+            "summary": "Attribute\u0020for\u0020specifying\u0020allowed\u0020content\u0020types\u0020for\u0020controllers\u0020or\u0020methods.",
+            "url": "classes/Core-Attributes-RespondWith.html"
+        },                {
+            "fqsen": "\\Core\\Context",
+            "name": "Context",
+            "summary": "Holds\u0020information\u0020about\u0020the\u0020current\u0020state\u0020of\u0020the\u0020application\nSuch\u0020as\u0020the\u0020dispatched\u0020controller\u0020class\u0020and\u0020method\u0020name.",
+            "url": "classes/Core-Context.html"
         },                {
             "fqsen": "\\",
             "name": "\\",
