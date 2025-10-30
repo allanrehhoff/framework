@@ -8,7 +8,6 @@
 
 use \Core\Assets;
 use \Core\Request;
-use \Core\Context;
 use \Core\Response;
 use \Core\Renderer;
 use \Core\Template;
@@ -20,11 +19,6 @@ abstract class Controller {
 	 * @var null|\Controller Holds the parent controller instance
 	 */
 	protected null|\Controller $parent = null;
-
-	/**
-	 * @var Context Current route context
-	 */
-	protected Context $context;
 
 	/**
 	 * @var Request Current request object
@@ -132,13 +126,6 @@ abstract class Controller {
 	 */
 	final public function getTemplate(): Template {
 		return $this->template;
-	}
-
-	/**
-	 * @return Context
-	 */
-	final public function getRouteContext(): Context {
-		return $this->context;
 	}
 
 	/**

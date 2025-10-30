@@ -28,11 +28,6 @@ final class Router {
 	private array $route;
 
 	/**
-	 * @var Context Current route context
-	 */
-	private Context $context;
-
-	/**
 	 * Router constructor parses args from current environment.
 	 * @param Request $iRequest The global request object
 	 * @param Response $iResponse The response object

@@ -1,10 +1,12 @@
 <?php
+
+use Core\Event;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-#[CoversClass(EventEmitter::class)]
+#[CoversClass(\Core\Event::class)]
 class EventEmitterTest extends TestCase {
-	public function setUp() : void {
+	public function setUp(): void {
 		\Core\Event::clear();
 	}
 
