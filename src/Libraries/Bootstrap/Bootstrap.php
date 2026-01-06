@@ -3,7 +3,6 @@
 namespace Bootstrap;
 
 use EventListeners\BaseurlRedirect;
-use \EventListeners\HttpsRedirect;
 use \EventListeners\ContentSecurityPolicy;
 
 /**
