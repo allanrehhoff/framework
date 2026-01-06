@@ -1,25 +1,31 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<phpdoc>
-    <title>Framework class reference</title>
-    <parser>
-        <target>docs/reference/</target>
-        <encoding>utf8</encoding>
-        <markers>
-            <item>TODO</item>
-            <item>FIXME</item>
-        </markers>
-        <extensions>
-            <extension>php</extension>
-        </extensions>
-        <visibility></visibility>
-    </parser>
-    <transformer>
-        <target>docs/reference/</target>
-    </transformer>
-    <transformations>
-        <template name="responsive" />
-    </transformations>
-    <files>
-        <directory>src/</directory>
-    </files>
-</phpdoc>
+<?xml version="1.0" encoding="UTF-8"?>
+<phpdocumentor
+    configVersion="3.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://docs.phpdoc.org/latest/phpdoc.xsd"
+>
+    <title>Class reference</title>
+
+    <paths>
+        <output>docs/reference</output>
+        <cache>.phpdoc/cache</cache>
+    </paths>
+    <version number="latest">
+        <api>
+            <source>
+                <path>src</path>
+            </source>
+
+            <visibility>public</visibility>
+
+            <markers>
+                <marker>TODO</marker>
+                <marker>FIXME</marker>
+            </markers>
+
+            <extensions>
+                <extension>php</extension>
+            </extensions>
+        </api>
+    </version>
+</phpdocumentor>

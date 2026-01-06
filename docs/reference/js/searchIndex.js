@@ -6,90 +6,475 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/CliController.html"
         },                {
+            "fqsen": "\\CliController\u003A\u003Aindex\u0028\u0029",
+            "name": "index",
+            "summary": "\/cli\/index",
+            "url": "classes/CliController.html#method_index"
+        },                {
+            "fqsen": "\\CliController\u003A\u003Ainterface\u0028\u0029",
+            "name": "interface",
+            "summary": "\/cli\/interface",
+            "url": "classes/CliController.html#method_interface"
+        },                {
+            "fqsen": "\\CliController\u003A\u003AmyMethod\u0028\u0029",
+            "name": "myMethod",
+            "summary": "\/cli\/my\u002Dmethod",
+            "url": "classes/CliController.html#method_myMethod"
+        },                {
             "fqsen": "\\IndexController",
             "name": "IndexController",
             "summary": "This\u0020is\u0020the\u0020frontpage\u0020\u0028index\u0029\u0020specific\u0020controller,\u0020use\u0020it\u0020as\u0020your\u0020boilerplate\u0020for\u0020other\u0020controllers.",
             "url": "classes/IndexController.html"
+        },                {
+            "fqsen": "\\IndexController\u003A\u003Aindex\u0028\u0029",
+            "name": "index",
+            "summary": "Default\u0020configured\u0020entry\u0020point\u0020for\u0020application",
+            "url": "classes/IndexController.html#method_index"
         },                {
             "fqsen": "\\Partial\\FooterController",
             "name": "FooterController",
             "summary": "",
             "url": "classes/Partial-FooterController.html"
         },                {
+            "fqsen": "\\Partial\\FooterController\u003A\u003Aindex\u0028\u0029",
+            "name": "index",
+            "summary": "Default\u0020entry\u0020point\u0020for\u0020footer\u0020partial",
+            "url": "classes/Partial-FooterController.html#method_index"
+        },                {
             "fqsen": "\\Partial\\HeaderController",
             "name": "HeaderController",
             "summary": "",
             "url": "classes/Partial-HeaderController.html"
+        },                {
+            "fqsen": "\\Partial\\HeaderController\u003A\u003Aindex\u0028\u0029",
+            "name": "index",
+            "summary": "Default\u0020entry\u0020point\u0020for\u0020the\u0020header\u0020partial",
+            "url": "classes/Partial-HeaderController.html#method_index"
         },                {
             "fqsen": "\\StatusCode\\ForbiddenController",
             "name": "ForbiddenController",
             "summary": "Controller\u0020for\u0020paths\u0020that\u0020is\u0020inaccessible\u0020in\u0020the\u0020current\u0020environment.",
             "url": "classes/StatusCode-ForbiddenController.html"
         },                {
+            "fqsen": "\\StatusCode\\ForbiddenController\u003A\u003Aindex\u0028\u0029",
+            "name": "index",
+            "summary": "Constructs\u0020and\u0020indicates\u0020the\u0020path\u0020was\u0020not\u0020allowed.",
+            "url": "classes/StatusCode-ForbiddenController.html#method_index"
+        },                {
             "fqsen": "\\StatusCode\\NotAcceptableController",
             "name": "NotAcceptableController",
             "summary": "",
             "url": "classes/StatusCode-NotAcceptableController.html"
+        },                {
+            "fqsen": "\\StatusCode\\NotAcceptableController\u003A\u003Aindex\u0028\u0029",
+            "name": "index",
+            "summary": "Constructs\u0020and\u0020indicates\u0020the\u0020request\u0020was\u0020not\u0020acceptable.",
+            "url": "classes/StatusCode-NotAcceptableController.html#method_index"
         },                {
             "fqsen": "\\StatusCode\\NotFoundController",
             "name": "NotFoundController",
             "summary": "Controller\u0020for\u0020paths\u0020that\u0020either\u0020cannot\u0020be\u0020routed.",
             "url": "classes/StatusCode-NotFoundController.html"
         },                {
+            "fqsen": "\\StatusCode\\NotFoundController\u003A\u003Aindex\u0028\u0029",
+            "name": "index",
+            "summary": "Constructs\u0020an\u0020indicates\u0020the\u0020path\u0020wasn\u0027t\u0020found",
+            "url": "classes/StatusCode-NotFoundController.html#method_index"
+        },                {
             "fqsen": "\\Arr",
             "name": "Arr",
             "summary": "Class\u0020Arr\nA\u0020collection\u0020of\u0020null\u002Daware\u0020array\u0020utility\u0020functions.",
             "url": "classes/Arr.html"
+        },                {
+            "fqsen": "\\Arr\u003A\u003Asafe\u0028\u0029",
+            "name": "safe",
+            "summary": "Recursively\u0020escapes\u0020an\u0020array\u0020of\u0020strings\u0020for\u0020use\u0020in\u0020HTML.",
+            "url": "classes/Arr.html#method_safe"
+        },                {
+            "fqsen": "\\Arr\u003A\u003Aget\u0028\u0029",
+            "name": "get",
+            "summary": "Get\u0020the\u0020value\u0020from\u0020an\u0020array\u0020using\u0020a\u0020key,\u0020with\u0020null\u0020safety.",
+            "url": "classes/Arr.html#method_get"
+        },                {
+            "fqsen": "\\Arr\u003A\u003Acontains\u0028\u0029",
+            "name": "contains",
+            "summary": "Checks\u0020if\u0020a\u0020given\u0020value\u0020exists\u0020in\u0020the\u0020provided\u0020array.",
+            "url": "classes/Arr.html#method_contains"
+        },                {
+            "fqsen": "\\Arr\u003A\u003Ahas\u0028\u0029",
+            "name": "has",
+            "summary": "Check\u0020if\u0020a\u0020key\u0020exists\u0020in\u0020an\u0020array,\u0020with\u0020null\u0020safety.",
+            "url": "classes/Arr.html#method_has"
+        },                {
+            "fqsen": "\\Arr\u003A\u003Aset\u0028\u0029",
+            "name": "set",
+            "summary": "Set\u0020a\u0020value\u0020in\u0020an\u0020array\u0020by\u0020key,\u0020with\u0020null\u0020safety.",
+            "url": "classes/Arr.html#method_set"
+        },                {
+            "fqsen": "\\Arr\u003A\u003Aforget\u0028\u0029",
+            "name": "forget",
+            "summary": "Remove\u0020a\u0020key\u0020from\u0020an\u0020array,\u0020with\u0020null\u0020safety.",
+            "url": "classes/Arr.html#method_forget"
+        },                {
+            "fqsen": "\\Arr\u003A\u003AisEmpty\u0028\u0029",
+            "name": "isEmpty",
+            "summary": "Check\u0020if\u0020an\u0020array\u0020is\u0020empty\u0020or\u0020null.",
+            "url": "classes/Arr.html#method_isEmpty"
+        },                {
+            "fqsen": "\\Arr\u003A\u003Aflatten\u0028\u0029",
+            "name": "flatten",
+            "summary": "Flatten\u0020a\u0020multi\u002Ddimensional\u0020array\u0020into\u0020a\u0020single\u0020level,\u0020with\u0020null\u0020safety.",
+            "url": "classes/Arr.html#method_flatten"
+        },                {
+            "fqsen": "\\Arr\u003A\u003Aslice\u0028\u0029",
+            "name": "slice",
+            "summary": "Get\u0020a\u0020slice\u0020of\u0020the\u0020array,\u0020with\u0020null\u0020safety.",
+            "url": "classes/Arr.html#method_slice"
+        },                {
+            "fqsen": "\\Arr\u003A\u003Amerge\u0028\u0029",
+            "name": "merge",
+            "summary": "Merge\u0020multiple\u0020arrays\u0020together,\u0020with\u0020null\u0020safety.",
+            "url": "classes/Arr.html#method_merge"
+        },                {
+            "fqsen": "\\Arr\u003A\u003Afilter\u0028\u0029",
+            "name": "filter",
+            "summary": "Filter\u0020elements\u0020of\u0020an\u0020array\u0020using\u0020a\u0020callback,\u0020with\u0020null\u0020safety.",
+            "url": "classes/Arr.html#method_filter"
+        },                {
+            "fqsen": "\\Arr\u003A\u003Amap\u0028\u0029",
+            "name": "map",
+            "summary": "Map\u0020over\u0020each\u0020element\u0020in\u0020the\u0020array,\u0020with\u0020null\u0020safety.",
+            "url": "classes/Arr.html#method_map"
+        },                {
+            "fqsen": "\\Arr\u003A\u003Ajoin\u0028\u0029",
+            "name": "join",
+            "summary": "Join\u0020array\u0020elements\u0020with\u0020a\u0020string,\u0020with\u0020null\u0020safety.",
+            "url": "classes/Arr.html#method_join"
+        },                {
+            "fqsen": "\\CR",
+            "name": "CR",
+            "summary": "",
+            "url": "namespaces/default.html#constant_CR"
+        },                {
+            "fqsen": "\\LF",
+            "name": "LF",
+            "summary": "",
+            "url": "namespaces/default.html#constant_LF"
+        },                {
+            "fqsen": "\\TAB",
+            "name": "TAB",
+            "summary": "",
+            "url": "namespaces/default.html#constant_TAB"
+        },                {
+            "fqsen": "\\CRLF",
+            "name": "CRLF",
+            "summary": "",
+            "url": "namespaces/default.html#constant_CRLF"
+        },                {
+            "fqsen": "\\SPACE",
+            "name": "SPACE",
+            "summary": "",
+            "url": "namespaces/default.html#constant_SPACE"
+        },                {
+            "fqsen": "\\BR",
+            "name": "BR",
+            "summary": "",
+            "url": "namespaces/default.html#constant_BR"
+        },                {
+            "fqsen": "\\DS",
+            "name": "DS",
+            "summary": "",
+            "url": "namespaces/default.html#constant_DS"
+        },                {
+            "fqsen": "\\IS_SSL",
+            "name": "IS_SSL",
+            "summary": "",
+            "url": "namespaces/default.html#constant_IS_SSL"
+        },                {
+            "fqsen": "\\IS_CLI",
+            "name": "IS_CLI",
+            "summary": "",
+            "url": "namespaces/default.html#constant_IS_CLI"
+        },                {
+            "fqsen": "\\APP_PATH",
+            "name": "APP_PATH",
+            "summary": "",
+            "url": "namespaces/default.html#constant_APP_PATH"
+        },                {
+            "fqsen": "\\STORAGE",
+            "name": "STORAGE",
+            "summary": "",
+            "url": "namespaces/default.html#constant_STORAGE"
+        },                {
+            "fqsen": "\\ACCEPT_JSON",
+            "name": "ACCEPT_JSON",
+            "summary": "",
+            "url": "namespaces/default.html#constant_ACCEPT_JSON"
+        },                {
+            "fqsen": "\\TESTS_RUNNING",
+            "name": "TESTS_RUNNING",
+            "summary": "",
+            "url": "namespaces/default.html#constant_TESTS_RUNNING"
         },                {
             "fqsen": "\\Bootstrap\\Bootstrap",
             "name": "Bootstrap",
             "summary": "Class\u0020Bootstrap",
             "url": "classes/Bootstrap-Bootstrap.html"
         },                {
+            "fqsen": "\\Bootstrap\\Bootstrap\u003A\u003Astartup\u0028\u0029",
+            "name": "startup",
+            "summary": "Initializes\u0020the\u0020application.",
+            "url": "classes/Bootstrap-Bootstrap.html#method_startup"
+        },                {
             "fqsen": "\\Configuration",
             "name": "Configuration",
             "summary": "Parses\u0020a\u0020JSONC\u0020file,\u0020and\u0020lets\u0020you\u0020access\u0020properties\u0020using\u0020a\u0020dot\u0020syntax\nalso\u0020supports\u0020.jsonc\u0020files",
             "url": "classes/Configuration.html"
+        },                {
+            "fqsen": "\\Configuration\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "The\u0020constructor\u0020starts\u0020parsing\u0020of\u0020the\u0020configuration\u0020file.",
+            "url": "classes/Configuration.html#method___construct"
+        },                {
+            "fqsen": "\\Configuration\u003A\u003Aget\u0028\u0029",
+            "name": "get",
+            "summary": "Gets\u0020a\u0020single\u0020configuration\u0020value.",
+            "url": "classes/Configuration.html#method_get"
+        },                {
+            "fqsen": "\\Configuration\u003A\u003Ahas\u0028\u0029",
+            "name": "has",
+            "summary": "Test\u0020if\u0020current\u0020config\u0020holds\u0020a\u0020value\u0020for\u0020a\u0020given\u0020key",
+            "url": "classes/Configuration.html#method_has"
+        },                {
+            "fqsen": "\\Configuration\u003A\u003Adelete\u0028\u0029",
+            "name": "delete",
+            "summary": "Remove\u0020a\u0020configuration\u0020value.",
+            "url": "classes/Configuration.html#method_delete"
+        },                {
+            "fqsen": "\\Configuration\u003A\u003Aremove\u0028\u0029",
+            "name": "remove",
+            "summary": "Alias\u0020for\u0020\\Configuration\u003A\u003Adelete\u0028\u0029",
+            "url": "classes/Configuration.html#method_remove"
+        },                {
+            "fqsen": "\\Configuration\u003A\u003Aset\u0028\u0029",
+            "name": "set",
+            "summary": "Dynamically\u0020set\u0020a\u0020configuration\u0020setting\u0020to\u0020a\u0020given\u0020value.",
+            "url": "classes/Configuration.html#method_set"
+        },                {
+            "fqsen": "\\Configuration\u003A\u003A__set\u0028\u0029",
+            "name": "__set",
+            "summary": "",
+            "url": "classes/Configuration.html#method___set"
+        },                {
+            "fqsen": "\\Configuration\u003A\u003A__get\u0028\u0029",
+            "name": "__get",
+            "summary": "Again\u0020please\u0020use\u0020the\u0020\u002D\u003Eget\u0028\u0029\u0020and\u0020\u002D\u003Eset\u0028\u0029\u0020methods",
+            "url": "classes/Configuration.html#method___get"
+        },                {
+            "fqsen": "\\Configuration\u003A\u003A__toString\u0028\u0029",
+            "name": "__toString",
+            "summary": "Get\u0020debug\u0020information\u0020by\u0020printing\u0020the\u0020configuration\u0020object.",
+            "url": "classes/Configuration.html#method___toString"
         },                {
             "fqsen": "\\Console",
             "name": "Console",
             "summary": "Common\u0020useful\u0020tools\u0020for\u0020command\u0020line\u0020operations",
             "url": "classes/Console.html"
         },                {
+            "fqsen": "\\Console\u003A\u003AshowStatus\u0028\u0029",
+            "name": "showStatus",
+            "summary": "Show\u0020a\u0020status\u0020bar\u0020in\u0020the\u0020console",
+            "url": "classes/Console.html#method_showStatus"
+        },                {
+            "fqsen": "\\Console\u003A\u003Aprogress\u0028\u0029",
+            "name": "progress",
+            "summary": "Iterates\u0020over\u0020an\u0020array\u0020calling\u0020\u0024callback\u0020on\u0020each\u0020item\u0020while\u0020maintaining\u0020a\u0020nice\u0020progressbar",
+            "url": "classes/Console.html#method_progress"
+        },                {
+            "fqsen": "\\Console\u003A\u003Aconfirm\u0028\u0029",
+            "name": "confirm",
+            "summary": "Prints\u0020a\u0020confirmation\u0020prompt\u0020to\u0020the\u0020console\nThis\u0020will\u0020exit\u0020the\u0020program\u0020if\u0020confirm\u0020is\u0020not\u0020positive.",
+            "url": "classes/Console.html#method_confirm"
+        },                {
+            "fqsen": "\\Console\u003A\u003Aarguments\u0028\u0029",
+            "name": "arguments",
+            "summary": "Viable\u0020alternative\u0020to\u0020PHP\u0027s\u0020getopt\u0028\u0029\u003B\u0020which\u0020aborts\u0020upon\u0020first\u0020unknown\u0020option\u0020passed",
+            "url": "classes/Console.html#method_arguments"
+        },                {
+            "fqsen": "\\Console\u003A\u003AgetOption\u0028\u0029",
+            "name": "getOption",
+            "summary": "Get\u0020value\u0020from\u0020the\u0020command\u0020line\u0020args\u0020\u0027options\u0027\u0020array",
+            "url": "classes/Console.html#method_getOption"
+        },                {
             "fqsen": "\\ContentSecurityPolicy\\Builder",
             "name": "Builder",
             "summary": "",
             "url": "classes/ContentSecurityPolicy-Builder.html"
+        },                {
+            "fqsen": "\\ContentSecurityPolicy\\Builder\u003A\u003AgenerateNonce\u0028\u0029",
+            "name": "generateNonce",
+            "summary": "Generate\u0020and\u0020store\u0020a\u0020new\u0020nonce\u0020for\u0020this\u0020request",
+            "url": "classes/ContentSecurityPolicy-Builder.html#method_generateNonce"
+        },                {
+            "fqsen": "\\ContentSecurityPolicy\\Builder\u003A\u003AgetNonce\u0028\u0029",
+            "name": "getNonce",
+            "summary": "Get\u0020the\u0020current\u0020nonce\u0020value",
+            "url": "classes/ContentSecurityPolicy-Builder.html#method_getNonce"
+        },                {
+            "fqsen": "\\ContentSecurityPolicy\\Builder\u003A\u003AaddPolicy\u0028\u0029",
+            "name": "addPolicy",
+            "summary": "Add\u0020a\u0020policy\u0020directive",
+            "url": "classes/ContentSecurityPolicy-Builder.html#method_addPolicy"
+        },                {
+            "fqsen": "\\ContentSecurityPolicy\\Builder\u003A\u003AenableNonceForPolicy\u0028\u0029",
+            "name": "enableNonceForPolicy",
+            "summary": "Enable\u0020nonce\u0020for\u0020a\u0020specific\u0020policy",
+            "url": "classes/ContentSecurityPolicy-Builder.html#method_enableNonceForPolicy"
+        },                {
+            "fqsen": "\\ContentSecurityPolicy\\Builder\u003A\u003AtoString\u0028\u0029",
+            "name": "toString",
+            "summary": "Convert\u0020the\u0020policy\u0020to\u0020a\u0020string",
+            "url": "classes/ContentSecurityPolicy-Builder.html#method_toString"
         },                {
             "fqsen": "\\Controller",
             "name": "Controller",
             "summary": "",
             "url": "classes/Controller.html"
         },                {
+            "fqsen": "\\Controller\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "Extending\u0020child\u0020controllers\u0020must\u0020not\u0020have\u0020a\u0020constructor.",
+            "url": "classes/Controller.html#method___construct"
+        },                {
+            "fqsen": "\\Controller\u003A\u003A__get\u0028\u0029",
+            "name": "__get",
+            "summary": "Notify\u0020of\u0020backwards\u0020compatibility\u0020breakages\u0020when\u0020setting\u0020data\nWhen\u0020accessing\u0020an\u0020array\u0020using\u0020the\u0020\u0024this\u002D\u003Edata\u005B\u0022key\u0022\u005D\u0020\u003D\u0020\u0022value\u0022\u0020syntax,\nit\u0020actually\u0020goes\u0020through\u0020__get\u0028\u0029\u003B\u0020instead\u0020of\u0020__set\u0028\u0029\u003B\nThis\u0020is\u0020because\u0020it\u0020is\u0020the\u0020array\u0020stored\u0020in\u0020\u0024this\u002D\u003Edata\u0020that\u0020is\u0020being\u0020modified\u0020rather\u0020than\u0020the\u0020class\u0020member",
+            "url": "classes/Controller.html#method___get"
+        },                {
+            "fqsen": "\\Controller\u003A\u003AsetParent\u0028\u0029",
+            "name": "setParent",
+            "summary": "Set\u0020current\u0020controllers\u0020parent.",
+            "url": "classes/Controller.html#method_setParent"
+        },                {
+            "fqsen": "\\Controller\u003A\u003AgetParent\u0028\u0029",
+            "name": "getParent",
+            "summary": "Get\u0020current\u0020parent\u0020controller\u0020instance",
+            "url": "classes/Controller.html#method_getParent"
+        },                {
+            "fqsen": "\\Controller\u003A\u003AgetChildren\u0028\u0029",
+            "name": "getChildren",
+            "summary": "Get\u0020names\u0020of\u0020children\u0020controllers",
+            "url": "classes/Controller.html#method_getChildren"
+        },                {
+            "fqsen": "\\Controller\u003A\u003AgetTemplate\u0028\u0029",
+            "name": "getTemplate",
+            "summary": "",
+            "url": "classes/Controller.html#method_getTemplate"
+        },                {
+            "fqsen": "\\Controller\u003A\u003AgetRequest\u0028\u0029",
+            "name": "getRequest",
+            "summary": "",
+            "url": "classes/Controller.html#method_getRequest"
+        },                {
+            "fqsen": "\\Controller\u003A\u003AgetResponse\u0028\u0029",
+            "name": "getResponse",
+            "summary": "",
+            "url": "classes/Controller.html#method_getResponse"
+        },                {
             "fqsen": "\\Core\\Application",
             "name": "Application",
             "summary": "The\u0020main\u0020class\u0020for\u0020this\u0020application.",
             "url": "classes/Core-Application.html"
+        },                {
+            "fqsen": "\\Core\\Application\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "Parse\u0020the\u0020current\u0020route\u0020and\u0020set\u0020caching\u0020as\u0020needed.",
+            "url": "classes/Core-Application.html#method___construct"
+        },                {
+            "fqsen": "\\Core\\Application\u003A\u003AgetRouter\u0028\u0029",
+            "name": "getRouter",
+            "summary": "Get\u0020the\u0020router\u0020being\u0020used",
+            "url": "classes/Core-Application.html#method_getRouter"
+        },                {
+            "fqsen": "\\Core\\Application\u003A\u003AgetTemplate\u0028\u0029",
+            "name": "getTemplate",
+            "summary": "Get\u0020the\u0020template\u0020object",
+            "url": "classes/Core-Application.html#method_getTemplate"
+        },                {
+            "fqsen": "\\Core\\Application\u003A\u003Arun\u0028\u0029",
+            "name": "run",
+            "summary": "Dispatches\u0020a\u0020controller,\u0020based\u0020upon\u0020the\u0020requested\u0020path.",
+            "url": "classes/Core-Application.html#method_run"
+        },                {
+            "fqsen": "\\Core\\Application\u003A\u003Asend\u0028\u0029",
+            "name": "send",
+            "summary": "Send\u0020the\u0020response\u0020to\u0020the\u0020client.",
+            "url": "classes/Core-Application.html#method_send"
         },                {
             "fqsen": "\\Core\\Assets",
             "name": "Assets",
             "summary": "Central\u0020class\u0020for\u0020handling\u0020javascripts\u0020and\u0020stylesheets\u0020to\u0020be\u0020rendered.",
             "url": "classes/Core-Assets.html"
         },                {
+            "fqsen": "\\Core\\Assets\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "Constructor",
+            "url": "classes/Core-Assets.html#method___construct"
+        },                {
+            "fqsen": "\\Core\\Assets\u003A\u003AaddStylesheet\u0028\u0029",
+            "name": "addStylesheet",
+            "summary": "Add\u0020a\u0020stylesheet\u0020to\u0020be\u0020linked.",
+            "url": "classes/Core-Assets.html#method_addStylesheet"
+        },                {
+            "fqsen": "\\Core\\Assets\u003A\u003AaddJavascript\u0028\u0029",
+            "name": "addJavascript",
+            "summary": "Add\u0020a\u0020javascript\u0020file\u0020to\u0020be\u0020rendered.",
+            "url": "classes/Core-Assets.html#method_addJavascript"
+        },                {
+            "fqsen": "\\Core\\Assets\u003A\u003AgetStylesheets\u0028\u0029",
+            "name": "getStylesheets",
+            "summary": "Get\u0020current\u0020stylesheets\u0020to\u0020be\u0020linked.",
+            "url": "classes/Core-Assets.html#method_getStylesheets"
+        },                {
+            "fqsen": "\\Core\\Assets\u003A\u003AgetJavascript\u0028\u0029",
+            "name": "getJavascript",
+            "summary": "Get\u0020current\u0020javascript\u0020files\u0020to\u0020be\u0020rendered.",
+            "url": "classes/Core-Assets.html#method_getJavascript"
+        },                {
             "fqsen": "\\Core\\Attributes\\RespondWith",
             "name": "RespondWith",
             "summary": "Attribute\u0020for\u0020specifying\u0020allowed\u0020content\u0020types\u0020for\u0020controllers\u0020or\u0020methods.",
             "url": "classes/Core-Attributes-RespondWith.html"
+        },                {
+            "fqsen": "\\Core\\Attributes\\RespondWith\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "Constructor",
+            "url": "classes/Core-Attributes-RespondWith.html#method___construct"
+        },                {
+            "fqsen": "\\Core\\Attributes\\RespondWith\u003A\u003AgetContentTypes\u0028\u0029",
+            "name": "getContentTypes",
+            "summary": "Get\u0020allowed\u0020content\u0020types.",
+            "url": "classes/Core-Attributes-RespondWith.html#method_getContentTypes"
         },                {
             "fqsen": "\\Core\\ClassName",
             "name": "ClassName",
             "summary": "Sanitizes\u0020and\u0020validates\u0020a\u0020controller\u0020class\u0020name\u0020is\u0020valid\u0020for\u0020use.",
             "url": "classes/Core-ClassName.html"
         },                {
+            "fqsen": "\\Core\\ClassName\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/Core-ClassName.html#method___construct"
+        },                {
             "fqsen": "\\Core\\ContentType\\ContentTypeEnum",
             "name": "ContentTypeEnum",
             "summary": "Enum\u0020representing\u0020different\u0020content\u0020types.",
             "url": "classes/Core-ContentType-ContentTypeEnum.html"
+        },                {
+            "fqsen": "\\Core\\ContentType\\ContentTypeEnum\u003A\u003AgetInstance\u0028\u0029",
+            "name": "getInstance",
+            "summary": "Returns\u0020the\u0020class\u0020name\u0020associated\u0020with\u0020the\u0020content\u0020type.",
+            "url": "classes/Core-ContentType-ContentTypeEnum.html#method_getInstance"
         },                {
             "fqsen": "\\Core\\ContentType\\ContentTypeEnum\u003A\u003AHTML",
             "name": "HTML",
@@ -111,30 +496,125 @@ Search.appendIndex(
             "summary": "Interface\u0020ContentType",
             "url": "classes/Core-ContentType-ContentTypeInterface.html"
         },                {
+            "fqsen": "\\Core\\ContentType\\ContentTypeInterface\u003A\u003AgetType\u0028\u0029",
+            "name": "getType",
+            "summary": "Get\u0020the\u0020content\u0020type\u0020short\u0020name",
+            "url": "classes/Core-ContentType-ContentTypeInterface.html#method_getType"
+        },                {
+            "fqsen": "\\Core\\ContentType\\ContentTypeInterface\u003A\u003AgetMedia\u0028\u0029",
+            "name": "getMedia",
+            "summary": "Get\u0020the\u0020content\u0020type\u0020short\u0020name",
+            "url": "classes/Core-ContentType-ContentTypeInterface.html#method_getMedia"
+        },                {
+            "fqsen": "\\Core\\ContentType\\ContentTypeInterface\u003A\u003Astream\u0028\u0029",
+            "name": "stream",
+            "summary": "Send\u0020the\u0020resulting\u0020output\u0020of\u0020a\u0020rendered\u0020view\u0020with\u0020data",
+            "url": "classes/Core-ContentType-ContentTypeInterface.html#method_stream"
+        },                {
             "fqsen": "\\Core\\ContentType\\Html",
             "name": "Html",
             "summary": "Class\u0020Core\\Output\\Html",
             "url": "classes/Core-ContentType-Html.html"
+        },                {
+            "fqsen": "\\Core\\ContentType\\Html\u003A\u003AgetType\u0028\u0029",
+            "name": "getType",
+            "summary": "Get\u0020the\u0020content\u0020type\u0020short\u0020name",
+            "url": "classes/Core-ContentType-Html.html#method_getType"
+        },                {
+            "fqsen": "\\Core\\ContentType\\Html\u003A\u003AgetMedia\u0028\u0029",
+            "name": "getMedia",
+            "summary": "Get\u0020the\u0020content\u0020type\u0020short\u0020name",
+            "url": "classes/Core-ContentType-Html.html#method_getMedia"
+        },                {
+            "fqsen": "\\Core\\ContentType\\Html\u003A\u003Astream\u0028\u0029",
+            "name": "stream",
+            "summary": "Render\u0020a\u0020view\u0020with\u0020data.",
+            "url": "classes/Core-ContentType-Html.html#method_stream"
         },                {
             "fqsen": "\\Core\\ContentType\\Json",
             "name": "Json",
             "summary": "Class\u0020Core\\ContentType\\Json",
             "url": "classes/Core-ContentType-Json.html"
         },                {
+            "fqsen": "\\Core\\ContentType\\Json\u003A\u003AgetType\u0028\u0029",
+            "name": "getType",
+            "summary": "Get\u0020the\u0020content\u0020type\u0020short\u0020name",
+            "url": "classes/Core-ContentType-Json.html#method_getType"
+        },                {
+            "fqsen": "\\Core\\ContentType\\Json\u003A\u003AgetMedia\u0028\u0029",
+            "name": "getMedia",
+            "summary": "Get\u0020the\u0020content\u0020type\u0020short\u0020name",
+            "url": "classes/Core-ContentType-Json.html#method_getMedia"
+        },                {
+            "fqsen": "\\Core\\ContentType\\Json\u003A\u003Astream\u0028\u0029",
+            "name": "stream",
+            "summary": "Render\u0020data\u0020as\u0020json",
+            "url": "classes/Core-ContentType-Json.html#method_stream"
+        },                {
             "fqsen": "\\Core\\ContentType\\Negotiator",
             "name": "Negotiator",
             "summary": "Handles\u0020the\u0020negotiation\u0020of\u0020content\u0020types\u0020between\u0020request\u0020headers,\napplication\u0020configuration,\u0020controller\/class\u0020and\u0020method\u0020attributes.",
             "url": "classes/Core-ContentType-Negotiator.html"
+        },                {
+            "fqsen": "\\Core\\ContentType\\Negotiator\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/Core-ContentType-Negotiator.html#method___construct"
+        },                {
+            "fqsen": "\\Core\\ContentType\\Negotiator\u003A\u003AgetContentType\u0028\u0029",
+            "name": "getContentType",
+            "summary": "Determine\u0020the\u0020appropriate\u0020content\u0020type\u0020for\u0020the\u0020current\u0020request.",
+            "url": "classes/Core-ContentType-Negotiator.html#method_getContentType"
         },                {
             "fqsen": "\\Core\\ContentType\\Xml",
             "name": "Xml",
             "summary": "Class\u0020Core\\ContentType\\Json",
             "url": "classes/Core-ContentType-Xml.html"
         },                {
+            "fqsen": "\\Core\\ContentType\\Xml\u003A\u003AgetType\u0028\u0029",
+            "name": "getType",
+            "summary": "Get\u0020the\u0020content\u0020type\u0020short\u0020name",
+            "url": "classes/Core-ContentType-Xml.html#method_getType"
+        },                {
+            "fqsen": "\\Core\\ContentType\\Xml\u003A\u003AgetMedia\u0028\u0029",
+            "name": "getMedia",
+            "summary": "Get\u0020the\u0020content\u0020type\u0020short\u0020name",
+            "url": "classes/Core-ContentType-Xml.html#method_getMedia"
+        },                {
+            "fqsen": "\\Core\\ContentType\\Xml\u003A\u003AarrayToXml\u0028\u0029",
+            "name": "arrayToXml",
+            "summary": "Converts\u0020an\u0020array\u0020to\u0020XML\u0020and\u0020returns\u0020a\u0020SimpleXMLElement.",
+            "url": "classes/Core-ContentType-Xml.html#method_arrayToXml"
+        },                {
+            "fqsen": "\\Core\\ContentType\\Xml\u003A\u003Astream\u0028\u0029",
+            "name": "stream",
+            "summary": "Render\u0020data\u0020as\u0020XML",
+            "url": "classes/Core-ContentType-Xml.html#method_stream"
+        },                {
             "fqsen": "\\Core\\Event",
             "name": "Event",
             "summary": "",
             "url": "classes/Core-Event.html"
+        },                {
+            "fqsen": "\\Core\\Event\u003A\u003Aclear\u0028\u0029",
+            "name": "clear",
+            "summary": "Clear\u0020all\u0020event\u0020listeners",
+            "url": "classes/Core-Event.html#method_clear"
+        },                {
+            "fqsen": "\\Core\\Event\u003A\u003AaddListener\u0028\u0029",
+            "name": "addListener",
+            "summary": "Register\u0020an\u0020event\u0020listener\u0020for\u0020a\u0020specific\u0020event.",
+            "url": "classes/Core-Event.html#method_addListener"
+        },                {
+            "fqsen": "\\Core\\Event\u003A\u003AremoveListener\u0028\u0029",
+            "name": "removeListener",
+            "summary": "Remove\u0020a\u0020specific\u0020event\u0020listener\u0020for\u0020an\u0020event.",
+            "url": "classes/Core-Event.html#method_removeListener"
+        },                {
+            "fqsen": "\\Core\\Event\u003A\u003Atrigger\u0028\u0029",
+            "name": "trigger",
+            "summary": "Emit\u0020an\u0020event\u0020and\u0020invoke\u0020all\u0020registered\u0020listeners\u0020for\u0020the\u0020event.",
+            "url": "classes/Core-Event.html#method_trigger"
         },                {
             "fqsen": "\\Core\\Exception\\FileNotFound",
             "name": "FileNotFound",
@@ -151,125 +631,980 @@ Search.appendIndex(
             "summary": "Sanitizes\u0020a\u0020string\u0020to\u0020a\u0020valid\u0020callable\u0020method\u0020name",
             "url": "classes/Core-MethodName.html"
         },                {
+            "fqsen": "\\Core\\MethodName\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/Core-MethodName.html#method___construct"
+        },                {
+            "fqsen": "\\Core\\MethodName\u003A\u003ADEFAULT",
+            "name": "DEFAULT",
+            "summary": "",
+            "url": "classes/Core-MethodName.html#constant_DEFAULT"
+        },                {
             "fqsen": "\\Core\\MVCStructure",
             "name": "MVCStructure",
             "summary": "Extended\u0020by\u0020\\Core\\ClassName\u0020and\u0020\\Core\\MethodName",
             "url": "classes/Core-MVCStructure.html"
+        },                {
+            "fqsen": "\\Core\\MVCStructure\u003A\u003AtoString\u0028\u0029",
+            "name": "toString",
+            "summary": "Returns\u0020the\u0020sanitized\u0020string",
+            "url": "classes/Core-MVCStructure.html#method_toString"
+        },                {
+            "fqsen": "\\Core\\MVCStructure\u003A\u003AtoStringWithoutSuffix\u0028\u0029",
+            "name": "toStringWithoutSuffix",
+            "summary": "Returns\u0020the\u0020sanitized\u0020string\u0020without\u0020the\u0020\u0022controller\u0020suffix\u0022",
+            "url": "classes/Core-MVCStructure.html#method_toStringWithoutSuffix"
         },                {
             "fqsen": "\\Core\\Renderer",
             "name": "Renderer",
             "summary": "Class\u0020Renderer",
             "url": "classes/Core-Renderer.html"
         },                {
+            "fqsen": "\\Core\\Renderer\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "Renderer\u0020constructor.",
+            "url": "classes/Core-Renderer.html#method___construct"
+        },                {
+            "fqsen": "\\Core\\Renderer\u003A\u003AgetResponse\u0028\u0029",
+            "name": "getResponse",
+            "summary": "Get\u0020the\u0020response\u0020to\u0020be\u0020rendered",
+            "url": "classes/Core-Renderer.html#method_getResponse"
+        },                {
+            "fqsen": "\\Core\\Renderer\u003A\u003AgetTemplate\u0028\u0029",
+            "name": "getTemplate",
+            "summary": "Get\u0020the\u0020template\/theme\u0020object.",
+            "url": "classes/Core-Renderer.html#method_getTemplate"
+        },                {
+            "fqsen": "\\Core\\Renderer\u003A\u003Arender\u0028\u0029",
+            "name": "render",
+            "summary": "Renders\u0020the\u0020given\u0020response.",
+            "url": "classes/Core-Renderer.html#method_render"
+        },                {
             "fqsen": "\\Core\\Request",
             "name": "Request",
             "summary": "Encapsulates\u0020the\u0020details\u0020of\u0020a\u0020request\u0020and\u0020simplifies\u0020the\u0020process\u0020of\u0020working\u0020with\u0020incoming\u0020HTTP\u0020requests.",
             "url": "classes/Core-Request.html"
+        },                {
+            "fqsen": "\\Core\\Request\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "Sets\u0020initial\u0020state\u0020of\u0020super\u0020globals",
+            "url": "classes/Core-Request.html#method___construct"
+        },                {
+            "fqsen": "\\Core\\Request\u003A\u003AsetArguments\u0028\u0029",
+            "name": "setArguments",
+            "summary": "Set\u0020arguments\u0020parsed\u0020from\u0020path",
+            "url": "classes/Core-Request.html#method_setArguments"
+        },                {
+            "fqsen": "\\Core\\Request\u003A\u003AgetArguments\u0028\u0029",
+            "name": "getArguments",
+            "summary": "Get\u0020path\u0020that\u0020should\u0020be\u0020used\u0020by\u0020the\u0020router",
+            "url": "classes/Core-Request.html#method_getArguments"
+        },                {
+            "fqsen": "\\Core\\Request\u003A\u003AgetArg\u0028\u0029",
+            "name": "getArg",
+            "summary": "Get\u0020arg\u0020by\u0020an\u0020index.",
+            "url": "classes/Core-Request.html#method_getArg"
+        },                {
+            "fqsen": "\\Core\\Request\u003A\u003AgetConfiguration\u0028\u0029",
+            "name": "getConfiguration",
+            "summary": "Returns\u0020request\u0020specific\u0020configuration\u0020file",
+            "url": "classes/Core-Request.html#method_getConfiguration"
+        },                {
+            "fqsen": "\\Core\\Request\u003A\u003AgetContentTypePreferences\u0028\u0029",
+            "name": "getContentTypePreferences",
+            "summary": "Tell\u0020the\u0020mime\u0020content\u0020type\u0020that\u0020the\u0020client\u0020prefer\u0020to\u0020recieve\nNULL\u0020is\u0020returned\u0020if\u0020the\u0020Accept\u0020header\u0020failed\u0020negotiation",
+            "url": "classes/Core-Request.html#method_getContentTypePreferences"
+        },                {
+            "fqsen": "\\Core\\Request\u003A\u003A\u0024get",
+            "name": "get",
+            "summary": "",
+            "url": "classes/Core-Request.html#property_get"
+        },                {
+            "fqsen": "\\Core\\Request\u003A\u003A\u0024post",
+            "name": "post",
+            "summary": "",
+            "url": "classes/Core-Request.html#property_post"
+        },                {
+            "fqsen": "\\Core\\Request\u003A\u003A\u0024server",
+            "name": "server",
+            "summary": "",
+            "url": "classes/Core-Request.html#property_server"
+        },                {
+            "fqsen": "\\Core\\Request\u003A\u003A\u0024files",
+            "name": "files",
+            "summary": "",
+            "url": "classes/Core-Request.html#property_files"
+        },                {
+            "fqsen": "\\Core\\Request\u003A\u003A\u0024cookie",
+            "name": "cookie",
+            "summary": "",
+            "url": "classes/Core-Request.html#property_cookie"
         },                {
             "fqsen": "\\Core\\Response",
             "name": "Response",
             "summary": "Class\u0020Response",
             "url": "classes/Core-Response.html"
         },                {
+            "fqsen": "\\Core\\Response\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "Response\u0020constructor.",
+            "url": "classes/Core-Response.html#method___construct"
+        },                {
+            "fqsen": "\\Core\\Response\u003A\u003AgetView\u0028\u0029",
+            "name": "getView",
+            "summary": "Get\u0020the\u0020name\u0020or\u0020path\u0020of\u0020the\u0020view\u0020template.",
+            "url": "classes/Core-Response.html#method_getView"
+        },                {
+            "fqsen": "\\Core\\Response\u003A\u003AsetView\u0028\u0029",
+            "name": "setView",
+            "summary": "",
+            "url": "classes/Core-Response.html#method_setView"
+        },                {
+            "fqsen": "\\Core\\Response\u003A\u003AgetData\u0028\u0029",
+            "name": "getData",
+            "summary": "Get\u0020the\u0020data\u0020to\u0020be\u0020passed\u0020to\u0020the\u0020view\u0020template.",
+            "url": "classes/Core-Response.html#method_getData"
+        },                {
+            "fqsen": "\\Core\\Response\u003A\u003AsetData\u0028\u0029",
+            "name": "setData",
+            "summary": "",
+            "url": "classes/Core-Response.html#method_setData"
+        },                {
+            "fqsen": "\\Core\\Response\u003A\u003AgetTitle\u0028\u0029",
+            "name": "getTitle",
+            "summary": "Get\u0020the\u0020current\u0020page\u0020title\u0020to\u0020be\u0020displayed.",
+            "url": "classes/Core-Response.html#method_getTitle"
+        },                {
+            "fqsen": "\\Core\\Response\u003A\u003AgetContentType\u0028\u0029",
+            "name": "getContentType",
+            "summary": "Get\u0020the\u0020content\u0020type\u0020of\u0020the\u0020response.",
+            "url": "classes/Core-Response.html#method_getContentType"
+        },                {
+            "fqsen": "\\Core\\Response\u003A\u003AsetContentType\u0028\u0029",
+            "name": "setContentType",
+            "summary": "Set\u0020the\u0020content\u0020type\u0020of\u0020the\u0020response.",
+            "url": "classes/Core-Response.html#method_setContentType"
+        },                {
+            "fqsen": "\\Core\\Response\u003A\u003AsetTitle\u0028\u0029",
+            "name": "setTitle",
+            "summary": "Set\u0020a\u0020dynamic\u0020value\u0020for\u0020the\u0020title\u0020tag.",
+            "url": "classes/Core-Response.html#method_setTitle"
+        },                {
+            "fqsen": "\\Core\\Response\u003A\u003AaddHeader\u0028\u0029",
+            "name": "addHeader",
+            "summary": "Queue\u0020header\u0020to\u0020be\u0020sent",
+            "url": "classes/Core-Response.html#method_addHeader"
+        },                {
+            "fqsen": "\\Core\\Response\u003A\u003AsendHttpCode\u0028\u0029",
+            "name": "sendHttpCode",
+            "summary": "Send\u0020HTTP\u0020code",
+            "url": "classes/Core-Response.html#method_sendHttpCode"
+        },                {
+            "fqsen": "\\Core\\Response\u003A\u003AsendHeaders\u0028\u0029",
+            "name": "sendHeaders",
+            "summary": "Send\u0020default\u0020HTTP\u0020headers",
+            "url": "classes/Core-Response.html#method_sendHeaders"
+        },                {
+            "fqsen": "\\Core\\Response\u003A\u003A\u0024data",
+            "name": "data",
+            "summary": "",
+            "url": "classes/Core-Response.html#property_data"
+        },                {
             "fqsen": "\\Core\\Router",
             "name": "Router",
             "summary": "Basic\u0020router\u0020for\u0020handling\u0020HTTP\u0020requests\u0020and\u0020routing\u0020them\u0020to\u0020appropriate\u0020controllers\nFollows\u0020a\u0020simple\u0020routing\u0020mechanism\u0020to\u0020match\u0020URLs\u0020and\u0020execute\u0020the\u0020corresponding\u0020controller\u0020for\u0020each\u0020route.",
             "url": "classes/Core-Router.html"
+        },                {
+            "fqsen": "\\Core\\Router\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "Router\u0020constructor\u0020parses\u0020args\u0020from\u0020current\u0020environment.",
+            "url": "classes/Core-Router.html#method___construct"
+        },                {
+            "fqsen": "\\Core\\Router\u003A\u003Adispatch\u0028\u0029",
+            "name": "dispatch",
+            "summary": "Executes\u0020a\u0020given\u0020controller\u0020by\u0020name.",
+            "url": "classes/Core-Router.html#method_dispatch"
+        },                {
+            "fqsen": "\\Core\\Router\u003A\u003AgetRequest\u0028\u0029",
+            "name": "getRequest",
+            "summary": "Get\u0020the\u0020\\Core\\Request\u0020object",
+            "url": "classes/Core-Router.html#method_getRequest"
+        },                {
+            "fqsen": "\\Core\\Router\u003A\u003AgetResponse\u0028\u0029",
+            "name": "getResponse",
+            "summary": "Get\u0020the\u0020\\Core\\Response\u0020object",
+            "url": "classes/Core-Router.html#method_getResponse"
+        },                {
+            "fqsen": "\\Core\\Router\u003A\u003AgetConfiguration\u0028\u0029",
+            "name": "getConfiguration",
+            "summary": "Get\u0020the\u0020\\Configuration\u0020object",
+            "url": "classes/Core-Router.html#method_getConfiguration"
+        },                {
+            "fqsen": "\\Core\\Router\u003A\u003AgetDefaultArguments\u0028\u0029",
+            "name": "getDefaultArguments",
+            "summary": "Returns\u0020default\u0020route\u0020from\u0020configuration",
+            "url": "classes/Core-Router.html#method_getDefaultArguments"
+        },                {
+            "fqsen": "\\Core\\Router\u003A\u003AgetNotFoundClassName\u0028\u0029",
+            "name": "getNotFoundClassName",
+            "summary": "Get\u0020ClassName\u0020for\u0020requests\u0020that\u0020cannot\u0020be\u0020routed\nThis\u0020is\u0020the\u0020class\u0020that\u0020will\u0020be\u0020executed\u0020when\u0020a\u0020route\u0020cannot\u0020be\u0020found",
+            "url": "classes/Core-Router.html#method_getNotFoundClassName"
+        },                {
+            "fqsen": "\\Core\\Router\u003A\u003AgetDefaultMethodName\u0028\u0029",
+            "name": "getDefaultMethodName",
+            "summary": "Get\u0020default\u0020MethodName\u0020to\u0020be\u0020called\u0020on\u0020controlelrs",
+            "url": "classes/Core-Router.html#method_getDefaultMethodName"
+        },                {
+            "fqsen": "\\Core\\Router\u003A\u003AhandleUnroutableRequest\u0028\u0029",
+            "name": "handleUnroutableRequest",
+            "summary": "Handle\u0020requests\u0020that\u0020cannot\u0020be\u0020routed.",
+            "url": "classes/Core-Router.html#method_handleUnroutableRequest"
+        },                {
+            "fqsen": "\\Core\\Router\u003A\u003AgetRoute\u0028\u0029",
+            "name": "getRoute",
+            "summary": "Returns\u0020the\u0020resolved\u0020route\u0020from\u0020path\u0020arguments\nFirst\u0020index\u0020will\u0020always\u0020be\u0020the\u0020controller\u0020to\u0020invoke\nsecond\u0020index,\u0020if\u0020present,\u0020will\u0020be\u0020the\u0020method\u0020name",
+            "url": "classes/Core-Router.html#method_getRoute"
         },                {
             "fqsen": "\\Core\\StatusCode\\Forbidden",
             "name": "Forbidden",
             "summary": "Throw\u0020this\u0020whenever\u0020you\u0020want\u0020to\u0020redirect\u0020the\u0020current\u0020controller\u0020to\u0020a\u0020\u0022forbidden\u0022\u0020controller",
             "url": "classes/Core-StatusCode-Forbidden.html"
         },                {
+            "fqsen": "\\Core\\StatusCode\\Forbidden\u003A\u003AgetHttpCode\u0028\u0029",
+            "name": "getHttpCode",
+            "summary": "Return\u0020an\u0020integer\u0020representing\u0020a\u0020HTTP\u0020code",
+            "url": "classes/Core-StatusCode-Forbidden.html#method_getHttpCode"
+        },                {
+            "fqsen": "\\Core\\StatusCode\\Forbidden\u003A\u003AgetClassName\u0028\u0029",
+            "name": "getClassName",
+            "summary": "Returns\u0020a\u0020class\u0020name\u0020matching\u0020the\u0020name\nof\u0020the\u0020http\u0020error\u0020exception\u0020being\u0020thrown.",
+            "url": "classes/Core-StatusCode-Forbidden.html#method_getClassName"
+        },                {
             "fqsen": "\\Core\\StatusCode\\NotAcceptable",
             "name": "NotAcceptable",
             "summary": "Throw\u0020this\u0020whenever\u0020you\u0020want\u0020to\u0020redirect\u0020the\u0020current\u0020controller\u0020to\u0020a\u0020\u0022forbidden\u0022\u0020controller",
             "url": "classes/Core-StatusCode-NotAcceptable.html"
+        },                {
+            "fqsen": "\\Core\\StatusCode\\NotAcceptable\u003A\u003AgetHttpCode\u0028\u0029",
+            "name": "getHttpCode",
+            "summary": "The\u0020HTTP\u0020status\u0020code\u0020for\u0020Not\u0020Acceptable\u0020controller.",
+            "url": "classes/Core-StatusCode-NotAcceptable.html#method_getHttpCode"
+        },                {
+            "fqsen": "\\Core\\StatusCode\\NotAcceptable\u003A\u003AgetClassName\u0028\u0029",
+            "name": "getClassName",
+            "summary": "Returns\u0020a\u0020class\u0020name\u0020matching\u0020the\u0020name\nof\u0020the\u0020http\u0020error\u0020exception\u0020being\u0020thrown.",
+            "url": "classes/Core-StatusCode-NotAcceptable.html#method_getClassName"
         },                {
             "fqsen": "\\Core\\StatusCode\\NotFound",
             "name": "NotFound",
             "summary": "Throw\u0020this\u0020whenever\u0020you\u0020want\u0020to\u0020redirect\u0020the\u0020current\u0020controller\u0020to\u0020a\u0020not\u0020found\u0020controller",
             "url": "classes/Core-StatusCode-NotFound.html"
         },                {
+            "fqsen": "\\Core\\StatusCode\\NotFound\u003A\u003AgetHttpCode\u0028\u0029",
+            "name": "getHttpCode",
+            "summary": "Return\u0020an\u0020integer\u0020representing\u0020a\u0020HTTP\u0020code",
+            "url": "classes/Core-StatusCode-NotFound.html#method_getHttpCode"
+        },                {
+            "fqsen": "\\Core\\StatusCode\\NotFound\u003A\u003AgetClassName\u0028\u0029",
+            "name": "getClassName",
+            "summary": "Returns\u0020a\u0020class\u0020name\u0020matching\u0020the\u0020name\nof\u0020the\u0020http\u0020error\u0020exception\u0020being\u0020thrown.",
+            "url": "classes/Core-StatusCode-NotFound.html#method_getClassName"
+        },                {
             "fqsen": "\\Core\\StatusCode\\StatusCode",
             "name": "StatusCode",
             "summary": "The\u0020base\u0020class\u0020for\u0020all\u0020HTTP\u0020exceptions\u0020to\u0020extend\u0020upon\nThis\u0020class\u0020is\u0020intentionally\u0020abstract\nAs\u0020it\u0020should\u0020not\u0020be\u0020instantiated\u0020directly\nand\u0020only\u0020serves\u0020as\u0020a\u0020catch\u002Dall\u0020class\u0020for\nall\u0020http\u0020error\u0020exceptions\u0020extending\u0020this",
             "url": "classes/Core-StatusCode-StatusCode.html"
+        },                {
+            "fqsen": "\\Core\\StatusCode\\StatusCode\u003A\u003AgetHttpCode\u0028\u0029",
+            "name": "getHttpCode",
+            "summary": "Return\u0020an\u0020integer\u0020representing\u0020a\u0020HTTP\u0020code",
+            "url": "classes/Core-StatusCode-StatusCode.html#method_getHttpCode"
+        },                {
+            "fqsen": "\\Core\\StatusCode\\StatusCode\u003A\u003AgetClassName\u0028\u0029",
+            "name": "getClassName",
+            "summary": "Returns\u0020a\u0020class\u0020name\u0020matching\u0020the\u0020name\nof\u0020the\u0020http\u0020error\u0020exception\u0020being\u0020thrown.",
+            "url": "classes/Core-StatusCode-StatusCode.html#method_getClassName"
         },                {
             "fqsen": "\\Core\\Template",
             "name": "Template",
             "summary": "Loads\u0020and\u0020setups\u0020the\u0020current\u0020configured\u0020theme\u0020in\u0020use.",
             "url": "classes/Core-Template.html"
         },                {
+            "fqsen": "\\Core\\Template\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "Doesn\u0027t\u0020do\u0020much\u0020of\u0020interest,\u0020this\u0020shouldn\u0027t\u0020be\u0020required\u0020to\u0020mess\u0020with.",
+            "url": "classes/Core-Template.html#method___construct"
+        },                {
+            "fqsen": "\\Core\\Template\u003A\u003AgetAssets\u0028\u0029",
+            "name": "getAssets",
+            "summary": "Get\u0020the\u0020\\Core\\Assets\u0020instance",
+            "url": "classes/Core-Template.html#method_getAssets"
+        },                {
+            "fqsen": "\\Core\\Template\u003A\u003AgetConfiguration\u0028\u0029",
+            "name": "getConfiguration",
+            "summary": "Returns\u0020the\u0020configuration\u0020object\u0020associated\u0020with\u0020the\u0020theme",
+            "url": "classes/Core-Template.html#method_getConfiguration"
+        },                {
+            "fqsen": "\\Core\\Template\u003A\u003AgetViewPath\u0028\u0029",
+            "name": "getViewPath",
+            "summary": "Get\u0020the\u0020path\u0020to\u0020the\u0020current\u0020active\u0020theme.",
+            "url": "classes/Core-Template.html#method_getViewPath"
+        },                {
+            "fqsen": "\\Core\\Template\u003A\u003AgetDirectoryUri\u0028\u0029",
+            "name": "getDirectoryUri",
+            "summary": "Get\u0020URI\u0020path\u0020to\u0020this\u0020theme",
+            "url": "classes/Core-Template.html#method_getDirectoryUri"
+        },                {
+            "fqsen": "\\Core\\Template\u003A\u003A\u0024assets",
+            "name": "assets",
+            "summary": "",
+            "url": "classes/Core-Template.html#property_assets"
+        },                {
             "fqsen": "\\Database\\Collection",
             "name": "Collection",
             "summary": "Class\u0020Collection",
             "url": "classes/Database-Collection.html"
+        },                {
+            "fqsen": "\\Database\\Collection\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "Collection\u0020constructor.",
+            "url": "classes/Database-Collection.html#method___construct"
+        },                {
+            "fqsen": "\\Database\\Collection\u003A\u003AgetFirst\u0028\u0029",
+            "name": "getFirst",
+            "summary": "Get\u0020the\u0020first\u0020element\u0020of\u0020the\u0020collection.",
+            "url": "classes/Database-Collection.html#method_getFirst"
+        },                {
+            "fqsen": "\\Database\\Collection\u003A\u003AgetLast\u0028\u0029",
+            "name": "getLast",
+            "summary": "Get\u0020the\u0020last\u0020element\u0020of\u0020the\u0020collection.",
+            "url": "classes/Database-Collection.html#method_getLast"
+        },                {
+            "fqsen": "\\Database\\Collection\u003A\u003AgetOne\u0028\u0029",
+            "name": "getOne",
+            "summary": "Find\u0020and\u0020return\u0020the\u0020first\u0020element\u0020in\u0020the\u0020collection\u0020where\u0020the\u0020callback\u0020returns\u0020true",
+            "url": "classes/Database-Collection.html#method_getOne"
+        },                {
+            "fqsen": "\\Database\\Collection\u003A\u003Acount\u0028\u0029",
+            "name": "count",
+            "summary": "Count\u0020the\u0020number\u0020of\u0020elements\u0020in\u0020this\u0020collection.",
+            "url": "classes/Database-Collection.html#method_count"
+        },                {
+            "fqsen": "\\Database\\Collection\u003A\u003AgetColumn\u0028\u0029",
+            "name": "getColumn",
+            "summary": "Get\u0020the\u0020values\u0020of\u0020a\u0020given\u0020key\u0020as\u0020a\u0020collection.",
+            "url": "classes/Database-Collection.html#method_getColumn"
+        },                {
+            "fqsen": "\\Database\\Collection\u003A\u003AisEmpty\u0028\u0029",
+            "name": "isEmpty",
+            "summary": "Check\u0020whether\u0020the\u0020collection\u0020is\u0020empty\u0020or\u0020not.",
+            "url": "classes/Database-Collection.html#method_isEmpty"
+        },                {
+            "fqsen": "\\Database\\Collection\u003A\u003Arewind\u0028\u0029",
+            "name": "rewind",
+            "summary": "Rewind\u0020the\u0020collection\u0020array\u0020back\u0020to\u0020the\u0020start.",
+            "url": "classes/Database-Collection.html#method_rewind"
+        },                {
+            "fqsen": "\\Database\\Collection\u003A\u003Acurrent\u0028\u0029",
+            "name": "current",
+            "summary": "Get\u0020the\u0020object\u0020at\u0020the\u0020current\u0020position.",
+            "url": "classes/Database-Collection.html#method_current"
+        },                {
+            "fqsen": "\\Database\\Collection\u003A\u003Akey\u0028\u0029",
+            "name": "key",
+            "summary": "Get\u0020the\u0020current\u0020position.",
+            "url": "classes/Database-Collection.html#method_key"
+        },                {
+            "fqsen": "\\Database\\Collection\u003A\u003Anext\u0028\u0029",
+            "name": "next",
+            "summary": "Advance\u0020the\u0020internal\u0020cursor\u0020of\u0020an\u0020array.",
+            "url": "classes/Database-Collection.html#method_next"
+        },                {
+            "fqsen": "\\Database\\Collection\u003A\u003Avalid\u0028\u0029",
+            "name": "valid",
+            "summary": "Check\u0020whether\u0020the\u0020collection\u0020contains\u0020more\u0020entries.",
+            "url": "classes/Database-Collection.html#method_valid"
+        },                {
+            "fqsen": "\\Database\\Collection\u003A\u003AoffsetExists\u0028\u0029",
+            "name": "offsetExists",
+            "summary": "Determine\u0020if\u0020an\u0020item\u0020exists\u0020at\u0020an\u0020offset.",
+            "url": "classes/Database-Collection.html#method_offsetExists"
+        },                {
+            "fqsen": "\\Database\\Collection\u003A\u003AoffsetGet\u0028\u0029",
+            "name": "offsetGet",
+            "summary": "Get\u0020an\u0020item\u0020at\u0020a\u0020given\u0020offset.",
+            "url": "classes/Database-Collection.html#method_offsetGet"
+        },                {
+            "fqsen": "\\Database\\Collection\u003A\u003AoffsetSet\u0028\u0029",
+            "name": "offsetSet",
+            "summary": "Set\u0020the\u0020item\u0020at\u0020a\u0020given\u0020offset.",
+            "url": "classes/Database-Collection.html#method_offsetSet"
+        },                {
+            "fqsen": "\\Database\\Collection\u003A\u003AoffsetUnset\u0028\u0029",
+            "name": "offsetUnset",
+            "summary": "Unset\u0020the\u0020item\u0020at\u0020a\u0020given\u0020offset.",
+            "url": "classes/Database-Collection.html#method_offsetUnset"
+        },                {
+            "fqsen": "\\Database\\Collection\u003A\u003Aall\u0028\u0029",
+            "name": "all",
+            "summary": "Get\u0020all\u0020of\u0020the\u0020items\u0020in\u0020the\u0020collection.",
+            "url": "classes/Database-Collection.html#method_all"
+        },                {
+            "fqsen": "\\Database\\Collection\u003A\u003AjsonSerialize\u0028\u0029",
+            "name": "jsonSerialize",
+            "summary": "Support\u0020serializing\u0020this\u0020collection\u0020to\u0020json\u0020object",
+            "url": "classes/Database-Collection.html#method_jsonSerialize"
+        },                {
+            "fqsen": "\\Database\\Collection\u003A\u003Afilter\u0028\u0029",
+            "name": "filter",
+            "summary": "Filter\u0020the\u0020collection\u0020using\u0020the\u0020provided\u0020callback.",
+            "url": "classes/Database-Collection.html#method_filter"
+        },                {
+            "fqsen": "\\Database\\Collection\u003A\u003Amap\u0028\u0029",
+            "name": "map",
+            "summary": "Apply\u0020a\u0020callback\u0020to\u0020each\u0020item\u0020in\u0020the\u0020collection\u0020and\u0020return\u0020a\u0020new\u0020collection\u0020with\u0020the\u0020results",
+            "url": "classes/Database-Collection.html#method_map"
+        },                {
+            "fqsen": "\\Database\\Collection\u003A\u003Areduce\u0028\u0029",
+            "name": "reduce",
+            "summary": "Reduce\u0020the\u0020collection\u0020to\u0020a\u0020single\u0020value\u0020using\u0020a\u0020callback",
+            "url": "classes/Database-Collection.html#method_reduce"
+        },                {
+            "fqsen": "\\Database\\Collection\u003A\u003Aslice\u0028\u0029",
+            "name": "slice",
+            "summary": "Extract\u0020a\u0020slice\u0020of\u0020the\u0020collection",
+            "url": "classes/Database-Collection.html#method_slice"
+        },                {
+            "fqsen": "\\Database\\Collection\u003A\u003Amerge\u0028\u0029",
+            "name": "merge",
+            "summary": "Merge\u0020another\u0020collection\u0020into\u0020this\u0020one",
+            "url": "classes/Database-Collection.html#method_merge"
+        },                {
+            "fqsen": "\\Database\\Collection\u003A\u003Aunique\u0028\u0029",
+            "name": "unique",
+            "summary": "Remove\u0020duplicate\u0020values\u0020from\u0020the\u0020collection",
+            "url": "classes/Database-Collection.html#method_unique"
+        },                {
+            "fqsen": "\\Database\\Collection\u003A\u003Aforget\u0028\u0029",
+            "name": "forget",
+            "summary": "Remove\u0020one\u0020or\u0020more\u0020items\u0020from\u0020the\u0020collection\u0020by\u0020key",
+            "url": "classes/Database-Collection.html#method_forget"
         },                {
             "fqsen": "\\Database\\Connection",
             "name": "Connection",
             "summary": "Base\u0020connection\u0020class",
             "url": "classes/Database-Connection.html"
         },                {
+            "fqsen": "\\Database\\Connection\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "Initiate\u0020a\u0020new\u0020database\u0020connection\u0020using\u0020PDO\u0020as\u0020a\u0020driver.",
+            "url": "classes/Database-Connection.html#method___construct"
+        },                {
+            "fqsen": "\\Database\\Connection\u003A\u003A__destruct\u0028\u0029",
+            "name": "__destruct",
+            "summary": "This\u0020should\u0020most\u0020likely\u0020close\u0020the\u0020connection\u0020when\u0020you\u0027re\u0020done\u0020using\u0020the\u0020\\Database\\Connection",
+            "url": "classes/Database-Connection.html#method___destruct"
+        },                {
+            "fqsen": "\\Database\\Connection\u003A\u003A__call\u0028\u0029",
+            "name": "__call",
+            "summary": "Allow\u0020methods\u0020not\u0020implemented\u0020by\u0020this\u0020class\u0020to\u0020be\u0020called\u0020on\u0020the\u0020connection",
+            "url": "classes/Database-Connection.html#method___call"
+        },                {
+            "fqsen": "\\Database\\Connection\u003A\u003Aconnect\u0028\u0029",
+            "name": "connect",
+            "summary": "Does\u0020the\u0020actual\u0020connection",
+            "url": "classes/Database-Connection.html#method_connect"
+        },                {
+            "fqsen": "\\Database\\Connection\u003A\u003Aclose\u0028\u0029",
+            "name": "close",
+            "summary": "Closes\u0020the\u0020PDO\u0020connection\u0020and\u0020nullifies\u0020any\u0020statements",
+            "url": "classes/Database-Connection.html#method_close"
+        },                {
+            "fqsen": "\\Database\\Connection\u003A\u003AgetInstance\u0028\u0029",
+            "name": "getInstance",
+            "summary": "Retrieve\u0020the\u0020latest\u0020initiated\u0020\\Database\\Connection\u0020instance.",
+            "url": "classes/Database-Connection.html#method_getInstance"
+        },                {
+            "fqsen": "\\Database\\Connection\u003A\u003AgetConnection\u0028\u0029",
+            "name": "getConnection",
+            "summary": "Retrieve\u0020the\u0020connection\u0020instance\u0020used\u0020by\u0020the\u0020current\u0020\\Database\\Connection\u0020instance.",
+            "url": "classes/Database-Connection.html#method_getConnection"
+        },                {
+            "fqsen": "\\Database\\Connection\u003A\u003Ause\u0028\u0029",
+            "name": "use",
+            "summary": "Switch\u0020database\u0020to\u0020use",
+            "url": "classes/Database-Connection.html#method_use"
+        },                {
+            "fqsen": "\\Database\\Connection\u003A\u003AbeginTransaction\u0028\u0029",
+            "name": "beginTransaction",
+            "summary": "Turns\u0020off\u0020autocommit\u0020mode.\u0020Until\u0020changes\u0020made\u0020to\u0020the\u0020database\u0020are\u0020committed.",
+            "url": "classes/Database-Connection.html#method_beginTransaction"
+        },                {
+            "fqsen": "\\Database\\Connection\u003A\u003Atransaction\u0028\u0029",
+            "name": "transaction",
+            "summary": "Helping\u0020wrapper\u0020function\u0020for\u0020PDO\u003A\u003AbeginTranstion\u0028\u0029\u003B",
+            "url": "classes/Database-Connection.html#method_transaction"
+        },                {
+            "fqsen": "\\Database\\Connection\u003A\u003Acommit\u0028\u0029",
+            "name": "commit",
+            "summary": "Commits\u0020a\u0020transaction,\u0020returning\u0020the\u0020database\u0020connection\u0020to\u0020autocommit\u0020mode.",
+            "url": "classes/Database-Connection.html#method_commit"
+        },                {
+            "fqsen": "\\Database\\Connection\u003A\u003Arollback\u0028\u0029",
+            "name": "rollback",
+            "summary": "Rolls\u0020back\u0020the\u0020current\u0020transaction",
+            "url": "classes/Database-Connection.html#method_rollback"
+        },                {
+            "fqsen": "\\Database\\Connection\u003A\u003Aprepare\u0028\u0029",
+            "name": "prepare",
+            "summary": "Overloads\u0020PDO\u003A\u003Aprepare\u0028\u0029\u003B\u0020to\u0020provide\u0020support\u0020for\u0020additional\u0020checks\u0020and\u0020functionality.",
+            "url": "classes/Database-Connection.html#method_prepare"
+        },                {
+            "fqsen": "\\Database\\Connection\u003A\u003Aquery\u0028\u0029",
+            "name": "query",
+            "summary": "Execute\u0020a\u0020parameterized\u0020SQL\u0020query.",
+            "url": "classes/Database-Connection.html#method_query"
+        },                {
+            "fqsen": "\\Database\\Connection\u003A\u003Acount\u0028\u0029",
+            "name": "count",
+            "summary": "Count\u0020total\u0020number\u0020rows\u0020in\u0020a\u0020column",
+            "url": "classes/Database-Connection.html#method_count"
+        },                {
+            "fqsen": "\\Database\\Connection\u003A\u003AfetchRow\u0028\u0029",
+            "name": "fetchRow",
+            "summary": "Fetch\u0020a\u0020single\u0020row\u0020from\u0020the\u0020given\u0020criteria.",
+            "url": "classes/Database-Connection.html#method_fetchRow"
+        },                {
+            "fqsen": "\\Database\\Connection\u003A\u003AfetchCell\u0028\u0029",
+            "name": "fetchCell",
+            "summary": "Fetch\u0020a\u0020cells\u0020value\u0020from\u0020the\u0020given\u0020criteria.",
+            "url": "classes/Database-Connection.html#method_fetchCell"
+        },                {
+            "fqsen": "\\Database\\Connection\u003A\u003AfetchField\u0028\u0029",
+            "name": "fetchField",
+            "summary": "Alias\u0020of\u0020\\Database\\Connection\u003A\u003AfetchCell\u0020implemented\u0020for\u0020the\u0020drupal\u0020developers\u0020sake.",
+            "url": "classes/Database-Connection.html#method_fetchField"
+        },                {
+            "fqsen": "\\Database\\Connection\u003A\u003Aselect\u0028\u0029",
+            "name": "select",
+            "summary": "Select\u0020rows\u0020based\u0020on\u0020the\u0020given\u0020criteria",
+            "url": "classes/Database-Connection.html#method_select"
+        },                {
+            "fqsen": "\\Database\\Connection\u003A\u003Asearch\u0028\u0029",
+            "name": "search",
+            "summary": "Performs\u0020a\u0020search\u0020of\u0020the\u0020given\u0020criteria",
+            "url": "classes/Database-Connection.html#method_search"
+        },                {
+            "fqsen": "\\Database\\Connection\u003A\u003AinsertMultiple\u0028\u0029",
+            "name": "insertMultiple",
+            "summary": "Inserts\u0020multiple\u0020rows\u0020in\u0020a\u0020single\u0020query",
+            "url": "classes/Database-Connection.html#method_insertMultiple"
+        },                {
+            "fqsen": "\\Database\\Connection\u003A\u003Ainsert\u0028\u0029",
+            "name": "insert",
+            "summary": "Inserts\u0020a\u0020row\u0020in\u0020the\u0020given\u0020table.",
+            "url": "classes/Database-Connection.html#method_insert"
+        },                {
+            "fqsen": "\\Database\\Connection\u003A\u003Areplace\u0028\u0029",
+            "name": "replace",
+            "summary": "Replaces\u0020a\u0020new\u0020row\u0020into\u0020the\u0020given\u0020table.",
+            "url": "classes/Database-Connection.html#method_replace"
+        },                {
+            "fqsen": "\\Database\\Connection\u003A\u003Aupsert\u0028\u0029",
+            "name": "upsert",
+            "summary": "Update\u0020or\u0020insert\u0020row,\u0020uses\u0020ON\u0020DUPLICATE\u0020KEY\u0020syntax",
+            "url": "classes/Database-Connection.html#method_upsert"
+        },                {
+            "fqsen": "\\Database\\Connection\u003A\u003Aupdate\u0028\u0029",
+            "name": "update",
+            "summary": "Update\u0020rows\u0020in\u0020the\u0020given\u0020table\u0020depending\u0020on\u0020the\u0020criteria.",
+            "url": "classes/Database-Connection.html#method_update"
+        },                {
+            "fqsen": "\\Database\\Connection\u003A\u003Adelete\u0028\u0029",
+            "name": "delete",
+            "summary": "Delete\u0020rows\u0020from\u0020the\u0020given\u0020table\u0020by\u0020criteria.",
+            "url": "classes/Database-Connection.html#method_delete"
+        },                {
+            "fqsen": "\\Database\\Connection\u003A\u003AdebugQuery\u0028\u0029",
+            "name": "debugQuery",
+            "summary": "Debugging\u0020prepared\u0020statements\u0020can\u0020be\u0020severely\u0020painful,\nuse\u0020this\u0020in\u0020place\u0020of,\u0020or\u0020in\u0020conjunction\u0020with,\u0020\\Database\\Connection\u003A\u003Aquery\u0028\u0029\u003B\u0020to\u0020output\u0020the\u0020resulting\u0020SQL.",
+            "url": "classes/Database-Connection.html#method_debugQuery"
+        },                {
+            "fqsen": "\\Database\\Connection\u003A\u003AinterpolateQuery\u0028\u0029",
+            "name": "interpolateQuery",
+            "summary": "Wrapper\u0020function\u0020for\u0020debugging\u0020purposes",
+            "url": "classes/Database-Connection.html#method_interpolateQuery"
+        },                {
+            "fqsen": "\\Database\\Connection\u003A\u003AlastInsertId\u0028\u0029",
+            "name": "lastInsertId",
+            "summary": "Get\u0020the\u0020last\u0020inserted\u0020ID",
+            "url": "classes/Database-Connection.html#method_lastInsertId"
+        },                {
+            "fqsen": "\\Database\\Connection\u003A\u003AsafeTable\u0028\u0029",
+            "name": "safeTable",
+            "summary": "Checks\u0020if\u0020table\u0020name\u0020is\u0020safe\u0020and\u0020returns\u0020it.",
+            "url": "classes/Database-Connection.html#method_safeTable"
+        },                {
+            "fqsen": "\\Database\\Connection\u003A\u003A\u0024statement",
+            "name": "statement",
+            "summary": "",
+            "url": "classes/Database-Connection.html#property_statement"
+        },                {
+            "fqsen": "\\Database\\Connection\u003A\u003A\u0024rowCount",
+            "name": "rowCount",
+            "summary": "",
+            "url": "classes/Database-Connection.html#property_rowCount"
+        },                {
+            "fqsen": "\\Database\\Connection\u003A\u003A\u0024queryCount",
+            "name": "queryCount",
+            "summary": "",
+            "url": "classes/Database-Connection.html#property_queryCount"
+        },                {
+            "fqsen": "\\Database\\Connection\u003A\u003A\u0024lastQuery",
+            "name": "lastQuery",
+            "summary": "",
+            "url": "classes/Database-Connection.html#property_lastQuery"
+        },                {
+            "fqsen": "\\Database\\Connection\u003A\u003A\u0024database",
+            "name": "database",
+            "summary": "",
+            "url": "classes/Database-Connection.html#property_database"
+        },                {
+            "fqsen": "\\Database\\Connection\u003A\u003A\u0024tables",
+            "name": "tables",
+            "summary": "",
+            "url": "classes/Database-Connection.html#property_tables"
+        },                {
             "fqsen": "\\Database\\Entity",
             "name": "Entity",
             "summary": "Represents\u0020a\u0020CRUD\u0027able\u0020entity.",
             "url": "classes/Database-Entity.html"
+        },                {
+            "fqsen": "\\Database\\Entity\u003A\u003AgetPrimaryKey\u0028\u0029",
+            "name": "getPrimaryKey",
+            "summary": "Subclasses\u0020must\u0020define\u0020getPrimaryKey\n\u0027late\u0020static\u0020binding\u0027\u0020will\u0020be\u0020used\u0020to\u0020load\nentities,\u0020and\u0020identify\u0020primary\u0020key\u0020\u002B\u0020table.",
+            "url": "classes/Database-Entity.html#method_getPrimaryKey"
+        },                {
+            "fqsen": "\\Database\\Entity\u003A\u003AgetTableName\u0028\u0029",
+            "name": "getTableName",
+            "summary": "Subclasses\u0020must\u0020define\u0020getTableName\n\u0027late\u0020static\u0020binding\u0027\u0020will\u0020be\u0020used\u0020to\u0020load\nentities,\u0020and\u0020identify\u0020primary\u0020key\u0020\u002B\u0020table.",
+            "url": "classes/Database-Entity.html#method_getTableName"
+        },                {
+            "fqsen": "\\Database\\Entity\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "Loads\u0020a\u0020given\u0020entity\u0020and\u0020populates\u0020it\u0020with\u0020the\u0020given\u0020data.",
+            "url": "classes/Database-Entity.html#method___construct"
+        },                {
+            "fqsen": "\\Database\\Entity\u003A\u003A__toString\u0028\u0029",
+            "name": "__toString",
+            "summary": "Print\u0020the\u0020Entity\u0020object\u0020only\u0020for\u0020debugging\u0020purposes",
+            "url": "classes/Database-Entity.html#method___toString"
+        },                {
+            "fqsen": "\\Database\\Entity\u003A\u003A__set\u0028\u0029",
+            "name": "__set",
+            "summary": "Sets\u0020a\u0020property\u0020to\u0020a\u0020given\u0020value",
+            "url": "classes/Database-Entity.html#method___set"
+        },                {
+            "fqsen": "\\Database\\Entity\u003A\u003A__isset\u0028\u0029",
+            "name": "__isset",
+            "summary": "Checks\u0020if\u0020entry\u0020exists\u0020by\u0020key\nThis\u0020is\u0020required\u0020together\u0020with\u0020__get\u0020for\nto\u0020support\u0020\u0027array_column\u0027\u0020in\u0020\\Database\\Collection\u003A\u003AgetColumn",
+            "url": "classes/Database-Entity.html#method___isset"
+        },                {
+            "fqsen": "\\Database\\Entity\u003A\u003A__get\u0028\u0029",
+            "name": "__get",
+            "summary": "Gets\u0020the\u0020value\u0020for\u0020a\u0020given\u0020property\u0020name",
+            "url": "classes/Database-Entity.html#method___get"
+        },                {
+            "fqsen": "\\Database\\Entity\u003A\u003Asave\u0028\u0029",
+            "name": "save",
+            "summary": "Saves\u0020the\u0020entity\u0020to\u0020a\u0020long\u0020term\u0020storage.",
+            "url": "classes/Database-Entity.html#method_save"
+        },                {
+            "fqsen": "\\Database\\Entity\u003A\u003Afrom\u0028\u0029",
+            "name": "from",
+            "summary": "Queries\u0020database\u0020for\u0020a\u0020given\u0020entity\u0020by\u0020the\u0020value\u0020of\u0020its\u0020primary\u0020key.",
+            "url": "classes/Database-Entity.html#method_from"
+        },                {
+            "fqsen": "\\Database\\Entity\u003A\u003Afind\u0028\u0029",
+            "name": "find",
+            "summary": "Attempts\u0020to\u0020find\u0020an\u0020entity\u0020from\u0020a\u0020given\u0020field\u0020and\u0020value",
+            "url": "classes/Database-Entity.html#method_find"
+        },                {
+            "fqsen": "\\Database\\Entity\u003A\u003Awith\u0028\u0029",
+            "name": "with",
+            "summary": "Backwards\u0020compatibility\u0020for\u0020the\u0020new\u0020hydrate\u0020method.",
+            "url": "classes/Database-Entity.html#method_with"
+        },                {
+            "fqsen": "\\Database\\Entity\u003A\u003Ahydrate\u0028\u0029",
+            "name": "hydrate",
+            "summary": "Created\u0020a\u0020new\u0020instance\u0020of\u0020entity\u0020type\u0020with\u0020existing\u0020data",
+            "url": "classes/Database-Entity.html#method_hydrate"
+        },                {
+            "fqsen": "\\Database\\Entity\u003A\u003Asearch\u0028\u0029",
+            "name": "search",
+            "summary": "Performs\u0020a\u0020search\u0020of\u0020the\u0020given\u0020criteria",
+            "url": "classes/Database-Entity.html#method_search"
+        },                {
+            "fqsen": "\\Database\\Entity\u003A\u003Ainsert\u0028\u0029",
+            "name": "insert",
+            "summary": "Helper\u0020method\u0020to\u0020quickly\u0020register\u0020a\u0020new\u0020entity",
+            "url": "classes/Database-Entity.html#method_insert"
+        },                {
+            "fqsen": "\\Database\\Entity\u003A\u003Adelete\u0028\u0029",
+            "name": "delete",
+            "summary": "Permanently\u0020delete\u0020a\u0020given\u0020entity\u0020row",
+            "url": "classes/Database-Entity.html#method_delete"
+        },                {
+            "fqsen": "\\Database\\Entity\u003A\u003Anew\u0028\u0029",
+            "name": "new",
+            "summary": "Creates\u0020a\u0020new\u0020instance\u0020of\u0020any\u0020given\u0020entity",
+            "url": "classes/Database-Entity.html#method_new"
+        },                {
+            "fqsen": "\\Database\\Entity\u003A\u003Aset\u0028\u0029",
+            "name": "set",
+            "summary": "Sets\u0020ones\u0020or\u0020more\u0020properties\u0020to\u0020a\u0020given\u0020value.",
+            "url": "classes/Database-Entity.html#method_set"
+        },                {
+            "fqsen": "\\Database\\Entity\u003A\u003AgetData\u0028\u0029",
+            "name": "getData",
+            "summary": "Gets\u0020the\u0020current\u0020entity\u0020data",
+            "url": "classes/Database-Entity.html#method_getData"
+        },                {
+            "fqsen": "\\Database\\Entity\u003A\u003Aget\u0028\u0029",
+            "name": "get",
+            "summary": "Get\u0020the\u0020value\u0020corrosponding\u0020to\u0020a\u0020given\u0020key",
+            "url": "classes/Database-Entity.html#method_get"
+        },                {
+            "fqsen": "\\Database\\Entity\u003A\u003Ashift\u0028\u0029",
+            "name": "shift",
+            "summary": "Get\u0020and\u0020shift\u0020a\u0020value\u0020off\u0020the\u0020data\u0020array",
+            "url": "classes/Database-Entity.html#method_shift"
+        },                {
+            "fqsen": "\\Database\\Entity\u003A\u003Aescape\u0028\u0029",
+            "name": "escape",
+            "summary": "Escape\u0020data\u0020for\u0020output",
+            "url": "classes/Database-Entity.html#method_escape"
+        },                {
+            "fqsen": "\\Database\\Entity\u003A\u003Asafe\u0028\u0029",
+            "name": "safe",
+            "summary": "Make\u0020a\u0020given\u0020value\u0020safe\u0020for\u0020insertion,\u0020could\u0020prevent\u0020future\u0020XSS\u0020injections",
+            "url": "classes/Database-Entity.html#method_safe"
+        },                {
+            "fqsen": "\\Database\\Entity\u003A\u003Aid\u0028\u0029",
+            "name": "id",
+            "summary": "Get\u0020the\u0020current\u0020value\u0020of\u0020primary\u0020key\u0020index.",
+            "url": "classes/Database-Entity.html#method_id"
+        },                {
+            "fqsen": "\\Database\\Entity\u003A\u003AgetKeyFilter\u0028\u0029",
+            "name": "getKeyFilter",
+            "summary": "Gets\u0020an\u0020array\u0020suitable\u0020for\u0020WHERE\u0020clauses\u0020in\u0020SQL\u0020statements",
+            "url": "classes/Database-Entity.html#method_getKeyFilter"
+        },                {
+            "fqsen": "\\Database\\Entity\u003A\u003Aexists\u0028\u0029",
+            "name": "exists",
+            "summary": "Determine\u0020if\u0020the\u0020loaded\u0020entity\u0020exists\u0020in\u0020db",
+            "url": "classes/Database-Entity.html#method_exists"
+        },                {
+            "fqsen": "\\Database\\Entity\u003A\u003AisNew\u0028\u0029",
+            "name": "isNew",
+            "summary": "Determine\u0020if\u0020the\u0020loaded\u0020entity\u0020is\u0020new",
+            "url": "classes/Database-Entity.html#method_isNew"
+        },                {
+            "fqsen": "\\Database\\Entity\u003A\u003AisModified\u0028\u0029",
+            "name": "isModified",
+            "summary": "Determine\u0020if\u0020the\u0020entity\u0020has\u0020been\u0020modified",
+            "url": "classes/Database-Entity.html#method_isModified"
+        },                {
+            "fqsen": "\\Database\\Entity\u003A\u003AgeneratesPrimaryKey\u0028\u0029",
+            "name": "generatesPrimaryKey",
+            "summary": "Check\u0020if\u0020the\u0020entity\u0020generates\u0020its\u0020own\u0020primary\u0020key\nHappens\u0020when\u0020entity\u0020uses\u0020a\u0020trait\u0020that\u0020implements\nthe\u0020generatePrimaryKey\u0020method.",
+            "url": "classes/Database-Entity.html#method_generatesPrimaryKey"
+        },                {
+            "fqsen": "\\Database\\Entity\u003A\u003AhasPrimaryKeyValue\u0028\u0029",
+            "name": "hasPrimaryKeyValue",
+            "summary": "Check\u0020if\u0020the\u0020primary\u0020key\u0020is\u0020set\u0020in\u0020either\u0020the\u0020data\u0020or\u0020new\u0020array",
+            "url": "classes/Database-Entity.html#method_hasPrimaryKeyValue"
+        },                {
+            "fqsen": "\\Database\\Entity\u003A\u003AjsonSerialize\u0028\u0029",
+            "name": "jsonSerialize",
+            "summary": "Support\u0020serializing\u0020this\u0020entity\u0020to\u0020json\u0020object",
+            "url": "classes/Database-Entity.html#method_jsonSerialize"
         },                {
             "fqsen": "\\Database\\EntityCache",
             "name": "EntityCache",
             "summary": "Handles\u0020caching\u0020of\u0020entity\u0020instances",
             "url": "classes/Database-EntityCache.html"
         },                {
+            "fqsen": "\\Database\\EntityCache\u003A\u003Acontains\u0028\u0029",
+            "name": "contains",
+            "summary": "Check\u0020if\u0020an\u0020entity\u0020exists\u0020in\u0020the\u0020cache",
+            "url": "classes/Database-EntityCache.html#method_contains"
+        },                {
+            "fqsen": "\\Database\\EntityCache\u003A\u003Aretrieve\u0028\u0029",
+            "name": "retrieve",
+            "summary": "Retrieve\u0020an\u0020entity\u0020from\u0020the\u0020cache",
+            "url": "classes/Database-EntityCache.html#method_retrieve"
+        },                {
+            "fqsen": "\\Database\\EntityCache\u003A\u003Aremove\u0028\u0029",
+            "name": "remove",
+            "summary": "Remove\u0020an\u0020entity\u0020from\u0020the\u0020cache",
+            "url": "classes/Database-EntityCache.html#method_remove"
+        },                {
+            "fqsen": "\\Database\\EntityCache\u003A\u003Astore\u0028\u0029",
+            "name": "store",
+            "summary": "Store\u0020an\u0020entity\u0020in\u0020the\u0020cache",
+            "url": "classes/Database-EntityCache.html#method_store"
+        },                {
+            "fqsen": "\\Database\\EntityCache\u003A\u003Aclear\u0028\u0029",
+            "name": "clear",
+            "summary": "Clear\u0020all\u0020cached\u0020entities",
+            "url": "classes/Database-EntityCache.html#method_clear"
+        },                {
             "fqsen": "\\Database\\EntityType",
             "name": "EntityType",
             "summary": "Class\u0020EntityType",
             "url": "classes/Database-EntityType.html"
+        },                {
+            "fqsen": "\\Database\\EntityType\u003A\u003AgetPrimaryKey\u0028\u0029",
+            "name": "getPrimaryKey",
+            "summary": "The\u0020primary\u0020key\u0020of\u0020the\u0020table\u0020this\u0020entity\u0020interacts\u0020with",
+            "url": "classes/Database-EntityType.html#method_getPrimaryKey"
+        },                {
+            "fqsen": "\\Database\\EntityType\u003A\u003AgetTableName\u0028\u0029",
+            "name": "getTableName",
+            "summary": "The\u0020table\u0020name\u0020this\u0020entity\u0020interacts\u0020with",
+            "url": "classes/Database-EntityType.html#method_getTableName"
         },                {
             "fqsen": "\\Database\\PrimaryKey\\UuidV4",
             "name": "UuidV4",
             "summary": "",
             "url": "classes/Database-PrimaryKey-UuidV4.html"
         },                {
+            "fqsen": "\\Database\\PrimaryKey\\UuidV4\u003A\u003AgeneratePrimaryKey\u0028\u0029",
+            "name": "generatePrimaryKey",
+            "summary": "Generates\u0020a\u0020version\u00204\u0020UUID\u0020\u0028Universally\u0020Unique\u0020Identifier\u0029.",
+            "url": "classes/Database-PrimaryKey-UuidV4.html#method_generatePrimaryKey"
+        },                {
             "fqsen": "\\Database\\PrimaryKey\\UuidV7",
             "name": "UuidV7",
             "summary": "",
             "url": "classes/Database-PrimaryKey-UuidV7.html"
+        },                {
+            "fqsen": "\\Database\\PrimaryKey\\UuidV7\u003A\u003AgeneratePrimaryKey\u0028\u0029",
+            "name": "generatePrimaryKey",
+            "summary": "Generates\u0020a\u0020version\u00207\u0020UUID\u0020\u0028Universally\u0020Unique\u0020Identifier\u0029.",
+            "url": "classes/Database-PrimaryKey-UuidV7.html#method_generatePrimaryKey"
         },                {
             "fqsen": "\\Database\\Statement",
             "name": "Statement",
             "summary": "",
             "url": "classes/Database-Statement.html"
         },                {
+            "fqsen": "\\Database\\Statement\u003A\u003AfetchCol\u0028\u0029",
+            "name": "fetchCol",
+            "summary": "Fetch\u0020the\u0020column\u0020queried",
+            "url": "classes/Database-Statement.html#method_fetchCol"
+        },                {
+            "fqsen": "\\Database\\Statement\u003A\u003Afetch\u0028\u0029",
+            "name": "fetch",
+            "summary": "Fetches\u0020the\u0020next\u0020row\u0020from\u0020a\u0020result\u0020set.",
+            "url": "classes/Database-Statement.html#method_fetch"
+        },                {
+            "fqsen": "\\Database\\Statement\u003A\u003AfetchColumn\u0028\u0029",
+            "name": "fetchColumn",
+            "summary": "Fetch\u0020a\u0020column\u0020by\u0020numeric\u0020index\u0020from\u0020the\u0020resultset.",
+            "url": "classes/Database-Statement.html#method_fetchColumn"
+        },                {
+            "fqsen": "\\Database\\Statement\u003A\u003AgetCollection\u0028\u0029",
+            "name": "getCollection",
+            "summary": "Gets\u0020result\u0020set\u0020collection",
+            "url": "classes/Database-Statement.html#method_getCollection"
+        },                {
+            "fqsen": "\\Database\\Statement\u003A\u003AgetIterator\u0028\u0029",
+            "name": "getIterator",
+            "summary": "Gets\u0020result\u0020set\u0020iterator,\u0020alias\u0020of\u0020Statement\u003A\u003AgetCollection",
+            "url": "classes/Database-Statement.html#method_getIterator"
+        },                {
             "fqsen": "\\Debug",
             "name": "Debug",
             "summary": "Put\u0020whatever\u0020helper\u0020functions\u0020you\u0020may\u0020need\u0020in\u0020this\u0020class.",
             "url": "classes/Debug.html"
+        },                {
+            "fqsen": "\\Debug\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "Mandatory\u0020constructor,\u0020nothing\u0020to\u0020do\u0020here.",
+            "url": "classes/Debug.html#method___construct"
+        },                {
+            "fqsen": "\\Debug\u003A\u003Apre\u0028\u0029",
+            "name": "pre",
+            "summary": "Pretty\u0020print\u0020almost\u0020any\u0020variable\u0020in\u0020a\u0020human\u0020readable\u0020format.",
+            "url": "classes/Debug.html#method_pre"
+        },                {
+            "fqsen": "\\Debug\u003A\u003AgetCaller\u0028\u0029",
+            "name": "getCaller",
+            "summary": "Get\u0020an\u0020easily\u0020readable\u0020tree\u0020of\u0020previously\u0020called\u0020functions.",
+            "url": "classes/Debug.html#method_getCaller"
         },                {
             "fqsen": "\\Environment",
             "name": "Environment",
             "summary": "",
             "url": "classes/Environment.html"
         },                {
+            "fqsen": "\\Environment\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "Constructor\u0020for\u0020the\u0020Environment\u0020class.",
+            "url": "classes/Environment.html#method___construct"
+        },                {
+            "fqsen": "\\Environment\u003A\u003Aput\u0028\u0029",
+            "name": "put",
+            "summary": "Set\u0020an\u0020environment\u0020variable\u0020with\u0020a\u0020given\u0020name\u0020and\u0020value.",
+            "url": "classes/Environment.html#method_put"
+        },                {
+            "fqsen": "\\Environment\u003A\u003Aget\u0028\u0029",
+            "name": "get",
+            "summary": "Get\u0020the\u0020value\u0020of\u0020an\u0020environment\u0020variable.",
+            "url": "classes/Environment.html#method_get"
+        },                {
             "fqsen": "\\EventListeners\\BaseurlRedirect",
             "name": "BaseurlRedirect",
             "summary": "",
             "url": "classes/EventListeners-BaseurlRedirect.html"
+        },                {
+            "fqsen": "\\EventListeners\\BaseurlRedirect\u003A\u003Ahandle\u0028\u0029",
+            "name": "handle",
+            "summary": "Make\u0020sure\u0020client\u0020is\u0020using\u0020the\u0020configured\u0020baseurl.",
+            "url": "classes/EventListeners-BaseurlRedirect.html#method_handle"
         },                {
             "fqsen": "\\EventListeners\\ContentSecurityPolicy",
             "name": "ContentSecurityPolicy",
             "summary": "",
             "url": "classes/EventListeners-ContentSecurityPolicy.html"
         },                {
+            "fqsen": "\\EventListeners\\ContentSecurityPolicy\u003A\u003Ahandle\u0028\u0029",
+            "name": "handle",
+            "summary": "Handles\u0020the\u0020Content\u002DSecurity\u002DPolicy\u0020header\u0020injection",
+            "url": "classes/EventListeners-ContentSecurityPolicy.html#method_handle"
+        },                {
             "fqsen": "\\Http\\ConnectionError",
             "name": "ConnectionError",
             "summary": "",
             "url": "classes/Http-ConnectionError.html"
         },                {
+            "fqsen": "\\Http\\ConnectionError\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "ConnectionError\u0020constructor.",
+            "url": "classes/Http-ConnectionError.html#method___construct"
+        },                {
             "fqsen": "\\Http\\HttpError",
             "name": "HttpError",
             "summary": "",
             "url": "classes/Http-HttpError.html"
+        },                {
+            "fqsen": "\\Http\\HttpError\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "HttpError\u0020constructor.",
+            "url": "classes/Http-HttpError.html#method___construct"
         },                {
             "fqsen": "\\Http\\Method",
             "name": "Method",
@@ -326,45 +1661,790 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Http-Request.html"
         },                {
+            "fqsen": "\\Http\\Request\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "The\u0020constructor\u0020takes\u0020a\u0020single\u0020argument,\u0020the\u0020url\u0020of\u0020the\u0020host\u0020to\u0020request.",
+            "url": "classes/Http-Request.html#method___construct"
+        },                {
+            "fqsen": "\\Http\\Request\u003A\u003A__destruct\u0028\u0029",
+            "name": "__destruct",
+            "summary": "Do\u0020not\u0020bother\u0020about\u0020this\u0020method,\u0020you\u0020should\u0020not\u0020be\u0020calling\u0020this.",
+            "url": "classes/Http-Request.html#method___destruct"
+        },                {
+            "fqsen": "\\Http\\Request\u003A\u003A__call\u0028\u0029",
+            "name": "__call",
+            "summary": "Allows\u0020usage\u0020for\u0020any\u0020curl_\u002A\u0020functions\u0020in\u0020PHP\u0020not\u0020implemented\u0020by\u0020this\u0020class.",
+            "url": "classes/Http-Request.html#method___call"
+        },                {
+            "fqsen": "\\Http\\Request\u003A\u003Afake\u0028\u0029",
+            "name": "fake",
+            "summary": "Registers\u0020a\u0020fake\u0020response\u0020for\u0020a\u0020specific\u0020URL\u0020pattern\u0020using\u0020glob\u0020matching.",
+            "url": "classes/Http-Request.html#method_fake"
+        },                {
+            "fqsen": "\\Http\\Request\u003A\u003Awith\u0028\u0029",
+            "name": "with",
+            "summary": "Construct\u0020a\u0020request\u0020object\u0020in\u0020a\u0020static\u0020way,\u0020useful\u0020for\u0020chaining\nSupports\u0020the\u0020following\u0020syntaxes\u003A\n\u002D\u0020\u0060Request\u003A\u003Awith\u0028\u0027GET\u0027,\u0020\u0027https\u003A\/\/example.com\u0027\u0029\u0060\n\u002D\u0020\u0060Request\u003A\u003Awith\u0028Method\u003A\u003AGET,\u0020\u0027https\u003A\/\/example.com\u0027\u0029\u0060\n\u002D\u0020\u0060Request\u003A\u003Awith\u0028\u0027https\u003A\/\/example.com\u0027\u0029\u0060",
+            "url": "classes/Http-Request.html#method_with"
+        },                {
+            "fqsen": "\\Http\\Request\u003A\u003Asend\u0028\u0029",
+            "name": "send",
+            "summary": "The\u0020primary\u0020function\u0020of\u0020this\u0020class,\u0020performs\u0020the\u0020actual\u0020call\u0020to\u0020a\u0020specified\u0020service.",
+            "url": "classes/Http-Request.html#method_send"
+        },                {
+            "fqsen": "\\Http\\Request\u003A\u003Aget\u0028\u0029",
+            "name": "get",
+            "summary": "Request\u0020a\u0020remote\u0020resource\u0020using\u0020GET\u0020as\u0020the\u0020HTTP\u0020method.",
+            "url": "classes/Http-Request.html#method_get"
+        },                {
+            "fqsen": "\\Http\\Request\u003A\u003Apost\u0028\u0029",
+            "name": "post",
+            "summary": "Request\u0020a\u0020remote\u0020resource\u0020using\u0020POST\u0020as\u0020the\u0020HTTP\u0020method.",
+            "url": "classes/Http-Request.html#method_post"
+        },                {
+            "fqsen": "\\Http\\Request\u003A\u003Ahead\u0028\u0029",
+            "name": "head",
+            "summary": "Obtain\u0020metainformation\u0020about\u0020the\u0020request\u0020without\u0020transferring\u0020the\u0020entire\u0020message\u002Dbody\nA\u0020HEAD\u0020request\u0020does\u0020not\u0020accept\u0020post\u0020data,\u0020so\u0020the\u0020\u0024data\u0020parameter\u0020is\u0020not\u0020available\u0020here.",
+            "url": "classes/Http-Request.html#method_head"
+        },                {
+            "fqsen": "\\Http\\Request\u003A\u003A\u0024options",
+            "name": "options",
+            "summary": "",
+            "url": "classes/Http-Request.html#property_options"
+        },                {
+            "fqsen": "\\Http\\Request\u003A\u003Aconnect\u0028\u0029",
+            "name": "connect",
+            "summary": "Request\u0020a\u0020remote\u0020resource\u0020using\u0020CONNECT\u0020as\u0020the\u0020HTTP\u0020method.",
+            "url": "classes/Http-Request.html#method_connect"
+        },                {
+            "fqsen": "\\Http\\Request\u003A\u003Atrace\u0028\u0029",
+            "name": "trace",
+            "summary": "Request\u0020a\u0020remote\u0020resource\u0020using\u0020TRACE\u0020as\u0020the\u0020HTTP\u0020method.",
+            "url": "classes/Http-Request.html#method_trace"
+        },                {
+            "fqsen": "\\Http\\Request\u003A\u003Aput\u0028\u0029",
+            "name": "put",
+            "summary": "Request\u0020a\u0020remote\u0020resource\u0020using\u0020PUT\u0020as\u0020the\u0020HTTP\u0020method.",
+            "url": "classes/Http-Request.html#method_put"
+        },                {
+            "fqsen": "\\Http\\Request\u003A\u003Adelete\u0028\u0029",
+            "name": "delete",
+            "summary": "Requests\u0020that\u0020the\u0020origin\u0020server\u0020delete\u0020the\u0020resource\u0020identified\u0020by\u0020the\u0020Request\u002DURI.",
+            "url": "classes/Http-Request.html#method_delete"
+        },                {
+            "fqsen": "\\Http\\Request\u003A\u003Apatch\u0028\u0029",
+            "name": "patch",
+            "summary": "Patch\u0020those\u0020data\u0020to\u0020the\u0020service.",
+            "url": "classes/Http-Request.html#method_patch"
+        },                {
+            "fqsen": "\\Http\\Request\u003A\u003AsetHeader\u0028\u0029",
+            "name": "setHeader",
+            "summary": "Provide\u0020an\u0020additional\u0020header\u0020for\u0020this\u0020request.",
+            "url": "classes/Http-Request.html#method_setHeader"
+        },                {
+            "fqsen": "\\Http\\Request\u003A\u003AsetPort\u0028\u0029",
+            "name": "setPort",
+            "summary": "Specifies\u0020the\u0020port\u0020to\u0020be\u0020requested\u0020upon",
+            "url": "classes/Http-Request.html#method_setPort"
+        },                {
+            "fqsen": "\\Http\\Request\u003A\u003AsetCookie\u0028\u0029",
+            "name": "setCookie",
+            "summary": "Send\u0020a\u0020cookie\u0020with\u0020this\u0020request.",
+            "url": "classes/Http-Request.html#method_setCookie"
+        },                {
+            "fqsen": "\\Http\\Request\u003A\u003AsetCookiejar\u0028\u0029",
+            "name": "setCookiejar",
+            "summary": "The\u0020name\u0020of\u0020a\u0020file\u0020in\u0020which\u0020to\u0020store\u0020all\u0020recieved\u0020cookies\u0020when\u0020the\u0020handle\u0020is\u0020closed,\u0020e.g.\u0020after\u0020a\u0020call\u0020to\u0020curl_close.",
+            "url": "classes/Http-Request.html#method_setCookiejar"
+        },                {
+            "fqsen": "\\Http\\Request\u003A\u003AsetOption\u0028\u0029",
+            "name": "setOption",
+            "summary": "Manually\u0020set\u0020a\u0020cURL\u0020option\u0020for\u0020this\u0020request.",
+            "url": "classes/Http-Request.html#method_setOption"
+        },                {
+            "fqsen": "\\Http\\Request\u003A\u003AgetOption\u0028\u0029",
+            "name": "getOption",
+            "summary": "Retrieve\u0020the\u0020current\u0020value\u0020of\u0020a\u0020given\u0020cURL\u0020option",
+            "url": "classes/Http-Request.html#method_getOption"
+        },                {
+            "fqsen": "\\Http\\Request\u003A\u003AsetAuthorization\u0028\u0029",
+            "name": "setAuthorization",
+            "summary": "A\u0020string\u0020to\u0020use\u0020as\u0020authorization\u0020for\u0020this\u0020request.",
+            "url": "classes/Http-Request.html#method_setAuthorization"
+        },                {
+            "fqsen": "\\Http\\Request\u003A\u003AsetVerbose\u0028\u0029",
+            "name": "setVerbose",
+            "summary": "Enable\u0020CURL\u0020verbosity,\u0020captures\u0020and\u0020pushes\u0020the\u0020output\u0020to\u0020the\u0020response\u0020headers.",
+            "url": "classes/Http-Request.html#method_setVerbose"
+        },                {
+            "fqsen": "\\Http\\Request\u003A\u003AsetUrl\u0028\u0029",
+            "name": "setUrl",
+            "summary": "Sets\u0020destination\u0020url,\u0020to\u0020which\u0020this\u0020request\u0020will\u0020be\u0020sent.",
+            "url": "classes/Http-Request.html#method_setUrl"
+        },                {
+            "fqsen": "\\Http\\Request\u003A\u003AgetUrl\u0028\u0029",
+            "name": "getUrl",
+            "summary": "Get\u0020the\u0020URL\u0020to\u0020be\u0020requested.",
+            "url": "classes/Http-Request.html#method_getUrl"
+        },                {
+            "fqsen": "\\Http\\Request\u003A\u003AsetMethod\u0028\u0029",
+            "name": "setMethod",
+            "summary": "Set\u0020the\u0020method\u0020to\u0020use\u0020for\u0020requests.",
+            "url": "classes/Http-Request.html#method_setMethod"
+        },                {
+            "fqsen": "\\Http\\Request\u003A\u003AgetMethod\u0028\u0029",
+            "name": "getMethod",
+            "summary": "Get\u0020the\u0020method\u0020to\u0020be\u0020used\u0020for\u0020requests",
+            "url": "classes/Http-Request.html#method_getMethod"
+        },                {
+            "fqsen": "\\Http\\Request\u003A\u003AgetResponse\u0028\u0029",
+            "name": "getResponse",
+            "summary": "Get\u0020the\u0020response\u0020object",
+            "url": "classes/Http-Request.html#method_getResponse"
+        },                {
+            "fqsen": "\\Http\\Request\u003A\u003A\u0024curl",
+            "name": "curl",
+            "summary": "",
+            "url": "classes/Http-Request.html#property_curl"
+        },                {
+            "fqsen": "\\Http\\Request\u003A\u003A\u0024method",
+            "name": "method",
+            "summary": "",
+            "url": "classes/Http-Request.html#property_method"
+        },                {
+            "fqsen": "\\Http\\Request\u003A\u003A\u0024response",
+            "name": "response",
+            "summary": "",
+            "url": "classes/Http-Request.html#property_response"
+        },                {
+            "fqsen": "\\Http\\Request\u003A\u003A\u0024verbosityHandle",
+            "name": "verbosityHandle",
+            "summary": "",
+            "url": "classes/Http-Request.html#property_verbosityHandle"
+        },                {
+            "fqsen": "\\Http\\Request\u003A\u003A\u0024cookiejar",
+            "name": "cookiejar",
+            "summary": "",
+            "url": "classes/Http-Request.html#property_cookiejar"
+        },                {
+            "fqsen": "\\Http\\Request\u003A\u003A\u0024headerHandle",
+            "name": "headerHandle",
+            "summary": "",
+            "url": "classes/Http-Request.html#property_headerHandle"
+        },                {
+            "fqsen": "\\Http\\Request\u003A\u003A\u0024returndata",
+            "name": "returndata",
+            "summary": "",
+            "url": "classes/Http-Request.html#property_returndata"
+        },                {
+            "fqsen": "\\Http\\Request\u003A\u003A\u0024curlInfo",
+            "name": "curlInfo",
+            "summary": "",
+            "url": "classes/Http-Request.html#property_curlInfo"
+        },                {
+            "fqsen": "\\Http\\Request\u003A\u003A\u0024cookies",
+            "name": "cookies",
+            "summary": "",
+            "url": "classes/Http-Request.html#property_cookies"
+        },                {
+            "fqsen": "\\Http\\Request\u003A\u003A\u0024headers",
+            "name": "headers",
+            "summary": "",
+            "url": "classes/Http-Request.html#property_headers"
+        },                {
             "fqsen": "\\Http\\Response",
             "name": "Response",
             "summary": "",
             "url": "classes/Http-Response.html"
+        },                {
+            "fqsen": "\\Http\\Response\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "Constructs\u0020the\u0020response\u0020to\u0020the\u0020request",
+            "url": "classes/Http-Response.html#method___construct"
+        },                {
+            "fqsen": "\\Http\\Response\u003A\u003A__toString\u0028\u0029",
+            "name": "__toString",
+            "summary": "Gives\u0020the\u0020raw\u0020response\u0020returned\u0020by\u0020remote\u0020resource.",
+            "url": "classes/Http-Response.html#method___toString"
+        },                {
+            "fqsen": "\\Http\\Response\u003A\u003AgetInfo\u0028\u0029",
+            "name": "getInfo",
+            "summary": "Get\u0020cURL\u0020information\u0020regarding\u0020this\u0020request.",
+            "url": "classes/Http-Response.html#method_getInfo"
+        },                {
+            "fqsen": "\\Http\\Response\u003A\u003AgetHttpCode\u0028\u0029",
+            "name": "getHttpCode",
+            "summary": "Returns\u0020the\u0020HTTP\u0020code\u0020represented\u0020by\u0020this\u0020reponse",
+            "url": "classes/Http-Response.html#method_getHttpCode"
+        },                {
+            "fqsen": "\\Http\\Response\u003A\u003AisSuccess\u0028\u0029",
+            "name": "isSuccess",
+            "summary": "Finds\u0020out\u0020whether\u0020a\u0020request\u0020was\u0020successful\u0020or\u0020not.",
+            "url": "classes/Http-Response.html#method_isSuccess"
+        },                {
+            "fqsen": "\\Http\\Response\u003A\u003AparseHeaders\u0028\u0029",
+            "name": "parseHeaders",
+            "summary": "Attempt\u0020to\u0020parse\u0020HTTP\u0020headers\u0020from\u0020raw\u0020respnose.",
+            "url": "classes/Http-Response.html#method_parseHeaders"
+        },                {
+            "fqsen": "\\Http\\Response\u003A\u003AgetHeaders\u0028\u0029",
+            "name": "getHeaders",
+            "summary": "Returns\u0020parsed\u0020header\u0020values.",
+            "url": "classes/Http-Response.html#method_getHeaders"
+        },                {
+            "fqsen": "\\Http\\Response\u003A\u003AgetCookie\u0028\u0029",
+            "name": "getCookie",
+            "summary": "Get\u0020cookies\u0020set\u0020by\u0020the\u0020remote\u0020server\u0020for\u0020the\u0020performed\u0020request,\u0020in\u0020case\u0020a\u0020cookiejar\u0020wasn\u0027t\u0020utilized.",
+            "url": "classes/Http-Response.html#method_getCookie"
+        },                {
+            "fqsen": "\\Http\\Response\u003A\u003AgetCookies\u0028\u0029",
+            "name": "getCookies",
+            "summary": "Return\u0020value\u0020of\u0020a\u0020given\u0020header",
+            "url": "classes/Http-Response.html#method_getCookies"
+        },                {
+            "fqsen": "\\Http\\Response\u003A\u003AgetBody\u0028\u0029",
+            "name": "getBody",
+            "summary": "Get\u0020the\u0020request\u0020response\u0020text\u0020without\u0020the\u0020headers.",
+            "url": "classes/Http-Response.html#method_getBody"
+        },                {
+            "fqsen": "\\Http\\Response\u003A\u003AasObject\u0028\u0029",
+            "name": "asObject",
+            "summary": "Decodes\u0020and\u0020returns\u0020an\u0020object,\u0020assumes\u0020HTTP\u0020Response\u0020is\u0020JSON",
+            "url": "classes/Http-Response.html#method_asObject"
+        },                {
+            "fqsen": "\\Http\\Response\u003A\u003AasArray\u0028\u0029",
+            "name": "asArray",
+            "summary": "Decodes\u0020and\u0020returns\u0020an\u0020associative\u0020array,\u0020assumes\u0020the\u0020HTTP\u0020Response\u0020is\u0020JSON",
+            "url": "classes/Http-Response.html#method_asArray"
+        },                {
+            "fqsen": "\\Http\\Response\u003A\u003AasXml\u0028\u0029",
+            "name": "asXml",
+            "summary": "Returns\u0020a\u0020SimpleXML\u0020object\u0020with\u0020containing\u0020the\u0020response\u0020content.",
+            "url": "classes/Http-Response.html#method_asXml"
+        },                {
+            "fqsen": "\\Http\\Response\u003A\u003A\u0024xmlErrors",
+            "name": "xmlErrors",
+            "summary": "",
+            "url": "classes/Http-Response.html#property_xmlErrors"
         },                {
             "fqsen": "\\Logger",
             "name": "Logger",
             "summary": "Simple\u0020logger\u0020class.",
             "url": "classes/Logger.html"
         },                {
+            "fqsen": "\\Logger\u003A\u003Adebug\u0028\u0029",
+            "name": "debug",
+            "summary": "Add\u0020a\u0020log\u0020entry\u0020with\u0020a\u0020diagnostic\u0020message\u0020for\u0020the\u0020developer.",
+            "url": "classes/Logger.html#method_debug"
+        },                {
+            "fqsen": "\\Logger\u003A\u003Ainfo\u0028\u0029",
+            "name": "info",
+            "summary": "Add\u0020a\u0020log\u0020entry\u0020with\u0020an\u0020informational\u0020message\u0020for\u0020the\u0020user.",
+            "url": "classes/Logger.html#method_info"
+        },                {
+            "fqsen": "\\Logger\u003A\u003Awarning\u0028\u0029",
+            "name": "warning",
+            "summary": "Add\u0020a\u0020log\u0020entry\u0020with\u0020a\u0020warning\u0020message.",
+            "url": "classes/Logger.html#method_warning"
+        },                {
+            "fqsen": "\\Logger\u003A\u003Aerror\u0028\u0029",
+            "name": "error",
+            "summary": "Add\u0020a\u0020log\u0020entry\u0020with\u0020an\u0020error.",
+            "url": "classes/Logger.html#method_error"
+        },                {
+            "fqsen": "\\Logger\u003A\u003Atime\u0028\u0029",
+            "name": "time",
+            "summary": "Start\u0020counting\u0020time,\u0020using\u0020\u0024name\u0020as\u0020an\u0020identifier.",
+            "url": "classes/Logger.html#method_time"
+        },                {
+            "fqsen": "\\Logger\u003A\u003AtimeEnd\u0028\u0029",
+            "name": "timeEnd",
+            "summary": "Stop\u0020counting\u0020time,\u0020and\u0020create\u0020a\u0020log\u0020entry\u0020reporting\u0020the\u0020elapsed\u0020amount\u0020of\ntime.",
+            "url": "classes/Logger.html#method_timeEnd"
+        },                {
+            "fqsen": "\\Logger\u003A\u003AformatLogEntry\u0028\u0029",
+            "name": "formatLogEntry",
+            "summary": "Take\u0020one\u0020log\u0020entry\u0020and\u0020return\u0020a\u0020one\u002Dline\u0020human\u002Dreadable\u0020string",
+            "url": "classes/Logger.html#method_formatLogEntry"
+        },                {
+            "fqsen": "\\Logger\u003A\u003Ainit\u0028\u0029",
+            "name": "init",
+            "summary": "Determine\u0020whether\u0020and\u0020where\u0020the\u0020log\u0020needs\u0020to\u0020be\u0020written\u003B\u0020executed\u0020only\nonce.",
+            "url": "classes/Logger.html#method_init"
+        },                {
+            "fqsen": "\\Logger\u003A\u003AdumpToFile\u0028\u0029",
+            "name": "dumpToFile",
+            "summary": "Dump\u0020the\u0020whole\u0020log\u0020to\u0020the\u0020given\u0020file.",
+            "url": "classes/Logger.html#method_dumpToFile"
+        },                {
+            "fqsen": "\\Logger\u003A\u003AdumpToString\u0028\u0029",
+            "name": "dumpToString",
+            "summary": "Dump\u0020the\u0020whole\u0020log\u0020to\u0020a\u0020string\u0020and\u0020return\u0020it.",
+            "url": "classes/Logger.html#method_dumpToString"
+        },                {
+            "fqsen": "\\Logger\u003A\u003AclearLog\u0028\u0029",
+            "name": "clearLog",
+            "summary": "Empty\u0020the\u0020log",
+            "url": "classes/Logger.html#method_clearLog"
+        },                {
+            "fqsen": "\\Logger\u003A\u003A\u0024printLog",
+            "name": "printLog",
+            "summary": "Whether\u0020to\u0020print\u0020log\u0020entries\u0020to\u0020screen\u0020as\u0020they\u0020are\u0020added.",
+            "url": "classes/Logger.html#property_printLog"
+        },                {
+            "fqsen": "\\Logger\u003A\u003A\u0024writeLog",
+            "name": "writeLog",
+            "summary": "Whether\u0020to\u0020write\u0020log\u0020entries\u0020to\u0020file\u0020as\u0020they\u0020are\u0020added.",
+            "url": "classes/Logger.html#property_writeLog"
+        },                {
+            "fqsen": "\\Logger\u003A\u003A\u0024logDir",
+            "name": "logDir",
+            "summary": "Directory\u0020where\u0020the\u0020log\u0020will\u0020be\u0020dumped,\u0020without\u0020the\u0020final\u0020slash\u003B\u0020default\nis\u0020this\u0020file\u0027s\u0020directory",
+            "url": "classes/Logger.html#property_logDir"
+        },                {
+            "fqsen": "\\Logger\u003A\u003A\u0024logFileName",
+            "name": "logFileName",
+            "summary": "File\u0020name\u0020for\u0020the\u0020log\u0020saved\u0020in\u0020the\u0020log\u0020dir",
+            "url": "classes/Logger.html#property_logFileName"
+        },                {
+            "fqsen": "\\Logger\u003A\u003A\u0024logFileExtension",
+            "name": "logFileExtension",
+            "summary": "File\u0020extension\u0020for\u0020the\u0020logs\u0020saved\u0020in\u0020the\u0020log\u0020dir",
+            "url": "classes/Logger.html#property_logFileExtension"
+        },                {
+            "fqsen": "\\Logger\u003A\u003A\u0024logFileAppend",
+            "name": "logFileAppend",
+            "summary": "Whether\u0020to\u0020append\u0020to\u0020the\u0020log\u0020file\u0020\u0028true\u0029\u0020or\u0020to\u0020overwrite\u0020it\u0020\u0028false\u0029",
+            "url": "classes/Logger.html#property_logFileAppend"
+        },                {
+            "fqsen": "\\Logger\u003A\u003A\u0024logLevel",
+            "name": "logLevel",
+            "summary": "Set\u0020the\u0020maximum\u0020level\u0020of\u0020logging\u0020to\u0020write\u0020to\u0020logs",
+            "url": "classes/Logger.html#property_logLevel"
+        },                {
+            "fqsen": "\\Logger\u003A\u003A\u0024defaultTimer",
+            "name": "defaultTimer",
+            "summary": "Name\u0020for\u0020the\u0020default\u0020timer",
+            "url": "classes/Logger.html#property_defaultTimer"
+        },                {
             "fqsen": "\\Obj",
             "name": "Obj",
             "summary": "Class\u0020Obj",
             "url": "classes/Obj.html"
+        },                {
+            "fqsen": "\\Obj\u003A\u003Aget\u0028\u0029",
+            "name": "get",
+            "summary": "Get\u0020a\u0020property\u0020value\u0020from\u0020an\u0020object,\u0020with\u0020null\u0020safety.",
+            "url": "classes/Obj.html#method_get"
+        },                {
+            "fqsen": "\\Obj\u003A\u003Aset\u0028\u0029",
+            "name": "set",
+            "summary": "Set\u0020a\u0020property\u0020value\u0020on\u0020an\u0020object,\u0020with\u0020null\u0020safety.",
+            "url": "classes/Obj.html#method_set"
+        },                {
+            "fqsen": "\\Obj\u003A\u003Asafe\u0028\u0029",
+            "name": "safe",
+            "summary": "Escapes\u0020an\u0020object\u0027s\u0020properties\u0020for\u0020use\u0020in\u0020HTML.",
+            "url": "classes/Obj.html#method_safe"
+        },                {
+            "fqsen": "\\Obj\u003A\u003Ahas\u0028\u0029",
+            "name": "has",
+            "summary": "Check\u0020if\u0020a\u0020property\u0020exists\u0020on\u0020an\u0020object,\u0020with\u0020null\u0020safety.",
+            "url": "classes/Obj.html#method_has"
+        },                {
+            "fqsen": "\\Obj\u003A\u003AtoArray\u0028\u0029",
+            "name": "toArray",
+            "summary": "Convert\u0020an\u0020object\u0020to\u0020an\u0020array.",
+            "url": "classes/Obj.html#method_toArray"
+        },                {
+            "fqsen": "\\Obj\u003A\u003AtoJson\u0028\u0029",
+            "name": "toJson",
+            "summary": "Convert\u0020an\u0020object\u0020to\u0020a\u0020JSON\u0020string.",
+            "url": "classes/Obj.html#method_toJson"
         },                {
             "fqsen": "\\Path",
             "name": "Path",
             "summary": "Class\u0020Path",
             "url": "classes/Path.html"
         },                {
+            "fqsen": "\\Path\u003A\u003Anormalize\u0028\u0029",
+            "name": "normalize",
+            "summary": "Normalize\u0020a\u0020file\u0020path\u0020by\u0020removing\u0020redundant\u0020slashes\u0020and\u0020resolving\u0020relative\u0020segments\u0020like\u0020\u0027.\u0027\u0020and\u0020\u0027..\u0027.",
+            "url": "classes/Path.html#method_normalize"
+        },                {
+            "fqsen": "\\Path\u003A\u003Ajoin\u0028\u0029",
+            "name": "join",
+            "summary": "Join\u0020multiple\u0020path\u0020segments\u0020into\u0020a\u0020single\u0020path.",
+            "url": "classes/Path.html#method_join"
+        },                {
+            "fqsen": "\\Path\u003A\u003Abasename\u0028\u0029",
+            "name": "basename",
+            "summary": "Get\u0020the\u0020base\u0020name\u0020of\u0020a\u0020path\u0020\u0028file\u0020or\u0020directory\u0020name\u0029.",
+            "url": "classes/Path.html#method_basename"
+        },                {
+            "fqsen": "\\Path\u003A\u003Aextension\u0028\u0029",
+            "name": "extension",
+            "summary": "Get\u0020the\u0020file\u0020extension\u0020from\u0020the\u0020path.",
+            "url": "classes/Path.html#method_extension"
+        },                {
+            "fqsen": "\\Path\u003A\u003Adirname\u0028\u0029",
+            "name": "dirname",
+            "summary": "Get\u0020the\u0020directory\u0020name\u0020of\u0020a\u0020path.",
+            "url": "classes/Path.html#method_dirname"
+        },                {
+            "fqsen": "\\Path\u003A\u003AisAbsolute\u0028\u0029",
+            "name": "isAbsolute",
+            "summary": "Check\u0020if\u0020the\u0020given\u0020path\u0020is\u0020absolute.",
+            "url": "classes/Path.html#method_isAbsolute"
+        },                {
+            "fqsen": "\\Path\u003A\u003Aresolve\u0028\u0029",
+            "name": "resolve",
+            "summary": "Resolve\u0020a\u0020relative\u0020path\u0020to\u0020an\u0020absolute\u0020path\u0020based\u0020on\u0020a\u0020base\u0020path.",
+            "url": "classes/Path.html#method_resolve"
+        },                {
+            "fqsen": "\\Path\u003A\u003AtoUri\u0028\u0029",
+            "name": "toUri",
+            "summary": "Convert\u0020a\u0020path\u0020to\u0020a\u0020URL\u002Dfriendly\u0020format\u0020\u0028slashes\u0020become\u0020forward\u0020slashes\u0029.",
+            "url": "classes/Path.html#method_toUri"
+        },                {
             "fqsen": "\\Registry",
             "name": "Registry",
             "summary": "Class\u0020used\u0020to\u0020hold\u0020global\u0020state\u0020objects.",
             "url": "classes/Registry.html"
+        },                {
+            "fqsen": "\\Registry\u003A\u003Aget\u0028\u0029",
+            "name": "get",
+            "summary": "Get\u0020an\u0020object\u0020by\u0020it\u0027s\u0020class\u0020name,\u0020namespaces\u0020included.",
+            "url": "classes/Registry.html#method_get"
+        },                {
+            "fqsen": "\\Registry\u003A\u003Aset\u0028\u0029",
+            "name": "set",
+            "summary": "Stores\u0020a\u0020given\u0020object\u0020by\u0020it\u0027s\u0020class\u0020name,\u0020namespaces\u0020included",
+            "url": "classes/Registry.html#method_set"
+        },                {
+            "fqsen": "\\Registry\u003A\u003Ahas\u0028\u0029",
+            "name": "has",
+            "summary": "Checks\u0020if\u0020the\u0020registry\u0020contains\u0020a\u0020given\u0020object.",
+            "url": "classes/Registry.html#method_has"
+        },                {
+            "fqsen": "\\Registry\u003A\u003AgetConfiguration\u0028\u0029",
+            "name": "getConfiguration",
+            "summary": "Get\u0020core\u0020application\u0020configuration\u0020object",
+            "url": "classes/Registry.html#method_getConfiguration"
+        },                {
+            "fqsen": "\\Registry\u003A\u003AgetEnvironment\u0028\u0029",
+            "name": "getEnvironment",
+            "summary": "",
+            "url": "classes/Registry.html#method_getEnvironment"
+        },                {
+            "fqsen": "\\Registry\u003A\u003AgetDatabaseConnection\u0028\u0029",
+            "name": "getDatabaseConnection",
+            "summary": "Get\u0020instance\u0020of\u0020Database\\Connection",
+            "url": "classes/Registry.html#method_getDatabaseConnection"
         },                {
             "fqsen": "\\Str",
             "name": "Str",
             "summary": "The\u0020Str\u0020class\u0020provides\u0020string\u0020manipulation\u0020methods.",
             "url": "classes/Str.html"
         },                {
+            "fqsen": "\\Str\u003A\u003Asafe\u0028\u0029",
+            "name": "safe",
+            "summary": "Null\u0020aware\u0020string\u0020escape",
+            "url": "classes/Str.html#method_safe"
+        },                {
+            "fqsen": "\\Str\u003A\u003Aencode\u0028\u0029",
+            "name": "encode",
+            "summary": "Null\u0020aware\u0020base64\u0020encoding",
+            "url": "classes/Str.html#method_encode"
+        },                {
+            "fqsen": "\\Str\u003A\u003Adecode\u0028\u0029",
+            "name": "decode",
+            "summary": "Null\u0020aware\u0020base64\u0020decoding.",
+            "url": "classes/Str.html#method_decode"
+        },                {
+            "fqsen": "\\Str\u003A\u003Alen\u0028\u0029",
+            "name": "len",
+            "summary": "Null\u0020aware\u0020multibyte\u0020string\u0020length\u0020count",
+            "url": "classes/Str.html#method_len"
+        },                {
+            "fqsen": "\\Str\u003A\u003Alower\u0028\u0029",
+            "name": "lower",
+            "summary": "Null\u0020aware\u0020multibyte\u0020lowercase\u0020convertion.",
+            "url": "classes/Str.html#method_lower"
+        },                {
+            "fqsen": "\\Str\u003A\u003Aupper\u0028\u0029",
+            "name": "upper",
+            "summary": "Null\u0020aware\u0020multibyte\u0020uppercase\u0020convertion.",
+            "url": "classes/Str.html#method_upper"
+        },                {
+            "fqsen": "\\Str\u003A\u003Asubstr\u0028\u0029",
+            "name": "substr",
+            "summary": "Null\u0020aware\u0020substring\u0020extraction.",
+            "url": "classes/Str.html#method_substr"
+        },                {
+            "fqsen": "\\Str\u003A\u003Apos\u0028\u0029",
+            "name": "pos",
+            "summary": "Null\u0020aware\u0020multibyte\u0020position\u0020of\u0020first\u0020occurrence\u0020of\u0020a\u0020substring\u0020in\u0020a\u0020string.",
+            "url": "classes/Str.html#method_pos"
+        },                {
+            "fqsen": "\\Str\u003A\u003Aucfirst\u0028\u0029",
+            "name": "ucfirst",
+            "summary": "Capitalize\u0020the\u0020first\u0020letter\u0020of\u0020a\u0020string\u0020\u0028multibyte\u0020safe\u0029.",
+            "url": "classes/Str.html#method_ucfirst"
+        },                {
+            "fqsen": "\\Str\u003A\u003Acontains\u0028\u0029",
+            "name": "contains",
+            "summary": "Check\u0020if\u0020a\u0020string\u0020contains\u0020another\u0020string\u0020\u0028case\u002Dsensitive\u0029.",
+            "url": "classes/Str.html#method_contains"
+        },                {
+            "fqsen": "\\Str\u003A\u003AcontainsIgnoreCase\u0028\u0029",
+            "name": "containsIgnoreCase",
+            "summary": "Check\u0020if\u0020a\u0020string\u0020contains\u0020another\u0020string\u0020\u0028case\u002Dinsensitive\u0029.",
+            "url": "classes/Str.html#method_containsIgnoreCase"
+        },                {
+            "fqsen": "\\Str\u003A\u003AstartsWith\u0028\u0029",
+            "name": "startsWith",
+            "summary": "Check\u0020if\u0020a\u0020string\u0020starts\u0020with\u0020another\u0020string\u0020\u0028case\u002Dsensitive\u0029.",
+            "url": "classes/Str.html#method_startsWith"
+        },                {
+            "fqsen": "\\Str\u003A\u003AstartsWithIgnoreCase\u0028\u0029",
+            "name": "startsWithIgnoreCase",
+            "summary": "Check\u0020if\u0020a\u0020string\u0020starts\u0020with\u0020another\u0020string\u0020\u0028case\u002Dinsensitive\u0029.",
+            "url": "classes/Str.html#method_startsWithIgnoreCase"
+        },                {
+            "fqsen": "\\Str\u003A\u003AendsWith\u0028\u0029",
+            "name": "endsWith",
+            "summary": "Check\u0020if\u0020a\u0020string\u0020ends\u0020with\u0020another\u0020string\u0020\u0028case\u002Dsensitive\u0029.",
+            "url": "classes/Str.html#method_endsWith"
+        },                {
+            "fqsen": "\\Str\u003A\u003AendsWithIgnoreCase\u0028\u0029",
+            "name": "endsWithIgnoreCase",
+            "summary": "Check\u0020if\u0020a\u0020string\u0020ends\u0020with\u0020another\u0020string\u0020\u0028case\u002Dinsensitive\u0029.",
+            "url": "classes/Str.html#method_endsWithIgnoreCase"
+        },                {
+            "fqsen": "\\Str\u003A\u003Atest\u0028\u0029",
+            "name": "test",
+            "summary": "Check\u0020if\u0020a\u0020string\u0020matches\u0020a\u0020given\u0020pattern\u0020\u0028case\u002Dsensitive\u0029.",
+            "url": "classes/Str.html#method_test"
+        },                {
+            "fqsen": "\\Str\u003A\u003Amatch\u0028\u0029",
+            "name": "match",
+            "summary": "Check\u0020if\u0020a\u0020string\u0020matches\u0020a\u0020given\u0020pattern\u0020\u0028case\u002Dsensitive\u0029.",
+            "url": "classes/Str.html#method_match"
+        },                {
+            "fqsen": "\\Str\u003A\u003AmatchAll\u0028\u0029",
+            "name": "matchAll",
+            "summary": "Match\u0020all\u0020occurrences\u0020of\u0020a\u0020pattern\u0020in\u0020a\u0020string.",
+            "url": "classes/Str.html#method_matchAll"
+        },                {
+            "fqsen": "\\Str\u003A\u003AnormalizeWhitespace\u0028\u0029",
+            "name": "normalizeWhitespace",
+            "summary": "Normalize\u0020multiple\u0020spaces\u0020and\u0020other\u0020whitespace\u0020to\u0020a\u0020single\u0020space.",
+            "url": "classes/Str.html#method_normalizeWhitespace"
+        },                {
+            "fqsen": "\\Str\u003A\u003Aascii\u0028\u0029",
+            "name": "ascii",
+            "summary": "Attempt\u0020to\u0020replace\u0020Unicode\u0020characters\u0020with\u0020their\u0020ASCII\u0020counterparts.",
+            "url": "classes/Str.html#method_ascii"
+        },                {
+            "fqsen": "\\Str\u003A\u003Aslug\u0028\u0029",
+            "name": "slug",
+            "summary": "Converts\u0020a\u0020string\u0020into\u0020a\u0020slug\u002Dfriendly\u0020format.",
+            "url": "classes/Str.html#method_slug"
+        },                {
+            "fqsen": "\\Str\u003A\u003Atrim\u0028\u0029",
+            "name": "trim",
+            "summary": "Null\u0020aware\u0020trimming.",
+            "url": "classes/Str.html#method_trim"
+        },                {
+            "fqsen": "\\Str\u003A\u003Artrim\u0028\u0029",
+            "name": "rtrim",
+            "summary": "Null\u0020aware\u0020right\u002Dtrimming.",
+            "url": "classes/Str.html#method_rtrim"
+        },                {
+            "fqsen": "\\Str\u003A\u003Altrim\u0028\u0029",
+            "name": "ltrim",
+            "summary": "Null\u0020aware\u0020left\u002Dtrimming.",
+            "url": "classes/Str.html#method_ltrim"
+        },                {
+            "fqsen": "\\Str\u003A\u003Areverse\u0028\u0029",
+            "name": "reverse",
+            "summary": "Null\u0020aware\u0020string\u0020reversal.",
+            "url": "classes/Str.html#method_reverse"
+        },                {
+            "fqsen": "\\Str\u003A\u003Arepeat\u0028\u0029",
+            "name": "repeat",
+            "summary": "Null\u0020aware\u0020string\u0020repetition.",
+            "url": "classes/Str.html#method_repeat"
+        },                {
+            "fqsen": "\\Str\u003A\u003Acut\u0028\u0029",
+            "name": "cut",
+            "summary": "Null\u0020aware\u0020string\u0020explode.",
+            "url": "classes/Str.html#method_cut"
+        },                {
+            "fqsen": "\\Str\u003A\u003Asplit\u0028\u0029",
+            "name": "split",
+            "summary": "Null\u0020aware\u0020string\u0020split\u0020\u0028multibyte\u0020safe\u0029.",
+            "url": "classes/Str.html#method_split"
+        },                {
+            "fqsen": "\\Str\u003A\u003Areplace\u0028\u0029",
+            "name": "replace",
+            "summary": "Null\u0020aware\u0020string\u0020replacement.",
+            "url": "classes/Str.html#method_replace"
+        },                {
+            "fqsen": "\\Str\u003A\u003Ajoin\u0028\u0029",
+            "name": "join",
+            "summary": "Null\u0020aware\u0020string\u0020join\u0020\u0028implode\u0029.",
+            "url": "classes/Str.html#method_join"
+        },                {
             "fqsen": "\\Url",
             "name": "Url",
             "summary": "This\u0020class\u0020provides\u0020utility\u0020methods\u0020for\u0020working\u0020with\u0020URLs,\nsuch\u0020as\u0020parsing\u0020and\u0020manipulating\u0020URL\u0020components.",
             "url": "classes/Url.html"
         },                {
+            "fqsen": "\\Url\u003A\u003AgetBaseurl\u0028\u0029",
+            "name": "getBaseurl",
+            "summary": "Get\u0020the\u0020base\u0020URL\u0020of\u0020the\u0020current\u0020application.",
+            "url": "classes/Url.html#method_getBaseurl"
+        },                {
+            "fqsen": "\\Url\u003A\u003AfromUri\u0028\u0029",
+            "name": "fromUri",
+            "summary": "Get\u0020the\u0020provided\u0020uri\u0020appended\u0020to\u0020the\u0020baseurl\u0020of\u0020the\u0020application.",
+            "url": "classes/Url.html#method_fromUri"
+        },                {
+            "fqsen": "\\Url\u003A\u003Aredirect\u0028\u0029",
+            "name": "redirect",
+            "summary": "Perform\u0020a\u0020redirect\u0020with\u0020a\u0020X\u002DRedirect\u002DBy\u0020header,\u0020the\u0020application\u0020will\u0020be\u0020shutdown\u0020after\u0020the\u0020redirect.",
+            "url": "classes/Url.html#method_redirect"
+        },                {
+            "fqsen": "\\Url\u003A\u003Aparse\u0028\u0029",
+            "name": "parse",
+            "summary": "Parses\u0020a\u0020URL\u0020and\u0020returns\u0020an\u0020associative\u0020array\u0020containing\u0020its\u0020components.",
+            "url": "classes/Url.html#method_parse"
+        },                {
+            "fqsen": "\\Url\u003A\u003Abuild\u0028\u0029",
+            "name": "build",
+            "summary": "Builds\u0020a\u0020URL\u0020from\u0020its\u0020components\u0020and\u0020returns\u0020the\u0020assembled\u0020string.",
+            "url": "classes/Url.html#method_build"
+        },                {
+            "fqsen": "\\Url\u003A\u003Aencode\u0028\u0029",
+            "name": "encode",
+            "summary": "Encodes\u0020a\u0020string\u0020by\u0020replacing\u0020special\u0020characters\u0020with\u0020their\u0020percent\u002Dencoded\u0020representation.",
+            "url": "classes/Url.html#method_encode"
+        },                {
+            "fqsen": "\\Url\u003A\u003Adecode\u0028\u0029",
+            "name": "decode",
+            "summary": "Decodes\u0020a\u0020percent\u002Dencoded\u0020string\u0020back\u0020to\u0020its\u0020original\u0020form.",
+            "url": "classes/Url.html#method_decode"
+        },                {
+            "fqsen": "\\Url\u003A\u003AbuildQueryString\u0028\u0029",
+            "name": "buildQueryString",
+            "summary": "Builds\u0020a\u0020query\u0020string\u0020from\u0020an\u0020associative\u0020array\u0020of\u0020parameters.",
+            "url": "classes/Url.html#method_buildQueryString"
+        },                {
+            "fqsen": "\\Url\u003A\u003AparseQueryString\u0028\u0029",
+            "name": "parseQueryString",
+            "summary": "Parses\u0020a\u0020query\u0020string\u0020and\u0020returns\u0020an\u0020associative\u0020array\u0020of\u0020its\u0020parameters.",
+            "url": "classes/Url.html#method_parseQueryString"
+        },                {
             "fqsen": "\\UUID",
             "name": "UUID",
             "summary": "Represents\u0020a\u0020universally\u0020unique\u0020identifier\u0020\u0028UUID\u0029,\u0020according\u0020to\u0020RFC\u00209562.",
             "url": "classes/UUID.html"
+        },                {
+            "fqsen": "\\UUID\u003A\u003AisValid\u0028\u0029",
+            "name": "isValid",
+            "summary": "Check\u0020if\u0020a\u0020string\u0020is\u0020a\u0020valid\u0020UUID.",
+            "url": "classes/UUID.html#method_isValid"
+        },                {
+            "fqsen": "\\UUID\u003A\u003Aequals\u0028\u0029",
+            "name": "equals",
+            "summary": "Check\u0020if\u0020two\u0020UUIDs\u0020are\u0020equal.",
+            "url": "classes/UUID.html#method_equals"
+        },                {
+            "fqsen": "\\UUID\u003A\u003AgetTime\u0028\u0029",
+            "name": "getTime",
+            "summary": "Returns\u0020Unix\u0020time\u0020from\u0020a\u0020UUID.",
+            "url": "classes/UUID.html#method_getTime"
+        },                {
+            "fqsen": "\\UUID\u003A\u003AgetVersion\u0028\u0029",
+            "name": "getVersion",
+            "summary": "Returns\u0020the\u0020UUID\u0020version.",
+            "url": "classes/UUID.html#method_getVersion"
+        },                {
+            "fqsen": "\\UUID\u003A\u003Acmp\u0028\u0029",
+            "name": "cmp",
+            "summary": "UUID\u0020comparison.",
+            "url": "classes/UUID.html#method_cmp"
+        },                {
+            "fqsen": "\\UUID\u003A\u003AtoString\u0028\u0029",
+            "name": "toString",
+            "summary": "The\u0020string\u0020standard\u0020representation\u0020of\u0020the\u0020UUID.",
+            "url": "classes/UUID.html#method_toString"
+        },                {
+            "fqsen": "\\UUID\u003A\u003Av3\u0028\u0029",
+            "name": "v3",
+            "summary": "Generate\u0020a\u0020version\u00203\u0020UUID\u0020based\u0020on\u0020the\u0020MD5\u0020hash\u0020of\u0020a\u0020namespace\u0020identifier\n\u0028which\u0020is\u0020a\u0020UUID\u0029\u0020and\u0020a\u0020name\u0020\u0028which\u0020is\u0020a\u0020string\u0029.",
+            "url": "classes/UUID.html#method_v3"
+        },                {
+            "fqsen": "\\UUID\u003A\u003Av4\u0028\u0029",
+            "name": "v4",
+            "summary": "Generate\u0020a\u0020version\u00204\u0020\u0028random\u0029\u0020UUID.",
+            "url": "classes/UUID.html#method_v4"
+        },                {
+            "fqsen": "\\UUID\u003A\u003Av5\u0028\u0029",
+            "name": "v5",
+            "summary": "Generate\u0020a\u0020version\u00205\u0020UUID\u0020based\u0020on\u0020the\u0020SHA\u002D1\u0020hash\u0020of\u0020a\u0020namespace\nidentifier\u0020\u0028which\u0020is\u0020a\u0020UUID\u0029\u0020and\u0020a\u0020name\u0020\u0028which\u0020is\u0020a\u0020string\u0029.",
+            "url": "classes/UUID.html#method_v5"
+        },                {
+            "fqsen": "\\UUID\u003A\u003Av6\u0028\u0029",
+            "name": "v6",
+            "summary": "UUID\u0020version\u00206\u0020is\u0020a\u0020field\u002Dcompatible\u0020version\u0020of\u0020UUIDv1,\u0020reordered\u0020for\u0020improved\nDB\u0020locality.\u0020It\u0020is\u0020expected\u0020that\u0020UUIDv6\u0020will\u0020primarily\u0020be\u0020used\u0020in\u0020contexts\nwhere\u0020there\u0020are\u0020existing\u0020v1\u0020UUIDs.\u0020Systems\u0020that\u0020do\u0020not\u0020involve\u0020legacy\u0020UUIDv1\nSHOULD\u0020consider\u0020using\u0020UUIDv7\u0020instead.",
+            "url": "classes/UUID.html#method_v6"
+        },                {
+            "fqsen": "\\UUID\u003A\u003Av7\u0028\u0029",
+            "name": "v7",
+            "summary": "UUID\u0020version\u00207\u0020features\u0020a\u0020time\u002Dordered\u0020value\u0020field\u0020derived\u0020from\u0020the\u0020widely\nimplemented\u0020and\u0020well\u0020known\u0020Unix\u0020Epoch\u0020timestamp\u0020source,\u0020the\u0020number\u0020of\nmilliseconds\u0020seconds\u0020since\u0020midnight\u00201\u0020Jan\u00201970\u0020UTC,\u0020leap\u0020seconds\u0020excluded.\u0020As\nwell\u0020as\u0020improved\u0020entropy\u0020characteristics\u0020over\u0020versions\u00201\u0020or\u00206.",
+            "url": "classes/UUID.html#method_v7"
+        },                {
+            "fqsen": "\\UUID\u003A\u003Av8\u0028\u0029",
+            "name": "v8",
+            "summary": "Generate\u0020a\u0020version\u00208\u0020UUID.\u0020A\u0020v8\u0020UUID\u0020is\u0020lexicographically\u0020sortable\u0020and\u0020is\ndesigned\u0020to\u0020encode\u0020a\u0020Unix\u0020timestamp\u0020with\u0020arbitrary\u0020sub\u002Dsecond\u0020precision.",
+            "url": "classes/UUID.html#method_v8"
+        },                {
+            "fqsen": "\\UUID\u003A\u003ANAMESPACE_DNS",
+            "name": "NAMESPACE_DNS",
+            "summary": "When\u0020this\u0020namespace\u0020is\u0020specified,\u0020the\u0020name\u0020string\u0020is\u0020a\u0020fully\u002Dqualified\u0020domain\u0020name.",
+            "url": "classes/UUID.html#constant_NAMESPACE_DNS"
+        },                {
+            "fqsen": "\\UUID\u003A\u003ANAMESPACE_URL",
+            "name": "NAMESPACE_URL",
+            "summary": "When\u0020this\u0020namespace\u0020is\u0020specified,\u0020the\u0020name\u0020string\u0020is\u0020a\u0020URL.",
+            "url": "classes/UUID.html#constant_NAMESPACE_URL"
+        },                {
+            "fqsen": "\\UUID\u003A\u003ANAMESPACE_OID",
+            "name": "NAMESPACE_OID",
+            "summary": "When\u0020this\u0020namespace\u0020is\u0020specified,\u0020the\u0020name\u0020string\u0020is\u0020an\u0020ISO\u0020OID.",
+            "url": "classes/UUID.html#constant_NAMESPACE_OID"
+        },                {
+            "fqsen": "\\UUID\u003A\u003ANAMESPACE_X500",
+            "name": "NAMESPACE_X500",
+            "summary": "When\u0020this\u0020namespace\u0020is\u0020specified,\u0020the\u0020name\u0020string\u0020is\u0020an\u0020X.500\u0020DN\u0020in\u0020DER\u0020or\u0020a\u0020text\u0020output\u0020format.",
+            "url": "classes/UUID.html#constant_NAMESPACE_X500"
+        },                {
+            "fqsen": "\\UUID\u003A\u003ANIL",
+            "name": "NIL",
+            "summary": "The\u0020nil\u0020UUID\u0020is\u0020special\u0020form\u0020of\u0020UUID\u0020that\u0020is\u0020specified\u0020to\u0020have\u0020all\u0020128\u0020bits\u0020set\u0020to\u0020zero.",
+            "url": "classes/UUID.html#constant_NIL"
+        },                {
+            "fqsen": "\\UUID\u003A\u003AMAX",
+            "name": "MAX",
+            "summary": "The\u0020Max\u0020UUID\u0020is\u0020special\u0020form\u0020of\u0020UUID\u0020that\u0020is\u0020specified\u0020to\u0020have\u0020all\u0020128\u0020bits\u0020set\u0020to\u0020one.",
+            "url": "classes/UUID.html#constant_MAX"
+        },                {
+            "fqsen": "\\UUID\u003A\u003ATIME_OFFSET_INT",
+            "name": "TIME_OFFSET_INT",
+            "summary": "0x01b21dd213814000\u0020is\u0020the\u0020number\u0020of\u0020100\u002Dns\u0020intervals\u0020between\u0020the\nUUID\u0020epoch\u00201582\u002D10\u002D15\u002000\u003A00\u003A00\u0020and\u0020the\u0020Unix\u0020epoch\u00201970\u002D01\u002D01\u002000\u003A00\u003A00.",
+            "url": "classes/UUID.html#constant_TIME_OFFSET_INT"
         },                {
             "fqsen": "\\",
             "name": "\\",
