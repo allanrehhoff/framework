@@ -2,7 +2,7 @@
 
 namespace Bootstrap;
 
-use EventListeners\BaseurlRedirect;
+use \EventListeners\BaseurlRedirect;
 use \EventListeners\ContentSecurityPolicy;
 
 /**
