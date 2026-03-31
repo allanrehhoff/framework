@@ -2,7 +2,7 @@
 
 ## 1. General
 - No PHP short open tags (`<?` and `<?=`). Use `<?php` only.
-- Files under `src/` are in scope for style enforcement. Exclude templates (`*.tpl.php`) from lint rules.
+- Files under `src/` are in scope for style enforcement.
 
 ## 2. Indentation and Braces
 - Use tabs for indentation.
