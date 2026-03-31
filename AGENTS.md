@@ -60,6 +60,17 @@ For any test or debugging scripts that can be reasonably implemented in PHP:
 Prefer native JavaScript over the bundled jQuery library.  
 While jQuery is available for convenience, use modern JavaScript APIs and methods whenever possible to reduce dependencies and improve performance.
 
+## Testing
+When writing tests for the framework:
+
+- New core components must include a corresponding test file in the testsuite
+- New classes require an accompanying test file
+- Controllers are exempt from unit test requirements
+- All tests must pass 100% of the time; prioritize implementation adjustments over test modifications
+- Test refactoring should only occur when determined to be contain bugs or necessitated by new features/refactors
+
+Run `composer test` to execute the PHPUnit test suite.
+
 ## Framework Architecture
 
 ### Core Components
@@ -84,7 +95,6 @@ While jQuery is available for convenience, use modern JavaScript APIs and method
 - CLI access through `CliController` methods
 
 ### Development Tools
-- **Testing**: Run `composer test` for PHPUnit tests
 - **Code Style**: `composer cs` for PHP CodeSniffer checks
 - **Documentation**: `composer build-docs` generates PHPDoc
 - **Debugging**: Use `Logger` class and environment-based debug settings
