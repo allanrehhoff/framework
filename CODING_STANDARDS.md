@@ -1,6 +1,6 @@
 # Coding Standards
 
-## 1. General
+## General
 - No PHP short open tags (`<?` and `<?=`). Use `<?php` only.
 - Files under `src/` are in scope for style enforcement.
 - Variables must never be used inside double quoted strings.
@@ -19,11 +19,11 @@ $message = "Hello $name!"; // Variable interpolation
 $message = "Hello {$name}!"; // Curly brace syntax
 ```
 
-## 2. Indentation and Braces
+## Indentation and Braces
 - Use tabs for indentation.
 - Opening brace for classes, functions, and control structures goes on the same line as the statement.
 
-## 3. Keywords and Syntax
+## Keywords and Syntax
 - Add a single space after control keywords: `if`, `foreach`, `while`, `switch`, etc.
 - Boolean, control and PHP keywords are lower-case.
 
@@ -41,7 +41,7 @@ if($value===null){
 }
 ```
 
-## 4. Arrays and built-in alternatives
+## Arrays and built-in alternatives
 - Use square-bracket syntax for arrays: `[]`.
 - Avoid old array syntax: `array()`.
 - Avoid forbidden direct functions:
@@ -62,7 +62,7 @@ echo "Hello world";
 $callback = create_function('', 'return true;');
 ```
 
-## 5. Type hints
+## Type hints
 - Prefer explicit type declarations in signatures.
 - Prefer union types for nullable values: `null|string` rather than `?string` for consistency with configured long type hints.
 
@@ -80,7 +80,7 @@ function isPalindrome(?string $string): bool {
 }
 ```
 
-## 5.1 Naming Conventions
+## Naming Conventions
 
 ### Variables
 Variables should be named after the object they hold, prefixed with a lowercase 'i' for instances:
@@ -95,6 +95,44 @@ $iConfiguration = \Registry::getConfiguration();
 ```php
 $user = new \User();
 $config = \Registry::getConfiguration();
+```
+
+### Casing
+Variables, functions and methods must use camelCase and never snake_case:
+Namespaces always PascalCase.  
+
+✅ Good
+```php
+namespace User;
+
+class User {
+    private string $userName;
+    
+    public function getUserName(): string {
+        return $this->userName;
+    }
+    
+    public function validateUserInput(): bool {
+        return true;
+    }
+}
+```
+
+⛔ Bad
+```php
+namespace user;
+
+class User {
+    private string $user_name; // snake_case
+    
+    public function get_user_name(): string { // snake_case
+        return $this->user_name;
+    }
+    
+    public function validate_user_input(): bool { // snake_case
+        return true;
+    }
+}
 ```
 
 ### Classes and Entities
@@ -124,7 +162,7 @@ class Users extends \Database\Entity { // Plural
 }
 ```
 
-## 5.2 Namespaces
+## Namespaces
 When using globally namespaced classes, always start with `\` inside controllers or classes.  
 The use of the `use` keyword is still permitted for imports:
 
@@ -151,7 +189,7 @@ class MyController extends Controller {
 }
 ```
 
-## 6. Docblocks
+## Docblocks
 - Docblock descriptions must be separated from `@param`, `@return`, and other tags by one blank line.
 - `@param` must include type and name; type can be short scalar (`int`, `bool`) for PHP 7/8 typed signatures.
 - Skipped checks: inheritdoc-based function comments, parameter case and spacing variants as configured.
@@ -169,7 +207,7 @@ function isPalindrome(null|string $string): bool {
 }
 ```
 
-## 7. Commenting and TODO
+## Commenting and TODO
 - Remove `@todo` comments before merging; temporary todos are caught by `Generic.Commenting.Todo`.
 
 ✅ Good
@@ -195,7 +233,7 @@ public function authenticate(): bool {
 }
 ```
 
-## 8. Coding standard configuration notes
+## Coding standard configuration notes
 - Includes `SlevomatCodingStandard.TypeHints.LongTypeHints`.
 - Enforces no unused function parameters (`Generic.CodeAnalysis.UnusedFunctionParameter`).
 - Enforces upper-case constants (`Generic.NamingConventions.UpperCaseConstantName`).
