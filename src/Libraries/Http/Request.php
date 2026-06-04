@@ -337,8 +337,6 @@ class Request {
 	 * @return Request The current instance
 	 */
 	private function closeConnection(): Request {
-		curl_close($this->curl);
-
 		// PHP 8.0.0 > compat
 		// as of PHP8 curl_close has no effect
 		// causing cookiejars to not be flushed
