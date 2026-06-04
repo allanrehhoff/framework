@@ -1,7 +1,7 @@
 # Custom PHP Framework - Introduction (Version 10)
 ![Status](https://img.shields.io/badge/status-stable-success?style=for-the-badge)
 ![Tests](https://img.shields.io/badge/Tests-passing-brightgreen?style=for-the-badge)
-![License](https://img.shields.io/github/license/atrehhoff/framework?style=for-the-badge)
+![License](https://img.shields.io/github/license/atrehhoff/framework?style=for-the-badge&label=License)
 ![Release](https://img.shields.io/github/v/release/atrehhoff/framework?style=for-the-badge)
 ![PHP](https://img.shields.io/badge/PHP-8.4-777BB4?style=for-the-badge&logo=php&logoColor=white)
 
