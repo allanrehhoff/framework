@@ -38,6 +38,8 @@ final class Xml implements ContentTypeInterface {
 		}
 
 		foreach ($data as $key => $value) {
+			$key = is_numeric($key) ? 'i' . $key : $key;
+
 			if (is_array($value)) {
 				// Handle multidimensional arrays recursively
 				$child = $iSimpleXMLElement->addChild($key);
