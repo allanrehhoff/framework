@@ -1,4 +1,9 @@
 # Changelog #
+
+v10.0.4
+- `AGENTS.md` and `CODING_STANDARDS.md` have been updated to be more strict and explicit.  
+- Non-associative arrays in response data prefixed with `i` when client requests XML.  
+
 v10.0.3
 - Bugfix in bin/app file.  
 
