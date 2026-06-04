@@ -19,6 +19,41 @@ $message = "Hello $name!"; // Variable interpolation
 $message = "Hello {$name}!"; // Curly brace syntax
 ```
 
+## Language
+English must be used in all circumstances. This includes:
+- All variable, function, method, and class names
+- All comments and docblocks
+- All error messages and logging output
+- All documentation and git commit messages
+
+Only exception is for user-facing text, if the general application language is non-english.  
+
+✅ Good
+```php
+$userName = "John";
+$isValidated = true;
+
+/**
+ * Retrieve the user's email address.
+ */
+public function getUserEmail(): string {
+    return $this->email;
+}
+```
+
+⛔ Bad
+```php
+$nombreDelUsuario = "John"; // Spanish name
+$estáValidado = true; // Spanish name
+
+/**
+ * Obtener la dirección de correo electrónico del usuario.
+ */
+public function getCorreoDelUsuario(): string {
+    return $this->email;
+}
+```
+
 ## Indentation and Braces
 - Use tabs for indentation.
 - Opening brace for classes, functions, and control structures goes on the same line as the statement.
@@ -232,6 +267,8 @@ public function authenticate(): bool {
     return false;
 }
 ```
+
+
 
 ## Coding standard configuration notes
 - Includes `SlevomatCodingStandard.TypeHints.LongTypeHints`.
