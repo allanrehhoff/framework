@@ -12,7 +12,7 @@ final class Registry {
 
 	/**
 	 * Get an object by it's class name, namespaces included.
-	 * Instatiates the object if not already existing.
+	 * Returns the stored object or null when nothing has been registered.
 	 * 
 	 * @param string $key alias/classname to retrieve from global state
 	 * @return mixed A class object
