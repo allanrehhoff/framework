@@ -194,7 +194,7 @@ class Bootstrap {
 											<li>A detailed step-by-step guide how you got this error</li>
 											<li>What you were trying to do</li>
 											<li>What you expected to happen</li>
-											<li>This part: " . $_SERVER["REQUEST_URI"] . "</li>
+											<li>This part: " . htmlentities($_SERVER["REQUEST_URI"]) . "</li>
 											<li>This time: " . date("Y-m-d H:i:s") . "</li>
 										</ul>
 									</ul>
