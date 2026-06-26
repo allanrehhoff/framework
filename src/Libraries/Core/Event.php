@@ -25,7 +25,7 @@ final class Event {
 	 * Register an event listener for a specific event.
 	 *
 	 * @param string $event The event name.
-	 * @param callable|array $listener The listener, which can be a callable, string, or class and method array. non-class functions caznnot be passed
+	 * @param callable|string|array $listener The listener, which can be a callable, a class string, or a class/method array.
 	 * 								   - If given a callable the event listener will be called as-is and passed event arguments
 	 * 								   - If given an array the listener will be called in static class context and passed event arguments
 	 * 								   - If given a string fx. MockEventListener:class the listener will be called in object context and must then implement a 'handle' method.
