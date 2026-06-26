@@ -72,7 +72,7 @@ final class Request {
 			$args = parse_url($this->server["REQUEST_URI"], PHP_URL_PATH);
 			$args = trim($args, '/');
 			$args = explode('/', $args);
-			$args = array_filter($args);
+			$args = array_filter($args, fn($arg) => $arg !== '');
 		}
 
 		$this->setArguments($args);
