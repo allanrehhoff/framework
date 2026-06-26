@@ -1,4 +1,12 @@
 # Changelog #
+v10.1.0
+- Further optimized for AI-assisted development*  
+- Fixed a bug where '0' and other falsy value was stripped from route args.  
+- Fixed infinite loop when keys named identically in Configuration->delete().  
+- Escape request uri being printed on error.  
+- Updated docblocks and documentation.  
+
+* AI-assisted development is supported as an optional workflow, not enforced or required.  
 
 v10.0.4
 - `AGENTS.md` and `CODING_STANDARDS.md` have been updated to be more strict and explicit.  
