@@ -29,7 +29,7 @@ When third-party dependencies are necessary:
 - Always specify exact version numbers
 - For JavaScript libraries: include version in filename or as a comment in the file
 - For PHP packages: specify versions in `composer.json`
-- Document the rationale for inclusion in code comments
+- Document the rationale for inclusion in code comments.
 
 ## Database Changes
 When database modifications or SQL queries are required:  
@@ -72,50 +72,6 @@ When writing tests for the framework:
 Run `composer test` to execute the PHPUnit test suite.
 
 ## Framework Architecture
-
-### CRUD'able Entities
-Controllers for entities that can be edited should follow a pattern similar to the following.
-Replace `Product` with appropriate entity terms.
-
-```php
-class ProductController extends Controller {
-	public function index(): void {
-		
-	}
-
-	// Use for both create and update
-	public function edit(): void {
-		$productId = $this->request->getArg(2); // Assuming URL structure: /product/edit/{id}
-		$iProduct = \Product::from($productId);
-
-		if($this->request->server["REQUEST_METHOD"] === "POST") {
-			$allowedFields = ["name", "description", "price"];
-			$iProduct->set($this->request->post, $allowedFields);
-
-			if($this->validate($iProduct)) {
-				$iProduct->save();
-			}
-		}
-	}
-
-	public function validate(\Product $iProduct): bool {
-		$this->data["errors"] = [];
-
-		// Validate name
-		if (empty($iProduct->get("name"))) {
-			$this->data["errors"][] = "Name is required.";
-		}
-
-		return empty($this->data["errors"]);
-	}
-}
-```
-
-### Escaping output
-The entity safe method `$iEntity->safe("propertyName")` is to be used over `htmlentities();`.  
-In the event that output does not belong to an entity, use `\Str::safe` method.  
-
-Array's can be escaped with `\Arr::safe();`
 
 ### Core Components
 - **Controllers**: Extend the `Controller` class, handle requests, set views, and pass data
