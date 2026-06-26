@@ -173,21 +173,21 @@ class Configuration {
 	 * @return self
 	 */
 	public function delete(string $key): Configuration {
-		$configValue = $this->parsedConfig;
-
 		$paths = explode('.', $key);
-		$unsetKey = array_slice($paths, -1)[0];
+		$configValue = &$this->parsedConfig;
+		$lastIndex = count($paths) - 1;
 
-		foreach ($paths as $path) {
+		foreach ($paths as $index => $path) {
 			if (!isset($configValue->$path)) {
 				throw new \InvalidArgumentException($key . " is not a valid configuration");
 			}
 
-			if (isset($configValue->$unsetKey)) {
-				unset($configValue->$unsetKey);
-			} else {
-				$configValue = &$configValue->$path;
+			if ($index === $lastIndex) {
+				unset($configValue->$path);
+				return $this;
 			}
+
+			$configValue = &$configValue->$path;
 		}
 
 		return $this;
