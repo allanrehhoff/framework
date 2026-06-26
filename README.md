@@ -3,7 +3,7 @@
 ![Tests](https://img.shields.io/badge/Tests-passing-brightgreen?style=for-the-badge)
 ![License](https://img.shields.io/github/license/atrehhoff/framework?style=for-the-badge&label=License)
 ![Release](https://img.shields.io/github/v/release/atrehhoff/framework?style=for-the-badge)
-![PHP](https://img.shields.io/badge/PHP-8.4-777BB4?style=for-the-badge&logo=php&logoColor=white)
+![PHP](https://img.shields.io/badge/PHP-8.5-777BB4?style=for-the-badge&logo=php&logoColor=white)
 
 A no-nonsense, lightweight, custom framework using intuitive patterns and requiring almost no boilerplate code.  
 Say goodbye to manually defining routes and unnecessary bloatware. 
