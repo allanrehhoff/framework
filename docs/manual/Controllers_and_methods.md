@@ -56,9 +56,49 @@ In this example, **TigerController** will be invoked after **AnimalController**.
 Only the `index` method is called on child controllers.  
 Response data set by a parent controller is accessible and modifiable by its children.
 
-You may throw a `\Core\StatusCode\NotFound` to reroute the stack to **NotFoundController**,  
-`\Core\StatusCode\Forbidden` to reroute to **ForbiddenController**,  
-or `\Core\StatusCode\BadRequest` to reroute to **BadRequestController**.
+## Rerouting with StatusCode Exceptions
+
+Controllers can throw `StatusCode` exceptions to reroute the request stack to a different status code controller.
+
+The following exceptions are available:
+
+| Exception | HTTP Code | Use Case |
+|-----------|-----------|----------|
+| `\Core\StatusCode\BadRequest` | 400 | Malformed or invalid request data |
+| `\Core\StatusCode\Unauthorized` | 401 | Authentication required |
+| `\Core\StatusCode\Forbidden` | 403 | Access denied for authenticated users |
+| `\Core\StatusCode\NotFound` | 404 | Resource or path does not exist |
+| `\Core\StatusCode\NotAcceptable` | 406 | Request format not supported |
+
+**Example:**
+
+```php
+<?php
+
+class UserController extends \Controller {
+	public function profile(): void {
+		// Check if user is authenticated
+		if (!$this->isAuthenticated()) {
+			throw new \Core\StatusCode\Unauthorized();
+		}
+
+		// Check if user has permission
+		if (!$this->hasPermission("view_profile")) {
+			throw new \Core\StatusCode\Forbidden();
+		}
+
+		// Validate input
+		if (empty($_GET["id"])) {
+			throw new \Core\StatusCode\BadRequest();
+		}
+
+		// Continue with normal processing
+		$this->response->setView("user/profile");
+	}
+}
+```
+
+When a `StatusCode` exception is thrown, the framework automatically routes the request to the corresponding status code controller (e.g., `UnauthorizedController`, `ForbiddenController`, etc.).
 
 ## Namespaced Controllers
 
