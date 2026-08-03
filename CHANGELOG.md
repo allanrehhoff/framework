@@ -2,6 +2,7 @@
 v10.2.0
 - Added \Core\StatusCode\BadRequest exception.  
 - Added \Core\StatusCode\Unauthorized exception.  
+- Updated documentation.   
 
 v10.1.0
 - Further optimized for AI-assisted development*  
