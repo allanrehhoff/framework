@@ -56,8 +56,9 @@ In this example, **TigerController** will be invoked after **AnimalController**.
 Only the `index` method is called on child controllers.  
 Response data set by a parent controller is accessible and modifiable by its children.
 
-You may throw a `\Core\HttpError\NotFound` to reroute the stack to **NotFoundController**,  
-or throw a `\Core\HttpError\Forbidden` to reroute to **ForbiddenController**.
+You may throw a `\Core\StatusCode\NotFound` to reroute the stack to **NotFoundController**,  
+`\Core\StatusCode\Forbidden` to reroute to **ForbiddenController**,  
+or `\Core\StatusCode\BadRequest` to reroute to **BadRequestController**.
 
 ## Namespaced Controllers
 
