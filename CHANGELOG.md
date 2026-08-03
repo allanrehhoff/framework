@@ -1,4 +1,8 @@
 # Changelog #
+v10.2.0
+- Added \Core\StatusCode\BadRequest exception.  
+- Added \Core\StatusCode\Unauthorized exception.  
+
 v10.1.0
 - Further optimized for AI-assisted development*  
 - Fixed a bug where '0' and other falsy value was stripped from route args.  
