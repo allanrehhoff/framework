@@ -18,7 +18,7 @@ class Statement extends \PDOStatement {
 	 * @return array
 	 */
 	public function fetchCol(): array {
-		$result = $this->fetchAll(\PDO::FETCH_COLUMN);
+		$result = $this->fetchAll(\PDO::FETCH_COLUMN, 0);
 
 		// PHP < 8.0.0 compat. PDOStatement::fetchAll(); will return false
 		// if the result set was empty, fixed in PHP 8.0.0
